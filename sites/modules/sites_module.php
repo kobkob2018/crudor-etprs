@@ -2,7 +2,7 @@
 	class sitesModule extends Module{
         public $add_models = array("biz_categories",
                     "sitePages",
-                    "SiteCat_phone",
+                    "siteCat_phone",
                     "siteBiz_forms",
                     "siteSite_styling");
 
