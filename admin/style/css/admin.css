@@ -1,0 +1,406 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+.clear{
+    clear:both;
+}
+
+.hidden{
+    display: none;
+}
+
+.row-fluid{display: flex;}
+
+ul li{
+    list-style: none;
+}
+
+
+h3{
+    padding: 8px 0px;
+}
+
+h4{
+    padding: 8px 0px;
+}
+
+.header{
+    display: flex;
+    background: #e5e5ec;
+    padding: 10px;
+    align-items: baseline;
+}
+
+.header .admin-title{
+    font-size:22px;
+    flex-grow: 1;
+    text-align: left;
+}
+
+#middle_wrap{
+    display: flex;
+    
+}
+
+#center_bar_wrap{
+    flex-grow:1;
+}
+
+
+.messages{
+    padding: 10px;
+    background: #ffeaea;
+    color: red;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 15px 36px;
+    box-shadow: 3px 4px 7px #c19d9d;
+}
+
+.messages.success-messages{
+    background: #cffcf9;
+    color: black;
+    box-shadow: 3px 4px 7px #c1bebe;
+}
+
+.messages.warning-messages{
+    background: #fee7a3;
+    color: black;
+    box-shadow: 3px 4px 7px #c1bebe;
+}
+
+.messages li{
+    list-style: inside;
+}
+
+#right_bar{
+    padding: 15px 10px 15px 5px;
+}
+
+#right_bar ul.item-group{
+    padding: 0px 10px 0px 0px;
+}
+
+#right_bar ul li.bar-item{
+
+}
+
+#right_bar ul li.bar-item a{
+    padding: 5px 14px 3px 25px;
+    border-bottom: 2px solid #dde0f4;
+    background: #dde0f4;
+    margin-bottom: 4px;
+    text-decoration:none;
+    color:black;
+    display:block;
+}
+
+#right_bar ul li.c-selected a{
+    border-color: blue;
+}
+
+#right_bar ul li.child-item a{
+    border-right:12px solid yellow;
+    padding-left: 2px;
+}
+
+#right_bar ul li.bar-item:hover a, #right_bar ul li.a-selected a{
+    color:black;
+    background:blue;
+}
+
+#content_wrap{
+    background: #dcdcf0;
+    padding: 15px;
+    margin: 5px;
+}
+
+.form-group {
+    display: table-row;
+}
+
+.form-group .form-group-en{
+    display: table-cell;
+    padding-top: 10px;
+}
+
+.form-group .form-group-color{
+    display: table-cell;
+    padding-right: 10px;
+    margin-bottom: -10px;
+    cursor: pointer;
+}
+
+.form-group .form-group-st{
+    display: table-cell;
+    padding-left: 10px;
+}
+.submit-form-group{
+    text-align: left;
+}
+.submit-form-group .submit-btn{
+    margin: 10px;
+    padding: 5px 20px;
+    font-size: 20px;
+    box-shadow: 3px 3px 3px gray;
+    width: auto;
+}
+
+.flex-table .row {
+    display: table-row;
+}
+
+.flex-table .col {
+    display: table-cell;
+    border: 1px solid grey;
+    padding: 5px;
+}
+  .flex-table .table-th .col{
+    border:none;
+}
+.flex-table .table-th .col-first{
+    background:none;
+}
+.flex-table .col-first {
+    background: #cdcdfa;
+    width:10px;
+}
+
+.flex-table .col-tiny {
+    max-width:50px;
+}
+
+.flex-table .col-small{
+    max-width: 100px;
+}
+
+.flex-table .table-input{
+    width: 100px;
+}
+
+.flex-table .col-tiny .table-input{
+    width: 30px;
+}
+
+.flex-table .col-small .table-input{
+    width: 80px;
+}
+
+.delete-item-x{
+    text-decoration: none;
+    font-family: sans-serif;
+    color: red;
+    font-size: 25px;
+    font-weight: bold;
+    display: block;
+    position: relative;
+    top: 4px;
+}
+
+.alt-box{
+    padding: 10px;
+    background: #ffbdbd;
+    border: 1px solid gray;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #ababab;
+}
+
+.alt-box .bottom-buttons{
+    display:flex;
+    font-size:18px;
+}
+
+.alt-box .cancel-button-wrap{
+
+}
+
+
+.focus-box{
+    padding: 10px;
+    background: #ffe8e8;
+    border: 1px solid gray;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #ababab;
+    max-width: 1050px;
+    margin: 20px auto;
+    display: block;
+} 
+
+.focus-box.sub-focus {
+    background: #fefdf07d;
+}
+
+.button-focus{
+    background: #fefdf0;
+    max-width:300px;
+    margin:10px;
+}
+
+.button-focus:hover{
+    background: #fffafa;
+}
+
+.go-button, .button-focus{
+    background: #fefdf0;
+    padding:5px 10px;
+    border-radius: 5px;
+    display:inline-block;
+    border: 1px solid black;
+    text-decoration: none;
+    box-shadow: 2px 2px 2px #939393;
+}
+
+.move-item-wrap{
+    float:left;
+}
+
+.item-edit-menu{
+    text-align: center;
+}
+
+.item-edit-menu a.c-selected, .item-edit-menu a.a-selected{
+    color:black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.content-blocks{
+    max-width: 800px;
+    margin:auto;
+}
+
+.content-block{    
+    margin-bottom: 25px;
+
+}
+
+.content-block .block-content{
+    padding:10px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    background: floralwhite;
+    box-shadow: 5px 5px 5px #c9c9c9;
+    
+}
+.content-block .block-content img{
+    max-width:100%;
+    height:auto;
+}
+
+.block-buttons{
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group select, .form-group input, .form-group textarea{
+    width:100%;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #b6b6ec;
+    min-width: 200px;
+}
+
+.form-group select.tree-select{
+    width: auto;
+    min-width: auto;
+}
+
+.form-group textarea{
+    min-height: 200px;
+}
+
+.form-group.small-text textarea{
+    min-height: 100px;
+}
+
+.form-group.big-text textarea{
+    min-height: 200px;
+}
+
+.time-selector{
+    direction: ltr;
+}
+
+.hour-groups-template{
+    padding:10px;
+    margin-bottom:20px;
+    border: 1px solid blue;
+    background: white;
+
+}
+
+.form-group.left-text input, .form-group.left-text textarea{
+    text-align: left;
+    direction: ltr;
+} 
+
+.hour-groups-template .group-times{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.hour-groups-template .days-label{
+    padding-top: 10px;
+}
+
+.hour-groups-template .days-checks{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.hour-groups-template  .day-check-wrap{
+    padding: 5px 0px 5px 5px;
+}
+
+.hour-groups-template .delete-item-x{
+    float: left;
+}
+
+.checkbox-head{
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.assign-checkbox-parent-wrap{
+    
+}
+
+.assign-checkbox-parent-wrap .a-gap{
+    width: 28px;
+    display: inline-block;
+    font-size: 38px;
+    text-decoration: none;
+    line-height: 20px;
+    font-weight: bold;
+}
+
+.assign-checkbox-parent-wrap .check-label{
+    display: block;
+    margin-top: 1px;
+    font-size: 20px;
+}
+
+.assign-checkbox-parent-wrap .input-checkbox{
+    width: 20px;
+    height: 20px;
+}
+
+.assign-checkbox-parent-wrap .children-wrap{
+    margin: 0px 22px;
+    border-right: 5px solid yellow;
+}
+
+.assign-checkbox-parent-wrap.closed .children-wrap{
+    display: none;
+}
+
+.a-closed .replacable-minus-sign{
+    display: none;
+}
+
+.a-open .replacable-plus-sign{
+    display: none;
+}

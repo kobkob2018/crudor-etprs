@@ -1,0 +1,79 @@
+.drawer-overlay{
+    position: fixed;
+    z-index: 101;
+    top: 0;
+    right: 0;
+    background-color: #11111142;
+    width: 100%;
+    height: 100%;
+    display: none;
+    transition: 0.5s;
+}
+.side-drawer-wrap {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 102;
+    top: 0;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+
+  }
+
+.side-drawer-wrap.left-side-drawer{
+    left: 0;
+    
+    right: auto;
+    
+}
+
+
+.side-drawer-wrap.left-side-drawer .closebtn {
+    left:auto;
+    right: 15px;
+    margin-right: 0px;
+}
+
+.side-drawer-wrap.left-side-drawer .side-drawer{
+    padding: 20px;
+    padding-top:40px;
+}
+
+  .side-drawer{
+      width: 300px;
+  }
+ 
+  .side-drawer-wrap .item {
+    padding: 8px 8px 8px 8px;
+    text-decoration: none;
+    color: #c4a976;
+    display: block;
+    transition: 0.3s;
+    line-height: 27px;
+    margin-bottom: 9px;
+  }  
+
+  .side-drawer-wrap a {
+    color: #c4a976;
+  }    
+  .side-drawer-wrap a:hover {
+    color: #f1f1f1;
+  }
+  
+  .side-drawer-wrap .closebtn {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    font-size: 40px;
+    margin-right: 50px;
+    text-decoration: none;
+  }
+  
+  
+  @media screen and (max-height: 450px) {
+    .side-drawer-wrap {padding-top: 15px;}
+    .side-drawer-wrap a {font-size: 18px;}
+  }

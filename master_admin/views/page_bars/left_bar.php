@@ -1,0 +1,1 @@
+Hi this is the left bar on the page view

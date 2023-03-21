@@ -1,0 +1,112 @@
+#accessibility_wrap {
+    background: #eaeaea;
+    color: #332a1a;
+    border: 2px solid black;
+    box-shadow: 5px 5px 5px grey;
+}
+#accessibility_wrap a {
+    color: black;
+}
+.accessibility .item {
+    font-size: 25px;
+    border-bottom: 1px solid;
+    margin: 12px;
+    font-family: monospace, sans-serif, serif;
+    color: black;
+}
+.accessibility a.acc-icon {
+    border: 1px solid black;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 12px;
+    background: white;
+    color: black;
+    width: 42px;
+    height: 44px;
+    line-height: 19px;
+    text-align: center;
+    font-size: 30px;
+}
+.accessibility a.acc-icon.reset {
+    width: auto;
+    height: auto;
+    font-size: 0.9em;
+}
+.accessibility .label {
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.accessibility .state {
+    float: left;
+    font-size: 0.8em;
+    padding-top: 20px;
+}
+body.biggerfont-1 {
+    font-size: 18px;
+}
+body.biggerfont-2 {
+    font-size: 20px;
+}
+body.biggerfont-3 {
+    font-size: 25px;
+}
+body.contrastOn img {
+    -webkit-filter: grayscale(100%);
+}
+body.contrastOn .main-content, body.contrastOn .main-content *, body.contrastOn .site-footer, body.contrastOn .top-menu .main-cat {
+    background: white !important;
+    color: black !important;
+    border-color: black;
+}
+body.contrastOn .main-content a, body.contrastOn .main-content * a, body.contrastOn .site-footer a, body.contrastOn .top-menu .main-cat a {
+    color: blue !important;
+}
+body.contrastOn .site-footer {
+    border-top: 1px solid black;
+}
+body.linksOn .header a, body.linksOn .main-content a {
+    text-decoration: underline !important;
+}
+body .accessibility .biggerfont {
+    display: none;
+}
+body .accessibility .biggerfont-0-label {
+    display: block;
+}
+body .accessibility .contrast-on-label {
+    display: none;
+}
+body .accessibility .links-on-label {
+    display: none;
+}
+body.biggerfont-1 .biggerfont.biggerfont-1-label {
+    display: block;
+}
+body.biggerfont-1 .biggerfont-0-label {
+    display: none;
+}
+body.biggerfont-2 .biggerfont.biggerfont-2-label {
+    display: block;
+}
+body.biggerfont-2 .biggerfont-0-label {
+    display: none;
+}
+body.biggerfont-3 .biggerfont.biggerfont-3-label {
+    display: block;
+}
+body.biggerfont-3 .biggerfont-0-label {
+    display: none;
+}
+body.linksOn .links-on-label {
+    display: block;
+}
+body.linksOn .links-off-label {
+    display: none;
+}
+body.contrastOn .contrast-off-label {
+    display: none;
+}
+body.contrastOn .contrast-on-label {
+    display: block;
+}
