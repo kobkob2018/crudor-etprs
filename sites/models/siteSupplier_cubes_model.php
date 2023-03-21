@@ -24,7 +24,7 @@
                 LEFT JOIN user_lead_visability ulv ON uls.user_id = ulv.user_id 
                 WHERE uls.active = '1' 
                 
-                AND  (uls.end_date > now() OR uls.end_date = '0000-00-00') 
+                AND  (uls.end_date > now() OR uls.end_date = 0000-00-00) 
                 AND ulv.show_in_sites = '1' 
                 AND uls.user_id IN(
                         SELECT distinct user_id FROM user_cat WHERE cat_id IN ($cat_in_sql))";
