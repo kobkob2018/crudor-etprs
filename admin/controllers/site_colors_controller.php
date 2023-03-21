@@ -1,6 +1,6 @@
 <?php
   class Site_colorsController extends CrudController{
-    public $add_models = array("adminSites","AdminSite_colors");
+    public $add_models = array("adminSites","adminSite_colors");
 
     protected function handle_access($action){
         
