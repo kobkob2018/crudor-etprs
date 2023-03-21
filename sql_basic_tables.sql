@@ -2071,7 +2071,7 @@ INSERT INTO `user_leads` (`id`, `user_id`, `date_in`, `last_update`, `full_name`
 CREATE TABLE `user_lead_rotation` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `last_update` date DEFAULT current_timestamp(),
+  `last_update` datetime DEFAULT current_timestamp(),
   `leads_recived` int(11) NOT NULL DEFAULT 0,
   `order_state` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -2216,7 +2216,7 @@ CREATE TABLE `user_pending_emails` (
   `title` varchar(80) NOT NULL,
   `content` text NOT NULL,
   `send_times` mediumtext NOT NULL,
-  `created_date` date NOT NULL DEFAULT current_timestamp()
+  `created_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
