@@ -167,7 +167,7 @@
 
 
         $color_values_sql_arr = array();
-        $site_css = false;
+        $site_css = '';
         foreach($update_values as $color_key=>$color){
             if($color_key != 'site_css'){
 
@@ -185,18 +185,15 @@
         $req->execute($execute_arr);
 
 
-        if($site_css){
-
-            $sql = "DELETE FROM site_css WHERE site_id = :site_id";		
-            $req = $db->prepare($sql);
-            $req->execute($execute_arr);
-            
-            $execute_arr['site_css'] = $site_css;
-            
-            $sql = "INSERT INTO site_css (site_id, css) VALUES (:site_id, :site_css)";
-            $req = $db->prepare($sql);
-            $req->execute($execute_arr);
-        }
+        $sql = "DELETE FROM site_css WHERE site_id = :site_id";		
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
+        
+        $execute_arr['site_css'] = $site_css;
+        
+        $sql = "INSERT INTO site_css (site_id, css) VALUES (:site_id, :site_css)";
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
 
     }
 }
