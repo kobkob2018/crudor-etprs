@@ -73,7 +73,7 @@
             <?php endif; ?>
             <?php if(!isset($info['input_remove']['city'])): ?> 
                 <div class="form-group">
-                    <select name="biz[city]" id="biz_city" class="form-input validate" required data-msg_required="אנא בחר עיר">
+                    <select name="biz[city_id]" id="biz_city_id" class="form-input validate" required data-msg_required="אנא בחר עיר">
                         <option value = "">בחר עיר</option>
                         <?php foreach($this->data['city_select']['options'] as $option): ?>
                             <option value = "<?= $option['id'] ?>" class="city-option deep-<?= $option['deep'] ?>"><?= $option['label'] ?></option>
@@ -81,7 +81,7 @@
                     </select>
                 </div>      
             <?php else: ?>
-                <input type="hidden" name="biz[city]" value="0" />
+                <input type="hidden" name="biz[city_id]" value="0" />
             <?php endif; ?>  
             
             <?php if(!isset($info['input_remove']['note'])): ?>
