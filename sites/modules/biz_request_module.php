@@ -210,12 +210,12 @@
         }
 
         protected function add_city_info_to_lead_info(){
-            $city_tree = Cities::simple_get_item_parents_tree($this->lead_info['city'],"*");
+            $city_tree = Cities::simple_get_item_parents_tree($this->lead_info['city_id'],"*");
             $this->lead_info['city_tree'] = $city_tree;
 
             $city_name = "";
             foreach($this->lead_info['city_tree'] as $city){
-                if($this->lead_info['city'] == $city['id'])
+                if($this->lead_info['city_id'] == $city['id'])
                 $city_name = $city['label'];
             }
             $this->lead_info['city_name'] = $city_name;
