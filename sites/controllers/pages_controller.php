@@ -41,22 +41,7 @@
     protected function home(){
       return $this->page_view();
     }
-  //override function 
-  // here we add the modules snippets!!
-    public function print_body2(){
-      ob_start();
-      $this->include_view($this->action_params['body_layout_file']);
-      $body_output = ob_get_clean();
-      
-      $body_output = $this->clean_mobile_conditions($body_output);
-      $body_output = $this->setup_cat_phone_text($body_output);  
-      $body_output = $this->setup_text_modules($body_output);
 
-      print($body_output);
-      /*
-        on blank layout this is not called
-      */ 
-    }
   }
 
 

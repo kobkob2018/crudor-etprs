@@ -30,6 +30,10 @@
 .fa-search::before {
     content: "\f002"; }
 
+
+.fa-phone::before {
+      content: "\f095"; }
+      
   @font-face {
     font-family: 'faFont';
     font-display: block;

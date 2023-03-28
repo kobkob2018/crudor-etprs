@@ -43,11 +43,11 @@ $config = array(
     'override_models'=>array(),
     'access_module'=>'main',
     /*
-    //to change configuration to main pointer, change following 2 lines 
-    'sites_build_format'=>'pointer_to_main',
+    //to change configuration to main symlinks, change following 2 lines 
+    'sites_build_format'=>'symlinks',
     #'domains_path'=>'/domains',
     */
-    'sites_build_format'=>'symlinks',
+    'sites_build_format'=>'pointer_to_main',
     /*
     // the real domain path
     'domains_path'=>'///home/ilan123/domains/',

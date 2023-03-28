@@ -85,6 +85,7 @@
 
         protected function setup_cat_phone_text($text){
             $biz_form_data = siteBiz_forms::get_current_biz_form();
+
             $phone_info = array(
               'phone'=>'',
               'display_class'=>''

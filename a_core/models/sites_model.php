@@ -135,8 +135,18 @@
             }
         }
         elseif($sites_build_format == 'pointer_to_main'){
-            $return_array['path'] = '/sites_assets/'.$site['id'].'/';
-            $return_array['url'] = $site_url.'/sites_assets/'.$site['id'].'/';
+            $return_array['path'] = 'assets_s/'.$site['id'].'/';
+            $return_array['url'] = $site_url.'/assets_s/'.$site['id'].'/';
+            if(!is_dir('assets_s')){
+                $oldumask = umask(0) ;
+                $mkdir = @mkdir( 'assets_s', 0755 ) ;
+                umask( $oldumask ) ;
+            }
+            if(!is_dir('assets_s/'.$site['id'])){
+                $oldumask = umask(0) ;
+                $mkdir = @mkdir( 'assets_s/'.$site['id'], 0755 ) ;
+                umask( $oldumask ) ;
+            }
         }
         return $return_array;
     }
