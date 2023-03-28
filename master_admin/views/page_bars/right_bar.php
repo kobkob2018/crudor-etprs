@@ -53,6 +53,10 @@
             <li class="bar-item <?= $view->a_class("refund_requests/list/") ?>">
                 <a href="<?= inner_url('refund_requests/list/') ?>" title="בקשות לזיכויים" class="a-link">בקשות לזיכויים</a>
             </li> 
+
+            <li class="bar-item <?= $view->a_class("net_messages/list/") ?>">
+                <a href="<?= inner_url('net_messages/list/') ?>" title="הודעות רשת" class="a-link">הודעות רשת</a>
+            </li> 
         <?php endif; ?>
 
     </ul>

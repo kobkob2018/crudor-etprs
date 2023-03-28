@@ -1,7 +1,6 @@
 <?php
-	class NotificationsController extends CrudController{
+	class NotificationsController extends Controller{
 		public function get_list(){
-            $this->set_layout('blank');
 			$billing_messege_exists = $this->billing_list(false);
 			if($billing_messege_exists){
 				echo "<div id='billing_note_wrap'>
@@ -10,50 +9,94 @@
 					</b>
 				</div>";
 			}
-			
-			$user = Users::get_loged_in_user();
+			$this->action_params['layout_file'] = 'blank';
+			$user = User::getLogedInUser();
 			// הודעות מערכת
-            $sql = "SELECT msg.*, u_read.read_status FROM net_messages msg  
-            LEFT JOIN net_message_user_read u_read 
-            ON u_read.message_id = msg.id 
-            WHERE u_read.user_id = :user_id 
-            AND u_read.read_status != '3' 
-            AND msg.deleted = '0'";
-            $execute_arr = array('user_id'=>$user['id']);
-            $db = Db::getInstance();
-            $req = $db->prepare($sql);
-            $req->execute($execute_arr);
-            $messages = $req->fetchAll();
-
+			$sql = "SELECT massg.* , u.id as user_id FROM usersMessageSinon as massg , users as u , user_extra_settings as uxs WHERE 
+				massg.deleted = '0' AND
+			  massg.status = '0' AND
+			  u.status = '0' AND
+				u.deleted = '0' AND
+				u.unk = '".$user['unk']."' AND
+				u.unk = uxs.unk AND
+				
+				( massg.send_city = u.city OR massg.send_city = '0' ) AND
+				( massg.send_gender = u.gender OR massg.send_gender = '0' )  AND
+				( u.birthday <= massg.send_birthday_start OR massg.send_birthday_start = '0000-00-00' )  AND
+				( u.birthday <= massg.send_birthday_end OR massg.send_birthday_end = '0000-00-00' ) AND
+				( u.insert_date <= massg.date_sent OR u.insert_date = '0000-00-00' ) AND 
+					(
+						( massg.client_10service = '2' AND uxs.belongTo10service != '1' ) OR
+						( massg.client_10service = '1' AND uxs.belongTo10service = '1' ) OR
+						( massg.client_10service = '0' )
+					)
+				ORDER BY massg.id DESC
+			";
+			$resMassg = mysql_db_query(DB , $sql );
+			
 			$count = 0;
 			$msgStr = "";
-            if($messages){
-
-                foreach($messages as $dataMassg)
-                {
-                    /*
-                    $dataMassg['date_sent']
-                    $dataMassg['subject']
-                    $dataMassg['read']
-                    $dataMassg['content']
-                    */
-				$date_time = $dataMassg['last_time_sent'];
+			while( $dataMassg = mysql_fetch_array($resMassg) )
+			{
+				$sql_checkCat = "SELECT cat_id FROM usersMessageSinon_x_cat WHERE sinon_id = '".$dataMassg['id']."' LIMIT 1";
+				$res_checkCat = mysql_db_query(DB,$sql_checkCat);
+				$data_checkCat = mysql_fetch_array($res_checkCat);
+				
+				if( $data_checkCat['cat_id'] != "" )	{
+					$sql = "SELECT x.cat_id FROM user_cat as c , usersMessageSinon_x_cat as x WHERE 
+									x.sinon_id = '".$dataMassg['id']."' AND x.cat_id=c.cat_id AND c.user_id = '".$dataMassg['user_id']."'";
+					$res_cat = mysql_db_query(DB,$sql);
+					$data_cat2 = mysql_fetch_array($res_cat);
+					
+					if( $data_cat2['cat_id'] == '' )
+						continue;
+				}
+				$dataMassg['read'] = '0';
+				$read_sql = "SELECT messege_id FROM usersMessageSinon_read WHERE 
+									messege_id = '".$dataMassg['id']."' AND user_id = '".$dataMassg['user_id']."'";
+				$read_res =  mysql_db_query(DB , $read_sql );
+				$read_data = mysql_fetch_array($read_res);
+				if($read_data['messege_id'] != ""){
+					$dataMassg['read'] = '1';
+				}
+				$date_time = GlobalFunctions::show_dateTime_field($dataMassg['date_sent']);
 				
 				$row_style = "4B8DF1";
-				$moreDateScript = "class='msg-title msg_read_".$dataMassg['read_status']."' id='line1_".$dataMassg['id']."' onclick='moreDate(\"".$dataMassg['id']."\")' style='cursor : pointer;' onMouseover='this.style.backgroundColor=\"D0E1FB\"; this.style.color=\"000000\";' onMouseout='this.style.backgroundColor=\"".$row_style."\"; this.style.color=\"ffffff\";' ";
+				$moreDateScript = "class='msg-title msg_read_".$dataMassg['read']."' id='line1_".$dataMassg['id']."' onclick='moreDate(\"".$dataMassg['id']."\")' style='cursor : pointer;' onMouseover='this.style.backgroundColor=\"D0E1FB\"; this.style.color=\"000000\";' onMouseout='this.style.backgroundColor=\"".$row_style."\"; this.style.color=\"ffffff\";' ";
 				$msgStr .= "<div ".$moreDateScript.">";
 					$msgStr .= "<div class='msg-icon'><img src='style/image/small_msg_icon.png'></div>";
 					
 					$msgStr .= "<div class='msg-time'>".$date_time."</div>";
-					$msgStr .= "<div class='msg-subject'>".$dataMassg['title']."</div>";
+					$msgStr .= "<div class='msg-subject'>".stripslashes(utgt($dataMassg['subject']))."</div>";
 					$msgStr .= "<div class='clear'></div>";
 				$msgStr .= "</div>";
 				
 				$msgStr .= "<div class='msg-content-wrap' style='display:none' id='line_".$dataMassg['id']."' style='background-color: #4B8DF1;'>
-                
-                <div class='msg-content'>".$dataMassg['msg']."</div>";
-                $count++;
-                }
+
+								<div class='msg-content'>".stripslashes(utgt($dataMassg['content']))."</div>
+								";
+							
+							if( $dataMassg['href_link_togo'] != "" && $dataMassg['name_link_togo'] != "" )
+							{
+								if( eregi("http://",$dataMassg['href_link_togo']) )
+									$goto = $dataMassg['href_link_togo'];
+								else
+									$goto = "http://".$dataMassg['href_link_togo'];
+								
+								$msgStr .= "
+								
+									
+									<div class='msg-link'><a href='".$goto."' class='maintext' style='color: blue;' target='_blank'><u>".stripslashes(utgt($dataMassg['name_link_togo']))."</u></a></div>
+									
+								";
+							}
+							
+							$msgStr .= "
+
+											<div class='msg-close' align=left width=40 id='line1_".$dataMassg['id']."' onclick='moreDate(\"line1_".$dataMassg['id']."\" , \"line_".$dataMassg['id']."\" )' style='cursor : pointer;'><u>סגור</u></td>
+
+							";
+				$count++;
 			}
 			if( $count > 0 )
 			{
@@ -72,25 +115,60 @@
 			
  		public function check_list(){
 			$messege_exists = false;
-			$this->set_layout('blank');
-			$user = Users::get_loged_in_user();			
+			$this->action_params['layout_file'] = 'blank';
+			$user = User::getLogedInUser();			
 			$billing_messege_exists = $this->billing_list(false);
 			if($billing_messege_exists){
 				$messege_exists = true;
 			}
 			else{
-				$sql = "SELECT count(msg.id) as msg_count FROM net_messages msg  
-                        LEFT JOIN net_message_user_read u_read 
-                        ON u_read.message_id = msg.id 
-                        WHERE u_read.user_id = :user_id 
-                        AND u_read.read_status = '0' 
-                        AND msg.deleted = '0'";
-                $execute_arr = array('user_id'=>$user['id']);
-                $db = Db::getInstance();
-                $req = $db->prepare($sql);
-                $req->execute($execute_arr);
-                $count_result = $req->fetch();
-				if( $count_result && $count_result['msg_count'] != '0' ){
+				// הודעות מערכת
+				$sql = "SELECT massg.* , u.id as user_id FROM usersMessageSinon as massg , users as u , user_extra_settings as uxs WHERE 
+					massg.deleted = '0' AND
+				  massg.status = '0' AND
+				  u.status = '0' AND
+					u.deleted = '0' AND
+					u.unk = '".$user['unk']."' AND
+					u.unk = uxs.unk AND
+					
+					( massg.send_city = u.city OR massg.send_city = '0' ) AND
+					( massg.send_gender = u.gender OR massg.send_gender = '0' )  AND
+					( u.birthday <= massg.send_birthday_start OR massg.send_birthday_start = '0000-00-00' )  AND
+					( u.birthday <= massg.send_birthday_end OR massg.send_birthday_end = '0000-00-00' ) AND
+					( u.insert_date <= massg.date_sent OR u.insert_date = '0000-00-00' ) AND 
+						(
+							( massg.client_10service = '2' AND uxs.belongTo10service != '1' ) OR
+							( massg.client_10service = '1' AND uxs.belongTo10service = '1' ) OR
+							( massg.client_10service = '0' )
+						)
+					ORDER BY massg.id DESC
+				";
+				$resMassg = mysql_db_query(DB , $sql );
+				
+				$count = 0;
+				while( $dataMassg = mysql_fetch_array($resMassg) ){
+					$sql_checkCat = "SELECT cat_id FROM usersMessageSinon_x_cat WHERE sinon_id = '".$dataMassg['id']."' LIMIT 1";
+					$res_checkCat = mysql_db_query(DB,$sql_checkCat);
+					$data_checkCat = mysql_fetch_array($res_checkCat);
+					
+					if( $data_checkCat['cat_id'] != "" )	{
+						$sql = "SELECT x.cat_id FROM user_cat as c , usersMessageSinon_x_cat as x WHERE 
+										x.sinon_id = '".$dataMassg['id']."' AND x.cat_id=c.cat_id AND c.user_id = '".$dataMassg['user_id']."'";
+						$res_cat = mysql_db_query(DB,$sql);
+						$data_cat2 = mysql_fetch_array($res_cat);
+						
+						if( $data_cat2['cat_id'] == '' )
+							continue;
+					}
+					$read_sql = "SELECT messege_id FROM usersMessageSinon_read WHERE 
+										messege_id = '".$dataMassg['id']."' AND user_id = '".$dataMassg['user_id']."'";
+					$read_res =  mysql_db_query(DB , $read_sql );
+					$read_data = mysql_fetch_array($read_res);
+					if($read_data['messege_id'] == ""){
+						$count++;
+					}	
+				}
+				if( $count > 0 ){
 					$messege_exists = true;
 				}
 			}
@@ -103,19 +181,131 @@
 		}
 
  		public function mark_as_read(){
-			$this->set_layout('blank');
-			$user = Users::get_loged_in_user();			
-			$message_id = $_GET['message_id'];
-            $execute_arr = array('user_id'=>$user['id'], 'message_id'=>$message_id);
-			$sql = "UPDATE net_message_user_read SET read_status = '1' WHERE user_id = :user_id AND message_id = :message_id";
-            $db = Db::getInstance();
-            $req = $db->prepare($sql);
-            $req->execute($execute_arr);
+			$this->action_params['layout_file'] = 'blank';
+			$user = User::getLogedInUser();			
+			$messege_id = $_GET['messege_id'];
+			$user_id = $user['id'];
+			$read_sql = "SELECT messege_id FROM usersMessageSinon_read WHERE 
+								messege_id = '".$messege_id."' AND user_id = '".$user_id."'";
+			$read_res =  mysql_db_query(DB , $read_sql );
+			$read_data = mysql_fetch_array($read_res);
+			if($read_data['messege_id'] == ""){
+				$insert_sql = "INSERT INTO usersMessageSinon_read (messege_id,user_id) VALUES($messege_id,$user_id)";
+				$insert_res =  mysql_db_query(DB,$insert_sql);
+			}
 		}
 		
 		public function billing_list($fulltext=true){
-            //todo...
-            return true;
+			
+			$bill_str = "";
+			$user = User::getLogedInUser();
+			$unk = $user['unk'];
+			$sql = "select have_homepage,have_topmenu,max_free_text,have_ecom,have_users_auth,have_event_board from users where unk = '".$unk."' and deleted = '0'";
+			$res = mysql_db_query(DB,$sql);
+			$data_settings = mysql_fetch_array($res);
+			
+			$sql_extra_settings = "select agreement_10service_site,agreement_10service_products,belongTo10service from user_extra_settings where unk = '".$unk."'";
+			$res_extra_settings = mysql_db_query(DB,$sql_extra_settings);
+			$data_extra_settings = mysql_fetch_array($res_extra_settings);
+			
+			
+				
+
+				$sql = "SELECT end_date FROM users WHERE deleted=0 AND status=0 AND unk = '".$unk."'";
+				$usersRes = mysql_db_query(DB,$sql);
+				$dataUser_expire = mysql_fetch_array($usersRes);
+				
+				$ex_end = explode("-" , $dataUser_expire['end_date'] );
+				
+				$DateDiffAry = $this->GetDateDifference(date('m').'/'.date('d').'/'.date('Y') , $ex_end[1].'/'.$ex_end[2].'/'.$ex_end[0] ); 
+				
+				
+				$sql = "SELECT hostPriceMon,domainPrice,domainEndDate FROM user_bookkeeping WHERE unk = '".$unk."'";
+				$res = mysql_db_query(DB, $sql);
+				$dataPrice = mysql_fetch_array($res);
+				
+				$ex_endDOMAIN = explode("-" , $dataPrice['domainEndDate'] );
+				
+				$DateDiffAry_domain = $this->GetDateDifference(date('m').'/'.date('d').'/'.date('Y') , $ex_endDOMAIN[1].'/'.$ex_endDOMAIN[2].'/'.$ex_endDOMAIN[0] ); 
+				
+				
+				if( $DateDiffAry['DaysSince'] <= 30 && $DateDiffAry['DaysSince'] > -30 && $dataPrice['hostPriceMon'] > 0 )
+				{
+
+					
+				
+											
+					$month = $dataPrice['hostPriceMon'];
+					$totalYear_whitoutMAAM = $dataPrice['hostPriceMon']*12;
+					$maam = (MAAM*$totalYear_whitoutMAAM)/100;
+					$totalYear = $totalYear_whitoutMAAM + $maam;
+					//$nikoiMas = ( $totalYear_whitoutMAAM + $maam ) * 0.02 ;
+					//$totalYear_NEW = $totalYear - $nikoiMas;
+					$bill_str.= "<hr style='border-top-color: #6b6b96;'/>";
+					$bill_str.= "<div class='billing-list-item'>
+						בעוד <b dir=ltr>".round($DateDiffAry['DaysSince'])."</b> ימים יפוג תוקף האתר.<br>
+						<br>
+						כדי שהמערכת האוטומטית לא תוריד את אתרך מהאינטרנט בתאריך הנ\"ל  יש לבצע תשלום <br>
+						 <br>
+						פירוט תשלום :<br>
+						 <br>
+						עלות אחסון חודשית ".myround($month)." ₪ + מע\"מ <br>
+						סה\"כ תשלום <b>".myround($totalYear)." ₪</b> כולל מע\"מ<br>
+						 <br>
+						 <br>
+						ניתן לחדש את אחסון האתר באחת מהדרכים הבאות  :
+						<ol>
+
+						
+						<li>באמצעות כרטיס אשראי, עד 12 תשלומים ללא רבית והצמדה, <a href='index.php?main=payWithCC&payToType=1&unk=".$unk."&sesid=".SESID."' class='maintext' style='color: blue;'><b>לחץ כאן לטופס סליקה</b></a> <b>*</b> &nbsp;&nbsp; <a href='index.php?main=payWithCC&payToType=1&unk=".UNK."&sesid=".SESID."'><img src='style/image/paypage_61.gif' border=0></a></li>
+						<li>צ'ק לכתובת : פארק אופיר 50, באר שבע , מיקוד : 84887 </li>
+						<li>הפקדה לחשבון בנק ע\"ש איי. אל. ביז קידום עסקים באינטרנט בע\"מ, בנק הפועלים, סניף 160 , מספר חשבון 71732</li>
+						</ol>
+						<b>* לאחר התשלום ישלח לאימייל שיצויין בטופס, חשבונית מס קבלה מקורית עם חתימה דגיטלית</b><br><br>
+
+						אם שולם באמצעות הפקדת כסף לחשבון הבנק או לחילופין נשלח צ'ק, נא להודיע באמצעות שליחת פנייה 
+						לטלפון 055-6810101
+						<br><br>
+						<b>*** עלות החזרת אתר שהורד על ידי המערכת האוטומטית מהאינטרנט  – 250 ₪ + מע\"מ</b>
+					</div>";
+
+				}
+				
+				if( $DateDiffAry_domain['DaysSince'] <= 30 && $DateDiffAry_domain['DaysSince'] > -30 && $dataPrice['domainPrice'] > 0){
+
+					$maam = (MAAM*$dataPrice['domainPrice'])/100;
+					$domainYear = $dataPrice['domainPrice'] + $maam;
+					
+					//$nikoiMas = ( $domainYear ) * 0.02 ;
+					//$domainYear_NEW = $domainYear - $nikoiMas;
+					
+
+						
+					$bill_str.= "<hr style='border-top-color: #6b6b96;'/>";
+					$bill_str.= "<div class='billing-list-item'>
+						בעוד <b dir=ltr>".round($DateDiffAry_domain['DaysSince'])."</b> ימים יפוג תוקף הדומיין.<br>
+						<br>
+						פירוט תשלום :<br>
+						 <br>
+						עלות דומיין כולל מע\"מ <b>".myround($domainYear)." ₪</b> לשנה
+						 <br>
+						 <br>
+						ניתן לחדש את הדומיין באחת מהדרכים הבאות :
+						<ol>
+						
+						<li>באמצעות כרטיס אשראי, עד 12 תשלומים ללא רבית והצמדה, <a href='index.php?main=payWithCC&payToType=2&unk=".$unk."&sesid=".SESID."' class='maintext' style='color: blue;'><b>לחץ כאן לטופס סליקה</b></a> <b>*</b> &nbsp;&nbsp; <a href='index.php?main=payWithCC&payToType=2&unk=".$unk."&sesid=".SESID."'><img src='style/image/paypage_61.gif' border=0></a></li>
+						<li>צ'ק לכתובת : פארק אופיר 50, באר שבע , מיקוד : 84887 </li>
+						<li>הפקדה לחשבון בנק ע\"ש איי. אל. ביז קידום עסקים באינטרנט בע\"מ, בנק הפועלים, סניף 160 , מספר חשבון 71732</li>
+						</ol>
+						אם שולם באמצעות הפקדת כסף לחשבון הבנק או לחילופין נשלח צ'ק, נא להודיע באמצעות שליחת פנייה 
+						לטלפון 055-6810101
+						<br><br>
+						<b>* לאחר התשלום ישלח לאימייל שיצויין בטופס, חשבונית מס קבלה מקורית עם חתימה דגיטלית</b><br>
+					</div>";
+																				
+				}
+
+
 			$sql_Fee = "SELECT lf.*, DATE_FORMAT(lf.until_date,'%d-%m-%Y') as untilDate , pay.payGood FROM ilbiz_launch_fee AS lf LEFT JOIN ilbizPayByCCLog as pay ON lf.order_id = pay.id WHERE unk = '".$unk."' AND deleted=0 ORDER BY lf.id DESC";
 			$res_Fee = mysql_db_query(DB,$sql_Fee);
 			$num = mysql_num_rows($res_Fee);
@@ -160,9 +350,68 @@
 				}
 			}
 		}
+		public function GetDateDifference($StartDateString=NULL, $EndDateString=NULL) { 
+		  $ReturnArray = array(); 
+		  
+		  $SDSplit = explode('/',$StartDateString); 
+		  $StartDate = mktime(0,0,0,$SDSplit[0],$SDSplit[1],$SDSplit[2]); 
+		  
+		  $EDSplit = explode('/',$EndDateString); 
+		  $EndDate = mktime(0,0,0,$EDSplit[0],$EDSplit[1],$EDSplit[2]); 
+		  
+		  $DateDifference = $EndDate-$StartDate; 
+		  
+		  $ReturnArray['YearsSince'] = $DateDifference/60/60/24/365; 
+		  $ReturnArray['MonthsSince'] = $DateDifference/60/60/24/365*12; 
+		  $ReturnArray['DaysSince'] = $DateDifference/60/60/24; 
+		  $ReturnArray['HoursSince'] = $DateDifference/60/60; 
+		  $ReturnArray['MinutesSince'] = $DateDifference/60; 
+		  $ReturnArray['SecondsSince'] = $DateDifference; 
 
+		  $y1 = date("Y", $StartDate); 
+		  $m1 = date("m", $StartDate); 
+		  $d1 = date("d", $StartDate); 
+		  $y2 = date("Y", $EndDate); 
+		  $m2 = date("m", $EndDate); 
+		  $d2 = date("d", $EndDate); 
+		  
+		  $diff = ''; 
+		  $diff2 = ''; 
+		  if (($EndDate - $StartDate)<=0) { 
+			  // Start date is before or equal to end date! 
+			  $diff = "0 days"; 
+			  $diff2 = "Days: 0"; 
+		  } else { 
+
+			  $y = $y2 - $y1; 
+			  $m = $m2 - $m1; 
+			  $d = $d2 - $d1; 
+			  $daysInMonth = date("t",$StartDate); 
+			  if ($d<0) {$m--;$d=$daysInMonth+$d;} 
+			  if ($m<0) {$y--;$m=12+$m;} 
+			  $daysInMonth = date("t",$m2); 
+			  
+			  // Nicestring ("1 year, 1 month, and 5 days") 
+			  if ($y>0) $diff .= $y==1 ? "1 year" : "$y years"; 
+			  if ($y>0 && $m>0) $diff .= ", "; 
+			  if ($m>0) $diff .= $m==1? "1 month" : "$m months"; 
+			  if (($m>0||$y>0) && $d>0) $diff .= ", and "; 
+			  if ($d>0) $diff .= $d==1 ? "1 day" : "$d days"; 
+			  
+			  // Nicestring 2 ("Years: 1, Months: 1, Days: 1") 
+			  if ($y>0) $diff2 .= $y==1 ? "Years: 1" : "Years: $y"; 
+			  if ($y>0 && $m>0) $diff2 .= ", "; 
+			  if ($m>0) $diff2 .= $m==1? "Months: 1" : "Months: $m"; 
+			  if (($m>0||$y>0) && $d>0) $diff2 .= ", "; 
+			  if ($d>0) $diff2 .= $d==1 ? "Days: 1" : "Days: $d"; 
+			  
+		  } 
+		  $ReturnArray['NiceString'] = $diff; 
+		  $ReturnArray['NiceString2'] = $diff2; 
+		  return $ReturnArray; 
+		}
 		public function payment_list(){
-			$user = Users::get_loged_in_user();
+			$user = User::getLogedInUser();
 			$unk = $user['unk'];
 			$sql = "SELECT id FROM users WHERE unk = '".$unk."' ";
 			$res = mysql_db_query(DB,$sql);
@@ -198,7 +447,7 @@
 		}
 		
 		public function payment_heshbonit(){
-			$user = Users::get_loged_in_user();
+			$user = User::getLogedInUser();
 			$unk = $user['unk'];		
 			global $word;
 			$sql = "SELECT id FROM users WHERE unk = '".$unk."' ";

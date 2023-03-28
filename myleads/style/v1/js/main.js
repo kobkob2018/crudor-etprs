@@ -138,7 +138,7 @@ function moreDate(id1)
 	document.getElementById("line_"+id1).style.display=(obj?"":"none");
 	jQuery(function($){
 		//begin_ajax_call_view();
-		var url = "notifications/mark_as_read/?messege_id="+id1;
+		var url = "notifications/mark_as_read/?message_id="+id1;
 		$.ajax({
 		  url: url,
 		});

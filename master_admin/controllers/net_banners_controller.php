@@ -17,7 +17,7 @@
         $payload = array(
             'order_by'=>'label'
         );
-        $net_banners = Net_banners::get_list($filter_arr,"*", 'id, insert_date , label, active, views, clicks, convertions ');
+        $net_banners = Net_banners::get_list($filter_arr,"*");
         $fields_collection = Net_banners::setup_field_collection();
         $active_strings = array();
         foreach($fields_collection['active']['options'] as $option){
