@@ -2,7 +2,7 @@
   class MediaController extends CrudController{
 
     public function upload(){
-        $accepted_origins = array("http://usites.com");
+        $accepted_origins = array("http://".$_SERVER['HTTP_HOST'],"https://".$_SERVER['HTTP_HOST']);
 
         if (isset($_SERVER['HTTP_ORIGIN'])) {
             // same-origin requests won't set an origin. If the origin is set, it must be valid.

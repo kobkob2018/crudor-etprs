@@ -19,9 +19,9 @@ function init_tinymce(selector_identifier,media_uploader_url, media_library_url)
     global_media_library_url = media_library_url;
     tinymce.init({
         selector: selector_identifier,
-        plugins: 'image code link lists codesample advlist autosave emoticons fullscreen help hr insertdatetime nonbreaking paste preview print searchreplace table' ,
+        plugins: 'image code link lists codesample advlist autosave emoticons fullscreen help insertdatetime nonbreaking preview searchreplace table' ,
         toolbar: ['undo redo | image code link hr insertdatetime | numlist bullist table',
-            'bold italic underline blocks | forecolor backcolor fontsize fontfamily styles | restoredraft paste preview print | nonbreaking codesample emoticons | fullscreen help'],
+            'bold italic underline blocks | forecolor backcolor fontsize fontfamily styles | restoredraft preview | nonbreaking codesample emoticons | fullscreen help'],
         contextmenu: "link image inserttable | cell row column deletetable",
         directionality : "rtl",
         insertdatetime_dateformat: "%Y-%m-%d",
