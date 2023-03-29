@@ -6,7 +6,7 @@ a{
     color: <?= $info['colors']['a-color'] ?>;
 }
 
-.top-fix{
+.top-fix, a.biz-form-door-button-a{
     background: <?= $info['colors']['top-fix-bg'] ?>;
     color: <?= $info['colors']['top-fix-color'] ?>;
 }
@@ -18,6 +18,8 @@ a{
 .top-fix a:hover{
     color: <?= $info['colors']['top-fix-link-hover'] ?>;
 }
+
+
 
 .header-mid{
     background: <?= $info['colors']['header-mid-bg'] ?>;

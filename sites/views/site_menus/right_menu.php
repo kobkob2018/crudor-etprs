@@ -1,4 +1,4 @@
-<ul class="item-group right-menu">
+<ul id="right_menu" class="item-group right-menu">
     
     <?php if($this->data['right_menu_items']['root_items']): ?>
         <?php foreach($this->data['right_menu_items']['root_items'] as $menu_item): ?>

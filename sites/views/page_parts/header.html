@@ -1,0 +1,36 @@
+<div class="header page-fixed-top top-fix">
+    <div id="" class="thin-only fix-top-right">
+        <a class="top-menu-door top-fa"  href="javascript://" onclick="toggleDrawer('top_menu_drawer')"><i class="fa fa-bars"></i></a>
+    </div>
+    <div id="logo_wrap" class="wide-fix-top-right">
+        
+        {{% mod | site_header | logo_img %}}
+    </div>
+    <div id="top_menu_drawer_wrap" class="fix-top-center top-menu-drawer">
+        <div id="top_menu_wrap" class="top-box">
+            {{% mod | site_menus | top_menu %}}
+        </div>
+    </div>
+    <div id="accessebility_and_phone" class="fix-top-left">
+        <span class="{{cat_phone_display}} cat_phone">
+           
+           <span class="thin-only">
+               <a class="service-phone-link" href="tel:{{cat_phone}}">
+                   <i class="fa fa-phone"></i>
+               </a>
+               
+           </span>
+           <span class="wide-only">
+               {{cat_phone}} <i class="fa fa-phone"></i>
+           </span> 
+           <span class="cat-phone-gap"> | </span>
+       </span>  
+        <a class="accessibility-door top-fa"  href="javascript://" onclick="openDrawer('accessibility')"><i class="fa fa-wheelchair"></i></a>
+        
+    
+    </div>
+    <div class="clear"></div>
+    <div class="thin-only biz-form-door-button-wrap">
+        <a class="biz-form-door-button-a"  href="javascript://" onclick="openbizForm()">להצעת מחיר לחצו כאן</a>
+    </div>	
+</div>

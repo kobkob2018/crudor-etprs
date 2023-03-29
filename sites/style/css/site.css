@@ -16,14 +16,14 @@ textarea, input { outline: none; }
     clear:both;
 }
 
-@media only screen and (min-width: 800px) {
-    .mobile-only{
+@media only screen and (min-width: 890px) {
+    .mobile-only, .thin-only{
         display: none;
     }
 }
 
-@media only screen and (max-width: 800px) {
-    .desktop-only{
+@media only screen and (max-width: 890px) {
+    .desktop-only, .wide-only{
         display: none;
     }
 }
@@ -57,9 +57,25 @@ textarea, input { outline: none; }
     margin-left: 10px;
 }
 
-.accessibility-door{
+.fix-top-right{
+    margin-left:auto;
+    margin-right: 10px;
+}
+
+.cat-phone-gap{
+    font-size: 30px;
+}
+.service-phone-link .fa{
+    font-size: 20px;
+    width: 24px;
+}
+.top-fa{
     font-size: 28px;
     font-weight: normal;
+}
+
+.top-fa .fa{
+    width:26px;
 }
 
 .footer{
@@ -107,84 +123,205 @@ textarea, input { outline: none; }
     align-items: center;
 }
 
-#page_middle{
-    display: flex;
-    margin: 0px 20px;
-    margin-top:100px;
+
+@media only screen and (min-width: 890px) {
+    .wide-fix-top-right{
+        margin-left:auto;
+        margin-right: 10px;
+    }
+
+    #top_menu_wrap{
+        display: flex;
+        align-items: center;
+    }
+    #top_menu_wrap ul.top-menu{
+        display: flex;
+    }
+    .top-menu .bar-item{
+        display: flex;
+        align-items: center;
+    }
+    .top-menu .bar-item .main-spn{
+        display:block;
+        border-right: 1px solid white;
+        font-size: 18px;
+        padding: 3px 8px;
+    }
+
+    .top-menu ul.sub-menu{
+        display: none;
+        position: fixed;
+        background: white;
+        border: 1px solid #11110e;
+        width: 84%;
+        right: 9%;
+        top: 72px;
+        padding: 10px;
+    }
+    .top-menu .fa-chevron-down{
+        font-size: 1.3em;
+    }
+    
+    .top-menu li.active-sub ul.sub-menu{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    
+    .top-menu ul.sub-menu .sub-item a{
+        margin: 0px;
+        padding: 10px;
+        width: 130px;
+        text-align: center;
+        display: block;
+        font-weight: bold;
+        color: black;
+        min-height: 70px;
+    }
+
+    #page_middle{
+        display: flex;
+        margin: 0px 20px;
+        margin-top:100px;
+    }
+    
+    
+    
+    #right_bar_wrap{
+        max-width: 18%;
+        overflow: hidden;
+        width:275px;
+    }
+    
+    #center_bar_wrap{
+        flex-shrink: 6;
+        flex-grow:1;
+        margin-right: 2.3%;
+        margin-left: 2.3%;
+    }
+    
+    #left_bar_wrap{
+        max-width: 25%;
+        width:440px;
+    }
 }
 
 
+@media only screen and (max-width: 890px) {
 
-#right_bar_wrap{
-    max-width: 18%;
-    overflow: hidden;
-    width:275px;
+    .top-menu-drawer{
+        transition: 0.5s;
+        position: fixed;
+        top: 60px;
+        background: inherit;
+        right: 0px;
+        max-height: 80vh;
+        overflow: auto;
+        right: -400px;
+        border: 1px solid;
+        z-index: 3;
+    }
+
+    .top-menu-drawer .right-menu{
+        padding: 0px 20px 10px;
+    }
+
+    #top_menu_wrap{
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 20px;
+        width: 250px;
+    }
+
+    .top-menu .bar-item, .top-menu .sub-item{
+        font-size: 18px;
+        padding-top: 7px;
+    }
+    .top-menu ul.sub-menu{
+        display: none;
+        padding-right: 10px;
+    }
+
+    .top-menu li.active-sub ul.sub-menu{
+        display: block;
+    }
+
+    #logo_wrap img{
+        max-height: 50px;
+    }
+
+    #page_middle{
+        margin: 0px 20px;
+        margin-top:130px;
+        display: flex;
+        flex-direction: column;
+    }
+    #page_middle #right_bar_wrap{
+        order: 3;
+    }
+    #page_middle #center_bar_wrap{
+        order:-1;
+    }
+    #page_middle #left_bar_wrap{
+        order: 1;
+    }
+
+    .biz-form-door-button-wrap{
+        position: fixed;       
+        top: 69px;
+        right: 0px;
+        left: 0px;
+        background: white;
+        border-bottom:10px solid white;
+    }
+    a.biz-form-door-button-a{
+        
+        text-align: center;
+        padding: 9px;
+        margin-top: 4px;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        margin-right: 10px;
+        margin-left: 10px;
+        box-sizing: border-box;
+        display: block;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .biz-form-door-button-wrap::before{
+        display: block;
+        content: "*";
+        background: white;
+        width: 19px;
+        height: 30px;
+        border-top-left-radius: 18px;
+        float: right;
+        margin-top: 9px;
+    }
+
+    .biz-form-door-button-wrap::after{
+        display: block;
+        content: "*";
+        background: white;
+        width: 19px;
+        height: 30px;
+        border-top-right-radius: 18px;
+        float: left;
+        margin-top: 9px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        font-size: 0px;
+    }
 }
 
-#center_bar_wrap{
-    flex-shrink: 6;
-    flex-grow:1;
-    margin-right: 2.3%;
-    margin-left: 2.3%;
+
+.title-wrap{
+    margin-bottom: 20px;
 }
 
-#left_bar_wrap{
-    max-width: 25%;
-    width:440px;
-}
 
-#top_menu_wrap{
-    display: flex;
-    align-items: center;
-}
-
-#top_menu_wrap ul.top-menu{
-    display: flex;
-}
-
-.top-menu .bar-item{
-    display: flex;
-    align-items: center;
-}
-
-.top-menu .bar-item .main-spn{
-    display:block;
-    border-right: 1px solid white;
-    font-size: 18px;
-    padding: 3px 8px;
-}
-
-.top-menu ul.sub-menu{
-    display: none;
-    position: fixed;
-    background: white;
-    border: 1px solid #11110e;
-    width: 84%;
-    right: 9%;
-    top: 72px;
-    padding: 10px;
-}
-
-.top-menu .fa-chevron-down{
-    font-size: 1.3em;
-}
-
-.top-menu li.active-sub ul.sub-menu{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-.top-menu ul.sub-menu .sub-item a{
-    margin: 0px;
-    padding: 10px;
-    width: 130px;
-    text-align: center;
-    display: block;
-    font-weight: bold;
-    color: black;
-    min-height: 70px;
-}
 
 .top-search button {
     all: unset;

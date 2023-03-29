@@ -33,7 +33,16 @@
 
 .fa-phone::before {
       content: "\f095"; }
-      
+
+.fa-burger::before {
+  content: "\f805"; }
+
+.fa-hamburger::before {
+  content: "\f805"; }
+
+  .fa-bars::before {
+    content: "\f0c9"; }
+
   @font-face {
     font-family: 'faFont';
     font-display: block;

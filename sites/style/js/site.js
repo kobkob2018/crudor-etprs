@@ -34,6 +34,29 @@ function close_all_top_submenus(){
 }
 
 
+function toggleDrawer(drawerId){
+    let drawer = document.getElementById(drawerId + "_wrap");
+    if(!drawer.classList.contains('opened')){
+        if(!drawer.classList.contains('right-menu-added')){
+            drawer.classList.add('right-menu-added');
+            let right_menu = document.getElementById("right_menu");
+            drawer.append(right_menu);
+        }
+        drawer.classList.add('opened');
+        drawer.classList.remove('closed');
+        //drawer.style.width = "250px";
+        drawer.style.right = "0px";
+       // drawer.style.display = "block";
+    }
+    else{
+        drawer.classList.remove('opened');
+        drawer.classList.add('closed');
+       // drawer.style.width = "0";
+        drawer.style.right = "-400px";
+       // drawer.style.display = "none";
+    }
+}
+
 function openDrawer(drawerId) {
     
     document.getElementById(drawerId + "_wrap").style.width = "300px";
