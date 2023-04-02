@@ -273,7 +273,7 @@ h4{
 }
 
 .content-block{    
-    margin-bottom: 25px;
+    margin-bottom: 0px;
 
 }
 
@@ -293,6 +293,17 @@ h4{
 .block-buttons{
     display: flex;
     justify-content: space-between;
+    font-size: 20px;
+    padding: 8px 37px;
+
+}
+
+.content-block .block-label, .content-block .block-buttons{
+    visibility: hidden;
+}
+
+.content-block:hover .block-buttons, .content-block:hover .block-label{
+    visibility: inherit;
 }
 
 .form-group select, .form-group input, .form-group textarea{

@@ -86,6 +86,13 @@
     }
 
     public static function send_email($email_to, $email_title,$email_content){
+      require_once('a_core/helpers/smtp_handler.php');
+      $email_sender = get_config('email_sender'); 
+      $email_sender_name = get_config('email_sender_name'); 
+      send_email_with_smtp($email_sender,$email_sender_name,$email_to,$email_title,$email_content);      
+    }
+
+    public static function send_email_dev($email_to, $email_title,$email_content){
       $email_sender = get_config('email_sender'); 
       $email_sender_name = get_config('email_sender_name');
       // Set content-type header for sending HTML email 
@@ -97,6 +104,7 @@
       mail($email_to,$email_title,$email_content,$headers);
       
     }
+
 
   }
 ?>

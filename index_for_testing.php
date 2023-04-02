@@ -1,3 +1,12 @@
 <?php 
-print("Hi, how are you?, You are now in this website: ".$_SERVER['HTTP_HOST']);
+
+
+send_email_test();
+exit("ok");
+
+
+function send_email_test(){
+    require_once('a_core/helpers/smtp_handler.php');
+    send_email_with_smtp();
+}
 ?>
