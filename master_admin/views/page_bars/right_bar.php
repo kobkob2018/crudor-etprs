@@ -25,6 +25,12 @@
         <?php endif; ?>
                 
         <?php if($view->user_is('master_admin')): ?>
+            <li class="bar-item <?= $view->a_class("global_settings/edit/") ?>">
+                <a href="<?= inner_url('global_settings/edit/') ?>" title="הגדרות כלליות" class="a-link">הגדרות כלליות</a>
+            </li> 
+
+
+
             <li class="bar-item <?= $view->a_c_class("cities") ?>">
                 <a href="<?= inner_url('cities/list/') ?>" title="ניהול ערים ואזורים" class="a-link">ניהול ערים ואזורים</a>
             </li> 
