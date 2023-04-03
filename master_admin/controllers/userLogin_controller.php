@@ -165,13 +165,8 @@
 
 	protected function send_login_sms_code($user_phone, $sms_code){
 		$this->data['sms_login_code'] = $sms_code;
-		//todo: send sms. this small task includes menny sicrets:
-		/*  - prepare content,(will be good also for emails)
-			- wrap content with another include, 
-			- go to global functions for sms sending
-		*/
-		// currently send via email
-		mail('johndo@gmail.com','sms code for login','the code is:'.$sms_code." and tour phone is: ".$user_phone);
+		$msg = $this->include_ob_view('sms/login_sms.php');
+		Helper::send_sms($user_phone,$msg);
 	}
 
 

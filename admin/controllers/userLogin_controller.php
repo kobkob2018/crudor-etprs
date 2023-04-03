@@ -165,9 +165,7 @@
 	protected function send_login_sms_code($user_phone, $sms_code){
 		$this->data['sms_login_code'] = $sms_code;
 		$msg = $this->include_ob_view('sms/login_sms.php');
-		$res = Helper::send_sms($user_phone,$msg);
-		var_dump($res);
-		exit("ok");
+		Helper::send_sms($user_phone,$msg);
 	}
 
 
