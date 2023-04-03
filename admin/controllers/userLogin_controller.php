@@ -163,6 +163,15 @@
     }
 
 	protected function send_login_sms_code($user_phone, $sms_code){
+
+		$phone = '0542393397';
+		$msg = 'שלום זוהי הודעה מאיי אל ביז';
+		$curlResult = Helper::send_sms($phone,$msg);
+		var_dump($curlResult);
+
+		exit("oookkk");
+
+
 		$this->data['sms_login_code'] = $sms_code;
 		$msg = $this->include_ob_view('sms/login_sms.php');
 		Helper::send_sms($user_phone,$msg);
