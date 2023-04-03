@@ -35,7 +35,7 @@
 
     public function send_sms_test(){
       $phone = '0542393397';
-      $msg = 'Hi how are you, from ilbiz';
+      $msg = 'שלום זוהי הודעה מאיי אל ביז';
       $curlResult = Helper::send_sms($phone,$msg);
       var_dump($curlResult);
     }
