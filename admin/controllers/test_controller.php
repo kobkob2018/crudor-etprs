@@ -33,5 +33,11 @@
 
     }
 
+    public function send_sms_test(){
+      $phone = '0542393397';
+      $msg = 'Hi how are you, from ilbiz';
+      Helper::send_sms($phone,$msg);
+    }
+
   }
 ?>
