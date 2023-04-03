@@ -165,7 +165,7 @@
 	protected function send_login_sms_code($user_phone, $sms_code){
 
 		$phone = '0542393397';
-		$msg = 'שלום זוהי הודעה מאיי אל ביז';
+		$msg = 'שלום זוהי  אל ביז';
 		$curlResult = Helper::send_sms($phone,$msg);
 		var_dump($curlResult);
 
