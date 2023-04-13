@@ -48,7 +48,7 @@
             //after pay with form(not token), add token data
             $result['L4digit'] = rand(1111,9999);
 
-            $return_url = "http://mylove.com/myleads/yaad_return/$return_method/?";
+            $return_url = get_config('base_url')."/myleads/yaad_return/$return_method/?";
             $return_url .= $this->create_url_params($result);
             $this->redirect_to($return_url);
         }
