@@ -150,6 +150,7 @@
     }
 
     protected function create_item($fixed_values){
+        $fixed_values['sender_id'] = $this->user['id'];
         return Net_messages::create($fixed_values);
     }
   }
