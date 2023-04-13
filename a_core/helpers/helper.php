@@ -86,6 +86,9 @@
     }
 
     public static function send_email($email_to, $email_title,$email_content){
+      if(get_config('mode') == 'dev'){
+        return self::send_email_dev($email_to, $email_title,$email_content);
+      }
       require_once('a_core/helpers/smtp_handler.php');
       $email_sender = get_config('email_sender'); 
       $email_sender_name = get_config('email_sender_name'); 

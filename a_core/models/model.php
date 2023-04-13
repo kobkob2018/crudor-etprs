@@ -49,7 +49,6 @@
           $fields_values_sql_arr[] = " :$key";
           $execute_arr[$key] = $value;
       }
-      
       $fields_keys_sql = implode(",",$fields_keys_sql_arr);
       $fields_values_sql = implode(",",$fields_values_sql_arr);
       $sql = "INSERT INTO $table_name ($fields_keys_sql) VALUES($fields_values_sql)";

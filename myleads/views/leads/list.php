@@ -158,7 +158,7 @@
 
 							  <div class="dropdown-menu lead_credits_dropdown" aria-labelledby="dropdownMenuLink">
 								<h5>יתרת לידים: {{user.lead_credit}}</h5>
-								<a class="dropdown-item" href="credits/buyLeads/">לחץ כאן לרכישה</a>
+								<a class="dropdown-item" href="credits/buy_leads/">לחץ כאן לרכישה</a>
 							  </div>
 							</div>	
 							<a href="javascript://" ng-click="update_filter();" id="refresh_button" class="leads-header-link"></a>
@@ -323,7 +323,7 @@
 											<h4>לא נותרו לך לידים לפתיחה<br/><span class="lead-name-holder"></span></h4>
 										</div>
 										<div class='lead_form_btn form-group'>
-											<a href="credits/buyLeads/">
+											<a href="credits/buy_leads/">
 												<button type="button" class="form-button">לחץ כאן לרכישת לידים</button>
 											</a>
 										</div>		

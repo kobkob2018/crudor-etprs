@@ -125,6 +125,13 @@
 
     }
 
+    public static function add_credits_to_user($user_id,$add_credits){
+
+        $db = Db::getInstance();
+        $req = $db->prepare("UPDATE user_lead_settings SET lead_credit = lead_credit + $add_credits WHERE user_id = :user_id");
+        $req->execute(array('user_id'=>$user_id));
+    }
+
     protected static function add_cat_to_flatten_options($parent_cat, $flatten_cat_options,$deep = 0){
         $deep++;
         $parent_cat['deep'] = $deep;

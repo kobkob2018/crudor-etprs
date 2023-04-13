@@ -7,9 +7,12 @@
     <h3>ניהול לקוח: <?= $this->data['user_info']['full_name'] ?></h3>
     <div class="item-edit-menu">
         <a href = "<?= inner_url('users/edit/') ?>?row_id=<?= $this->data['user_info']['id'] ?>" class="item-edit-a <?= $view->a_class('users/edit/') ?>">עריכת פרטים</a>
+        |
+        <a href = "<?= inner_url('user_lounch_fee/list/') ?>?user_id=<?= $this->data['user_info']['id'] ?>" class="item-edit-a <?= $view->a_c_class('user_lounch_fee') ?>">שיגורי תשלום</a>
         | 
         <a href = "<?= inner_url('user_lead_settings/list/') ?>?user_id=<?= $this->data['user_info']['id'] ?>" class="item-edit-a <?= $view->a_c_class('user_lead_settings') ?>">לידים</a>
-       <?php if(isset($this->data['add_leads_menu'])): ?>
+
+        <?php if(isset($this->data['add_leads_menu'])): ?>
             <br/>
             <a href = "<?= inner_url('users/select_cats/') ?>?row_id=<?= $this->data['user_info']['id'] ?>" class="item-edit-a <?= $view->a_class('users/select_cats/') ?>">קטגוריות</a>
             | 

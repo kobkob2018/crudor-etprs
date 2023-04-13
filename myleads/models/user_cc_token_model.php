@@ -1,31 +1,8 @@
 <?php
 
-class User_cc extends TableModel{
+class User_cc_token extends TableModel{
 
-    protected static $main_table = 'userCCToken';
-
-	public static function getCCTokens_data($unk){
-		$user_tokens = false;
-		$user_biz_name = "";
-		$user_full_name = "";
-		$db = Db::getInstance();
-		$sql = "SELECT L4digit,full_name,biz_name FROM userCCToken WHERE unk = :unk";		
-		$req = $db->prepare($sql);
-		$req->execute(array('unk'=>$unk));
-		
-		foreach($req->fetchAll() as $user_token_data) {
-			if(!$user_tokens){
-				$user_tokens = array();
-			}
-			$user_tokens[] = $user_token_data['L4digit'];
-			if($user_token_data['biz_name'] != ""){
-				$user_biz_name = iconv("Windows-1255","UTF-8",$user_token_data['biz_name']);
-				$user_full_name = iconv("Windows-1255","UTF-8",$user_token_data['full_name']);		
-			}
-		}
-		return array('biz_name'=>$user_biz_name,'full_name'=>$user_full_name,'tokens'=>$user_tokens);
-	}
-
+    protected static $main_table = 'user_cc_token';
 
 	public static function getCCToken_data($unk,$token_id){
 		$db = Db::getInstance();

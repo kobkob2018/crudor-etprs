@@ -313,7 +313,17 @@ h4{
 }
 
 .time-selector{
+    
     direction: ltr;
+}
+
+.time-selector select, .day-check-wrap input{
+    width: auto;
+    min-width: auto;
+}
+
+.group-times .time-to{
+    margin-right: 20px;
 }
 
 .hour-groups-template{
@@ -395,4 +405,14 @@ h4{
 
 .a-open .replacable-plus-sign{
     display: none;
+}
+
+
+.user_fee_state_5{
+    background: #ddd;
+    color: #555;
+}
+
+.user_fee_state_1{
+    background: rgb(196, 219, 196);
 }

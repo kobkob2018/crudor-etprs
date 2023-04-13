@@ -25,8 +25,8 @@
 							<h4><?= $this->user['full_name']; ?></h4>
 							<h5><?= $this->user['username']; ?></h5>
 							<ul>
-								<li><a href="<?= inner_url("credits/buyLeads/") ?>">רכישת לידים</a></li>
-								<li><a href="<?= inner_url("notifications/payment_list/") ?>">תשלומים אחרונים</a></li>
+								<li><a href="<?= inner_url("credits/buy_leads/") ?>">רכישת לידים</a></li>
+								<li><a href="<?= inner_url("payments/list/") ?>">תשלומים אחרונים</a></li>
 								<li><a href="<?= inner_url("user/details/") ?>">עדכון פרטים</a></li>
 								<?php if($this->user['have_net_banners']): ?>
 									<li><a href="<?= inner_url("reports/banners/") ?>" ?>">הבאנרים שלי</a></li>

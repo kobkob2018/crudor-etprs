@@ -86,6 +86,12 @@
         'label'=>'כתובת',
         'type'=>'text'
       ),
+
+      'city_name'=>array(
+        'label'=>'שם עיר (לכתובת)',
+        'type'=>'text'
+      ),
+
       'sex'=>array(
         'label'=>'מין',
         'type'=>'select',

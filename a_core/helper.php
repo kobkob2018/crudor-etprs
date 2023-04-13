@@ -157,9 +157,12 @@ function input_protect($val){
     return $val;
 }
 
-function hebdt($datetime_str){
+function hebdt($datetime_str = null ,$format = 'd-m-Y H:i:s'){
+    if(!$datetime_str){
+        return "";
+    }
 	$date = new DateTime($datetime_str);
-	return $date->format('d-m-Y H:i:s');
+    return $date->format($format);
 }
 
 function system_path($file_path){
