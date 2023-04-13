@@ -32,9 +32,9 @@
                     <img src="<?= $this->file_master_url_of('cube_image', $cube['cube_image']) ?>" alt="<?= $cube['label'] ?>" />
                 <?php else: ?>
                     <?php if($cube['status'] == '2'): ?>
-                        <img src="<?= $this->file_master_url_of('cube_amin', 'amin1.png') ?>" alt="נמצא אמין" />
+                        <img src="<?= styles_url('amin1.png') ?>" alt="נמצא אמין" />
                     <?php else: ?>
-                        <img src="<?= $this->file_master_url_of('cube_amin', 'amin2.png') ?>" alt="חדש בבדיקה" />
+                        <img src="<?= styles_url('amin2.png') ?>" alt="חדש בבדיקה" />
                     <?php endif; ?>
                 <?php endif; ?>
             </div>
