@@ -288,7 +288,7 @@
 		}
 		
 		$filter_sql .= $deleted_filter_sql;
-		$pending_qry = " AND ((ul.send_state != '0' OR ul.send_state IS NULL) OR (ul.view_time != '' AND ul.view_time IS NOT NULL)) ";		
+		$pending_qry = " AND ((ul.send_state != '0' OR ul.send_state IS NULL) OR (ul.view_time IS NOT NULL)) ";		
 		$list = array();
 		$db = Db::getInstance();
 
