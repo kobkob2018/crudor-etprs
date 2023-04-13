@@ -98,13 +98,14 @@
         'options'=>array(
             array('value'=>'1', 'title'=>'זכר'),
             array('value'=>'2', 'title'=>'נקבה')
-        )
+        ),
+        'validation'=>'required'
       ),
 
       'birth_date'=>array(
         'label'=>'תאריך לידה',
         'type'=>'date',
-        'validation'=>'date'
+        'validation'=>'required date'
       ),
 
     );  
