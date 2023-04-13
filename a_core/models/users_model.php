@@ -105,7 +105,7 @@
       'birth_date'=>array(
         'label'=>'תאריך לידה',
         'type'=>'date',
-        'validation'=>'required date'
+        'validation'=>'required, date'
       ),
 
     );  
