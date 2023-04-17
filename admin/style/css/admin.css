@@ -155,7 +155,7 @@ h4{
 
 .flex-table .col {
     display: table-cell;
-    border: 1px solid grey;
+    border: 1px solid #a7c33e;
     padding: 5px;
 }
   .flex-table .table-th .col{
@@ -187,6 +187,18 @@ h4{
 
 .flex-table .col-small .table-input{
     width: 80px;
+}
+
+.flex-table input, .flex-table select{
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #b6b6ec;
+}
+
+.flex-table input.input-checkbox{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
 }
 
 .delete-item-x{
@@ -414,4 +426,22 @@ h4{
 
 .a-open .replacable-plus-sign{
     display: none;
+}
+
+.filter-menu{
+    display: flex;
+}
+
+.filter-menu a.filter-a-clicker{
+    display: block;
+    padding: 5px 10px;
+}
+
+a.filter-a-clicker.selected{
+    font-weight: bold;
+    color: black;
+}
+
+.filter-form .col{
+    vertical-align: bottom;
 }

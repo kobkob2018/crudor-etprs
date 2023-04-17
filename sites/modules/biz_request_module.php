@@ -73,11 +73,14 @@
                 'banner_id',
                 'aff_id',
                 'referrer',
+                'site_ref',
                 'recivers',
                 'full_name',
                 'phone',                
                 'note',
                 'extra_info',
+                'campaign_type',
+                'campaign_name',
             );
 
             $fixed_db_values = array();

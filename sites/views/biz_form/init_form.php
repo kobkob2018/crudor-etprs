@@ -14,8 +14,10 @@
         <?php else: ?>
             <input type="hidden" name="biz[page_id]" value="-1" />
         <?php endif; ?>
+        
         <input type="hidden" name="biz[form_id]" value="<?= $this->data['biz_form']['id'] ?>" />
         <input type="hidden" name="biz[referrer]" value="<?= current_url() ?>" />
+        <input type="hidden" name="biz[site_ref]" value="<?= $_SERVER['HTTP_HOST'] ?>" />
         <?php if(isset($_REQUEST['test_form'])): ?>
             <div class="test-group form-group">
                 <input type="button" class="tester-button form-input" data-status="pending" value="שליחת בדיקה" />
@@ -26,6 +28,12 @@
         <?php endif; ?>
         <?php if(isset($_GET['aff_id'])): ?>
             <input type="hidden" name="biz[aff_id]" value="<?= $_GET['aff_id'] ?>" />
+        <?php endif; ?>
+        <?php if(isset($_GET['campaign_type'])): ?>
+            <input type="hidden" name="biz[campaign_type]" value="<?= $_GET['campaign_type'] ?>" />
+        <?php endif; ?>
+        <?php if(isset($_GET['campaign_name'])): ?>
+            <input type="hidden" name="biz[campaign_name]" value="<?= $_GET['campaign_name'] ?>" />
         <?php endif; ?>
         <input type="hidden" name="biz[is_moblie]" value="<?= is_mobile()? '1': '0' ?>" />
         <div class="biz-form-placeholder"  data-form_id='<?= $info['biz_form']['id'] ?>' data-cat_id='<?= $info['biz_form']['cat_id'] ?>' data-fetch_url='<?= inner_url("biz_form/fetch/") ?>'>

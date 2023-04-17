@@ -50,6 +50,8 @@
 
             $return_url = get_config('base_url')."/myleads/yaad_return/$return_method/?";
             $return_url .= $this->create_url_params($result);
+            
+            exit("for demo return, go to: ". $return_url);
             $this->redirect_to($return_url);
         }
 

@@ -56,12 +56,19 @@
                 <a href="<?= inner_url('refund_reasons/list/') ?>" title="סיבות זיכוי" class="a-link">סיבות זיכוי</a>
             </li> 
 
-            <li class="bar-item <?= $view->a_class("refund_requests/list/") ?>">
-                <a href="<?= inner_url('refund_requests/list/') ?>" title="בקשות לזיכויים" class="a-link">בקשות לזיכויים</a>
-            </li> 
-
             <li class="bar-item <?= $view->a_class("net_messages/list/") ?>">
                 <a href="<?= inner_url('net_messages/list/') ?>" title="הודעות רשת" class="a-link">הודעות רשת</a>
+            </li> 
+
+            <h4>ניהול לידים</h4>
+            <li class="bar-item <?= $view->a_class('biz_requests/list/') ?>">
+                <a href="<?= inner_url('biz_requests/list/') ?>" title="בקשות להצעת מחיר" class="a-link">בקשות להצעת מחיר</a>
+            </li> 
+            <li class="bar-item <?= $view->a_class("users_leads/list/") ?>">
+                <a href="<?= inner_url('users_leads/list/') ?>" title="לידים ללקוחות שנבחרו" class="a-link">לידים ללקוחות שנבחרו</a>
+            </li> 
+            <li class="bar-item <?= $view->a_class("refund_requests/list/") ?>">
+                <a href="<?= inner_url('refund_requests/list/') ?>" title="בקשות לזיכויים" class="a-link">בקשות לזיכויים</a>
             </li> 
         <?php endif; ?>
 
