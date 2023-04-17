@@ -75,8 +75,9 @@
                 'Amount_paid'=>$_REQUEST['Amount'],
                 'ACode'=>$_REQUEST['ACode']
             );
-            exit("before update");
+            
             Myleads_pay_by_cc_log::update($cc_log['id'],$update_arr);
+            exit("after update");
         }        
 
         protected function add_user_cc_token($cc_log){
