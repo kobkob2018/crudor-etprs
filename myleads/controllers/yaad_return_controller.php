@@ -2,10 +2,12 @@
 //http://mylove.com/myleads/payments/lounch_fee/?row_id=9
 	class Yaad_returnController extends CrudController{
 		public $add_models = array('myleads_lounch_fee','user_cc_token','myleads_pay_by_cc_log');
-		public function ok(){
+		
+        protected $cc_log = null;
+        protected $cc_log_set = false;
+        public function ok(){
             $cc_log = $this->get_cc_log();
-            print_r_help($cc_log);
-            exit();
+
             if(!$cc_log){
                 SystemMessages::add_err_message("אירעה שגיאה בתשלום");
                 return $this->redirect_to(inner_url());
@@ -53,10 +55,16 @@
         }
 
         protected function get_cc_log(){
-            if(!isset($_REQUEST['Order'])){
-                return false;
+            if($this->cc_log_set){
+                return $this->cc_log;
             }
-            return Myleads_pay_by_cc_log::get_by_id($_REQUEST['Order']);
+            $this->cc_log_set = true;
+            if(!isset($_REQUEST['Order'])){
+                return $this->cc_log;
+            }
+            $this->cc_log = Myleads_pay_by_cc_log::get_by_id($_REQUEST['Order']);
+            $this->cc_log_set = true;
+            return $this->cc_log;
         }
 
         protected function update_cc_log_from_request($cc_log,$pay_good = '1'){
@@ -67,6 +75,7 @@
                 'Amount_paid'=>$_REQUEST['Amount'],
                 'ACode'=>$_REQUEST['ACode']
             );
+            exit("before update");
             Myleads_pay_by_cc_log::update($cc_log['id'],$update_arr);
         }        
 
