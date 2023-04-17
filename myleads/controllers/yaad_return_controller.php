@@ -44,6 +44,7 @@
                     'cc_log'=>$cc_log,
                     'success'=>$success
                 );
+                exit("before init");
                 return $this->call_module($cc_log['handle_module'],$cc_log['handle_method'],$action_data);
             }
             if($success == 'ok'){
@@ -77,7 +78,6 @@
             );
             
             Myleads_pay_by_cc_log::update($cc_log['id'],$update_arr);
-            exit("after update");
         }        
 
         protected function add_user_cc_token($cc_log){
