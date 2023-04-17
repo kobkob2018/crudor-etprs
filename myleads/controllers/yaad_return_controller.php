@@ -38,9 +38,9 @@
 		}
 
         protected function init_handler_module($cc_log,$success = 'error'){
-           exit("herreeee");
+           
             if($cc_log['handle_module'] != '' && $cc_log['handle_method'] != ''){
-
+                exit("inside handle_module");
                 $action_data = array(
                     'cc_log'=>$cc_log,
                     'success'=>$success
@@ -48,6 +48,7 @@
                 exit("before init");
                 return $this->call_module($cc_log['handle_module'],$cc_log['handle_method'],$action_data);
             }
+            exit("out handle_module");
             if($success == 'ok'){
               //  SystemMessages::add_success_message($cc_log['details']." - התשלום בוצע בהצלחה");
             }
