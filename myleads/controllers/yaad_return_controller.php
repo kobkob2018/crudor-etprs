@@ -4,6 +4,8 @@
 		public $add_models = array('myleads_lounch_fee','user_cc_token','myleads_pay_by_cc_log');
 		public function ok(){
             $cc_log = $this->get_cc_log();
+            print_r_help($cc_log);
+            exit();
             if(!$cc_log){
                 SystemMessages::add_err_message("אירעה שגיאה בתשלום");
                 return $this->redirect_to(inner_url());
@@ -93,8 +95,8 @@
                 'Fild1'=>$_REQUEST['Fild1'],
                 'Fild2'=>$_REQUEST['Fild2'],
                 'Fild3'=>$_REQUEST['Fild3'],
-                'full_name'=>$_REQUEST['full_name'],
-                'biz_name'=>$_REQUEST['biz_name']
+                'full_name'=>$cc_log['full_name'],
+                'biz_name'=>$cc_log['biz_name']
             );
             return User_cc_token::create($new_token);
         }
