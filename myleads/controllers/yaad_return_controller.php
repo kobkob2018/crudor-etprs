@@ -2,12 +2,8 @@
 //http://mylove.com/myleads/payments/lounch_fee/?row_id=9
 	class Yaad_returnController extends CrudController{
 		public $add_models = array('myleads_lounch_fee','user_cc_token','myleads_pay_by_cc_log');
-		
-        protected $cc_log = null;
-        protected $cc_log_set = false;
-        public function ok(){
+		public function ok(){
             $cc_log = $this->get_cc_log();
-
             if(!$cc_log){
                 SystemMessages::add_err_message("אירעה שגיאה בתשלום");
                 return $this->redirect_to(inner_url());
@@ -15,7 +11,6 @@
             
             $this->update_cc_log_from_request($cc_log,'2');
             $this->add_user_cc_token($cc_log);
-            print_r_help($cc_log);
             
             return $this->init_handler_module($cc_log,'ok');
 			
@@ -40,34 +35,26 @@
         protected function init_handler_module($cc_log,$success = 'error'){
            
             if($cc_log['handle_module'] != '' && $cc_log['handle_method'] != ''){
-                exit("inside handle_module");
+
                 $action_data = array(
                     'cc_log'=>$cc_log,
                     'success'=>$success
                 );
-                exit("before init");
                 return $this->call_module($cc_log['handle_module'],$cc_log['handle_method'],$action_data);
             }
-            exit("out handle_module");
             if($success == 'ok'){
-              //  SystemMessages::add_success_message($cc_log['details']." - התשלום בוצע בהצלחה");
+                SystemMessages::add_success_message($cc_log['details']," - התשלום בוצע בהצלחה");
             }
             else{
-               // SystemMessages::add_err_message($cc_log['details']." - אירעה שגיאה בעת התשלום, אנא נסה שוב.");
+                SystemMessages::add_err_message($cc_log['details']," - אירעה שגיאה בעת התשלום, אנא נסה שוב.");
             }
         }
 
         protected function get_cc_log(){
-            if($this->cc_log_set){
-                return $this->cc_log;
-            }
-            $this->cc_log_set = true;
             if(!isset($_REQUEST['Order'])){
-                return $this->cc_log;
+                return false;
             }
-            $this->cc_log = Myleads_pay_by_cc_log::get_by_id($_REQUEST['Order']);
-            $this->cc_log_set = true;
-            return $this->cc_log;
+            return Myleads_pay_by_cc_log::get_by_id($_REQUEST['Order']);
         }
 
         protected function update_cc_log_from_request($cc_log,$pay_good = '1'){
@@ -78,7 +65,6 @@
                 'Amount_paid'=>$_REQUEST['Amount'],
                 'ACode'=>$_REQUEST['ACode']
             );
-            
             Myleads_pay_by_cc_log::update($cc_log['id'],$update_arr);
         }        
 
