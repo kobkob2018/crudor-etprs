@@ -48,10 +48,10 @@
                 return $this->call_module($cc_log['handle_module'],$cc_log['handle_method'],$action_data);
             }
             if($success == 'ok'){
-                SystemMessages::add_success_message($cc_log['details']," - התשלום בוצע בהצלחה");
+                SystemMessages::add_success_message($cc_log['details']." - התשלום בוצע בהצלחה");
             }
             else{
-                SystemMessages::add_err_message($cc_log['details']," - אירעה שגיאה בעת התשלום, אנא נסה שוב.");
+                SystemMessages::add_err_message($cc_log['details']." - אירעה שגיאה בעת התשלום, אנא נסה שוב.");
             }
         }
 
