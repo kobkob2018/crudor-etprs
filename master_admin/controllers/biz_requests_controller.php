@@ -1,6 +1,6 @@
 <?php
   class Biz_requestsController extends CrudController{
-    public $add_models = array('biz_categories','masterBiz_requests','cities','MasterLeads_complex','masterUser_leads');
+    public $add_models = array('biz_categories','masterBiz_requests','cities','masterLeads_complex','masterUser_leads');
 
     protected $session_filter = false;
 
