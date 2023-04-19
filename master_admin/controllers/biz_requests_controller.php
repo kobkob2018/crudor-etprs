@@ -233,7 +233,7 @@
             $db_lead_info['request_id'] = $biz_request['id'];
             $db_lead_info['billed'] = $billed;
             $db_lead_info['duplicate_id'] = $duplicate_lead ? $duplicate_lead : "";
-            $db_lead_info['send_state'] = '0';
+            $db_lead_info['send_state'] = '1'; //sending immidiatly not pending
             $db_lead_info['resource'] = 'form';
 
             $user_lead_id = MasterUser_leads::add_user_lead($db_lead_info,$user_id);
