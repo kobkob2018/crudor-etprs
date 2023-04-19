@@ -82,5 +82,7 @@
         $fields_collection['until_date']['default'] = self::default_until_date();
         return parent::setup_field_collection($fields_collection);
     }
+
+    
 }
 ?>

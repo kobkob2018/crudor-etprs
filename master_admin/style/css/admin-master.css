@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+body{
+    background: #9d9d6b;
+}
+
 .clear{
     clear:both;
 }
@@ -29,9 +33,12 @@ h4{
 
 .header{
     display: flex;
-    background: #e5e5ec;
+    background: #f5efef;
     padding: 10px;
     align-items: baseline;
+    box-shadow: -4px 9px 5px #8e6464;
+    border-top: 2px solid #5d5d8a;
+    border-bottom: 2px solid #010101;
 }
 
 .header .admin-title{
@@ -47,6 +54,7 @@ h4{
 
 #center_bar_wrap{
     flex-grow:1;
+    margin-right: 30px;
 }
 
 
@@ -58,6 +66,13 @@ h4{
     border-radius: 5px;
     margin: 15px 36px;
     box-shadow: 3px 4px 7px #c19d9d;
+    position: relative;
+    left: 0px;
+    transition: left 0.5s;
+}
+
+.show-off .messages{
+    left: -100vw;
 }
 
 .messages.success-messages{
@@ -75,6 +90,29 @@ h4{
 .messages li{
     list-style: inside;
 }
+
+
+#right_bar_wrap{
+    position: absolute;
+    background: #fae2e2a6;
+    padding-left: 20px;
+    box-shadow: -4px 9px 13px gray;
+    border-radius: 5px;
+    top: 81px;
+    right: -185px;
+    width: 220px;
+    padding-left: 35px;
+    transition: all 0.7s;
+    box-sizing: content-box;
+    z-index: 5;
+}
+
+#right_bar_wrap:hover{
+    right: 0px;
+    background: #f5efef;
+}
+
+
 
 #right_bar{
     padding: 15px 10px 15px 5px;
@@ -113,9 +151,12 @@ h4{
 }
 
 #content_wrap{
-    background: #dcdcf0;
+    background: #e9e9d3;
     padding: 15px;
+    padding-right: 50px;
     margin: 5px;
+    border-radius: 10px;
+    border: 5px solid #778d8d;
 }
 
 .form-group {
@@ -224,7 +265,7 @@ h4{
 
 .focus-box{
     padding: 10px;
-    background: #ffe8e8;
+    background: #f5efef;
     border: 1px solid gray;
     border-radius: 5px;
     box-shadow: 5px 5px 5px #ababab;
@@ -241,10 +282,13 @@ h4{
     background: #fefdf0;
     max-width:300px;
     margin:10px;
+    transition: transform 0.5s;
 }
 
 .button-focus:hover{
     background: #fffafa;
+    transform: scale(1.1);
+    
 }
 
 .go-button, .button-focus{
@@ -263,6 +307,19 @@ h4{
 
 .item-edit-menu{
     text-align: center;
+}
+
+.item-edit-menu a{
+    font-size: 18px;
+    display: inline-block;
+    padding: 10px 2px;
+    transition: all 0.5s;
+    color: blue;
+}
+
+.item-edit-menu a:hover{
+    transform: scale(1.1);
+    color: #121223;
 }
 
 .item-edit-menu a.c-selected, .item-edit-menu a.a-selected{
@@ -513,4 +570,64 @@ a.filter-a-clicker.selected{
     padding: 1px 9px;
     display: inline;
 }
+.users-send-list  .user_isactive_0 .col{
+    background: #d7d6d6;
+    color: #989696;
+}
+.users-send-list  .user_isactive_0 .input-checkbox{
+    display: none;
+}
 
+.red{
+    color:red;
+}
+.green{
+    color:green;
+}
+
+#content_wrap{
+    position: relative;
+    transition: bottom 0.9s;
+    bottom:0px;
+
+}
+.show-off #content_wrap{
+    
+    bottom:-10px;
+} 
+
+@media only screen and (max-width: 900px) {
+  
+    #right_bar_wrap{
+        height: 60px;
+        transition: right 0.3s;
+        overflow: hidden;
+       
+    }
+    
+    #right_bar_wrap:hover{
+        height: auto;
+    }
+
+    #center_bar_wrap{
+        margin-right: 0px;
+    }
+
+    #content_wrap{
+        padding-top: 55px;
+        padding-right: 15px;
+    }
+    .row-fluid{
+        display: block;
+    }
+    .form-group .form-group-st {
+        display: block;
+    }
+
+    .form-group .form-group-en {
+        display: block;
+        padding-top: 0px;
+        padding-bottom: 10px;
+    }
+    
+}

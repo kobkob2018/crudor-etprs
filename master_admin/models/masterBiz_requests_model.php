@@ -3,6 +3,24 @@
 
     protected static $main_table = 'biz_requests';
 
+    public static function get_request($request_id){
+        $biz_request = self::get_by_id($request_id);
+        if(!$biz_request){
+            return false;
+        }
+        $city_name = "";
+        if($biz_request['city_id'] != ""){
+            $city = Cities::get_by_id($biz_request['city_id'],'label');
+            if($city){
+                $city_name = $city['label'];
+            }
+        }
+        $biz_request['city_name'] = $city_name;
+        $biz_request['cat_tree'] = Biz_categories::get_item_parents_tree($biz_request['cat_id'],'id,parent,label');
+        $biz_request['banner_name'] = self::get_banner_name($biz_request['banner_id']);
+        return $biz_request;
+    }
+
     public static function get_request_list($filter){
         $db = Db::getInstance();
         $where_arr = self::get_where_arr($filter);
@@ -38,6 +56,22 @@
 
         }
         return $biz_requests;
+    }
+
+    protected static function get_banner_name($banner_id = ""){
+        $banner_name = "";
+        if($banner_id != "" && $banner_id != '0'){
+            $db = Db::getInstance();
+            $sql = "SELECT label FROM net_banners WHERE id = :banner_id";
+            $ex_arr = array('banner_id'=>$banner_id);
+            $req = $db->prepare($sql);
+            $req->execute($ex_arr);
+            $banner_result = $req->fetch();
+            if($banner_result){
+                $banner_name = $banner_result['label'];
+            }
+        }
+        return $banner_name;
     }
 
     public static function get_referrer_options($filter){

@@ -412,6 +412,9 @@
         echo "</table>";
     }
 
-
+    public function add_request(){
+        echo "המודול בבנייה";
+        
+    }
   }
 ?>

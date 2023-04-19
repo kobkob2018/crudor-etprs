@@ -158,7 +158,7 @@ function input_protect($val){
 }
 
 function hebdt($datetime_str = null ,$format = 'd-m-Y H:i:s'){
-    if(!$datetime_str){
+    if(!$datetime_str || $datetime_str == '0000-00-00'){
         return "";
     }
 	$date = new DateTime($datetime_str);

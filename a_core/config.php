@@ -16,9 +16,9 @@ $config = array(
     'base_url'=>'',
     'base_url_dir'=>'',
 
-    'master_domain'=>'usites.com',
+    'master_domain'=>'webushka.com',
 
-    'master_url'=>'http://usites.com',
+    'master_url'=>'http://webushka.com',
     'error_controller'=>'pages',
     'error_action'=>'error',
 

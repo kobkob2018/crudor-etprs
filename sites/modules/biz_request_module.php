@@ -287,7 +287,7 @@
                 
                 $user_lead_id = SiteUser_leads::add_user_lead($db_lead_info,$user);
 
-                $auth_link = get_config('main_website_url')."/myleads/leads/auth/?token=".$token;
+                $auth_link = get_config('master_url')."/myleads/leads/auth/?token=".$token;
                 
 
                 $email_info = array(

@@ -16,6 +16,5 @@ $system_config = array(
     'email_sender'=>'info@ilbiz.co.il',
     'email_sender_name'=>'מנהל הרשת',
 
-    'main_module'=>'sites',
-    'main_website_url'=>'http://usites.com'
+    'main_module'=>'sites'
 );

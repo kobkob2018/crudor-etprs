@@ -12,7 +12,7 @@
 		<title><?= $this->data['meta_title'] ?></title>
 		<?php $this->include_view('registered_scripts/head.php'); ?>
   </head>
-  <body style="direction:rtl; text-align:right;" class="<?php echo $this->body_class; ?>">
+  <body style="direction:rtl; text-align:right;" class="<?php echo $this->body_class; ?> show-off">
 	<?php $this->print_body();  ?>
 	<?php $this->include_view('registered_scripts/foot.php'); ?>
   </body>

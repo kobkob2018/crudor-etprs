@@ -1,17 +1,3 @@
-<div class="hidden">
-    <form action = "" class="filter-keeper">
-        <?php foreach($_REQUEST['filter'] as $filter_key=>$filter_val): ?>
-            <?php if(is_array($filter_val)): ?>
-                <?php foreach($filter_val as $key_2=>$val_2): ?>
-                    <input type="hidden" name="filter[<?= $filter_key ?>][<?= $key_2 ?>]" value="<?= $val_2 ?>" />
-                <?php endforeach; ?>
-            <?php else: ?>
-                <input type="hidden" name="filter[<?= $filter_key ?>]" value="<?= $filter_val ?>" />
-            <?php endif; ?>
-        <?php endforeach; ?>
-    </form>
-</div>
-
 <h2>רשימת בקשות להצעת מחיר</h2>
 <hr/>
 <div class = "filter-wrap">
@@ -25,16 +11,16 @@
     <div class="filter-form-wrap">
         <form  class="flex-table filter-form" action = "" method = "POST" >
             <div class="table-tr row ">
-                <input type="hidden" class="status-holder-field" name="filter[status]" value="<?= $info['filter_str']['status'] ?>" />
-                <input type="hidden" class="status-holder-field" name="filter[limit_count]" value="<?= $info['filter_str']['limit_count'] ?>" />
+                <input type="hidden" class="status-holder-field" name="filter[status]" value="<?= $info['filter_input']['status'] ?>" />
+                <input type="hidden" class="status-holder-field" name="filter[limit_count]" value="<?= $info['filter_input']['limit_count'] ?>" />
 
                 <div class="col">
                     מתאריך: <br/>
-                    <input type="text" class = 'table-input' name = 'filter[date_s]' value = "<?= $info['filter_str']['date_s'] ?>" />
+                    <input type="text" class = 'table-input' name = 'filter[date_s]' value = "<?= $info['filter_input']['date_s'] ?>" />
                 </div>
                 <div class="col">
                     עד תאריך: <br/>
-                    <input type="text" class = 'table-input' name = 'filter[date_e]' value = "<?= $info['filter_str']['date_e'] ?>" />
+                    <input type="text" class = 'table-input' name = 'filter[date_e]' value = "<?= $info['filter_input']['date_e'] ?>" />
                 </div>
                 <div class="col">
                     הגיע מחיפוש ב: <br/>
@@ -49,11 +35,11 @@
                 </div>
                 <div class="col">
                     ip: <br/>
-                    <input type="text" class = 'table-input' name = 'filter[ip]' value = "<?= $info['filter_str']['ip'] ?>" />
+                    <input type="text" class = 'table-input' name = 'filter[ip]' value = "<?= $info['filter_input']['ip'] ?>" />
                 </div>
                 <div class="col">
                     חיפוש חפשי: <br/>
-                    <input type="text" class = 'table-input' name = 'filter[free]' value = "<?= $info['filter_str']['free'] ?>" />
+                    <input type="text" class = 'table-input' name = 'filter[free]' value = "<?= $info['filter_input']['free'] ?>" />
                 </div>
                 <div class="col"><input type="submit" value="חפש" /></div>
             </div>
@@ -76,34 +62,7 @@
         </form>
     </div>
 </div>
-<script type="text/javascript">
-    document.querySelectorAll(".filter-a-clicker").forEach(clicker=>{
-        const c_wrap = clicker.closest(".filter-wrap");
-        const c_form = c_wrap.querySelector("form.filter-form");
-        const class_find = clicker.dataset.field+"-holder-field";
-        const c_val = clicker.dataset.value;
-        const c_input = c_wrap.querySelector("."+class_find);
-        clicker.addEventListener("click",function(){
-            c_input.value = c_val;
-            c_form.submit();
 
-        });
-        
-    });
-
-    document.querySelectorAll(".check-show").forEach(checkShow=>{
-        
-        const checkSwitch = checkShow.querySelector(".check-show-main input");
-        checkSwitch.addEventListener("change",function(){
-            if(checkSwitch.checked){
-                checkShow.classList.add("checked");
-            }
-            else{
-                checkShow.classList.remove("checked");
-            }
-        });
-    });
-</script>
 <hr/>
 
 <div class="marks-menu-wrap">
@@ -136,6 +95,9 @@
     <div class="request-list-th table-th row">
         <div class="col">
             תאריך
+        </div>
+        <div class="col">
+            שליחות
         </div>
         <div class="col">
             שם מלא
@@ -185,6 +147,9 @@
             <?php endif; ?>
         </div>
         <div class="col">
+            <?= $biz_request['recivers'] ?>
+        </div>
+        <div class="col">
             <?= $biz_request['full_name'] ?>
         </div>
         <div class="col">
@@ -213,10 +178,17 @@
             <?= $biz_request['banner_name'] ?>
         </div>
         <div class="col">
-            <?= $biz_request['banner_name'] ?>
+            <select class="auto-change-status" data-row_id = "<?= $biz_request['id'] ?>">
+                <?php foreach($info['status_options'] as $option): ?>
+                    <?php if($option_key != 'all'): ?>
+                        <?php $selected_str = $option['value'] == $biz_request['status']? "selected" : ""; ?>
+                        <option value="<?= $option['value'] ?>" <?= $selected_str ?> ><?= $option['label'] ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
         </div>
         <div class="col">
-            <a href = "javascript://" onClick = "link_with_filter" >
+            <a href = "<?= inner_url("biz_requests/view/?row_id=") ?><?= $biz_request['id'] ?>">
                 שלח
             </a>
         </div>
@@ -224,6 +196,43 @@
     <?php endforeach; ?>
 </div>
 
-<?php 
-print_r_help($info);
-?>
+
+<script type="text/javascript">
+    document.querySelectorAll(".filter-a-clicker").forEach(clicker=>{
+        const c_wrap = clicker.closest(".filter-wrap");
+        const c_form = c_wrap.querySelector("form.filter-form");
+        const class_find = clicker.dataset.field+"-holder-field";
+        const c_val = clicker.dataset.value;
+        const c_input = c_wrap.querySelector("."+class_find);
+        clicker.addEventListener("click",function(){
+            c_input.value = c_val;
+            c_form.submit();
+
+        });
+        
+    });
+
+    document.querySelectorAll(".check-show").forEach(checkShow=>{
+        
+        const checkSwitch = checkShow.querySelector(".check-show-main input");
+        checkSwitch.addEventListener("change",function(){
+            if(checkSwitch.checked){
+                checkShow.classList.add("checked");
+            }
+            else{
+                checkShow.classList.remove("checked");
+            }
+        });
+    });
+
+    document.querySelectorAll(".auto-change-status").forEach(selectEl=>{
+        
+        selectEl.addEventListener("change",function(event){
+            const select = event.target;
+            const rowId = select.dataset.row_id;
+            const status = select.value;
+            const url = "<?= inner_url('biz_requests/status_update/?row_id=') ?>" + rowId + "&status="+status;
+            window.location.href = url;
+        })
+    });
+</script>

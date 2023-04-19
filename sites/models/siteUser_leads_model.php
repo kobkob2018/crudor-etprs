@@ -7,7 +7,7 @@
         $lead_fixed_values = array(
             'user_id'=>$user['info']['id'],
             'full_name'=>$lead_info['full_name'],
-            'email'=>$lead_info['full_name'],
+            'email'=>$lead_info['email'],
             'phone'=>$lead_info['phone'],
             'note'=>$lead_info['note'],
             'extra'=>$lead_info['extra_info'],
