@@ -3,7 +3,7 @@
 <h4>טפסים בעמוד</h4>
 
 <div class="add-content-block-wrap">
-    <a class="focus-box button-focus" href="<?= inner_url('biz_forms/add/') ?>?page_id=<?= $this->data['page_info']['id'] ?>">הוספת טוםס</a>
+    <a class="focus-box button-focus" href="<?= inner_url('biz_forms/add/') ?>?page_id=<?= $this->data['page_info']['id'] ?>">הוספת טופס</a>
 </div>
 
 <div class="content-biz-forms">

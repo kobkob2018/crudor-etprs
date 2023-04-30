@@ -12,8 +12,15 @@
         <form  class="flex-table filter-form" action = "" method = "POST" >
             <div class="table-tr row ">
                 <input type="hidden" class="status-holder-field" name="filter[status]" value="<?= $info['filter_input']['status'] ?>" />
-                <input type="hidden" class="status-holder-field" name="filter[limit_count]" value="<?= $info['filter_input']['limit_count'] ?>" />
-
+                
+                <div class="col">
+                    עמוד: <br/>
+                    <select class = 'table-input page-select' name="filter[page]" >
+                        <?php foreach($info['page_options'] as $option): ?>
+                            <option value="<?= $option['index'] ?>" <?= $option['selected_str'] ?>><?= $option['index'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
                 <div class="col">
                     מתאריך: <br/>
                     <input type="text" class = 'table-input' name = 'filter[date_s]' value = "<?= $info['filter_input']['date_s'] ?>" />
@@ -41,23 +48,23 @@
                     חיפוש חפשי: <br/>
                     <input type="text" class = 'table-input' name = 'filter[free]' value = "<?= $info['filter_input']['free'] ?>" />
                 </div>
-                <div class="col"><input type="submit" value="חפש" /></div>
+                <div class="col"><input class="filter-submit" type="submit" value="חפש" /></div>
             </div>
     
-                    <div class="check-show <?= $info['campaign_types_checked'] ?>">
-                        <div class="check-show-main check-show-el">
-                            <input type="checkbox" class="input-checkbox" value="1" name="filter[filter_campaign_types]" <?= $info['campaign_types_checked'] ?> /> סנן לפי סוג קמפיין
-                        </div>
-                        <div class="check-show-child check-show-el">
-                            <input type="checkbox" class="input-checkbox" value="1" name="filter[campaign_types][0]" <?= $info['campaign_types_checkboxes']['0']['checked_str'] ?> /> ללא קמפיין
-                        </div>
-                        <div class="check-show-child check-show-el">
-                            <input type="checkbox" class="input-checkbox" value="1" name="filter[campaign_types][1]" <?= $info['campaign_types_checkboxes']['1']['checked_str'] ?> /> קמפיין פייסבוק
-                        </div>
-                        <div class="check-show-child check-show-el">
-                            <input type="checkbox" class="input-checkbox" value="1" name="filter[campaign_types][2]" <?= $info['campaign_types_checkboxes']['2']['checked_str'] ?> /> קמפיין גוגל
-                        </div>
-                    </div>
+            <div class="check-show <?= $info['campaign_types_checked'] ?>">
+                <div class="check-show-main check-show-el">
+                    <input type="checkbox" class="input-checkbox" value="1" name="filter[filter_campaign_types]" <?= $info['campaign_types_checked'] ?> /> סנן לפי סוג קמפיין
+                </div>
+                <div class="check-show-child check-show-el">
+                    <input type="checkbox" class="input-checkbox" value="1" name="filter[campaign_types][0]" <?= $info['campaign_types_checkboxes']['0']['checked_str'] ?> /> ללא קמפיין
+                </div>
+                <div class="check-show-child check-show-el">
+                    <input type="checkbox" class="input-checkbox" value="1" name="filter[campaign_types][1]" <?= $info['campaign_types_checkboxes']['1']['checked_str'] ?> /> קמפיין פייסבוק
+                </div>
+                <div class="check-show-child check-show-el">
+                    <input type="checkbox" class="input-checkbox" value="1" name="filter[campaign_types][2]" <?= $info['campaign_types_checkboxes']['2']['checked_str'] ?> /> קמפיין גוגל
+                </div>
+            </div>
                 
         </form>
     </div>
@@ -179,7 +186,7 @@
         </div>
         <div class="col">
             <select class="auto-change-status" data-row_id = "<?= $biz_request['id'] ?>">
-                <?php foreach($info['status_options'] as $option): ?>
+                <?php foreach($info['status_options'] as $option_key=>$option): ?>
                     <?php if($option_key != 'all'): ?>
                         <?php $selected_str = $option['value'] == $biz_request['status']? "selected" : ""; ?>
                         <option value="<?= $option['value'] ?>" <?= $selected_str ?> ><?= $option['label'] ?></option>
@@ -204,12 +211,51 @@
         const class_find = clicker.dataset.field+"-holder-field";
         const c_val = clicker.dataset.value;
         const c_input = c_wrap.querySelector("."+class_find);
+        const pageSelect = c_form.querySelector(".page-select");
         clicker.addEventListener("click",function(){
             c_input.value = c_val;
+            pageSelect.value = '1';
             c_form.submit();
 
         });
         
+    });
+
+    
+
+    document.querySelectorAll(".filter-submit").forEach(select=>{
+        const c_wrap = select.closest(".filter-wrap");
+        const c_form = c_wrap.querySelector("form.filter-form");
+        const pageSelect = c_form.querySelector(".page-select");
+        select.addEventListener("click",function(event){
+            event.preventDefault();
+            pageSelect.value = '1';
+            c_form.submit();
+        });
+        
+    });
+
+    document.querySelectorAll(".page-select").forEach(select=>{
+        const c_wrap = select.closest(".filter-wrap");
+        const c_form = c_wrap.querySelector("form.filter-form");
+        select.addEventListener("change",function(){
+            c_form.submit();
+        });
+        
+    });
+
+    
+    document.querySelectorAll(".check-show").forEach(checkShow=>{
+        
+        const checkSwitch = checkShow.querySelector(".check-show-main input");
+        checkSwitch.addEventListener("change",function(){
+            if(checkSwitch.checked){
+                checkShow.classList.add("checked");
+            }
+            else{
+                checkShow.classList.remove("checked");
+            }
+        });
     });
 
     document.querySelectorAll(".check-show").forEach(checkShow=>{

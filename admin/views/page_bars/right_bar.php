@@ -101,10 +101,22 @@
 
         <ul class="item-group">
 
-            <li class="bar-item <?= $view->a_class("pages/list/") ?> <?= $view->a_c_class("quotes") ?>">
-                <a href="<?= inner_url('quotes/cat_list/') ?>" title="הצעות מחיר" class="a-link">הצעות מחיר</a>
+            <li class="bar-item <?= $view->a_class("quote_cats/list/") ?> <?= $view->a_c_class("quote_cats, quotes") ?>">
+                <a href="<?= inner_url('quote_cats/list/') ?>" title="הצעות מחיר" class="a-link">הצעות מחיר</a>
             </li>
-      
+
+            
+            <li class="bar-item <?= $view->a_class("product_cats/list/") ?> <?= $view->a_c_class("product_cats, products") ?>">
+                <a href="<?= inner_url('product_cats/list/') ?>" title="מוצרים" class="a-link">ניהול מוצרים</a>
+            </li>
+        </ul>
+
+        <ul class="item-group">
+
+            <li class="bar-item <?= $view->a_class("gallery_images/list/") ?> <?= $view->a_c_class("gallery_images") ?>">
+                <a href="<?= inner_url('gallery_images/gallery_list/') ?>" title="גלריות" class="a-link">גלריות</a>
+            </li>
+
         </ul>
     <?php endif; ?>
 </div>

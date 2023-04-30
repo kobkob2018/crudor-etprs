@@ -1,7 +1,5 @@
 <?php
 
-//this one is used at the cities controller
-//in the cats controller the cat_city model is used
     class Quote_cat_assign extends TableModel{
 
         protected static $main_table = 'quote_cat_assign';

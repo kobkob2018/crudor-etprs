@@ -6,10 +6,27 @@
 
     public static $fields_collection = array(
         'label'=>array(
-            'label'=>'כותרת',
+            'label'=>'תווית(לשימוש בניהול)',
             'type'=>'text',
             'validation'=>'required'
-        )
+        ),
+        'title'=>array(
+            'label'=>'כותרת (שתופיע באתר)',
+            'type'=>'text',
+            'validation'=>'required'
+        ),
+        'custom_html'=>array(
+            'label'=>'HTML של הצעת מחיר',
+            'type'=>'textbox',
+            'css_class'=>'small-text',
+            'validation'=>''
+        ),
+        'row_html'=>array(
+            'label'=>'HTML של שורה',
+            'type'=>'textbox',
+            'css_class'=>'small-text',
+            'validation'=>''
+        ),
     );
 
     public static $cat_delete_fields_collection = array(

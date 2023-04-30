@@ -31,12 +31,14 @@
     }
 
     public function list(){
+        
         if(isset($_REQUEST['reset_filter'])){
             return $this->reset_filter();
         }
         $this->init_filter_session();
         $filter_input = array(
-            'limit_count'=>$this->get_request_filter_param('limit_count','0'),
+            'page'=>$this->get_request_filter_param('page','1'),
+            'page_limit'=>'100',
             'status'=>$this->get_request_filter_param('status','0'),
             'date_s'=>$this->get_request_filter_param('date_s', $this->get_default_date_s()),
             'date_e'=>$this->get_request_filter_param('date_e'),
@@ -50,7 +52,8 @@
 
 
         $filter = array(
-            'limit_count'=>$filter_input['limit_count'],
+            'page'=>$filter_input['page'],
+            'page_limit'=>$filter_input['page_limit'],
             'status'=>$filter_input['status'],
             'date_s'=>$this->get_en_date($filter_input['date_s']),
             'date_e'=>$this->get_en_date($filter_input['date_e']),
@@ -112,14 +115,43 @@
                 $referrer_options[$filter['referrer']]['selected_str'] = 'selected';
             }
         }
+       
+        $biz_requests_arr = MasterBiz_requests::get_request_list($filter);
+        $row_count = $biz_requests_arr['row_count'];
+        $next_page = true;
+        $page_limit = intval($filter['page_limit']);
+        $page_i = 1;
+        $page_options = array();
+        $page = intval($filter['page']);
+        while($next_page){
+            $page_option = array(
+                'index'=>$page_i,
+                'selected_str'=>'',
+            );
 
-        $biz_requests = MasterBiz_requests::get_request_list($filter);
-        
+            if($page_i == $page){
+                $page_option['selected_str'] = ' selected ';
+            }
+            $page_options[] = $page_option;
+            $limit_count = $page_i*$page_limit;
+            if($limit_count < $row_count){
+                $page_i++;
+            }
+            else{
+                $next_page = false;
+            }
+        }
+
+        //print_r_help($page_options);
+
+        $biz_requests = $biz_requests_arr['biz_requests'];
+
         $info = array(
             'filter'=>$filter,
             'filter_input'=>$filter_input,
             'status_options'=>$status_options,
             'referrer_options'=>$referrer_options,
+            'page_options'=>$page_options,
             'biz_requests'=>$biz_requests,
             'campaign_types_checked'=>$filter_campaign_types_checked,
             'campaign_types_checkboxes'=>$campaign_types_checkboxes
@@ -166,7 +198,7 @@
 
         $biz_request = MasterBiz_requests::get_request($_REQUEST['row_id']);
 
-        $duplicated_user_leads = MasterLeads_complex::get_duplicated_user_leads($active_user_id_arr, $biz_request);
+        $duplicate_user_leads = MasterLeads_complex::get_duplicated_user_leads($active_user_id_arr, $biz_request);
 
         foreach($user_id_arr as $user_id){
             $user_info = MasterLeads_complex::get_user_info($user_id);

@@ -1,5 +1,3 @@
-
-
 function assign_select_toggle(aDoor){
     const assign_id = aDoor.dataset.assign_id;
     const parentEl = aDoor.closest(".assign-checkbox-parent-wrap");

@@ -71,6 +71,7 @@ function openDrawer(drawerId) {
 
 document.addEventListener("DOMContentLoaded",()=>{
     initBannerClickers();
+    initPageRearangement();
 });
 
 initBannerClickers = ()=>{
@@ -88,4 +89,53 @@ initBannerClickers = ()=>{
             });
         }
     );
+} 
+
+initPageRearangement = ()=>{
+    rearangeLeftBar();
+    relocateBizForm();
+} 
+
+rearangeLeftBar = ()=>{
+    const leftBarTop = document.querySelector(".leftbar-top-holder");
+    const leftBarMid = document.querySelector(".leftbar-top-holder");
+    const leftBarBottom = document.querySelector(".leftbar-top-holder");
+    if(leftBarTop){ 
+        document.querySelectorAll('.go-left, .go-left-top').forEach(
+            goLeft=>{
+                leftBarTop.append(goLeft);
+            }
+        );
+        document.querySelectorAll('.go-left-mid').forEach(
+            goLeft=>{
+                leftBarMid.append(goLeft);
+            }
+        );
+        document.querySelectorAll('.go-left-bottom').forEach(
+            goLeft=>{
+                leftBarBottom.append(goLeft);
+            }
+        );
+    }
+    document.querySelectorAll(".grab-content").forEach(
+        grabber=>{   
+            const grabClass = grabber.dataset.grab;
+            document.querySelectorAll("."+grabClass).forEach(grabbedContent=>{
+                grabber.append(grabbedContent);
+            });
+        }
+    );
+} 
+
+
+relocateBizForm = ()=>{
+    let formHolder = document.querySelector(".hero-form-holder");
+    if(!formHolder){
+        return;
+    }
+    let bizForm = document.querySelector(".biz-form-wrap");
+    if(bizForm){
+        formHolder.append(bizForm);
+    }
+    
 } 

@@ -1,5 +1,5 @@
 <div class="biz-form-generator">
-    <div class="form-header">
+    <div class="form-header big-title biz-form-bg">
         <h3 class='form-title'>
             <?= $info['biz_form']['title'] ?>
         </h3>
@@ -36,7 +36,7 @@
             <input type="hidden" name="biz[campaign_name]" value="<?= $_GET['campaign_name'] ?>" />
         <?php endif; ?>
         <input type="hidden" name="biz[is_moblie]" value="<?= is_mobile()? '1': '0' ?>" />
-        <div class="biz-form-placeholder"  data-form_id='<?= $info['biz_form']['id'] ?>' data-cat_id='<?= $info['biz_form']['cat_id'] ?>' data-fetch_url='<?= inner_url("biz_form/fetch/") ?>'>
+        <div class="biz-form-placeholder biz-form-bg"  data-form_id='<?= $info['biz_form']['id'] ?>' data-cat_id='<?= $info['biz_form']['cat_id'] ?>' data-fetch_url='<?= inner_url("biz_form/fetch/") ?>'>
             <span class = "append-spot"></span>
             <?php if(!isset($info['input_remove']['name'])): ?>
                 <div class="form-group">
@@ -111,7 +111,7 @@
             </div>
         </div>
     </form>
-    <div class="submit-wrap pending-state form-group">
+    <div class="submit-wrap pending-state form-group biz-form-bg">
         <input type="submit" class="submit-button form-input color-button" data-status="pending" value="שליחה" />
     </div>
 </div>

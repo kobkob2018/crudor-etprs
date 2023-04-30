@@ -1,4 +1,4 @@
-<?php $this->include_view("quotes/cat_header.php"); ?>
+<?php $this->include_view("quote_cats/header.php"); ?>
 <div class="focus-box">
     <div class="eject-box">
         <a href="<?= inner_url("/quotes/list/") ?>?cat_id=<?= $this->data['cat_info']['id'] ?>">חזרה לרשימה</a>

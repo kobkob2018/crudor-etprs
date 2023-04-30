@@ -36,5 +36,9 @@ function init_tinymce(selector_identifier,media_uploader_url, media_library_url)
 
 }
 
+function cancelTinymce(selector_identifier){
+    tinymce.remove(selector_identifier);
+}
+
 tiny_mce_callback_handler = new Tiny_mce_callback_handler_class();
 global_media_library_url = null;

@@ -26,7 +26,20 @@
         $where_arr = self::get_where_arr($filter);
         $where_str = $where_arr['where_str'];
         $where_params = $where_arr['where_params'];
-        $sql = "SELECT req.*, city.label as city_name FROM biz_requests req LEFT JOIN cities city ON req.city_id = city.id WHERE $where_str"; 		
+        
+        //count all
+        $sql = "SELECT COUNT(req.id) as row_count FROM biz_requests req WHERE $where_str"; 		
+        $req = $db->prepare($sql);
+        $req->execute($where_params);
+        $row_count_result =  $req->fetch();
+        $row_count = '0';
+        if($row_count_result){
+            $row_count = $row_count_result['row_count'];
+        }
+        $row_count = intval($row_count);
+        //get rows in page
+        $sql = "SELECT req.*, city.label as city_name FROM biz_requests req LEFT JOIN cities city ON req.city_id = city.id WHERE $where_str ORDER BY id desc "; 		
+        $sql.= " ".$where_arr['limit_str'];
         $req = $db->prepare($sql);
         $req->execute($where_params);
         $biz_requests =  $req->fetchAll();
@@ -55,7 +68,11 @@
             $biz_requests[$key] = $biz_request;
 
         }
-        return $biz_requests;
+        $return_arr = array(
+            'row_count'=>$row_count,
+            'biz_requests'=>$biz_requests
+        );
+        return $return_arr;
     }
 
     protected static function get_banner_name($banner_id = ""){
@@ -132,9 +149,20 @@
             $types_in = implode(",",$campaign_type_arr);
             $where_str .= " AND req.campaign_type IN ($types_in) ";
         }
+
+        $page = intval($filter['page']);
+        $page = $page - 1;
+        if($page<0){
+            $page_limit = 0;
+        }
+        $page_limit = intval($filter['page_limit']);
+        $limit_count = $page*$page_limit;
+        $limit_str = " LIMIT $limit_count, $page_limit ";
+
         return array(
             'where_str'=>$where_str,
-            'where_params'=>$where_params
+            'where_params'=>$where_params,
+            'limit_str'=>$limit_str,
         );
     }
 }

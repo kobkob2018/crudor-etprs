@@ -164,7 +164,6 @@
         if($validate_result['success']){
             $fixed_values = $validate_result['fixed_values'];
             $row_id = $this->create_item($form_handler->fix_values_for_update($fixed_values));
-  
             $fixed_row_values = array();
             foreach($fixed_values as $key=>$value){
                 $fixed_row_value = str_replace('{{row_id}}',$row_id,$value);
@@ -469,6 +468,7 @@
         $form_handler->update_fields_collection($field_collection);
         $form_handler->setup_db_values($item);
         $item['form_identifier'] = $item_key;
+        $item['form_handler'] = $form_handler;
         return $item;
     }
 

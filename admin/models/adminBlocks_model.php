@@ -21,7 +21,7 @@
         'content'=>array(
             'label'=>'תוכן',
             'type'=>'textbox',
-            'reachtext'=>true,
+            'reachtext'=>'optional',
             'css_class'=>'big-text'
         ),    
 

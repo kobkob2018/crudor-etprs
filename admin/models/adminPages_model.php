@@ -5,11 +5,40 @@
     protected static $select_opriotns_arr = array();
 
     public static $fields_collection = array(
+        'priority'=>array(
+            'label'=>'מיקום',
+            'type'=>'text',
+            'default'=>'10',
+            'validation'=>'required, int'
+        ),
+
         'title'=>array(
             'label'=>'כותרת',
             'type'=>'text',
             'validation'=>'required'
         ),
+        'active'=>array(
+            'label'=>'פעיל',
+            'type'=>'select',
+            'default'=>'1',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא'),
+                array('value'=>'1', 'title'=>'כן')
+            ),
+            'validation'=>'required'
+        ),
+
+        'visible'=>array(
+            'label'=>'הצג באתרים',
+            'type'=>'select',
+            'default'=>'1',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא'),
+                array('value'=>'1', 'title'=>'כן')
+            ),
+            'validation'=>'required'
+        ),
+
         'meta_title'=>array(
             'label'=>'כותרת מטא',
             'type'=>'text',
@@ -26,8 +55,10 @@
         ),
 
         'content'=>array(
-            'label'=>'תוכן ראשי',
+            'label'=>'תוכן ראשי מקוצר',
             'type'=>'textbox',
+            'reachtext'=>true,
+            'css_class'=>'big-text',
         ),
 
         'right_banner'=>array(

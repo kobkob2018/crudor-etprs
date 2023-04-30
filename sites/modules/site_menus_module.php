@@ -35,5 +35,12 @@
             $this->include_view('site_menus/bottom_menu.php');
         }
 
+        public function hero_menu(){
+            $data = $this->controller->data;
+            $hero_menu_items = SiteMenuItems::get_menu_items_tree($data['site']['id'], SiteMenuItems::$menu_type_list['hero']);
+            $this->add_data('hero_menu_items',$hero_menu_items);
+            $this->include_view('site_menus/hero_menu.php');
+        }
+
 	}
 ?>

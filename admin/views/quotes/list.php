@@ -1,4 +1,4 @@
-<?php $this->include_view("/quotes/cat_header.php"); ?>
+<?php $this->include_view("quote_cats/header.php"); ?>
 
 <div class="add-item-wrap">
     <a class="focus-box button-focus" href="<?= inner_url('quotes/add/') ?>?cat_id=<?= $this->data['cat_info']['id'] ?>">הוספת הצעת מחיר</a>

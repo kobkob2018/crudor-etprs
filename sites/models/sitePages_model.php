@@ -50,5 +50,15 @@
         'right_banner'=>'pages/banners'
     );
 
+    public static function get_home_page_list(){
+        $current_site = Sites::get_current_site();
+        $execute_arr = array('site_id'=>$current_site['id']);
+        $db = Db::getInstance();
+        $sql = "SELECT * FROM content_pages WHERE site_id = :site_id AND active = '1' AND visible = '1' ORDER BY priority desc LIMIT 10";	
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
+        $page_list = $req->fetchAll();
+        return $page_list;
+    }
   }
 ?>

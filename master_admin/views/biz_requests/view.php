@@ -83,7 +83,7 @@
         </div>
         <div class="col">
             <select class="auto-change-status" data-row_id="<?= $biz_request['id'] ?>">
-                <?php foreach($info['status_options'] as $option): ?>
+                <?php foreach($info['status_options'] as $option_key=>$option): ?>
                     <?php if($option_key != 'all'): ?>
                         <?php $selected_str = $option['value'] == $biz_request['status']? "selected" : ""; ?>
                         <option value="<?= $option['value'] ?>" <?= $selected_str ?> ><?= $option['label'] ?></option>

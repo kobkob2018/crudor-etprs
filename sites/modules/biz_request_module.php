@@ -159,8 +159,8 @@
                 return $return_array;
             }
 
-            if(isset($_REQUEST['extra'])){
-                $this->lead_info['extra_info'] = json_encode($_REQUEST['extra']);
+            if(isset($_REQUEST['biz']['extra'])){
+                $this->lead_info['extra_info'] = json_encode($_REQUEST['biz']['extra']);
             }
             else{
                 $this->lead_info['extra_info'] = "";
