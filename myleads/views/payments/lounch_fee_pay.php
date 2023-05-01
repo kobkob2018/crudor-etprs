@@ -9,7 +9,7 @@
     
     <form action='payments/send_to_yaad/' method='post' name='sendto_yaad' id='sendto_yaad_form'>
         <input type='hidden' name='row_id' value='<?= $info['lounch_fee']['id'] ?>' />
-        
+        <input type='hidden' name='content_type' value='iframe' />
         <div class='pay_desc form-group'>
             
             <?php if(!$info['user_cc_tokens']): ?>

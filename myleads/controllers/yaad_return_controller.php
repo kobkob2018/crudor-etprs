@@ -3,6 +3,8 @@
 	class Yaad_returnController extends CrudController{
 		public $add_models = array('myleads_lounch_fee','user_cc_token','myleads_pay_by_cc_log');
 		public function ok(){
+            print_r_help($_REQUEST);
+            exit();
             $cc_log = $this->get_cc_log();
             if(!$cc_log){
                 SystemMessages::add_err_message("אירעה שגיאה בתשלום");
