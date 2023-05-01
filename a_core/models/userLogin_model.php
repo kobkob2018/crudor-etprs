@@ -89,7 +89,6 @@
 			'ip'=>$_SERVER['REMOTE_ADDR'],
 			'sms_code'=>'',
 		);
-		print_r_help($trace_array);
 		
 		if($add_sms_code){
 			$trace_array['sms_code'] = rand(10000,99999);
