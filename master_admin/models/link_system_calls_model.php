@@ -316,7 +316,6 @@
     }
 
     protected static function fetch_calls_from_link_by_status($call_status){
-      
       $last_lead_id = self::get_last_call_fetched_by_status($call_status);
       $link_table = self::$link_tables[$call_status];
       $link_db = self::getLinkDb();
@@ -332,6 +331,8 @@
       foreach($result as $call_key=>$call){
         $result[$call_key]['answer'] = $call_status; 
       }
+      print_r_help($result);
+exit();
       return $result;
     }
 

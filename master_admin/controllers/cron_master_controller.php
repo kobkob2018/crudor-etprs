@@ -3,16 +3,14 @@ class Cron_masterController extends CrudController{
 
   protected $scedualed_module_tasks = array(
     'each_minute'=>array(
+      array('label'=>'cron_user_phone_calls', 
+        'module'=>'cron_user_phone_calls',
+        'action'=>'update_new_calls'
+      ),
       array('label'=>'send_pending_emails', 
             'module'=>'cron_emails',
             'action'=>'send_pending_emails'
       ),
-
-      array('label'=>'cron_user_phone_calls', 
-      'module'=>'cron_user_phone_calls',
-      'action'=>'update_new_calls'
-    ),
-
     ),
     'hourly'=>array(),
     'daily_mornings'=>array(),
