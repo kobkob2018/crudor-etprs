@@ -10,9 +10,6 @@
             }
             
             $this->update_cc_log_from_request($cc_log,'2');
-
-            print_r_help($_REQUEST);
-            exit();  
             $this->add_user_cc_token($cc_log);
             
             return $this->init_handler_module($cc_log,'ok');
@@ -75,6 +72,9 @@
             if(!(isset($_REQUEST['L4digit']) && $_REQUEST['L4digit']!='' && $_REQUEST['L4digit']!= '0')){
                 return;
             }
+
+            print_r_help($_REQUEST);
+            exit("here");  
             //check if token not allready exist
             $filter_arr = array(
                 'user_id'=>$cc_log['user_id'],
