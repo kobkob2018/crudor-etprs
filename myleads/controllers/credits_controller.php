@@ -68,8 +68,7 @@
                 // 'allowFalse'=>'True',
                 
             );
-            print_r_help($params);
-            exit();
+
             $postData = '';
             //create name value pairs seperated by &
             foreach($params as $k => $v) 
@@ -79,7 +78,8 @@
             $postData = rtrim($postData, '&');
          
             $ch = curl_init();  
-            
+            print_r_help($params,$postData);
+            exit();            
             curl_setopt($ch,CURLOPT_URL,$yaad_api_url);
             curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
             curl_setopt($ch,CURLOPT_HEADER, false); 
