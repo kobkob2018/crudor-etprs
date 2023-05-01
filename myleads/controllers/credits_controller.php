@@ -85,7 +85,6 @@
          
             $output=curl_exec($ch);
             curl_close($ch);
-            exit($output);
             $result_arr = explode("&",$output);
             $result = array();
             foreach($result_arr as $result_val){
@@ -100,7 +99,8 @@
             }
             else{
                 SystemMessages::add_err_message("הפעולה נכשלה, אחד הפרטים אינם נכונים. אנא נסה שוב.");
-                return $this->eject_redirect();
+                SystemMessages::add_err_message("code: ".$result['CCode']);
+                return $this->redirect_to('payments/list/');
             }
         }
         else{
