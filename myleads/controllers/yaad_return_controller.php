@@ -10,11 +10,11 @@
                 SystemMessages::add_err_message("אירעה שגיאה בתשלום");
                 return $this->redirect_to(inner_url());
             }
-            print_r_help($_REQUEST);
-            exit();
+
             $this->update_cc_log_from_request($cc_log,'2');
             $this->add_user_cc_token($cc_log);
-            
+            print_r_help($_REQUEST);
+            exit();            
             return $this->init_handler_module($cc_log,'ok');
 			
             //update ilbizPayByCCLog 
