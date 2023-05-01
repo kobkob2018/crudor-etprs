@@ -72,9 +72,7 @@
             if(!(isset($_REQUEST['L4digit']) && $_REQUEST['L4digit']!='' && $_REQUEST['L4digit']!= '0')){
                 return;
             }
-
-            print_r_help($_REQUEST);
-            exit("here");  
+ 
             //check if token not allready exist
             $filter_arr = array(
                 'user_id'=>$cc_log['user_id'],
@@ -85,6 +83,11 @@
                 return;
             }
             $yaad_token = $this->get_token_from_yaad($_REQUEST['Id']);
+
+            print_r_help($_REQUEST);
+
+            var_dump($yaad_token);
+            exit("here"); 
             $new_token = array(
                 'user_id'=>$cc_log['user_id'],
                 'transaction_id'=>$_REQUEST['Id'],
