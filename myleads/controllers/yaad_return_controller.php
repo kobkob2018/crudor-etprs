@@ -8,7 +8,10 @@
                 SystemMessages::add_err_message("אירעה שגיאה בתשלום");
                 return $this->redirect_to(inner_url());
             }
-            
+            if($cc_log['pay_good'] != '0'){
+                SystemMessages::add_err_message("אירעה שגיאה בתשלום");
+                return $this->redirect_to(inner_url()); 
+            }
             $this->update_cc_log_from_request($cc_log,'2');
             $this->add_user_cc_token($cc_log);
             
@@ -25,7 +28,7 @@
                 SystemMessages::add_err_message("אירעה שגיאה בתשלום");
                 return $this->redirect_to(inner_url());
             }
-            $this->update_cc_log_from_request($cc_log,'2');
+            $this->update_cc_log_from_request($cc_log,'1');
             return $this->init_handler_module($cc_log,'error');
 			
             //update ilbizPayByCCLog
@@ -82,6 +85,9 @@
                 return;
             }
             $yaad_token = $this->get_token_from_yaad($_REQUEST['Id']);
+            if(!$yaad_token){
+                return;
+            }
             $new_token = array(
                 'user_id'=>$cc_log['user_id'],
                 'transaction_id'=>$_REQUEST['Id'],
