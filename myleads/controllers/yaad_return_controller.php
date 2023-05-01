@@ -6,11 +6,11 @@
             $cc_log = $this->get_cc_log();
             if(!$cc_log){
                 SystemMessages::add_err_message("אירעה שגיאה בתשלום");
-                return $this->redirect_to(inner_url());
+                return $this->redirect_to(inner_url('payments/list/'));
             }
             if($cc_log['pay_good'] != '0'){
                 SystemMessages::add_err_message("אירעה שגיאה בתשלום");
-                return $this->redirect_to(inner_url()); 
+                return $this->redirect_to(inner_url('payments/list/')); 
             }
             $this->update_cc_log_from_request($cc_log,'2');
             $this->add_user_cc_token($cc_log);
