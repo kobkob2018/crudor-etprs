@@ -1,6 +1,6 @@
 <?php 
 
-echo "Your IP adress is: ".$_SERVER['remote_addr'];
+echo "Your IP adress is: ".$_SERVER['REMOTE_ADDR'];
 /*
 
 send_email_test();
