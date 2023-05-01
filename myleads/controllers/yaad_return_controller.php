@@ -133,7 +133,7 @@
             print_help($api_url);
             print_help($postData);
             print_help($output);
-
+exit();
             $result_arr = explode("&",$output);
             $result = array();
             foreach($result_arr as $result_val){
