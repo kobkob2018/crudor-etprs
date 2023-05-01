@@ -50,7 +50,7 @@
             $params = array(
                 'Masof'=>get_config('yaad_api_masof'),
                 'action'=>'soft',
-                'PassP'=>get_config('yaad_api_pass'),
+                'PassP'=>get_config('yaad_api_token_pass'),
                 'Token'=>'True',
                 'Order'=>$pay_by_cc_log_id,
                 'Amount'=>$new_p,
@@ -85,7 +85,7 @@
          
             $output=curl_exec($ch);
             curl_close($ch);
-            
+            exit($output);
             $result_arr = explode("&",$output);
             $result = array();
             foreach($result_arr as $result_val){
