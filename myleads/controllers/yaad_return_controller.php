@@ -82,6 +82,9 @@
                 return;
             }
             $yaad_token = $this->get_token_from_yaad($_REQUEST['Id']);
+            if(!$yaad_token){
+                return false;
+            }
             $new_token = array(
                 'user_id'=>$cc_log['user_id'],
                 'transaction_id'=>$_REQUEST['Id'],
@@ -108,7 +111,6 @@
                 'TransId'=>$transaction_id,
                 'allowFalse'=>'True',
             );
-
           $postData = '';
            //create name value pairs seperated by &
            foreach($params as $k => $v) 
@@ -123,11 +125,11 @@
             curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
             curl_setopt($ch,CURLOPT_HEADER, false); 
             curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);    
-         print_help($postData);
+         
             $output=curl_exec($ch);
-         var_dump($output);
+         
             curl_close($ch);
-         exit("in get token");   
+            
             $result_arr = explode("&",$output);
             $result = array();
             foreach($result_arr as $result_val){
