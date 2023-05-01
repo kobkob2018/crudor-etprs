@@ -126,7 +126,7 @@
 	}
 
 	public function redirect_to($url){
-		exit("redirected to: ". $url)
+		exit("redirected to: ". $url);
 		$this->set_layout('blank');
 		header('Location: '.$url);
 	}
