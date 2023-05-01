@@ -5,7 +5,7 @@
 
 				<h5>לרכישה:</h5>
 				<form action='credits/send_to_yaad/' method='post' name='sendto_buy_leads' id='sendto_buy_leads_form'>
-					<input type='hidden' name='content_type' value='iframe' />
+					
 					<div class='buy_leads_desc form-group'>
 						
 						אנא מלאו את מספר הלידים שברצונכם לרכוש: <br/>
