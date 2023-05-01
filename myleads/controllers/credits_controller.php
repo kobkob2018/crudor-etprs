@@ -86,6 +86,7 @@
          
             $output=curl_exec($ch);
             curl_close($ch);
+            print_help("credits_controller.php line 89. please fix");
             print_r_help($params,$output);
             exit(); 
             $result_arr = explode("&",$output);
