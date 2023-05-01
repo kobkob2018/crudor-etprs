@@ -78,8 +78,7 @@
             $postData = rtrim($postData, '&');
          
             $ch = curl_init();  
-            print_r_help($params,$postData);
-            exit();            
+           
             curl_setopt($ch,CURLOPT_URL,$yaad_api_url);
             curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
             curl_setopt($ch,CURLOPT_HEADER, false); 
@@ -87,6 +86,8 @@
          
             $output=curl_exec($ch);
             curl_close($ch);
+            print_r_help($params,$output);
+            exit(); 
             $result_arr = explode("&",$output);
             $result = array();
             foreach($result_arr as $result_val){
