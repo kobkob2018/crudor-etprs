@@ -108,7 +108,7 @@
         protected function get_token_from_yaad($transaction_id){
 	
             $params = array(
-                'Pass'=>get_config('yaad_api_token_pass'),
+                'PassP'=>get_config('yaad_api_token_pass'),
                 'action'=>'getToken',
                 'Masof'=>get_config('yaad_api_masof'),
                 'TransId'=>$transaction_id,
