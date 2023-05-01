@@ -90,9 +90,9 @@
                 'Tmonth'=>$_REQUEST['Tmonth'],
                 'Tyear'=>$_REQUEST['Tyear'],
                 'customer_ID_number'=>$_REQUEST['UserId'],
-                'Fild1'=>$_REQUEST['Fild1'],
-                'Fild2'=>$_REQUEST['Fild2'],
-                'Fild3'=>$_REQUEST['Fild3'],
+                'Fild1'=>wigt($_REQUEST['Fild1']),
+                'Fild2'=>wigt($_REQUEST['Fild2']),
+                'Fild3'=>wigt($_REQUEST['Fild3']),
                 'full_name'=>$cc_log['full_name'],
                 'biz_name'=>$cc_log['biz_name']
             );

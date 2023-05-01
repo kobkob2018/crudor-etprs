@@ -165,6 +165,15 @@ function hebdt($datetime_str = null ,$format = 'd-m-Y H:i:s'){
     return $date->format($format);
 }
 
+function utgt($val){
+	return iconv("windows-1255//IGNORE", "UTF-8//IGNORE",$val);
+}
+
+function wigt($val){
+	return iconv("UTF-8","windows-1255",$val);
+}
+
+
 function system_path($file_path){
     global $init_request;
     
