@@ -10,6 +10,7 @@
 	private $login_state = false;
 
     public function __construct(){
+		print_r_help($_SESSION);
 		if(session__isset('login_user')){
 			$this->retrive_user_data_from_db();
 		}
