@@ -1,7 +1,7 @@
 <?php
   class cron_user_phone_callsModule extends CrudController{
 
-    public $add_models = array("Link_system_calls");
+    public $add_models = array("link_system_calls");
 
 
     protected function update_new_calls(){
