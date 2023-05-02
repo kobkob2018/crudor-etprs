@@ -21,7 +21,7 @@ a{
 
 
 
-.header-mid{
+.header-mid, .kova-b h3{
     background: <?= $info['colors']['header-mid-bg'] ?>;
     color: <?= $info['colors']['header-mid-color'] ?>;
 }
@@ -42,10 +42,12 @@ a{
     color: <?= $info['colors']['footer-color'] ?>;
 }
 
-.big-title{
+.big-title, .kova h3{
     background: <?= $info['colors']['big-title-bg'] ?>;
     color: <?= $info['colors']['big-title-color'] ?>;   
 }
+
+
 
 .big-title a{
     color: <?= $info['colors']['big-title-color'] ?>;   
