@@ -123,6 +123,7 @@
         $return_array = array(
             'url'=>'',
             'path'=>'',
+            'outer_url'=>''
         );
         
         $sites_build_format = get_config('sites_build_format');
@@ -131,12 +132,14 @@
             $return_array['path'] = get_config('domains_path').'/'.$site['domain'].'/public_html/'.'assets/';
             $return_array['url'] = $site_url.'/assets/';
             if(get_config('mode') == 'dev'){
-                $return_array['url'] = $site_url.'/'.get_config('domains_path').'/'.$site['domain'].'/public_html/'.'assets/';
+                $return_array['url'] = '/'.get_config('domains_path').'/'.$site['domain'].'/public_html/'.'assets/';
+                $return_array['outer_url'] = $site_url.'/'.get_config('domains_path').'/'.$site['domain'].'/public_html/'.'assets/';
             }
         }
         elseif($sites_build_format == 'pointer_to_main'){
             $return_array['path'] = 'assets_s/'.$site['id'].'/';
-            $return_array['url'] = $site_url.'/assets_s/'.$site['id'].'/';
+            $return_array['url'] = 'assets_s/'.$site['id'].'/';
+            $return_array['outer_url'] = $site_url.'/assets_s/'.$site['id'].'/';
             if(!is_dir('assets_s')){
                 $oldumask = umask(0) ;
                 $mkdir = @mkdir( 'assets_s', 0755 ) ;
