@@ -623,21 +623,21 @@ a.nice-button{
         border-bottom-left-radius:20px ;
         border-bottom-right-radius:20px ;
     }
-    
-    .h-r,.h-l{
-        width: 48% ;
-    }
-    .h-r{
-        float: right;
-    }
-    .h-l{
-        float: left;
-    }
 }
 
 
 @media only screen and (min-width: 580px) {
     .leftish{float:left;}
+    .h-r,.h-l{
+        width: 48% ;
+    }
+    .h-r{
+        float: right;
+        clear: both;
+    }
+    .h-l{
+        float: left;
+    }
 }
 
 @media only screen and (max-width: 890px) {
