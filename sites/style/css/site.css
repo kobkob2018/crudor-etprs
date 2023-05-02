@@ -602,6 +602,10 @@ a.nice-button{
 }
 
 
+@media only screen and (min-width: 580px) {
+    .leftish{float:left;}
+}
+
 @media only screen and (max-width: 890px) {
 
     .top-menu-drawer{
