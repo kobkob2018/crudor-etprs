@@ -24,7 +24,7 @@ textarea, input { outline: none; }
 
 @media only screen and (max-width: 890px) {
     .desktop-only, .wide-only{
-        display: none;
+        display: none !important;
     }
 }
 
