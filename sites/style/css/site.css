@@ -476,6 +476,17 @@ a.nice-button{
     text-align:center;
 }
 
+
+.kova. .kova-b{
+    text-align: center;
+}
+
+.kova h3,.kova-b h3{
+    padding: 5px 10px;
+    border-top-right-radius: 18px;
+    border-top-left-radius: 18px;
+}
+
 @media only screen and (min-width: 890px) {
     .wide-fix-top-right{
         margin-left:auto;
@@ -605,7 +616,15 @@ a.nice-button{
         border-bottom-right-radius:20px ;
     }
     
-    
+    .h-r,.h-l{
+        width: 45% ;
+    }
+    .h-r{
+        float: right;
+    }
+    .h-l{
+        float: left;
+    }
 }
 
 
