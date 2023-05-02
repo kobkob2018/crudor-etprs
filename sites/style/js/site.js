@@ -94,6 +94,7 @@ initBannerClickers = ()=>{
 initPageRearangement = ()=>{
     rearangeLeftBar();
     relocateBizForm();
+    fixHeaderSpacing();
 } 
 
 rearangeLeftBar = ()=>{
@@ -138,4 +139,16 @@ relocateBizForm = ()=>{
         formHolder.append(bizForm);
     }
     
+} 
+
+fixHeaderSpacing = ()=>{
+    let fixTop = document.querySelector(".top-fix");
+    if(!fixTop){
+        return;
+    }
+    let pageWrap = document.querySelector("#page_wrap");
+    if(!pageWrap){
+        return;
+    }
+    pageWrap.style.marginTop = fixTop.offsetHeight + "px";
 } 
