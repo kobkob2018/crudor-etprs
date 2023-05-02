@@ -472,6 +472,10 @@ a.nice-button{
     max-width: 100%;
 }
 
+.centerish{
+    text-align:center;
+}
+
 @media only screen and (min-width: 890px) {
     .wide-fix-top-right{
         margin-left:auto;
