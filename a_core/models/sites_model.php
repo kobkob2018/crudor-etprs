@@ -138,7 +138,7 @@
         }
         elseif($sites_build_format == 'pointer_to_main'){
             $return_array['path'] = 'assets_s/'.$site['id'].'/';
-            $return_array['url'] = 'assets_s/'.$site['id'].'/';
+            $return_array['url'] = '/assets_s/'.$site['id'].'/';
             $return_array['outer_url'] = $site_url.'/assets_s/'.$site['id'].'/';
             if(!is_dir('assets_s')){
                 $oldumask = umask(0) ;
