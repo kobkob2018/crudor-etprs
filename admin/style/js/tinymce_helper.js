@@ -18,7 +18,7 @@ function update_from_media_library(file_name){
 function init_tinymce(selector_identifier,media_uploader_url, media_library_url){
     global_media_library_url = media_library_url;
     tinymce.init({
-
+/*
         setup: (editor) => {
             editor.ui.registry.addButton('kovaDiv', {
                 text: '(:::)',
@@ -28,6 +28,8 @@ function init_tinymce(selector_identifier,media_uploader_url, media_library_url)
                 }
             });
           },
+
+          */
         selector: selector_identifier,
         plugins: 'image code link lists codesample advlist autosave emoticons fullscreen help insertdatetime nonbreaking preview searchreplace table' ,
         toolbar: ['undo redo | image code align link hr insertdatetime kovaDiv | numlist bullist table',
