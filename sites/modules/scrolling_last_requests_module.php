@@ -1,7 +1,7 @@
 <?php
 	class scrolling_last_requestsModule extends Module{
         
-        public $add_models = array("biz_categories","cities","siteBiz_forms","SiteBiz_requests");
+        public $add_models = array("biz_categories","cities","siteBiz_forms","siteBiz_requests");
         public function print(){
 
             $biz_form_data = siteBiz_forms::get_current_biz_form();
