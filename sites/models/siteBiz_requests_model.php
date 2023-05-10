@@ -37,5 +37,16 @@
         return $result['times_count'];
     }
 
+    public static function get_cat_last_requests($cat_tree){
+
+        $execute_arr = array("phone"=>$phone);
+        $sql = "SELECT COUNT(id) as `times_count` FROM biz_requests WHERE phone = :phone AND date_in > (NOW() - INTERVAL 7 DAY)";
+        $db = Db::getInstance();		
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
+        $result = $req->fetch();
+        return $result['times_count'];
+    }
+
 }
 ?>

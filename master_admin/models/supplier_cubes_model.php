@@ -36,9 +36,10 @@
         $cities_tree = self::simple_get_item_offsprings_tree_by_table_name('0', 'cities',"id, parent,label",array(),array('order_by'=>'label'));
 
         $return_options = array();
+        $return_options[] = array('value'=>'0','title'=>"---");
         foreach($cities_tree[0]['children'] as $key=>$area){
             
-            $return_options[] = array('value'=>$area['id'],'title'=>"--".$area['label']."--");
+            $return_options[] = array('value'=>$area['id'],'title'=>$area['label']);
             if($area['has_children']){
                 foreach($area['children'] as $city){
                     $return_options[] = array('value'=>$city['id'],'title'=>$city['label']);

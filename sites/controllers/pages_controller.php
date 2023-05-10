@@ -12,6 +12,9 @@
     }
 
     protected function page_view(){
+      if(!isset($this->data['is_home_page'])){
+        $this->data['is_home_page'] = false;
+      }
       $page = SitePages::get_current_page();
       
       $this->add_asset_mapping(SitePages::$assets_mapping);
@@ -39,6 +42,7 @@
     }
 
     protected function home(){
+      $this->data['is_home_page'] = true;
       return $this->page_view();
     }
 

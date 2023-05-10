@@ -17,8 +17,8 @@
 
         'end_date'=>array(
             'label'=>'תאריך תפוגת פעילות',
-            'type'=>'text',
-            'validation'=>'date_time'
+            'type'=>'date',
+            'validation'=>'required, date'
         ),
 
         'lead_price_no_tax'=>array(
