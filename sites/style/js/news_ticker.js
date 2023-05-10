@@ -1,6 +1,7 @@
 initNewsTicker = ()=>{
-    const travelocity = 0.4
-    document.querySelectorAll("ul#ticker01").forEach(strip=>{
+   
+    const travelocity = 0.56;
+    document.querySelectorAll(".news-ticker").forEach(strip=>{
         strip.dataset.animate_state = "play";
         let stripHeight = strip.offsetHeight;
         let mask = wrapElement(strip,"mask");
@@ -16,7 +17,8 @@ initNewsTicker = ()=>{
         });
         let containerHeight = tickercontainer.offsetHeight;
         let totalTravel = stripHeight;
-        const tempo = totalTravel/travelocity;
+        // const tempo = totalTravel/travelocity;
+        const tempo = 1700;
         //console.log(totalTravel);
 
         function scrollnews(fromP){
@@ -38,9 +40,8 @@ initNewsTicker = ()=>{
                 fromP = containerHeight;
             }
             toP = fromP - 50;
-          //  console.log("animateStrip");
-            let spazioNext = strip.offsetTop - totalTravel;
-            
+            console.log(tempo);
+            console.log(toP);
             const newspaperSpinning = [
                 { top: fromP+"px" },
                 { top: toP + "px" },

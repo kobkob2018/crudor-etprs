@@ -1,20 +1,38 @@
 <?php
 	class scrolling_last_requestsModule extends Module{
         
-        public $add_models = array("biz_categories","siteBiz_forms");
+        public $add_models = array("biz_categories","cities","siteBiz_forms","SiteBiz_requests");
         public function print(){
 
             $biz_form_data = siteBiz_forms::get_current_biz_form();
             if(!$biz_form_data){
                 return;
             }
-            if($biz_form_data['cat_id'] == ""){
-                return;
-            }
-            $cat_tree = Biz_categories::get_item_parents_tree($biz_form_data['cat_id'],'id, parent');
-            $last_requests = SiteBiz_requests::get_cat_last_requests($cat_tree);
+            
+            $last_requests = SiteBiz_requests::get_form_last_requests($biz_form_data['id']);
+            $cat_names = array();
             if($last_requests){
-
+                foreach($last_requests  as $key=>$biz_request){
+                    $cat_id = $biz_request['cat_id'];
+                    if(!isset($cat_names[$cat_id])){
+                        $cat_name = Biz_categories::get_by_id($cat_id,'label');
+                        if(!$cat_name){
+                            $cat_name = "";
+                        }
+                        $cat_names[$cat_id] = $cat_name['label'];
+                    }
+                    $city_id = $biz_request['city_id'];
+                    $biz_request['cat_name'] = $cat_names[$cat_id];
+                    if(!isset($city_names[$cat_id])){
+                        $city_name = Cities::get_by_id($city_id,'label');
+                        if(!$city_name){
+                            $city_name = "";
+                        }
+                        $city_names[$city_id] = $city_name['label'];
+                    }
+                    $biz_request['city_name'] = $city_names[$city_id];
+                    $last_requests[$key] = $biz_request;
+                }
                 //add data here
             }
             if(empty($last_requests)){
@@ -22,11 +40,10 @@
             }
             $info = array(
                 'form'=>$biz_form_data,
-                'cat_tree'=>$cat_tree,
                 'last_requests'=>$last_requests
             );
 
-            $this->include_view('supplier_cubes/leftbar_supplier_cubes.php',$info);
+            $this->include_view('scrolling/last_requests.php',$info);
         }
 
 	}

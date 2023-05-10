@@ -37,15 +37,18 @@
         return $result['times_count'];
     }
 
-    public static function get_cat_last_requests($cat_tree){
+    public static function get_form_last_requests($form_id){
 
-        $execute_arr = array("phone"=>$phone);
-        $sql = "SELECT COUNT(id) as `times_count` FROM biz_requests WHERE phone = :phone AND date_in > (NOW() - INTERVAL 7 DAY)";
+        $execute_arr = array('form_id'=>$form_id);
+        $sql = "SELECT * FROM biz_requests WHERE form_id = :form_id AND date_in > (NOW() - INTERVAL 30 DAY) LIMIT 10";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
         $req->execute($execute_arr);
-        $result = $req->fetch();
-        return $result['times_count'];
+        $result = $req->fetchAll();
+        if(!$result){
+            return array();
+        }
+        return $result;
     }
 
 }

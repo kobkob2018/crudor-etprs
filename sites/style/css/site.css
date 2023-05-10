@@ -477,6 +477,9 @@ a.nice-button{
     text-align:center;
 }
 
+.smaller{
+    font-size: 0.6rem;
+}
 
 .kova, .kova-b{
     text-align: center;
@@ -489,6 +492,34 @@ a.nice-button{
     border-top-right-radius: 18px;
     border-top-left-radius: 18px;
 }
+
+.right-bar .kova{
+    margin-top: 20px;
+}
+
+.kova-content{
+    border: 1px solid gray;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.news-ticker-wrap { 
+    height:160px;
+    overflow:hidden;
+    text-align: right;
+    font-family:Helvetica;
+  }
+.news-ticker-wrap .mask {
+    position: relative;
+    left: 0px;
+    top: 10px;
+    height:150px;
+    overflow: hidden;
+  }
+  .news-ticker {
+    position: relative;
+  }
+
 
 .img img{
     width: 100%;
