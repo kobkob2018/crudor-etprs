@@ -86,10 +86,11 @@
             'type'=>'text'
         ),  
         
-        
         'city_id'=>array(
             'label'=>'שיוך לעיר',
             'type'=>'select',
+            'default'=>'0',
+            'select_blank'=>false,
             'options_method'=>array('model'=>'supplier_cubes','method'=>'get_select_city_options')
         ),
 
