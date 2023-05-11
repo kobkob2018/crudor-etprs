@@ -72,8 +72,8 @@
             'type'=>'select',
             'default'=>'1',
             'options'=>array(
-                array('value'=>'0', 'title'=>'כן'),
-                array('value'=>'1', 'title'=>'לא')
+                array('value'=>'0', 'title'=>'לא'),
+                array('value'=>'1', 'title'=>'כן')
             ),
             'validation'=>'required'
         ),
