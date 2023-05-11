@@ -59,7 +59,13 @@
                 <a href="<?= inner_url('site_colors/edit/') ?>" title="צבעים" class="a-link">צבעים</a>
             </li>         
         </ul>
+        <ul class="item-group">
 
+            <li class="bar-item <?= $view->a_class("news/list/") ?> <?= $view->a_c_class("news") ?>">
+                <a href="<?= inner_url('news/list/') ?>" title="חדשות האתר" class="a-link">חדשות האתר</a>
+            </li>
+            
+        </ul>
         <h4>ניהול תפריטים</h4>
         <ul class="item-group">
 
