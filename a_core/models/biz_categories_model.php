@@ -50,6 +50,12 @@
             'type'=>'text',
             'validation'=>'required'
         ),
+        'priority'=>array(
+            'label'=>'מיקום',
+            'type'=>'text',
+            'default'=>'10',
+            'validation'=>'required, int'
+        ),
         'active'=>array(
             'label'=>'סטטוס פעיל',
             'type'=>'select',
