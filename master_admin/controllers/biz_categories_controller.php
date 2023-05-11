@@ -33,7 +33,7 @@
         $filter_arr['parent'] = $this->data['current_item_id'];
 
         $payload = array(
-            'order_by'=>'label'
+            'order_by'=>'priority, label'
         );
         $cat_list = Biz_categories::get_list($filter_arr,"*", $payload);  
         $this->data['cat_list'] = $cat_list;

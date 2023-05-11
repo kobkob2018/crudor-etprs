@@ -17,6 +17,7 @@
 <?php if(!empty($this->data['cat_list'])): ?>
     <div class="items-table flex-table">
         <div class="table-th row">
+            <div class="co col-tiny">מיקום</div>
             <div class="col">קטגוריה</div>
             <div class="col">עריכה</div>
             <div class="col">העברה</div>
@@ -24,6 +25,9 @@
         </div>
         <?php foreach($this->data['cat_list'] as $cat): ?>
             <div class="table-tr row">
+                <div class="col col-tiny">
+                    <?= $cat['priority'] ?>
+                </div>
                 <div class="col">
                     <a href = "<?= inner_url('biz_categories/list/') ?>?row_id=<?= $cat['id'] ?>" title="בחירה"><?= $cat['label'] ?></a>
                 </div>

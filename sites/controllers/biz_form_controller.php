@@ -161,7 +161,8 @@
         $return_array['cat_id'] = $cat_id;
         $return_array['have_children'] = false;
         $filter_arr = array('active'=>'1', 'visible'=>'1');
-        $cat_children = Biz_categories::get_children_list_of($cat_id,'id,label,parent',$filter_arr);
+        $payload = array('order_by'=>'priority, label');
+        $cat_children = Biz_categories::get_children_list_of($cat_id,'id,label,parent',$filter_arr,$payload);
         if(!$cat_children){
             return $return_array;
         }

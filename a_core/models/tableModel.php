@@ -23,8 +23,8 @@ class TableModel extends Model{
         return self::simple_get_item_parents_tree($item_id, $select_params);
     }
 
-    public static function get_children_list_of($parent_id, $select_params = "*"){
-        return self::simple_get_children_list_of($parent_id, $select_params);
+    public static function get_children_list_of($parent_id, $select_params = "*",$filter_arr = array(),$payload = array()){
+        return self::simple_get_children_list_of($parent_id, $select_params,$filter_arr,$payload);
     }
 
     public static function create($field_values){
@@ -168,12 +168,12 @@ class TableModel extends Model{
         return self::simple_delete_arr_by_table_name($item_arr, $table_name);
     }   
 
-    public static function simple_get_children_list_of($parent_id, $select_params = "*"){
+    public static function simple_get_children_list_of($parent_id, $select_params = "*", $filter_arr = array(), $payload = array()){
         if(!static::$main_table){
             return false;
         }
         $table_name = static::$main_table;
-        return self::simple_get_children_list_of_by_table_name($parent_id, $table_name, $select_params);
+        return self::simple_get_children_list_of_by_table_name($parent_id, $table_name, $select_params, $filter_arr, $payload);
     }
 
     public static function simple_delete_with_offsprings($row_id){
