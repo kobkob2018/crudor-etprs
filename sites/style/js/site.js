@@ -131,6 +131,11 @@ rearangeLeftBar = ()=>{
 
 relocateBizForm = ()=>{
     let formHolder = document.querySelector(".hero-form-holder");
+    if(window.innerWidth < 890){
+        if(formHolder.classList.contains("wide-only")){
+            return;
+        }
+    }
     if(!formHolder){
         return;
     }
