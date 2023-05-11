@@ -53,7 +53,7 @@
         'priority'=>array(
             'label'=>'מיקום',
             'type'=>'text',
-            'default'=>'10',
+            'default'=>'50',
             'validation'=>'required, int'
         ),
         'active'=>array(
