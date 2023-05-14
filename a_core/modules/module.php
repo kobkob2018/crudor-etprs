@@ -40,5 +40,23 @@
       return $body_output;
     }
 
+    protected function decode_action_data_arr(){
+      $data = $this->action_data;
+      $data_arr = explode(" ",$data);
+      
+      $return_arr = array();
+      foreach($data_arr as $param){
+        
+        $param = trim($param);
+        $param_arr = explode(":",$param);
+        
+        if(isset($param_arr[0]) && isset($param_arr[1])){
+          $return_arr[$param_arr[0]] = $param_arr[1];
+        }
+      }
+      
+      return $return_arr;
+    }
+
   }
 ?>

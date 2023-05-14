@@ -1,4 +1,7 @@
 <div class="right-bar">
+    <?php if($this->data['is_home_page']): ?>
+        <?php $this->call_module('scrolling_news','print'); ?>
+    <?php endif; ?>
     <?php if($view->controller_is("pages")): ?>
         <?php if(isset($this->data['page']['right_banner']) && $this->data['page']['right_banner']): ?>
             <div class = 'right-bar-banner'>

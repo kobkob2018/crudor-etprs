@@ -515,11 +515,19 @@ a.nice-button{
     top: 10px;
     height:150px;
     overflow: hidden;
-  }
-  .news-ticker {
+}
+.news-ticker{
     position: relative;
-  }
+}
 
+.news-ticker .item-content{
+    font-size: 0.9em;
+    padding-bottom: 10px;
+}
+
+a.news-ticker-a-content{
+    color: black;
+}
 
 .img img{
     width: 100%;

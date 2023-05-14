@@ -15,9 +15,6 @@
                             <div class="item-content">
                                 <?= $biz_request['note'] ?>
                             </div>
-                            <b class="color-b">
-                                <?= $biz_request['id'] ?>
-                            </b>
                             <div class="item-date smaller">
                                 <?= hebdt($biz_request['date_in'],"d-m-Y H:i") ?>
                             </div>                              

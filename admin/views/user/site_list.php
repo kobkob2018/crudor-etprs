@@ -1,3 +1,5 @@
+<h2>האתרים שלי</h2>
+<h4>בחר אתר לעריכה</h4>
 <ul> 
     <?php foreach($this->data['user_sites_link_list'] as $site): ?>
         <li>

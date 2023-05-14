@@ -21,8 +21,8 @@
             'css_class'=>'small-text',
             'validation'=>''
         ),
-        'row_html'=>array(
-            'label'=>'HTML של שורה',
+        'title_html'=>array(
+            'label'=>'HTML של שורת הכותרת',
             'type'=>'textbox',
             'css_class'=>'small-text',
             'validation'=>''

@@ -12,7 +12,7 @@ initNewsTicker = ()=>{
         });
         let containerHeight = tickercontainer.offsetHeight;
         let totalTravel = stripHeight;
-        const tempo = 1700;
+        const tempo = 5500;
 
         function scrollnews(fromP){
             animateStrip(fromP,(nextfromP)=>{scrollnews(nextfromP);});
