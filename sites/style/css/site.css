@@ -97,6 +97,11 @@ textarea, input { outline: none; }
     width:26px;
 }
 
+.top-fa .fa.fa-wheelchair{
+    font-size: 18px;
+    width: 14px;
+}
+
 .footer{
     margin-top: 100px;
     padding: 20px;
@@ -532,6 +537,47 @@ a.news-ticker-a-content{
 .img img{
     width: 100%;
     height: auto;
+}
+
+.flex-table .row {
+    display: table-row;
+}
+
+.flex-table .col {
+    display: table-cell;
+    border-bottom: 1px solid #a7c33e;
+    padding: 5px 10px 15px;
+    vertical-align: top;
+
+}
+
+.flex-table .col-tiny {
+    max-width:50px;
+}
+
+.flex-table .col-small{
+    max-width: 100px;
+}
+
+.quote-cat-wrap{
+    margin: 20px 0px;
+}
+
+.quote-list-wrap .flex-table-th{
+    background: #808080;
+    color: white;
+}
+
+.quote-list-wrap {
+    border: 5px solid gray;
+    border-top: none;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+}
+
+.quote-list-wrap .col{
+    border-bottom: 2px solid #808080;
 }
 
 @media only screen and (min-width: 890px) {
