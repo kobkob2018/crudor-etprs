@@ -72,7 +72,27 @@ function openDrawer(drawerId) {
 document.addEventListener("DOMContentLoaded",()=>{
     initBannerClickers();
     initPageRearangement();
+    initQuotesToggler();
 });
+
+initQuotesToggler = ()=>{
+    document.querySelectorAll('.quote-cat-toggler').forEach(
+        toggler=>{
+            toggler.addEventListener("click",(event)=>{
+                const quoteCat = toggler.closest(".quote-cat-wrap");
+                const quoteList = quoteCat.querySelector(".quote-list-wrap");
+                if(quoteCat.dataset.state == "open"){
+                    quoteCat.dataset.state = "closed";
+                    quoteList.classList.add("hidden");
+                }
+                else{
+                    quoteCat.dataset.state = "open";
+                    quoteList.classList.remove("hidden");                    
+                }
+            });
+        }
+    );
+} 
 
 initBannerClickers = ()=>{
     document.querySelectorAll('.banner-clicker').forEach(
@@ -131,6 +151,9 @@ rearangeLeftBar = ()=>{
 
 relocateBizForm = ()=>{
     let formHolder = document.querySelector(".hero-form-holder");
+    if(!formHolder){
+        return;
+    }
     if(window.innerWidth < 890){
         if(formHolder.classList.contains("wide-only")){
             return;

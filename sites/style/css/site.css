@@ -483,7 +483,7 @@ a.nice-button{
 }
 
 .smaller{
-    font-size: 0.6rem;
+    font-size: 0.85rem;
 }
 
 .kova, .kova-b{
@@ -545,7 +545,6 @@ a.news-ticker-a-content{
 
 .flex-table .col {
     display: table-cell;
-    border-bottom: 1px solid #a7c33e;
     padding: 5px 10px 15px;
     vertical-align: top;
 
@@ -559,8 +558,17 @@ a.news-ticker-a-content{
     max-width: 100px;
 }
 
+.quote-cat-title{
+    text-align: center;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
 .quote-cat-wrap{
     margin: 20px 0px;
+    border-bottom: 8px solid #808080;
+    border-radius: 5px;
 }
 
 .quote-list-wrap .flex-table-th{
@@ -569,15 +577,54 @@ a.news-ticker-a-content{
 }
 
 .quote-list-wrap {
-    border: 5px solid gray;
+    border: 5px solid #808080;
     border-top: none;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-
 }
 
 .quote-list-wrap .col{
     border-bottom: 2px solid #808080;
+}
+
+.mobile-quote-wrap{
+    border-bottom: 2px solid #808080;
+}
+
+.mobile-quote-wrap .col{
+    border-bottom: none;
+}
+
+.quote-wrap .col-first{
+    width: 30%;
+}
+
+.quote-wrap .col-first img{
+    width: 100%;
+}
+
+.quote-link a{
+    display: block;
+    padding: 5px 18px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    max-width: 100px;
+}
+
+.quote-phone-link{
+    display: flex;
+    padding-top: 5px;
+}
+
+.quote-phone-link .fa{
+    display: block;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.quote-list-wrap .flex-table-th .col{
+    border-bottom:none;
+    padding: 5px 10px 5px;
+    font-size: 20px;
 }
 
 @media only screen and (min-width: 890px) {
@@ -708,6 +755,9 @@ a.news-ticker-a-content{
         padding: 16px 50px;
         border-bottom-left-radius:20px ;
         border-bottom-right-radius:20px ;
+    }
+    .quote-wrap .col-first{
+        width: 110px;
     }
 }
 

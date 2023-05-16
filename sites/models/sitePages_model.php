@@ -60,5 +60,33 @@
         $page_list = $req->fetchAll();
         return $page_list;
     }
+
+    public static function search_by_str($search){
+        $current_site = Sites::get_current_site();
+        $execute_arr = array('site_id'=>$current_site['id'], 'search'=>"%".$search."%");
+        $db = Db::getInstance();
+        $sql = "SELECT * FROM 
+                    content_pages WHERE ( 
+                            id IN(
+                                SELECT distinct page_id 
+                                FROM content_blocks 
+                                WHERE site_id = :site_id 
+                                AND content LIKE :search) 
+                            OR title LIKE :search 
+                            OR description LIKE :search
+                        ) 
+                        AND site_id = :site_id 
+                        AND active = '1' 
+                        AND visible = '1'";	
+
+
+
+        
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
+        $page_list = $req->fetchAll();
+        return $page_list;
+    }
+
   }
 ?>

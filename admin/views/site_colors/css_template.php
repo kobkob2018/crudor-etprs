@@ -31,7 +31,7 @@ a{
 }
 
 .header-mid a:hover{
-    color: <?= $info['colors']['top-link-hover'] ?>;
+    color: <?= $info['colors']['top-fix-link-hover'] ?>;
 }
 
 .footer{
@@ -61,7 +61,7 @@ a{
     color: <?= $info['colors']['title-color'] ?>; 
 }
 
-.bolor-b{
+.color-b{
     color: <?= $info['colors']['b-color'] ?>;
 }
 
