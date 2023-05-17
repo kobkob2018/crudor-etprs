@@ -3,7 +3,6 @@
     public $add_models = array("siteGallery");
 
     protected function init_setup($action){
-      $this->data['page_meta_title'] = $this->data['site']['meta_title'];
       return parent::init_setup($action);
     }
 

@@ -29,7 +29,7 @@
     </ul>
 <?php endif; ?>
 <div class="top-search">
-    <form action = "<?= inner_url('search/result/') ?>" method="POST" >
+    <form action = "<?= inner_url('search/result/') ?>" method="GET" >
         <input type="text" name="user_search" placeholder="חיפוש"/>
         <button type="submit">
             <span class="fa fa-search"></span>

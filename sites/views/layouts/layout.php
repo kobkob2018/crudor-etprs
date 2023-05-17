@@ -6,8 +6,10 @@
     </script>
   		<base href="<?= outer_url(); ?>" />
 		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />	
-		<link rel="shortcut icon" type="image/x-icon" href="style/image/favicon.ico">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+		
 		
 
 		<link rel="stylesheet" href="<?= styles_url("style/css/site.css") ?>?v=<?= get_config("cash_version") ?>"  type="text/css" />	
@@ -20,6 +22,22 @@
 		<link rel="stylesheet" href="<?= styles_url("style/css/icons.css") ?>?v=<?= get_config("cash_version") ?>"  type="text/css" />	
 
 		<title><?= $this->data['page_meta_title']; ?></title>
+
+		<?php if(isset($this->data['page_meta_favicon'])): ?>
+			<link rel="shortcut icon" type="image/x-icon" href="<?= $this->data['page_meta_favicon'] ?>">
+		<?php endif; ?>
+		<?php if(isset($this->data['page_meta_keywords'])): ?>
+			<META NAME="KEYWORDS" CONTENT="<?= str_replace('"','\"',$this->data['page_meta_keywords']) ?>">
+		<?php endif; ?>
+
+		<?php if(isset($this->data['page_meta_description'])): ?>
+			<META NAME="DESCRIPTION" CONTENT="<?= str_replace('"','\"',$this->data['page_meta_description']) ?>">
+		<?php endif; ?>
+
+		<?php if(isset($this->data['page_meta_ogimage'])): ?>
+			<META property="og:image" CONTENT="<?= $this->data['page_meta_ogimage'] ?>">
+		<?php endif; ?>
+
 		<?php $this->include_view('registered_scripts/head.php'); ?>
 		<?php if(isset($this->data['page_style']) && $this->data['page_style'] && $this->data['page_style']['styling_tags'] != ''): ?>
 			<?= $this->data['page_style']['styling_tags'] ?>

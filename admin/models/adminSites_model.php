@@ -43,6 +43,17 @@
             'upload_to'=>'site',
             'name_file'=>'logo.{{ext}}'
         ), 
+
+        'favicon'=>array(
+            'label'=>'פביקון',
+            'type'=>'file',
+            'file_type'=>'img',
+            'validation'=>'img',
+            'img_max'=>'10000',
+            'upload_to'=>'site',
+            'name_file'=>'favicon.{{ext}}'
+        ), 
+
         'home_page'=>array(
             'label'=>'דף הבית',
             'type'=>'select',

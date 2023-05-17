@@ -121,7 +121,6 @@
 
         }
         return $file_name;
-
     }
 
     public function add_asset_mapping($mapping_arr){

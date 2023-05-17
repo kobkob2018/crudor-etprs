@@ -29,6 +29,25 @@
             ),
             'validation'=>'required'
         ),
+        
+        'meta_title'=>array(
+            'label'=>'כותרת מטא',
+            'type'=>'text',
+            'validation'=>'required',
+            'css_class'=>'yellowish'
+        ),
+
+        'meta_description'=>array(
+            'label'=>'תיאור מטא',
+            'type'=>'textbox',
+            'css_class'=>'small-text yellowish'
+        ),
+
+        'meta_keywords'=>array(
+            'label'=>'מילות מפתח',
+            'type'=>'text',
+            'css_class'=>'yellowish'
+        ),
 
         'title'=>array(
             'label'=>'כותרת',

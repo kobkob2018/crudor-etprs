@@ -14,11 +14,13 @@
             if($site){
                 
                 $this->add_data('page_meta_title', $site['meta_title']);
+                $this->init_meta_values($site);
             }
             else{
                 $this->add_data('page_meta_title',get_config('site_title'));
             }
             $this->add_data('site',$site);
+            
             $site_styling = SiteSite_styling::get_current_site_styling();
             $this->add_data('site_styling',$site_styling);
             return;
@@ -136,6 +138,16 @@
               }
             }
             return $return_text;
+        }
+
+        public function init_meta_values($site){         
+          $this->add_data("page_meta_title",$site['meta_title']);
+          $this->add_data("page_meta_keywords",$site['meta_keywords']);
+          $this->add_data("page_meta_description",$site['meta_description']);
+          $logo_url = $this->controller->file_url_of('logo',$site['logo']);
+          $this->add_data("page_meta_ogimage",outer_url($logo_url));
+          $favicon_url = $this->controller->file_url_of('favicon',$site['favicon']);
+          $this->add_data("page_meta_favicon",outer_url($favicon_url));
         }
 
 	}

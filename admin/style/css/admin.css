@@ -417,6 +417,11 @@ h4{
     min-height: 200px;
 }
 
+.form-group.yellowish textarea, .form-group.yellowish input{
+    background: #ffffe3;
+}
+
+
 .time-selector{
     direction: ltr;
 }

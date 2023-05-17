@@ -168,6 +168,7 @@
 
     public static $asset_mapping = array(
         'logo'=>'site',
+        'favicon'=>'site',
         'colors_css'=>'style'
     );
   }

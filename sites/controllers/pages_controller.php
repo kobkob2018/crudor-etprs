@@ -2,12 +2,11 @@
   class PagesController extends CrudController{
     public $add_models = array("sitePages","siteBlocks","sitePage_style");
     public function error() {
-      SystemMessages::add_err_message("Oops! seems like you are in the wrong place");
+      header('HTTP/1.0 404 Not Found');
       $this->include_view('pages/error.php');
     }
 
     protected function init_setup($action){
-      $this->data['page_meta_title'] = $this->data['site']['title'];
       return parent::init_setup($action);
     }
 
@@ -22,7 +21,7 @@
         return $this->error();
       }
       $this->data['page'] = $page;
-      $this->data['page_meta_title'] = $page['meta_title'];
+      //$this->data['page_meta_title'] = $page['meta_title'];
 
       $this->data['content_blocks'] = SiteBlocks::get_current_page_blocks();
       $page_style = SitePage_style::get_current_page_style();
@@ -36,6 +35,20 @@
         if($page_style['page_layout'] == '2'){
           $this->set_body('combine_body');
         }
+      }
+
+      if($page['meta_title'] != ""){
+        $this->add_data("page_meta_title",$page['meta_title']);
+      }
+      if($page['meta_keywords'] != ""){
+        $this->add_data("page_meta_keywords",$page['meta_keywords']);
+      }
+      if($page['meta_description'] != ""){
+        $this->add_data("page_meta_description",$page['meta_description']);
+      }
+      if($page['right_banner'] != ""){
+        $ogimage_url = $this->file_url_of('right_banner',$page['right_banner']);
+        $this->add_data("page_meta_ogimage",outer_url($ogimage_url));
       }
 
       $this->include_view('pages/page_view.php');

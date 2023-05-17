@@ -42,8 +42,22 @@
         'meta_title'=>array(
             'label'=>'כותרת מטא',
             'type'=>'text',
-            'validation'=>'required'
+            'validation'=>'required',
+            'css_class'=>'yellowish'
         ),
+
+        'meta_description'=>array(
+            'label'=>'תיאור מטא',
+            'type'=>'textbox',
+            'css_class'=>'small-text yellowish'
+        ),
+
+        'meta_keywords'=>array(
+            'label'=>'מילות מפתח',
+            'type'=>'text',
+            'css_class'=>'yellowish'
+        ),
+
         'link'=>array(
             'label'=>'כתובת URL',
             'type'=>'text',
