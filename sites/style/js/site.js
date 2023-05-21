@@ -116,6 +116,7 @@ initPageRearangement = ()=>{
     relocateBizForm();
     fixMainTitle();
     fixHeaderSpacing();
+    setTimeout(function(){fixHeaderSpacing()},5000);
 } 
 
 fixMainTitle = ()=>{
