@@ -53,5 +53,41 @@
         $this->include_view('products/view.php', $info);
     }
 
+    protected function stam(){
+        $info = array(
+            'product_id'=>false,
+            'sub_id'=>false,
+            'cat_id'=>false
+        );
+        
+        if(isset($_REQUEST['p'])){
+            $info['product_id'] = $_REQUEST['p'];
+        }
+        
+        if(isset($_REQUEST['sub'])){
+            $info['sub_id'] = $_REQUEST['sub'];
+        }
+        
+        if(isset($_REQUEST['cat'])){
+            $info['cat_id'] = $_REQUEST['cat'];
+        }
+        $info = $this->get_cat_list($info);
+        
+    }
+
+    protected function get_cat_list($info){
+        $info['cat_list'] = SiteProducts::get_cat_list($site_id);
+        if(!$info['cat_id']){
+
+        }
+        return $info;
+    }
+
+    protected function get_sub_list($info){
+        $info['cat_list'] = SiteProducts::get_cat_list($site_id);
+
+        return $info;
+    }
+
   }
 ?>

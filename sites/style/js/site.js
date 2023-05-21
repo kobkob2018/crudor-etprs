@@ -114,8 +114,20 @@ initBannerClickers = ()=>{
 initPageRearangement = ()=>{
     rearangeLeftBar();
     relocateBizForm();
+    fixMainTitle();
     fixHeaderSpacing();
 } 
+
+fixMainTitle = ()=>{
+    const titleHolder = document.querySelector(".main-title-holder");
+    if(!titleHolder){
+        return
+    }
+    const titleElement = document.querySelector("#content_title_wrap");
+    if(titleElement){
+        titleHolder.append(titleElement);
+    }
+}
 
 rearangeLeftBar = ()=>{
     const leftBarTop = document.querySelector(".leftbar-top-holder");
