@@ -28,8 +28,8 @@
             SystemMessages::add_success_message("התיקיות שוויכו בהצלחה");
             return $this->redirect_to(inner_url("products/assign_subs/?row_id=".$this->data['item_info']['id'])); 
         }
-
-        $sub_list = Product_sub::get_list(array(),"id, label");
+        $filter_arr = $this->get_base_filter();
+        $sub_list = Product_sub::get_list($filter_arr,"id, label");
         $subs_assigned = Product_sub_assign::get_assigned_subs_to_item($this->data['item_info']['id']);
         $subs_checked_list = array();
         foreach($subs_assigned as $sub){

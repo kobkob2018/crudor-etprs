@@ -70,7 +70,8 @@
         'price'=>array(
             'label'=>'מחיר',
             'type'=>'text',
-            'validation'=>'float'
+            'validation'=>'float',
+            'default'=>'0'
         ),
 
         'image'=>array(
