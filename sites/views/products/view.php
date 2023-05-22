@@ -101,10 +101,9 @@
                                 <?php foreach($info['images'] as $key=>$image): ?>
                                 <div class="gallery-item item item_id_<?= $key ?>">
                                     <div class="item-content">
-                                    fff f ff ff 
                                         <div class="item-text">
                                             <h2>
-                                            d d dd dd d
+                                            <?= $image['label'] ?>
                                             </h2>
                                         </div>
                                                             

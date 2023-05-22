@@ -1,8 +1,7 @@
 
 window.addEventListener("load", (event) => {
-    prepareModalGallery();
-    
-  });
+    setTimeout(function(){prepareModalGallery();},500);
+});
 
 let galleryCarusels = [];
 function prepareModalGallery(){
