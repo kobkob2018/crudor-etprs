@@ -1,3 +1,4 @@
+<h5><?= $this->data['product_info']['label'] ?></h5>
 <div class="sub-header">
     <div class="item-edit-menu">
         <a href = "<?= inner_url('products/edit/') ?>?row_id=<?= $this->data['product_info']['id'] ?>" class="item-edit-a <?= $view->a_class('products/edit/') ?>">עריכה</a>

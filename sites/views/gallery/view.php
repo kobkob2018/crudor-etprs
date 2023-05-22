@@ -41,3 +41,22 @@
     });
 </script>
 
+<div class="inner-section gallery-wrap">
+
+    <div class="gallery">
+
+        <div class="gallery-items">
+                <?php foreach($info['images'] as $key=>$image): ?>
+                    <div class="gallery-item">
+                        
+                        <a href="javascript://" class="modal-gallery-a" data-gallery_id = "gallery_modal_1" data-img_index = "<?= $key ?>">
+                            <img src="<?= $this->file_url_of('product_images',$image['small_image']) ?>" img="{{img_title}}" />
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            
+        </div>
+
+    </div>
+</div>
+

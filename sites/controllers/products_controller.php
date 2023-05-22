@@ -96,7 +96,7 @@
         );
         
         $this->include_view('products/view.php', $info);
-        print_r_help($info);
+        
     }
 
   }

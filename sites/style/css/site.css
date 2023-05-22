@@ -32,7 +32,9 @@ textarea, input { outline: none; }
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
-
+i.fa{
+    font-style: normal;
+}
 
 .page-fixed-top{
     position: fixed;
@@ -198,7 +200,26 @@ textarea, input { outline: none; }
     margin-bottom: 20px;
 }
 
+.midpage-title-wrap{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
+.box-price{
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid;
+    border-bottom:1px solid ;
+    text-align: center;
+    font-weight: bold;
+}
+
+.select-cat-auto-submit{
+    padding: 6px;
+    width: 100%;
+    font-weight: bold;
+    border-radius: 3px;
+}
 
 .top-search button {
     all: unset;
@@ -672,6 +693,39 @@ a.news-ticker-a-content{
     font-size: 20px;
 }
 
+.product-images-wrap{
+    max-width: 256px;
+    float: left;
+    overflow: hidden;
+    margin-right: 50px;
+}
+
+.product-images-wrap .big-img-wrap{
+    border: 1px solid #bbb;
+    text-align: center;
+}
+
+.product-images-wrap .big-img-wrap img{
+    max-height: 100%;
+}
+
+.product-images-wrap img{
+    max-width: 100%;
+}
+
+.product-thumbs{
+    display: flex;
+    margin-top: 5px;
+    flex-wrap: wrap;
+    
+}
+
+.product-thumb{
+    border: 1px solid gray;
+    width: 25%;
+    flex-grow: 1;
+}
+
 @media only screen and (min-width: 890px) {
     .wide-fix-top-right{
         margin-left:auto;
@@ -820,9 +874,26 @@ a.news-ticker-a-content{
         float: left;
     }
 }
+@media only screen and (max-width: 580px) {
+    .product-images-wrap{
+        float:none;
+        margin: auto;
+    }
+
+}
 
 @media only screen and (max-width: 890px) {
 
+    .page-fixed-top{
+        padding: 0px 0px 5px;
+    }
+
+    .fix-top-right{
+        margin-right: 20px;
+    }
+    .fix-top-left{
+        margin-left: 20px;
+    }
     .top-menu-drawer{
         transition: 0.5s;
         position: fixed;
@@ -885,10 +956,7 @@ a.news-ticker-a-content{
     }
 
     .biz-form-door-button-wrap{
-        position: fixed;       
-        top: 56px;
-        right: 0px;
-        left: 0px;
+        width: 100%;
         background: white;
         border-bottom:10px solid white;
     }
@@ -929,7 +997,7 @@ a.news-ticker-a-content{
         margin-top: 9px;
         position: absolute;
         left: 0px;
-        top: 0px;
+        bottom: 0px;
         font-size: 0px;
     }
 

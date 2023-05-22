@@ -9,3 +9,6 @@
     </div>
 </div>
 <h2>ניהול מוצרים</h2>
+<div class="watch-helper">
+    <a target="_BLANK" href="<?= $this->data['work_on_site']['url'] ?>/products/view/">צפה באתר</a>
+</div>

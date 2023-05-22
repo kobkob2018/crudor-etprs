@@ -6,7 +6,15 @@
       return parent::init_setup($action);
     }
 
+    public function error() {
+        header('HTTP/1.0 404 Not Found');
+        $this->include_view('pages/error.php');
+    }
+
     protected function view(){
+
+        $site_id = $this->data['site']['id'];
+        
         $cat_list = siteGallery::get_site_cat_list($this->data['site']['id']);
         if(!$cat_list){
             $cat_list = array();

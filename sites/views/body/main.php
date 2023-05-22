@@ -13,7 +13,7 @@
 				<?php $this->call_module('site_menus','top_menu'); ?>
 			</div>
 			<div id="accessebility_and_phone" class="fix-top-left">
-				<a class="accessibility-door"  href="javascript://" onclick="openDrawer('accessibility')"><i class="fa fa-wheelchair"></i></a>
+				<a class="accessibility-door"  href="javascript://" onclick="openDrawer('accessibility')"><span class="fa fa-wheelchair"></span></a>
 				
 			
 			</div>
