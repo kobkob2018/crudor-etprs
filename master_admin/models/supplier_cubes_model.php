@@ -68,6 +68,7 @@
         'banner_id'=>array(
             'label'=>'שיוך לבאנר',
             'type'=>'select',
+            'select_blank'=>array('value'=>'0','label'=>'---'),
             'options_method'=>array('model'=>'supplier_cubes','method'=>'get_select_banner_options')
         ),  
 

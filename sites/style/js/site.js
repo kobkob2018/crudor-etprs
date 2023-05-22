@@ -114,12 +114,13 @@ initBannerClickers = ()=>{
 initPageRearangement = ()=>{
     rearangeLeftBar();
     relocateBizForm();
-    fixMainTitle();
+    grabMainTitle();
+    grabSearchForm();
     fixHeaderSpacing();
-    setTimeout(function(){fixHeaderSpacing()},800);
+    setTimeout(function(){fixHeaderSpacing()},300);
 } 
 
-fixMainTitle = ()=>{
+grabMainTitle = ()=>{
     const titleHolder = document.querySelector(".main-title-holder");
     if(!titleHolder){
         return
@@ -127,6 +128,17 @@ fixMainTitle = ()=>{
     const titleElement = document.querySelector("#content_title_wrap");
     if(titleElement){
         titleHolder.append(titleElement);
+    }
+}
+
+grabSearchForm = ()=>{
+    const searchHolder = document.querySelector(".search-form-holder");
+    if(!searchHolder){
+        return
+    }
+    const searchElement = document.querySelector("#content_title_wrap");
+    if(searchElement){
+        searchHolder.append(searchElement);
     }
 }
 

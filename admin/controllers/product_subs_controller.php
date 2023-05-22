@@ -27,8 +27,8 @@
           SystemMessages::add_success_message("התיקיות שוויכו בהצלחה");
           return $this->redirect_to(inner_url("product_subs/assign_cats/?row_id=".$this->data['item_info']['id'])); 
       }
-
-      $cat_list = Product_cat::get_list(array(),"id, label");
+      $filter_arr = $this->get_base_filter();
+      $cat_list = Product_cat::get_list($filter_arr,"id, label");
       $cats_assigned = Product_sub_cat_assign::get_assigned_cats_to_item($this->data['item_info']['id']);
       $cats_checked_list = array();
       foreach($cats_assigned as $cat){
