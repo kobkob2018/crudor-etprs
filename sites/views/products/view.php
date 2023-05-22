@@ -67,18 +67,20 @@
             </div>
             <script type="text/javascript">
                 document.addEventListener("DOMContentLoaded",()=>{                   
-                    const bigImg = document.querySelector(".product-big-img");
-                    const bigImgWrap = document.querySelector(".big-img-wrap");
-                    bigImgWrap.style.height = bigImgWrap.offsetHeight + "px";
-                    document.querySelectorAll(".product-thumb a").forEach(thumb=>{
-                        thumb.addEventListener("mouseover",()=>{
-                            if(bigImg){
-                                bigImg.src = thumb.dataset.big_img;
-                            }
-                        });
-                    });
-                });
 
+                    setTimeout(function(){
+                        const bigImg = document.querySelector(".product-big-img");
+                        const bigImgWrap = document.querySelector(".big-img-wrap");
+                        bigImgWrap.style.height = bigImgWrap.offsetHeight + "px";
+                            document.querySelectorAll(".product-thumb a").forEach(thumb=>{
+                                thumb.addEventListener("mouseover",()=>{
+                                    if(bigImg){
+                                        bigImg.src = thumb.dataset.big_img;
+                                    }
+                                });
+                            });
+                        });
+                    },500);
             </script>
 
             <div id="modals_placeholder"></div>
