@@ -31,7 +31,7 @@
 
     public static $gallery_delete_fields_collection = array(
         'move_images_to'=>array(
-            'label'=>'העבר הצעות מחיר לתיקייה',
+            'label'=>'העבר תמונות לגלרייה',
             'type'=>'select',
             'default'=>'0',
             'options_method'=>array('model'=>'gallery','method'=>'get_select_gallery_options'),

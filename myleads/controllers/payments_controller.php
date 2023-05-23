@@ -94,7 +94,7 @@
             return $this->eject_redirect();
         }
 
-            $trans_id = $cc_log['trans_id'];
+        $trans_id = $cc_log['trans_id'];
 
             $yaad_user = get_config('yaad_invoice_user');
             $yaad_pass = get_config('yaad_invoice_pass');
@@ -102,15 +102,14 @@
             $yaad_url = get_config('yaad_invoice_url');
 
             $postData = "d=s&action=PrintHesh&TransId=$trans_id&type=HTML&Masof=$yaad_masof&User=$yaad_user&Pass=$yaad_pass&HeshORCopy=True";
-            echo nl2br("
-            \$ch = curl_init();  
-            
-            curl_setopt(\$ch,CURLOPT_URL,$yaad_url);
-            curl_setopt(\$ch,CURLOPT_RETURNTRANSFER,true);
-            curl_setopt(\$ch,CURLOPT_HEADER, false); 
-            curl_setopt(\$ch, CURLOPT_POSTFIELDS, $postData);
-         ");
-         exit();
+
+            $ch = curl_init();  
+         
+            curl_setopt($ch,CURLOPT_URL,$yaad_url);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+            curl_setopt($ch,CURLOPT_HEADER, false); 
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);    
+         
             $output=curl_exec($ch);
             
             $output = str_replace("<img","<img style='display:none;' ",$output);

@@ -20,10 +20,10 @@ function send_email_with_smtp($email_from,$name_from,$mail_to,$subject,$html_bod
         //Server settings
     //  $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.mailgun.org';                     //Set the SMTP server to send through
+        $mail->Host       = get_config('aws_host');;                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = get_config('mailgun_username');                     //SMTP username
-        $mail->Password   = get_config('mailgun_Password');                     //SMTP password
+        $mail->Username   = get_config('aws_username');                     //SMTP username
+        $mail->Password   = get_config('aws_password');                     //SMTP password
     // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
 
         $mail->SMTPSecure = 'tls';   // Enable encryption, 'ssl'
