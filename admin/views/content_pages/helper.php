@@ -2,12 +2,6 @@
     <div class="helper-close">
         <a href="javascript://" class="content-helper-close">X</a>
     </div>
-    <h3>
-        תגיות עיצוב - אפשרויות(יש להוסיף עם רווחים)
-    </h3>
-    <div class="css-classes-helper">
-
-    </div>
 
     <h3>
         קודים מקוצרים
@@ -31,6 +25,35 @@
         </div>
 
     </div>
+
+
+    <h3>
+        תגיות עיצוב - אפשרויות(יש להוסיף עם רווחים)
+    </h3>
+    <div class="css-classes-helper">
+        <input class="code-input-inline" type="text" value="c-clock" />
+        <br/>
+        קופסא עם פינות עגולות וצללית, בא כברירת מחדל כבלוק תוכן
+    </div>
+
+    <div class="css-classes-helper">
+        <input class="code-input-inline" type="text" value="nowrap" />
+        <br/>
+        אם רוצים לא לעטוף אלמנט בכלל. כשאין צורך בשום עיצוב זה חוסך שכבת HTML וגוגל אוהבים את זה
+    </div>
+
+    <div class="css-classes-helper">
+        <input class="code-input-inline" type="text" value="go-left" />
+        <br/>
+        <input class="code-input-inline" type="text" value="go-left-top" />
+        <br/>
+        <input class="code-input-inline" type="text" value="go-left-mid" />
+        <br/>
+        <input class="code-input-inline" type="text" value="go-left-bottom" />
+        <br/>
+        כך ניתן לשלוח בלוק לעמודה השמאלית, למעלה, באמצע או למטה בהתאמה
+    </div>
+
 </div>
 
 <script type="text/javascript">
