@@ -102,13 +102,13 @@
             $yaad_url = get_config('yaad_invoice_url');
 
             $postData = "d=s&action=PrintHesh&TransId=$trans_id&type=HTML&Masof=$yaad_masof&User=$yaad_user&Pass=$yaad_pass&HeshORCopy=True";
-
-            $ch = curl_init();  
             echo nl2br("
-            curl_setopt($ch,CURLOPT_URL,$yaad_url);
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-            curl_setopt($ch,CURLOPT_HEADER, false); 
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+            \$ch = curl_init();  
+            
+            curl_setopt(\$ch,CURLOPT_URL,$yaad_url);
+            curl_setopt(\$ch,CURLOPT_RETURNTRANSFER,true);
+            curl_setopt(\$ch,CURLOPT_HEADER, false); 
+            curl_setopt(\$ch, CURLOPT_POSTFIELDS, $postData);
          ");
          exit();
             $output=curl_exec($ch);
