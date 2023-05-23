@@ -16,10 +16,10 @@ try {
     //Server settings
   //  $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.mailgun.org';                     //Set the SMTP server to send through
+    $mail->Host       = 'ses-smtp-user.ilbiz.server';                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'postmaster@sandbox7c9cb30db9394825903363f0bfc344a2.mailgun.org';                     //SMTP username
-    $mail->Password   = 'e02badb7793776f0f6eae3003e6acd95-d51642fa-7395e214';                               //SMTP password
+    $mail->Username   = 'AKIAXYQE7TSERGGL467L';                     //SMTP username
+    $mail->Password   = 'BKv/pCgnPL3LpTXKha8i/oGFrGOuh+6Yrzth/TtcSxAV';                               //SMTP password
    // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
 
     $mail->SMTPSecure = 'tls';   // Enable encryption, 'ssl'
