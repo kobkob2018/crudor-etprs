@@ -71,10 +71,14 @@
                     setTimeout(function(){
                         const bigImg = document.querySelector(".product-big-img");
                         const bigImgWrap = document.querySelector(".big-img-wrap");
-                        bigImgWrap.style.height = bigImgWrap.offsetHeight + "px";
+                        
                             document.querySelectorAll(".product-thumb a").forEach(thumb=>{
                                 thumb.addEventListener("mouseover",()=>{
                                     if(bigImg){
+                                        if(!bigImgWrap.classList.contains("h-set")){
+                                            bigImgWrap.classList.add("h-set");
+                                            bigImgWrap.style.height = bigImgWrap.offsetHeight + "px";
+                                        }
                                         bigImg.src = thumb.dataset.big_img;
                                     }
                                 });
