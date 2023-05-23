@@ -113,7 +113,7 @@
             $output=curl_exec($ch);
             
             $output = str_replace("<img","<img style='display:none;' ",$output);
-
+            $output = iconv ('windows-1255', 'utf8', $output);
             curl_close($ch);	
             return $this->include_view('payments/yaad_invoice.php',$output);
     }

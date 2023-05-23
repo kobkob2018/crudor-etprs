@@ -67,13 +67,17 @@
             </div>
             <script type="text/javascript">
                 document.addEventListener("DOMContentLoaded",()=>{                   
-
+                    let currentThumb = false;
                     setTimeout(function(){
                         const bigImg = document.querySelector(".product-big-img");
                         const bigImgWrap = document.querySelector(".big-img-wrap");
                         
                             document.querySelectorAll(".product-thumb a").forEach(thumb=>{
+                                if(!currentThumb){
+                                    currentThumb = thumb;
+                                }
                                 thumb.addEventListener("mouseover",()=>{
+                                    currentThumb = thumb;
                                     if(bigImg){
                                         if(!bigImgWrap.classList.contains("h-set")){
                                             bigImgWrap.classList.add("h-set");
@@ -82,6 +86,9 @@
                                         bigImg.src = thumb.dataset.big_img;
                                     }
                                 });
+                            });
+                            bigImgWrap.addEventListener("click",function(){
+                                currentThumb.click();
                             });
                         });
                     },500);
