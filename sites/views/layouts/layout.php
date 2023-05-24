@@ -46,6 +46,11 @@
   <body style="direction:rtl; text-align:right;" class="<?= $this->body_class ?>">
 	<?php $this->print_body();  ?>
 	<?php $this->include_view('registered_scripts/foot.php'); ?>
-
+	<div class="hidden biz-form-modal" data-state="empty">
+		<div class="modal-close-button-wrap">
+			<a href="javascript://" onclick="closebizForm()" title="סגור">X</a>
+		</div>
+		<div class="biz-form-holder"></div>
+	</div>
   </body>
 <html>

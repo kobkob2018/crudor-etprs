@@ -1,5 +1,7 @@
 <h3>גלריות</h3>
-
+<div class="watch-helper">
+    <a target="_BLANK" href="<?= $this->data['work_on_site']['url'] ?>/gallery/view/">צפה באתר</a>
+</div>
 <h4>הוספת גלריה</h4>
 <div class="items-table flex-table">
     <div class="table-th row">

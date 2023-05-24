@@ -99,5 +99,26 @@
         
     }
 
+    public function set_url($url_params = array()){
+        $final_url_params = array();
+        $check_url_params = array('cat','sub','p');
+        foreach($check_url_params as $param){
+            if(isset($_GET[$param])){
+                $final_url_params[$param] = $_GET[$param];
+            }
+        }
+        foreach($url_params as $param=>$val){
+            $final_url_params[$param] = $val;
+        }
+        $url_q_params = array();
+        foreach($final_url_params as $param=>$val){
+            $url_q_params[] = "$param=$val";
+        }
+        
+        $url_q = implode("&",$url_q_params);
+        $final_url = inner_url("products/view/?".$url_q);
+        return $final_url;
+    }
+
   }
 ?>

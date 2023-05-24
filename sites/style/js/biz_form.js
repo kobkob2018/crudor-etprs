@@ -417,3 +417,28 @@ function help_debug_forms(){
 function updateCatIdHelper(){
     form_debug_helper.catHolder.value = form_debug_helper.selected_cat;
 }
+
+function openbizForm(){
+    const formModal = document.querySelector(".biz-form-modal");
+    if(!formModal){
+        return;
+    }
+    if(formModal.dataset.state == "empty"){
+        const bizForm = document.querySelector(".biz-form-wrap");
+        const formHolder = formModal.querySelector(".biz-form-holder");
+        if((!bizForm) || (!formHolder)){
+            return;
+        }
+        formHolder.append(bizForm);
+        formModal.classList.remove("hidden");
+        formModal.dataset.state == "set";
+    }
+}
+
+function closebizForm(){
+    const formModal = document.querySelector(".biz-form-modal");
+    if(!formModal){
+        return;
+    }
+    formModal.classList.add("hidden");
+}

@@ -81,7 +81,7 @@
         return $sub_list;
     }
 
-    public static function get_product_list($site_id, $cat_id, $sub_id){
+    public static function get_product_list($site_id, $cat_id = false, $sub_id = false, $limit = false, $order_by = false){
         $execute_arr = array('site_id'=>$site_id);
         $sub_query = "";
         if($sub_id){
@@ -93,9 +93,16 @@
             $execute_arr['cat_id'] = $cat_id;
         }
 
-        
+        $limit_sql = "";
+        if($limit){
+            $limit_sql = " LIMIT $limit ";
+        }
+        $order_by_sql = "";
+        if($order_by){
+            $order_by_sql = " ORDER BY ".$order_by;
+        }
         $db = Db::getInstance();
-        $sql = "SELECT * FROM products WHERE site_id = :site_id $sub_query";	
+        $sql = "SELECT * FROM products WHERE site_id = :site_id $sub_query".$order_by_sql.$limit_sql;	
         $req = $db->prepare($sql);
         $req->execute($execute_arr);
         $sub_list = $req->fetchAll();

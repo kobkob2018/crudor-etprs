@@ -16,7 +16,7 @@
         <div class = "helper-code">
              רשימת מוצרים לדף הבית <br/>
             
-            <input class="code-input" type="text" value="{{% mod | homepage | product_list | limit:4 %}}" />
+            <input class="code-input" type="text" value="{{% mod | products | cubes | limit:4 %}}" />
             <br/>
             ניתן לשנות את המספר 4 כדי לשנות את מספר המוצרים שיופיעו
             <br/>

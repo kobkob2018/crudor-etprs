@@ -33,5 +33,9 @@
         return $result;
     }
 
+    public static $assets_mapping = array(
+        'gallery_images'=>'gallery'
+    );
+
 }
 ?>

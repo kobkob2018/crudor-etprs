@@ -146,8 +146,11 @@
           $this->add_data("page_meta_description",$site['meta_description']);
           $logo_url = $this->controller->file_url_of('logo',$site['logo']);
           $this->add_data("page_meta_ogimage",outer_url($logo_url));
-          $favicon_url = $this->controller->file_url_of('favicon',$site['favicon']);
-          $this->add_data("page_meta_favicon",outer_url($favicon_url));
+          if($site['favicon']!=""){
+            $favicon_url = $this->controller->file_url_of('favicon',$site['favicon']);
+            $this->add_data("page_meta_favicon",outer_url($favicon_url));
+          }
+        
         }
 
 	}

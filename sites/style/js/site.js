@@ -144,8 +144,8 @@ grabSearchForm = ()=>{
 
 rearangeLeftBar = ()=>{
     const leftBarTop = document.querySelector(".leftbar-top-holder");
-    const leftBarMid = document.querySelector(".leftbar-top-holder");
-    const leftBarBottom = document.querySelector(".leftbar-top-holder");
+    const leftBarMid = document.querySelector(".leftbar-mid-holder");
+    const leftBarBottom = document.querySelector(".leftbar-bottom-holder");
     if(leftBarTop){ 
         document.querySelectorAll('.go-left, .go-left-top').forEach(
             goLeft=>{

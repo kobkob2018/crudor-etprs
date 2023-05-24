@@ -13,46 +13,66 @@
 
     protected function view(){
 
+
         $site_id = $this->data['site']['id'];
-        
-        $cat_list = siteGallery::get_site_cat_list($this->data['site']['id']);
+
+        $cat_list = siteGallery::get_site_cat_list($site_id);
         if(!$cat_list){
             $cat_list = array();
         }
+        $selected_cat = false;
 
-        foreach($cat_list as $cat_key=>$cat){
-            $cat_list[$cat_key]['selected_str'] = "";
+        if(isset($cat_list[0]['id'])){
+            $selected_cat = $cat_list[0]['id'];
         }
-        if(isset($_REQUEST['cat_id'])){
-            $cat_id = $_REQUEST['cat_id'];
-            $this->data['cat_id'] = $cat_id;
-            foreach($cat_list as $key=>$cat){
-                if($cat['id'] == $cat_id){
-                    $cat_list[$key]['selected_str'] = " selected ";
-                }
-            }
-
-            $gallery_list = siteGallery::get_cat_gallery_list($cat_id);
-            
-            foreach($gallery_list as $gallery_key=>$galery){
-                $gallery_list[$gallery_key]['selected_str'] = "";
-            }
-            if(isset($_REQUEST['gallery_id'])){
-                $gallery_id = $_REQUEST['gallery_id'];
-                foreach($gallery_list as $key=>$gallery){
-                    if($gallery['id'] == $gallery_id){
-                        $gallery_list[$key]['selected_str'] = " selected ";
-                    }
-                }
-                
-                $this->data['gallery_id'] = $gallery_id;
-                $this->data['gallery_images'] = siteGallery::get_gallery_images($gallery_id);
-            }
-            $this->data['gallery_list'] = $gallery_list;
-
+        if(isset($_REQUEST['cat'])){
+            $selected_cat = $_REQUEST['cat'];
         }
-        $this->data['cat_list'] = $cat_list;
-        return $this->include_view('gallery/view.php');
+        foreach($cat_list as $key=>$cat){
+            $cat_list[$key]['selected_str'] = "";
+            if($cat['id'] == $selected_cat){
+                $cat_list[$key]['selected_str'] = " selected ";
+            }
+        }
+
+        $gallery_list = false;
+        $gallery_info = false;
+
+        if($selected_cat){
+            $gallery_list = siteGallery::get_cat_gallery_list($selected_cat);
+        }
+
+        foreach($gallery_list as $gallery_key=>$galery){
+            $gallery_list[$gallery_key]['selected_str'] = "";
+        }
+        $selected_gallery = false;
+        if(isset($gallery_list[0])){
+            $selected_gallery = $gallery_list[0]['id'];
+        }
+        if(isset($_REQUEST['g'])){
+            $selected_gallery = $_REQUEST['g'];
+        }
+    
+        foreach($gallery_list as $key=>$gallery){
+            if($gallery['id'] == $selected_gallery){
+                $gallery_list[$key]['selected_str'] = " selected ";
+                $gallery_info = $gallery_list[$key];
+            }
+        }
+        $gallery_images = false;
+        if($selected_gallery){    
+            $gallery_images = siteGallery::get_gallery_images($selected_gallery);
+        }
+        $info = array(
+            'gallery'=>$gallery_info,
+            'images'=>$gallery_images,
+            'cat_list'=>$cat_list,
+            'selected_cat'=>$selected_cat,
+            'gallery_list'=>$gallery_list
+        );
+        $this->add_asset_mapping(SiteGallery::$assets_mapping);
+
+        return $this->include_view('gallery/view.php',$info);
     }
   }
 ?>

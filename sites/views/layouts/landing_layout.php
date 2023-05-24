@@ -7,7 +7,9 @@
   		<base href="<?= outer_url(); ?>" />
 		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />	
-		<link rel="shortcut icon" type="image/x-icon" href="style/image/favicon.ico">
+		<?php if(isset($this->data['page_meta_favicon'])): ?>
+			<link rel="shortcut icon" type="image/x-icon" href="<?= $this->data['page_meta_favicon'] ?>">
+		<?php endif; ?>
 		<link rel="stylesheet" href="<?= styles_url("style/css/site.css") ?>?v=<?= get_config("cash_version") ?>"  type="text/css" />
 		<link rel="stylesheet" href="<?= $this->file_url_of('colors_css','colors.css') ?>?v=<?= get_config("cash_version") ?>"  type="text/css" />
 		<script src="<?= styles_url("style/js/site.js") ?>?v=<?= get_config("cash_version") ?>"></script>

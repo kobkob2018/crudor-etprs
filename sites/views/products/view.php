@@ -121,7 +121,7 @@
                                         </div>
                                                             
                                         <div class="item-img">
-                                            <img src="<?= $this->file_url_of('product_images',$image['image']) ?>" alt="{{ img_title }}" />
+                                            <img src="<?= $this->file_url_of('product_images',$image['image']) ?>" alt="<?= $image['label'] ?>" />
                                         </div>
 
                                     </div>
@@ -163,7 +163,7 @@
                 <div class="box-content">
                     <?php if($product['image']): ?>
                         <div class="box-image">
-                            <a href="<?= current_url(array('p'=>$product['id'])) ?>" title="<?= $product['label'] ?>">
+                            <a href="<?= $this->set_url(array('p'=>$product['id'])) ?>" title="<?= $product['label'] ?>">
                                 <img src="<?= $this->file_url_of('product_image',$product['image']) ?>" alt="<?= $product['label'] ?>" />
                             </a>
                         </div>
@@ -177,7 +177,7 @@
                         </div> 
                     <?php endif; ?>
                     <div class="box-go-to">
-                        <a href="<?= current_url(array('p'=>$product['id'])) ?>" title="<?= $product['label'] ?>">
+                        <a href="<?= $this->set_url(array('p'=>$product['id'])) ?>" title="<?= $product['label'] ?>">
                             למידע נוסף
                         </a>
                     </div>
@@ -201,7 +201,7 @@
                 <div class="box-content">
                     <?php if($product['image']): ?>
                         <div class="box-image">
-                            <a href="<?= current_url(array('p'=>$product['id'])) ?>" title="<?= $product['label'] ?>">
+                            <a href="<?= $this->set_url(array('p'=>$product['id'])) ?>" title="<?= $product['label'] ?>">
                                 <img src="<?= $this->file_url_of('product_image',$product['image']) ?>" alt="<?= $product['label'] ?>" />
                             </a>
                         </div>
@@ -215,7 +215,7 @@
                         </div> 
                     <?php endif; ?>
                     <div class="box-go-to">
-                        <a href="<?= current_url(array('p'=>$product['id'])) ?>" title="<?= $product['label'] ?>">
+                        <a href="<?= $this->set_url(array('p'=>$product['id'])) ?>" title="<?= $product['label'] ?>">
                             למידע נוסף
                         </a>
                     </div>
