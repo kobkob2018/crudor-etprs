@@ -17,7 +17,12 @@
 
             foreach(Tasks::get_list() as $task){
                 $user_name_arr = Users::get_by_id($task['user_id'],"full_name");
-                $task['user_name'] = $user_name_arr['full_name'];
+                if($user_name_arr){
+                    $task['user_name'] = $user_name_arr['full_name'];
+                }
+                else{
+                    $task['user_name'] = "USER DELETED!!!";
+                }
                 $tasks[] = $task;
             }
             $this->data['task_list'] = $tasks;

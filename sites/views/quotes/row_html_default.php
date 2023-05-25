@@ -16,7 +16,8 @@
 		{{description}}
 		</div>
 	</div>
-	<div class="span2  col">								
+	<div class="span2  col">		
+		<!-- if price -->						
 		<h4 class="quote-price color-title">
 			₪{{price}}
 		</h4>
@@ -24,6 +25,7 @@
 		<div class="quote-price-text smaller">
 		{{price_text}}
 		</div>	
+		<!-- endif -->
 	</div>
 	
 	<div class="span2  col col-last">

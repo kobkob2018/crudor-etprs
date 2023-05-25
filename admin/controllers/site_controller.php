@@ -50,12 +50,52 @@
     }
 
     protected function get_fields_collection(){
+      if($_REQUEST['action'] == 'add'){
+        exit("todo:// admin/site_controller.php line 54 ");
+      }
       return AdminSites::setup_field_collection();
     }
 
     protected function update_item($item_id,$update_values){
       return Sites::update($item_id,$update_values);
     }
+
+
+    public function add(){
+      return parent::add();
+    }  
+
+    public function createSend(){
+        return parent::createSend();
+    }
+
+
+    public function include_add_view(){
+        $this->include_view('site/add_site.php');
+    }  
+
+    protected function create_success_message(){
+        SystemMessages::add_success_message("האתר נוצר בהצלחה");
+    }
+
+
+    protected function delete_success_message(){
+        SystemMessages::add_success_message("האתר נמחק");
+    }
+
+    protected function delete_item($row_id){
+        echo "UNDER CONSTRUCTION";
+        return;
+      //return Products::delete($row_id);
+    }
+
+    protected function create_item($fixed_values){
+        $site_id = Sites::create($fixed_values);
+        exit("site id is:".$site_id);
+    }
+
+
+
 
   }
 ?>

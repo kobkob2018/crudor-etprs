@@ -38,7 +38,7 @@
             
 
             
-            <?php if($view->site_user_is('master_admin')): ?>
+            <?php if($view->user_is('master_admin')): ?>
                 <li class="bar-item <?= $view->a_class("siteUsers/list/") ?>">
                 <a href="<?= inner_url('siteUsers/list/') ?>" title="מנהלי אתר" class="a-link">מנהלי אתר</a>
             </li>        
@@ -106,11 +106,11 @@
 
 
         <ul class="item-group">
-
-            <li class="bar-item <?= $view->a_class("quote_cats/list/") ?> <?= $view->a_c_class("quote_cats, quotes") ?>">
-                <a href="<?= inner_url('quote_cats/list/') ?>" title="הצעות מחיר" class="a-link">הצעות מחיר</a>
-            </li>
-
+            <?php if($view->user_is('master_admin')): //can switch to site_user_is.. ?>
+                <li class="bar-item <?= $view->a_class("quote_cats/list/") ?> <?= $view->a_c_class("quote_cats, quotes") ?>">
+                    <a href="<?= inner_url('quote_cats/list/') ?>" title="הצעות מחיר" class="a-link">הצעות מחיר</a>
+                </li>
+            <?php endif; ?>
             
             <li class="bar-item <?= $view->a_class("product_cats/list/") ?> <?= $view->a_c_class("product_cats, products") ?>">
                 <a href="<?= inner_url('product_cats/list/') ?>" title="מוצרים" class="a-link">ניהול מוצרים</a>

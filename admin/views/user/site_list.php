@@ -1,7 +1,7 @@
 <h2>האתרים שלי</h2>
 <?php if(Helper::user_is('master_admin',$this->user)): ?>
 <div class="add-button-block-wrap">
-    <a class="focus-box button-focus" href="/admin/product_cats/add/">הוספת תיקייה</a>
+    <a class="focus-box button-focus" href="/admin/user_sites/add/">יצירת אתר חדש</a>
 </div>
 <?php endif; ?>
 <h4>בחר אתר לעריכה</h4>

@@ -60,6 +60,7 @@
             'select_blank'=>array('value'=>'0','label'=>'---'),
             'options_method'=>array('model'=>'adminPages','method'=>'get_select_options')
         ),
+
         'meta_description'=>array(
             'label'=>'תיאור מטא',
             'type'=>'textbox',
