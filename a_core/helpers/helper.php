@@ -60,6 +60,10 @@
           break;
         }
       }
+      
+      if(!in_array($needed_roll,$exepted_rolls)){
+        return false;
+      }
 
       foreach($exepted_rolls as $roll){
         if($roll == $user_is){
