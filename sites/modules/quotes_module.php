@@ -19,7 +19,7 @@
                 $open_state = $action_data['state'];
             }
             $quote_cat['open_state'] = $open_state;
-            if($quote_cat['custom_html'] == "" || true){
+            if($quote_cat['custom_html'] == ""){
                 $quote_cat['custom_html'] = $this->controller->include_ob_view('quotes/row_html_default.php');
             }
             if($quote_cat['title_html'] == ""){

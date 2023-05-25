@@ -1,13 +1,13 @@
 <!--desktop_only-->
 <div class="quote-wrap row">	
-	<div class="span2 col col-first">
+	<div class="col col-first">
 		<!-- if image -->
 			<div class="quote-img-wrap">
 				<img class="quote-img" title="{{label}}" src="{{img_url}}" />
 			</div>
 		<!-- endif -->
 	</div>
-	<div class="span6  col">								
+	<div class="col">								
 		<h3 class="quote-title color-title">
 			{{label}}
 		</h3>
@@ -16,19 +16,20 @@
 		{{description}}
 		</div>
 	</div>
-	<div class="span2  col">		
+	<div class="col">		
 		<!-- if price -->						
 		<h4 class="quote-price color-title">
 			₪{{price}}
 		</h4>
-
+		<!-- endif -->
+		<!-- if price_text -->
 		<div class="quote-price-text smaller">
 		{{price_text}}
 		</div>	
 		<!-- endif -->
 	</div>
 	
-	<div class="span2  col col-last">
+	<div class="col col-last">
 		<!-- if link -->
 		<div class="quote-link">
 			<a class="color-button"  href="{{link}}" title="לנציג">

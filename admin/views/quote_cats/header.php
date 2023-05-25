@@ -5,9 +5,9 @@
 <h3>ניהול תיקיית הצעות מחיר <?= $this->data['cat_info']['label'] ?></h3>
 <hr/>
 <div class="yellowish form-group left-text">
-    קוד להוספת הצעות מחיר בטוקן: <input  value = "{{% mod | quotes | print_cat | cat_id:9 %}}" />
+    קוד להוספת הצעות מחיר בטוקן: <input  value = "{{% mod | quotes | print_cat | cat_id:<?= $this->data['cat_info']['id'] ?> %}}" />
     <br/>
-    מצב פתוח: <input  value = "{{% mod | quotes | print_cat | cat_id:9 state:open %}}" />
+    מצב פתוח: <input  value = "{{% mod | quotes | print_cat | cat_id:<?= $this->data['cat_info']['id'] ?> state:open %}}" />
 </div>
 <hr/>
 <div class="item-edit-menu">

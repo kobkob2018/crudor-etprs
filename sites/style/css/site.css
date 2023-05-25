@@ -687,6 +687,19 @@ a.news-ticker-a-content{
     border-radius: 3px;
 }
 
+.quote-galley{
+    border-bottom: 3px solid;
+}
+
+.quote-galley .el{
+    margin-bottom: 10px;
+    border-bottom:none ;
+}
+
+.quote-galley .quote-link a{
+    margin: auto;
+}
+
 .quote-list-wrap .flex-table-th .col{
     border-bottom:none;
     padding: 5px 10px 5px;
