@@ -869,10 +869,10 @@ a.news-ticker-a-content{
     
     .top-menu li.active-sub ul.sub-menu{
         display: flex;
-        justify-content: space-around;
+        justify-content: start;
         flex-wrap: wrap;
     }
-    
+
     .top-menu ul.sub-menu .sub-item a{
         margin: 0px;
         padding: 10px;
@@ -883,7 +883,7 @@ a.news-ticker-a-content{
         color: black;
         min-height: 70px;
     }
-
+    
     #page_wrap{
         margin-top: 58px;
         transition: margin 0.3s;

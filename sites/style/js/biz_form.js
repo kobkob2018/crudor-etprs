@@ -30,12 +30,11 @@ class BizForm{
         this.submitUrl = "";
         this.selectEventListenerBinded = this.selectEventListener.bind(this);
         this.submitEventListenerBinded = this.submitEventListener.bind(this);
-        this.testFunctionBinded = this.testFunction.bind(this);
         
         this.submitButton.addEventListener("click", this.submitEventListenerBinded, true);
         this.max_stock = 0;
         this.initFetch();
-        this.initTestButton();
+        
     }
 
     initFetch(){
@@ -203,27 +202,6 @@ class BizForm{
             this.hideLoading();
         });
         console.log(formData);
-    }
-    initTestButton(){
-        
-        this.formElement.querySelectorAll(".tester-button").forEach(testButton=>{
-            testButton.addEventListener("click", this.testFunctionBinded, true);
-        });
-    }
-    testFunction(){
-        
-        fetch(this.fetchUrl+"?test_form=1&cat_id=0&form_id="+this.form_id).then((res) => res.json()).then(info => {
-            console.log("adding pixels for testing");
-
-            const successEl = document.createElement('div');
-            successEl.innerHTML = info.html;
-            this.wrapElement.insertBefore(successEl,this.formElement);
-        }).catch(function(err) {
-            
-            console.log(err);
-            console.log("The test failed... ");
-            //alert("Something went wrong. please reload the page");
-        });
     }
 }
 

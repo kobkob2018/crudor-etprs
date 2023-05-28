@@ -52,13 +52,8 @@
         return false;
     }
 
-    public function user_is($needed_roll){
+    public function user_is($needed_roll,$work_on_site = false){
       $user = $this->controller->user;
-      $work_on_site = false;
-      $data = $this->controller->data;
-      if(isset($data['work_on_site'])){
-        $work_on_site = $data['work_on_site'];
-      }
       return Helper::user_is($needed_roll,$user,$work_on_site);
     }
 
@@ -71,7 +66,7 @@
       if(!$work_on_site){
         return false;
       }
-      return self::user_is($needed_roll);
+      return self::user_is($needed_roll,$work_on_site);
     }
 
 

@@ -3,6 +3,64 @@
 
     protected static $main_table = 'sites';
 
+    protected static $auto_delete_from_attached_tables = array(
+        'site_colors'=>array(
+            'table'=>'site_colors',
+            'id_key'=>'site_id'
+        ),
+        'site_css'=>array(
+            'table'=>'site_css',
+            'id_key'=>'site_id'
+        ),
+        'site_styling'=>array(
+            'table'=>'site_styling',
+            'id_key'=>'site_id'
+        ),
+        'biz_forms'=>array(
+            'table'=>'biz_forms',
+            'id_key'=>'site_id'
+        ),
+        'content_blocks'=>array(
+            'table'=>'content_blocks',
+            'id_key'=>'site_id'
+        ),
+        'content_pages'=>array(
+            'table'=>'content_pages',
+            'id_key'=>'site_id'
+        ),
+        'gallery'=>array(
+            'table'=>'gallery',
+            'id_key'=>'site_id'
+        ),
+        'gallery_cat'=>array(
+            'table'=>'gallery_cat',
+            'id_key'=>'site_id'
+        ),
+        'menu_items'=>array(
+            'table'=>'menu_items',
+            'id_key'=>'site_id'
+        ),
+        'news'=>array(
+            'table'=>'news',
+            'id_key'=>'site_id'
+        ),
+        'products'=>array(
+            'table'=>'products',
+            'id_key'=>'site_id'
+        ),
+        'product_cat'=>array(
+            'table'=>'product_cat',
+            'id_key'=>'site_id'
+        ),
+        'product_sub'=>array(
+            'table'=>'product_sub',
+            'id_key'=>'site_id'
+        ),
+        'user_sites'=>array(
+            'table'=>'user_sites',
+            'id_key'=>'site_id'
+        )
+    );
 
     public static $fields_collection = array(
 

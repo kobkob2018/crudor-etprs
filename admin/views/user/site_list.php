@@ -1,7 +1,7 @@
 <h2>האתרים שלי</h2>
 <?php if(Helper::user_is('master_admin',$this->user)): ?>
 <div class="add-button-block-wrap">
-    <a class="focus-box button-focus" href="/admin/user_sites/add/">יצירת אתר חדש</a>
+    <a class="focus-box button-focus" href="/admin/site/add/">יצירת אתר חדש</a>
 </div>
 <?php endif; ?>
 <h4>בחר אתר לעריכה</h4>
@@ -10,7 +10,7 @@
         <li>
             <a href="<?= inner_url("userSites/checkin/") ?>?workon=<?= $site['id'] ?>" title="<?= $site['title']; ?>"><?= $site['title']; ?></a>
              | 
-             <a href="http://<?= $site['domain']; ?>/usites/" title="<?= $site['title']; ?>" target="_BLANK">צפה באתר</a>
+             <a href="http://<?= $site['domain']; ?>" title="<?= $site['title']; ?>" target="_BLANK">צפה באתר</a>
         </li>
     <?php endforeach; ?>
 </ul>

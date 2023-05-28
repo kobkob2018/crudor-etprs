@@ -34,56 +34,6 @@
         }       
     }
 
-    public function add(){
-        return parent::add();
-    }  
-
-    public function createSend(){
-        return parent::createSend();
-    }
-
-    public function delete(){
-        echo "under construction";
-        return;      
-    }
-
-    public function include_add_view(){
-        $this->include_view('site/add_site.php');
-    }  
-
-    protected function create_success_message(){
-        SystemMessages::add_success_message("האתר נוצר בהצלחה");
-    }
-
-
-    protected function delete_success_message(){
-        SystemMessages::add_success_message("האתר נמחק");
-    }
-
-    protected function delete_item($row_id){
-        echo "UNDER CONSTRUCTION";
-        return;
-       //return Products::delete($row_id);
-    }
-
-    public function eject_url(){
-        return inner_url('userSites/list/');
-    }
-
-    public function url_back_to_item($item_info){
-        echo "UNDER CONSTRUCTION";
-        return;
-        //return inner_url("products/edit/?row_id=".$item_info['id']);
-    }
-
-    protected function get_fields_collection(){
-        return Sites::setup_field_collection();
-    }
-
-    protected function create_item($fixed_values){
-        $site_id = Sites::create($fixed_values);
-        exit("site id is:".$site_id);
-    }
 
   }
 ?>

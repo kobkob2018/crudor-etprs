@@ -52,7 +52,7 @@
       $fields_keys_sql = implode(",",$fields_keys_sql_arr);
       $fields_values_sql = implode(",",$fields_values_sql_arr);
       $sql = "INSERT INTO $table_name ($fields_keys_sql) VALUES($fields_values_sql)";
-      
+
       $db = Db::getInstance();		
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
@@ -61,7 +61,12 @@
 
     public static function simple_find_by_table_name($filter_arr,$table_name , $select_params = "*", $payload = array()){
       $req = static::simple_find_with_filter_req_by_table_name($filter_arr,$table_name, $select_params, $payload);
-      $result = $req->fetch();
+      if(!isset($payload['NO_FETCH_ASSOC'])){
+        $result = $req->fetch(PDO::FETCH_ASSOC);
+      }
+      else{
+        $result = $req->fetch();
+      }
       if(isset($payload['add_custom_param'])){
         $add_custom_param = $payload['add_custom_param'];
         $controller_interface = $add_custom_param['controller'];
@@ -78,7 +83,13 @@
 
     public static function simple_get_list_by_table_name($filter_arr,$table_name, $select_params = "*", $payload = array()){
       $req = static::simple_find_with_filter_req_by_table_name($filter_arr,$table_name, $select_params, $payload);
-      $result = $req->fetchAll();
+      
+      if(!isset($payload['NO_FETCH_ASSOC'])){
+        $result = $req->fetchAll(PDO::FETCH_ASSOC);
+      }
+      else{
+        $result = $req->fetchAll();
+      }
       if(isset($payload['add_custom_param'])){
         $add_custom_param = $payload['add_custom_param'];
         $controller_interface = $add_custom_param['controller'];
