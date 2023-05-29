@@ -232,7 +232,17 @@
         foreach($missing_dst as $key=>$counter){
           $missing_str.= "\n missing: ".$key."($counter)";
         }
-        Helper::send_email("ilan@il-biz.com","phones without user",$missing_str);
+
+        $d = date("m_y");
+        $logfilename = "cal_log_".$d.".txt";
+        
+        Helper::add_log($logfilename,"\n".$missing_str."\n\n\n");
+        try{
+          Helper::send_email("ilan@il-biz.com","phones without user",$missing_str);
+        }
+        catch(Exception $e){
+
+        }
       }
     }
 

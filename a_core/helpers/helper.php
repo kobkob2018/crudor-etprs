@@ -112,6 +112,21 @@
       
     }
 
+    public static function add_log($log_file,$log_text){
+      if(!is_dir('assets_s')){
+        $oldumask = umask(0) ;
+        $mkdir = @mkdir( 'assets_s', 0755 ) ;
+        umask( $oldumask ) ;
+      }
+      if(!is_dir('assets_s/logs')){
+          $oldumask = umask(0) ;
+          $mkdir = @mkdir( 'assets_s/logs', 0755 ) ;
+          umask( $oldumask ) ;
+      }
+      $log_filename = 'assets_s/logs/'.$log_file;
+
+      file_put_contents($log_filename, $log_text, FILE_APPEND);
+    }
 
   }
 ?>
