@@ -1,6 +1,8 @@
 <?php
 	class sitesModule extends Module{
-        public $add_models = array("biz_categories",
+        public $add_models = array(
+                    "sites",
+                    "biz_categories",
                     "sitePages",
                     "siteCat_phone",
                     "siteBiz_forms",
@@ -27,7 +29,15 @@
         }        
 
         public function handle_access_default(){
-            return true;
+          $current_site = Sites::get_current_site();
+          if(!$current_site){
+            header('HTTP/1.0 403 Forbidden');
+            $this->include_view('access/denied403.php');
+            echo 'You are forbidden!';
+            exit();
+            return false;
+          }
+          return true;
         }
 
         public function get_assets_dir(){

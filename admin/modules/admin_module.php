@@ -16,6 +16,9 @@
         }
 
         public function handle_access_default(){
+            if(!$this->handle_admin_domains_access()){
+                return false;
+            }
             return $this->handle_access_workon_site_only();
         }
 

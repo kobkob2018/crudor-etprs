@@ -14,6 +14,7 @@
             }
             else{              
                 $current_site = self::get_by_domain($_SERVER["HTTP_HOST"]);
+                self::$sites_arr['current'] = $current_site;
                 if($current_site){
                     self::$sites_arr['current'] = $current_site;
                     session__set("site_id",self::$sites_arr['current']['id']);

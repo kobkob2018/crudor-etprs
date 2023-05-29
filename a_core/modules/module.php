@@ -58,5 +58,35 @@
       return $return_arr;
     }
 
+    protected function handle_admin_domains_access(){
+      $current_domain = $_SERVER['HTTP_HOST'];
+      $master_domain = get_config("master_domain");
+      if($current_domain == $master_domain){
+        return true;
+      }
+      $allow_more_domains = Global_settings::get()['admin_domains'];
+
+      if(!$allow_more_domains){
+        $this->show_403_page();
+        return false;
+      }
+      $domains_arr = array();
+      $domains_str_arr = explode(",",$allow_more_domains);
+      foreach($domains_str_arr as $domian){
+        $domains_arr[] = trim($domian);
+      }
+      if(in_array($current_domain,$domains_arr)){
+        return true;
+      }
+      $this->show_403_page();
+      return false;
+    }
+
+
+    protected function show_403_page(){
+      header('HTTP/1.0 403 Forbidden');
+      $this->include_view('access/denied403.php');
+      exit();
+    }
   }
 ?>
