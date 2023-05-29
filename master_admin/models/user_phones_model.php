@@ -16,6 +16,7 @@
             'type'=>'select',
             'default'=>'0',
             'options'=>array(
+                array('value'=>'0', 'title'=>'ללא'),
                 array('value'=>'2', 'title'=>'גוגל'),
                 array('value'=>'1', 'title'=>'פייסבוק')
             )
