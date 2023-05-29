@@ -136,7 +136,7 @@
       exit("ok to here");
     }
 
-    protected function handle_tracking_phones($tracking_phones){
+    protected static function handle_tracking_phones($tracking_phones){
       $c_tracking_on = Global_settings::get()['c_tracking_on'];
       if($c_tracking_on){
         return;
@@ -161,7 +161,7 @@
       curl_close ($track_ch);
     }
 
-    protected function handle_phone_api_send($user_phone,$lead_data,$call_data){
+    protected static function handle_phone_api_send($user_phone,$lead_data,$call_data){
       $db = Db::getInstance();
       $sql = "SELECT * FROM user_phone_api WHERE phone_id = :phone_id";
       $execute_arr = array('phone_id'=>$user_phone['did']);  
@@ -266,7 +266,7 @@
       }
     }
 
-    protected function handle_lead_billing_and_duplicates($lead_data,$user_phone){
+    protected static function handle_lead_billing_and_duplicates($lead_data,$user_phone){
       $db = Db::getInstance();
       $sql = "SELECT id, duplicate_id FROM user_leads WHERE phone = :phone AND lead_billed = 1 AND user_id = :user_id AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)) LIMIT 1";
       $execute_arr = array('phone'=>$lead_data['phone'], 'user_id'=>$lead_data['user_id']);  
