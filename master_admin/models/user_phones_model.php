@@ -14,9 +14,9 @@
         'campaign_type'=>array(
             'label'=>'סוג קמפיין',
             'type'=>'select',
-            'default'=>'1',
+            'default'=>'0',
             'options'=>array(
-                array('value'=>'0', 'title'=>'גוגל'),
+                array('value'=>'2', 'title'=>'גוגל'),
                 array('value'=>'1', 'title'=>'פייסבוק')
             )
         ),

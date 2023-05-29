@@ -15,11 +15,8 @@
     protected static function getLinkDb() {
       if (!isset(self::$link_db)) {
         $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-        self::$link_db = new PDO('mysql:host='.get_config('link_host').'; port='.get_config('link_port').'; dbname='.get_config('link_db').'', get_config('link_user'), get_config('link_pass'), $pdo_options);
-        
-        //if not working try without port: 
-        //self::$link_db = new PDO('mysql:host='.get_config('link_host').';  dbname='.get_config('link_db').'', get_config('link_user'), get_config('link_pass'), $pdo_options);
-      }
+        self::$link_db = new PDO('mysql:host='.get_config('link_host').'; port='.get_config('link_port').'; dbname='.get_config('link_db').'', get_config('link_user'), get_config('link_pass'), $pdo_options);      
+        }
       return self::$link_db;
     }
 

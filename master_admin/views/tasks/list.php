@@ -12,7 +12,7 @@
     </div>
 <?php endif; ?>
 <div class="task-list">
-    <h2>הנה רשימת המשימות</h2>
+    <h2>רשימת המשימות</h2>
     <p>
         <a href="<?= inner_url("tasks/add/") ?>">הוספת משימה</a>
     </p>
