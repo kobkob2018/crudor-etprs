@@ -265,7 +265,7 @@
 
     protected static function handle_lead_billing_and_duplicates($lead_data,$user_phone){
       $db = Db::getInstance();
-      $sql = "SELECT id, duplicate_id FROM user_leads WHERE phone = :phone AND lead_billed = 1 AND user_id = :user_id AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)) LIMIT 1";
+      $sql = "SELECT id, duplicate_id FROM user_leads WHERE phone = :phone AND billed = 1 AND user_id = :user_id AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)) LIMIT 1";
       $execute_arr = array('phone'=>$lead_data['phone'], 'user_id'=>$lead_data['user_id']);  
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
