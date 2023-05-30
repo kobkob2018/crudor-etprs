@@ -8,7 +8,7 @@
         'number'=>array(
             'label'=>'מספר',
             'type'=>'text',
-            'validation'=>'required, phone'
+            'validation'=>'required'
         ),
 
         'campaign_type'=>array(
