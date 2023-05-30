@@ -529,7 +529,9 @@ a.nice-button{
     max-width: 100px;
     padding-left: 10px;
 }
-
+.amin-logo img{
+    max-width: 100%;
+}
 .roundish-cube .whatsapp-phone a{
     display: flex;
     align-items: center;
@@ -883,7 +885,7 @@ a.news-ticker-a-content{
         color: black;
         min-height: 70px;
     }
-    
+
     #page_wrap{
         margin-top: 58px;
         transition: margin 0.3s;

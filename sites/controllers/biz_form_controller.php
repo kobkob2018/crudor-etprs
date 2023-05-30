@@ -1,7 +1,7 @@
 <?php
 //http://love.com/biz_form/submit_request/?form_id=4&submit_request=1&biz[cat_id]=52&biz[full_name]=demo_post2&biz[phone]=098765432&biz[email]=no-mail&biz[city]=6&cat_tree[0]=47&cat_tree[1]=52
   class Biz_formController extends CrudController{
-    public $add_models = array("sitePages","biz_categories","siteBiz_forms","cities");
+    public $add_models = array("sitePages","biz_categories","siteBiz_forms","cities","sitesCat_city");
 
 
     protected function init_setup($action){
@@ -129,6 +129,25 @@
 
     public function get_cat_final_fields($return_array){
         $parent_tree = Biz_categories::get_item_parents_tree($return_array['cat_id'],'*');
+        
+        $add_email_to_form = false;
+        foreach($parent_tree as $cat){
+            //cascading default from top to bottom
+            $add_email_to_form = $cat['add_email_to_form'];
+        }
+        $allowed_cities = SitesCat_city::get_cat_city_assign($parent_tree);
+        
+        if(!$allowed_cities){
+            $city_list = Cities::get_flat_select_city_options();
+        }
+        else{
+            $city_list = Cities::get_filtered_flat_select_city_options($allowed_cities);
+        }
+        $allowed_city_id_arr = array();
+        foreach($city_list as $city){
+            $allowed_city_id_arr[] = $city['id'];
+        }
+        
         $extra_fields = array();
         foreach($parent_tree as $cat){
             if($cat['extra_fields'] != ''){
@@ -142,6 +161,8 @@
         $return_array['html'] = $this->include_ob_view('biz_form/fetch_cat_extra_fields.php',$info);
         $return_array['state'] = 'ready';
         $return_array['submit_url'] = inner_url('biz_form/submit_request/?form_id='.$this->data['form_info']['id']);
+        $return_array['allowed_cities'] = $allowed_city_id_arr;
+        $return_array['add_email_to_form'] = $add_email_to_form;
         return $return_array;
     }
 

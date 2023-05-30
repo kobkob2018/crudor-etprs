@@ -27,6 +27,8 @@ class BizForm{
         this.loadingMsg = this.placeholder.querySelector(".loading-message");
         this.submitButton = wrapElement.querySelector(".submit-button");
         this.submitWrap = wrapElement.querySelector(".submit-wrap");
+        this.citySelect = this.formElement.querySelector("#biz_city_id");
+        this.emailSwitch = this.wrapElement.querySelector(".email-field-switch");
         this.submitUrl = "";
         this.selectEventListenerBinded = this.selectEventListener.bind(this);
         this.submitEventListenerBinded = this.submitEventListener.bind(this);
@@ -48,6 +50,11 @@ class BizForm{
         fetch(this.fetchUrl+"?cat_id="+cat_id+"&form_id="+this.form_id).then((res) => res.json()).then(info => {
             
             if(info.success){
+                if(info.allowed_cities){
+                    this.reset_city_select(info.allowed_cities);
+                }
+                this.switchEmailField(info.add_email_to_form);
+
                 this.appendChildren(info.html,cat_id);
                 this.bindCatSelectEvents(cat_id);
                 this.outLoadingState(info);
@@ -91,6 +98,51 @@ class BizForm{
     catChildClassName(cat_id){
         return 'child-of-'+cat_id;
     }
+    switchEmailField(addEmailField){
+        
+        if(typeof(addEmailField) == "undefined"){
+            return;
+        }
+        if(!this.emailSwitch){
+            return;
+        }
+        if(!addEmailField){
+            const emailSwitchOff = this.emailSwitch.querySelector(".email-field-switch-off");
+            if(!emailSwitchOff){
+                return;
+            }
+            const emailSwitchOn = this.placeholder.querySelector(".email-field-switch-on");
+            this.placeholder.insertBefore(emailSwitchOff,emailSwitchOn);
+            this.emailSwitch.append(emailSwitchOn);
+        }
+        else{
+            const emailSwitchOn = this.emailSwitch.querySelector(".email-field-switch-on");
+            if(!emailSwitchOn){
+                return;
+            }
+            const emailSwitchOff = this.placeholder.querySelector(".email-field-switch-off");
+            this.placeholder.insertBefore(emailSwitchOn,emailSwitchOff);
+            this.emailSwitch.append(emailSwitchOff);
+        }
+    }
+    reset_city_select(allowed_cities){
+        if(!this.citySelect){
+            return;
+        }
+        this.citySelect.querySelectorAll("option").forEach(option=>{
+            const optionVal = parseInt(option.value);
+            
+            if(!allowed_cities.includes(optionVal)){
+                option.classList.add("hidden");
+                option.selected = false;
+            }
+            else{
+                option.classList.remove("hidden");
+            }
+        });
+        
+    }
+
     removeChildrenOf(childEl){
         this.max_stock++;
         if(this.max_stock > 10){

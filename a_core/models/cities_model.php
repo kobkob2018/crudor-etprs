@@ -70,5 +70,29 @@
         }
         return $return_arr;
     }
+
+
+    public static function get_filtered_flat_select_city_options($allowed_cities, $allow_children = false, $return_arr = array(), $parent_id = 0, $deep = 0){
+
+        $deep++;
+        $filter_arr = array('parent'=>$parent_id);
+        $payload = array(
+            'order_by'=>'label'
+        );
+        $children = self::get_list($filter_arr, 'id, parent, label',$payload);
+        if($children){
+            foreach($children as $city_child){
+                $city_child['deep'] = $deep;
+                $auto_children_allowed = false;
+                if($allow_children || in_array($city_child['id'],$allowed_cities)){
+                    $auto_children_allowed = true;
+                    $return_arr[] = $city_child;
+                }
+                
+                $return_arr = self::get_filtered_flat_select_city_options($allowed_cities,$auto_children_allowed, $return_arr, $city_child['id'], $deep);
+            }
+        }
+        return $return_arr;
+    }
 }
 ?>

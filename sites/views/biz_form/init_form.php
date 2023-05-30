@@ -18,6 +18,11 @@
         <input type="hidden" name="biz[form_id]" value="<?= $this->data['biz_form']['id'] ?>" />
         <input type="hidden" name="biz[referrer]" value="<?= current_url() ?>" />
         <input type="hidden" name="biz[site_ref]" value="<?= $_SERVER['HTTP_HOST'] ?>" />
+        <?php if(isset($_REQUEST['test_form'])): ?>
+            <div class="test-group form-group">
+                <input type="button" class="tester-button form-input" data-status="pending" value="שליחת בדיקה" />
+            </div>
+        <?php endif; ?>
         <?php if(isset($_GET['banner_id'])): ?>
             <input type="hidden" name="biz[banner_id]" value="<?= $_GET['banner_id'] ?>" />
         <?php endif; ?>
@@ -67,8 +72,8 @@
             <?php else: ?>
                 <input type="hidden" name="biz[phone]" value="" />
             <?php endif; ?>
-            <?php if(!isset($info['input_remove']['email'])): ?>
-                <div class="form-group">
+            <?php if((!isset($info['input_remove']['email'])) && $this->data['biz_form']['add_email']): ?>
+                <div class="form-group email-field-switch-on">
                     <input type="text" name="biz[email]" id="biz_phone" class="form-input validate" placeholder="אימייל" required data-msg_required="יש למלא אימייל" data-msg_invalid="יש למלא אימייל תקין" />
                 </div>
             <?php else: ?>
@@ -109,6 +114,12 @@
     <div class="submit-wrap pending-state form-group biz-form-bg">
         <input type="submit" class="submit-button form-input color-button" data-status="pending" value="שליחה" />
     </div>
+
+    <?php if((!isset($info['input_remove']['email'])) && $this->data['biz_form']['add_email']): ?>
+        <div class="hidden email-field-switch">
+            <input class="email-field-switch-off" type="hidden" name="biz[email]" value="no-mail" />
+        </div> 
+    <?php endif; ?>
 </div>
 
 <?php $this->register_script('js','biz_form_js',styles_url('style/js/biz_form.js'),'foot'); ?> 

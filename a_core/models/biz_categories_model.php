@@ -114,7 +114,7 @@
         ),
 
         'show_whatsapp_button'=>array(
-            'label'=>'הוסף שדה אימייל',
+            'label'=>'הצג כפתור ווטסאפ',
             'type'=>'select',
             'default'=>'1',
             'options'=>array(

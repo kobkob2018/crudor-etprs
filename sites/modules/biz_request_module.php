@@ -91,7 +91,7 @@
             }
 
             $request_id = SiteBiz_requests::create($fixed_db_values);
-
+            $this->lead_info['reuqest_id'] = $request_id;
             if(isset($fixed_db_values['banner_id']) && $fixed_db_values['banner_id'] != ''){
                 $this->controller->add_model('siteNet_banners');
                 SiteNet_banners::add_count_to_banner($fixed_db_values['banner_id'], 'convertions');

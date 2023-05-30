@@ -324,5 +324,44 @@
         $req = $db->prepare($sql);
         $req->execute();
     }
+
+    public static function get_request_info_with_users($request_id){
+        $execute_arr = array("request_id"=>$request_id);
+        $sql = "SELECT * FROM biz_requests WHERE id = :request_id";
+        $db = Db::getInstance();		
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
+        $biz_request = $req->fetch();
+        if(!$biz_request){
+            return false;
+        }
+
+
+        $sql = "SELECT user_id FROM user_leads WHERE request_id = :request_id";
+        $db = Db::getInstance();		
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
+        $user_leads = $req->fetchAll();
+
+        $user_ids = array();
+        if($user_leads){
+
+            foreach($user_leads as $user_lead){
+                $user_ids[] = $user_lead['user_id'];
+            }
+        }
+
+        $user_id_in_str = implode(",",$user_ids);
+        $sql = "SELECT * FROM supplier_cubes WHERE status != '0' AND user_id IN($user_id_in_str)"; 
+        
+        $req = $db->prepare($sql);
+        $req->execute();
+        $cubes = $req->fetchAll(); 
+        return array(
+            'request'=>$biz_request,
+            'user_ids'=>$user_ids,
+            'supplier_cubes'=>$cubes
+        );
+    }
 }
 ?>
