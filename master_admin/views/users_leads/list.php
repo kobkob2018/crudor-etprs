@@ -10,6 +10,7 @@
     </div>
     <div class="filter-form-wrap">
         <form  class="flex-table filter-form" action = "" method = "POST" >
+            
             <div class="table-tr row ">
                 <input type="hidden" class="status-holder-field" name="filter[status]" value="<?= $info['filter_input']['status'] ?>" />
                 
@@ -36,7 +37,7 @@
                 </div>
                 <div class="col"><input class="filter-submit" type="submit" value="חפש" /></div>
             </div>
-    
+            <input type="hidden" name="filter[checkboxes_set]" value = '1' />
             <div class="check-show">
                 <div class="check-show-el">
                     <input type="checkbox" class="input-checkbox" value="1" name="filter[filter_selected_users]" <?= $info['filter_selected_users'] ?> /> הצג רק לקוחות נבחרים

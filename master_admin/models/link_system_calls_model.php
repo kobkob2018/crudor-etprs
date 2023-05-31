@@ -130,7 +130,7 @@
 
       self::handle_tracking_phones($tracking_phones);
 
-      exit("ok to here");
+      return "OK TO HERE";
     }
 
     protected static function handle_tracking_phones($tracking_phones){

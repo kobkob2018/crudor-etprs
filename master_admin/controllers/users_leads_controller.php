@@ -33,7 +33,7 @@
             'date_s'=>$this->get_request_filter_param('date_s', $this->get_default_date_s()),
             'date_e'=>$this->get_request_filter_param('date_e'),
             'free'=>$this->get_request_filter_param('free'),
-            'filter_selected_users'=>$this->get_request_filter_param('filter_selected_users','1')
+            'filter_selected_users'=>$this->get_request_filter_param('filter_selected_users','1',true)
         );
 
 
@@ -140,9 +140,12 @@
         return $this->redirect_to(inner_url('users_leads/list/'));
     }
 
-    protected function get_request_filter_param($param_name,$default_val = ""){
+    protected function get_request_filter_param($param_name,$default_val = "",$checkbox_default = false){
         if(isset($this->session_filter[$param_name])){
             return $this->session_filter[$param_name];
+        }
+        elseif($checkbox_default && isset($this->session_filter['checkboxes_set'])){
+            return "0";
         }
         return $default_val;
     }

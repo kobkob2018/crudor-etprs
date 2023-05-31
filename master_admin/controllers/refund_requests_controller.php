@@ -272,7 +272,6 @@
                         if($data['resource'] == "phone"){
                             $phone_data =  Refund_requests::get_phone_call_data($data['phone_id']);
                             echo "<span style='color:orange;font-weight:bold;'>סטטוס תשובה:</span> ".$phone_data['answer']."<br/>"
-                                ."<span style='color:orange;font-weight:bold;'>הודעת טקסט:</span> ".$phone_data['sms_send']."<br/>"
                                 ."<span style='color:orange;font-weight:bold;'>חיוב בשניות:</span> ".$phone_data['billsec']."<br/>"
                                 ."<span style='color:orange;font-weight:bold;'>מזהה:</span> ".$phone_data['uniqueid']."<br/>";						
                         }
