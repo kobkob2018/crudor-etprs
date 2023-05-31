@@ -33,7 +33,6 @@
           if(!$current_site){
             header('HTTP/1.0 403 Forbidden');
             $this->include_view('access/denied403.php');
-            echo 'You are forbidden!';
             exit();
             return false;
           }

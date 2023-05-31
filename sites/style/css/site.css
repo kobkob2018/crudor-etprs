@@ -442,6 +442,11 @@ a.nice-button{
     background: #ffffffb0;
 }
 
+.hero-form-holder .request-success-wrap{
+    background: #ffffffb0;
+    padding: 20px;
+}
+
 .hero-form-holder .submit-wrap input{
     display: inline-block;
     width: auto;

@@ -125,6 +125,7 @@ class BizForm{
             this.emailSwitch.append(emailSwitchOff);
         }
     }
+    
     reset_city_select(allowed_cities){
         if(!this.citySelect){
             return;
