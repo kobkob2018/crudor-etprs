@@ -8,8 +8,7 @@
 
     private static $link_tables = array(
       'ANSWERED'=>'in1331',
-      'NO ANSWER'=>'abdn1331',
-      'MESSEGE'=>'cb1331',
+      'NO ANSWER'=>'abdn1331'
     );
 
     protected static function getLinkDb() {
@@ -25,9 +24,9 @@
       $new_calls_arr = array();
 
       $answered_calls = self::fetch_calls_from_link_by_status("ANSWERED");
+	  
       $no_answer_calls = self::fetch_calls_from_link_by_status("NO ANSWER");
-      $msg_calls = self::fetch_calls_from_link_by_status("MESSEGE");
-
+	  
       foreach($answered_calls as $call){
         $new_calls_arr[$call['CallId']] = $call;
       }
@@ -36,12 +35,8 @@
         //some fix to the lead details...
         $call['src'] = $call['callerid'];
         $call['dst'] = $call['did'];
-        $new_calls_arr[$call['CallId']] = $call;
-      }
-      
-      foreach($msg_calls as $call){
-        $call['src'] = $call['callerid'];
-        $call['dst'] = $call['did'];
+		$call['duration'] = '0';  
+		$call['filename'] = '';  
         $new_calls_arr[$call['CallId']] = $call;
       }
 
@@ -71,18 +66,13 @@
             'call_to' => $call['dst'],
             'did' => $call['did'],
             'answer' => $call['answer'],
-            'sms_send' => $call['sms_sent'],
             'call_date' => $call['time'],
             'billsec' => $call['duration'],
             'uniqueid'  => '0',
             'link_sys_id'  => $call['CallId'],
             'link_sys_identity' => $call['uniqueid'],
-            'recordingfile'  => $call['filename'],          
-            'extra' => ''
+            'recordingfile'  => $call['filename']
           );
-          if($call['answer'] == "MESSEGE"){
-            $call_data['extra'] = $call['number'];  
-          }
 
           $call_id = self::simple_create_by_table_name($call_data,'user_phone_calls');
 
@@ -130,7 +120,7 @@
 
       self::handle_tracking_phones($tracking_phones);
 
-      return "OK TO HERE";
+      exit("ok to here");
     }
 
     protected static function handle_tracking_phones($tracking_phones){
@@ -161,7 +151,7 @@
     protected static function handle_phone_api_send($user_phone,$lead_data,$call_data){
       $db = Db::getInstance();
       $sql = "SELECT * FROM user_phone_api WHERE phone_id = :phone_id";
-      $execute_arr = array('phone_id'=>$user_phone['did']);  
+      $execute_arr = array('phone_id'=>$call_data['did']);  
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
       $api_sends = $req->fetchAll();
