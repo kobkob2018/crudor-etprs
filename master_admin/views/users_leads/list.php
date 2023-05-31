@@ -114,6 +114,9 @@
                         <?= $user_lead['phone'] ?>
                     </div>
                     <div class="col">
+                        <?php if($user_lead['resource'] == "phone"): ?>
+                            <b class="red">ליד טלפוני</b><br/>
+                        <?php endif; ?>
                         <?= $user_lead['email'] ?>
                     </div>
 
