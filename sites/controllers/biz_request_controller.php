@@ -11,11 +11,14 @@
     public function view(){
 
         if(!isset($_REQUEST['r'])){
-            return;
+          return $this->redirect_to(inner_url("?r=1"));
         }
         $this->add_asset_mapping(SiteSupplier_cubes::$assets_mapping);
         $request_id = $_REQUEST['r'];
         $info = Leads_complex::get_request_info_with_users($request_id);
+        if(!$info){
+          return $this->redirect_to(inner_url("?r=1"));
+        }
         $this->include_view("supplier_cubes/lead_supplier_cubes.php", $info);
     }
 

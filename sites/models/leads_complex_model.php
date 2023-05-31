@@ -336,6 +336,11 @@
             return false;
         }
 
+        $return_array = array(
+            'request'=>$biz_request,
+            'user_ids'=>false,
+            'supplier_cubes'=>false
+        );
 
         $sql = "SELECT user_id FROM user_leads WHERE request_id = :request_id";
         $db = Db::getInstance();		
@@ -343,25 +348,26 @@
         $req->execute($execute_arr);
         $user_leads = $req->fetchAll();
 
-        $user_ids = array();
-        if($user_leads){
-
-            foreach($user_leads as $user_lead){
-                $user_ids[] = $user_lead['user_id'];
-            }
+        if(!$user_leads){
+            return $return_array;
         }
 
+        $user_ids = array();
+
+        foreach($user_leads as $user_lead){
+            $user_ids[] = $user_lead['user_id'];
+        }
+        $return_array['user_ids'] = $user_ids;
         $user_id_in_str = implode(",",$user_ids);
+        
         $sql = "SELECT * FROM supplier_cubes WHERE status != '0' AND user_id IN($user_id_in_str)"; 
         
         $req = $db->prepare($sql);
         $req->execute();
         $cubes = $req->fetchAll(); 
-        return array(
-            'request'=>$biz_request,
-            'user_ids'=>$user_ids,
-            'supplier_cubes'=>$cubes
-        );
+        $return_array['supplier_cubes'] = $cubes;
+        
+        return $return_array;
     }
 }
 ?>
