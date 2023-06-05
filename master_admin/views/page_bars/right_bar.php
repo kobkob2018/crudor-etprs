@@ -70,6 +70,9 @@
             <li class="bar-item <?= $view->a_class("refund_requests/list/") ?>">
                 <a href="<?= inner_url('refund_requests/list/') ?>" title="בקשות לזיכויים" class="a-link">בקשות לזיכויים</a>
             </li> 
+            <li class="bar-item <?= $view->a_class("missing_user_phones/list/") ?>">
+                <a href="<?= inner_url('missing_user_phones/list/') ?>" title="מספרי טלפון חסרים" class="a-link">מספרי טלפון חסרים</a>
+            </li>
         <?php endif; ?>
 
     </ul>

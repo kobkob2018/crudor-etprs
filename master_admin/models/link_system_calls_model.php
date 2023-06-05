@@ -124,6 +124,7 @@
     }
 
     protected static function handle_tracking_phones($tracking_phones){
+		exit("tesstt000000111111111");
       $c_tracking_on = Global_settings::get()['c_tracking_on'];
       if($c_tracking_on){
         return;
@@ -216,19 +217,22 @@
     protected static function handle_missing_user_phones($missing_dst){
       if(!empty($missing_dst)){
         $missing_str = "phones not belong to customerts: \n";
+		$db = Db::getInstance();
         foreach($missing_dst as $key=>$counter){
-          $missing_str.= "\n missing: ".$key."($counter)";
-        }
-
-        $d = date("m_y");
-        $logfilename = "cal_log_".$d.".txt";
-        
-        Helper::add_log($logfilename,"\n".$missing_str."\n\n\n");
-        try{
-          Helper::send_email("ilan@il-biz.com","phones without user",$missing_str);
-        }
-        catch(Exception $e){
-
+			$sql = "SELECT id FROM missing_user_phones_reports WHERE phone = :phone";
+			$execute_arr = array('phone'=>$key);  
+			$req = $db->prepare($sql);
+			$req->execute($execute_arr);
+			$res = $req->fetchAll();
+			if($res){
+				$sql = "UPDATE missing_user_phones_reports SET last_call = NOW() WHERE phone = :phone";
+			}
+			else{
+				$sql = "INSERT INTO missing_user_phones_reports(phone) VALUES(:phone)";
+			}
+			$execute_arr = array('phone'=>$key);  
+			$req = $db->prepare($sql);
+			$req->execute($execute_arr);
         }
       }
     }
