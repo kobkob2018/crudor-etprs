@@ -11,6 +11,8 @@
       'NO ANSWER'=>'abdn1331'
     );
 
+	private static $users_lead_visability = array();
+
     protected static function getLinkDb() {
       if (!isset(self::$link_db)) {
         $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
@@ -49,14 +51,14 @@
 
         // bill_normal: lead_bill
 
-        $dst = $call['dst'];
+        $did = $call['did'];
 
         if (!$user_phone) {
-          if(isset($missing_dst[$dst])){
-            $missing_dst[$dst] = $missing_dst[$dst]+1;
+          if(isset($missing_dst[$did])){
+            $missing_dst[$did] = $missing_dst[$did]+1;
           }
           else{
-            $missing_dst[$dst] = 1;
+            $missing_dst[$did] = 1;
           }
         }
         else{
@@ -79,9 +81,6 @@
           $call_data['id'] = $call_id;
 
           $times_called = self::set_times_called_to_call($call_data,$call_id);
-          $tracked = $times_called == '0' ? '1' : '0';
-
-
 
           $lead_data = array(
             'user_id'=>$user_phone['user_id'],
@@ -104,50 +103,84 @@
           
           $lead_data['id'] = $lead_id;
 
-          $tracking_phones[] = array("p"=>$call_data['did'],"r"=>$call_id,"c"=>$lead_id,"t"=>$tracked,"tc"=>$times_called);
-
+         
           self::handle_phone_api_send($user_phone,$lead_data,$call_data);
-
-
-
           self::handle_return_sms($call,$user_phone);
-
+		  self::list_in_misscalls($call,$lead_data,$user_phone['user_id']);
         }
-
+		print_r_help($call,$call['src']);
       }
 
-      self::handle_missing_user_phones($missing_dst);
+		self::handle_missing_user_phones($missing_dst);
 
-      self::handle_tracking_phones($tracking_phones);
+		self::fix_todays_campaign_leads();
 
-      exit("ok to here");
     }
 
-    protected static function handle_tracking_phones($tracking_phones){
-		exit("tesstt000000111111111");
-      $c_tracking_on = Global_settings::get()['c_tracking_on'];
-      if($c_tracking_on){
-        return;
-      }
-      $tracking_phones_json = json_encode($tracking_phones);
+	protected static function list_in_misscalls($call,$lead_data,$user_id){
+		if(!self::is_user_visible_in_misscalls($user_id)){
+			return;
+		}
+		if(self::find_lead_for_call($call)){
+			return;
+		}
+		
+	}
+
+	//check if lead for the phone nu,ber exist at the same month
+	protected static function find_lead_for_call($call){
+		$db = Db::getInstance();
+		$sql = "SELECT * FROM user_leads WHERE resource = 'form' AND phone = :phone AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE))";
+		$execute_arr = array();  
+		$req = $db->prepare($sql);
+		$req->execute(array('phone'=>$call['src']));
+		return $req->fetch();	
+	}
 	
-      $track_params = "?phones_tracked=".$tracking_phones_json;
-      $master_url = get_config('master_url');
+	protected static function is_user_visible_in_misscalls($user_id){
+		$user_visability = false;
+		if(isset(self::$users_lead_visability[$user_id])){
+			$user_visability = self::$users_lead_visability[$user_id];
+		}
+		else{
+			$db = Db::getInstance();
+			$sql = "SELECT * FROM user_lead_visability WHERE user_id = :user_id";
+			$execute_arr = array();  
+			$req = $db->prepare($sql);
+			$req->execute(array('user_id'=>$user_id));
+			$user_visability = $req->fetch();
+			self::$users_lead_visability[$user_id] = $user_visability;
+		}
+		if(!$user_visability){
+			return false;
+		}
+		return $user_visability['show_in_misscalls_report']; 
+	}
 
-
-      //todo see what they do in "https://ilbiz.co.il/c_tracking/"...
-      $track_url = $master_url."/c_tracking/track/".$track_params;  
-      $track_ch = curl_init(); 
-      curl_setopt( $track_ch, CURLOPT_URL,$track_url ); 
-      curl_setopt($track_ch, CURLOPT_HEADER, 0);
-      curl_setopt( $track_ch, CURLOPT_POST, 1 ); 
-      curl_setopt( $track_ch, CURLOPT_POSTFIELDS, $track_params ); 
-      curl_setopt($track_ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($track_ch, CURLOPT_FOLLOWLOCATION, TRUE);
-      $resualt = curl_exec ($track_ch); 
-      //mail("yacov.avr@gmail.com","check phones_37 ",$msg_to_email."\n\n\n\n".$tracking_phones_json."----".$resualt);  
-      curl_close ($track_ch);
-    }
+	protected static function fix_todays_campaign_leads(){
+		$db = Db::getInstance();
+		$sql = "SELECT * FROM user_leads WHERE resource = 'phone' AND campaign_type != '0' AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-%d') as DATE))";
+		$execute_arr = array();  
+		$req = $db->prepare($sql);
+		$req->execute();
+		$campaign_phones = $req->fetchAll();
+		if(!$campaign_phones){
+			return;
+		}
+		foreach($campaign_phones as $lead){
+			$date_in_arr = explode(" ",$lead['date_in']);
+			$date_like = $date_in_arr[0];
+			$execute_arr = array(
+				'campaign_type'=>$lead['campaign_type'],
+				'campaign_name'=>$lead['campaign_name'],
+				'date_like'=>"%".$date_like."%", 
+				'phone'=>$lead['phone'],
+			);
+			$sql ="UPDATE user_leads SET campaign_type = :campaign_type, campaign_name = :campaign_name WHERE resource = 'form' AND campaign_type IS NULL AND phone= :phone AND date_in LIKE :date_like ";
+			$req = $db->prepare($sql);
+			$req->execute($execute_arr);
+		}
+	}
 
     protected static function handle_phone_api_send($user_phone,$lead_data,$call_data){
       $db = Db::getInstance();
@@ -290,7 +323,7 @@
     protected static function get_user_phone_by_call($call){
       $db = Db::getInstance();
       $did = isset($call['did'])? $call['did'] : "" ;
-      if(!$did == ''){
+      if((!$did) || $did == ''){
         $did = '0';
       }
 
@@ -299,19 +332,7 @@
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
       $user_phone = $req->fetch();
-      if($user_phone){
-        return $user_phone;
-      }
 
-      //if user phone not found, try again with the dst param
-      if(!isset($call['dst']) || $call['dst'] == ''){
-        return false;
-      }
-      $execute_arr['number_find'] =  $call['dst'];
-
-      $req = $db->prepare($sql);
-      $req->execute($execute_arr);
-      $user_phone = $req->fetch();
       return $user_phone;
 
     }
