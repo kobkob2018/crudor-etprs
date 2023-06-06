@@ -5,7 +5,7 @@ class Link_phone_switchboardController extends CrudController{
         $client_ip = $_SERVER['REMOTE_ADDR'];
         if($client_ip != '62.128.52.101' && $client_ip != '62.90.6.141' && $client_ip != '82.166.145.101'){
             //echo $client_ip."<br/>";
-            exit("invalid request"); 
+          //  exit("invalid request"); 
         }
         return true;
     }
