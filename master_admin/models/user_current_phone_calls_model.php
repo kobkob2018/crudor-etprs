@@ -37,6 +37,13 @@
 
     }
 
+    public static function cleanup_20_minutes(){
+      $db = Db::getInstance();
+      $sql = "DELETE FROM user_current_phone_calls WHERE call_date < DATE_SUB( NOW( ) , INTERVAL 20 MINUTE )";
+      $req = $db->prepare($sql);
+      $req->execute();
+    }
+
   }
 
 ?>

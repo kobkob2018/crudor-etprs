@@ -13,15 +13,18 @@ class Link_phone_switchboardController extends CrudController{
 
     //212.143.17.254:80/lfg.php?did=722706388
     public function insert_call(){
+        $this->set_layout("blank");
         $this->add_model("user_current_phone_calls");
         $call_data = array(
            'call_from' => $_REQUEST['src'],
             'dst' => $_REQUEST['dst'],
             'call_to' => $_REQUEST['dst'],
             'did' => $_REQUEST['did'],
-            'link_sy_sidentity' => $_REQUEST['uniqueid'],
+            'link_sys_identity' => $_REQUEST['uniqueid'],
         );
         User_current_phone_calls::insert_call($call_data);
+        User_current_phone_calls::cleanup_20_minutes();
+        exit("ok");
     }
 
 }
