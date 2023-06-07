@@ -123,7 +123,7 @@
         $sql = "SELECT distinct refund.row_id as lead_id
                 FROM lead_refund_requests refund
                 LEFT JOIN users user ON refund.user_id = user.id
-        ".$where_sql." ORDER BY refund.id desc ".$limit_sql;
+        ".$where_sql." GROUP BY refund.row_id ORDER BY max(refund.id) desc ".$limit_sql;
        
         $req = $db->prepare($sql);
         $req->execute();
