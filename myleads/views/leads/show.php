@@ -1,6 +1,6 @@
 <?php $data_sent=$lead->users_send_summary;  $data=$lead->estimate_form_data;  ?>
 <div class="beck-link">
-	<a href='/<?php echo $this->base_url_dir; ?>/leads/all/'>חזרה לרשימת הלידים</a>
+	<a href='<?= inner_url("leads/list/") ?>'>חזרה לרשימת הלידים</a>
 </div>
 <h3>צפייה בליד <?= $data['full_name'] ?> <?php echo $data['phone']; ?> [<?php echo hebdt($data['insert_date']); ?>]</h3>
 <hr/>

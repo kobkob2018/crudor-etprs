@@ -21,7 +21,7 @@
         if($user['lead_visability']['records_password'] == $_REQUEST['records_password']){
           session__set('recordings_pass','1');
           session__set('show_row',$_REQUEST['row_id']);
-          $this->redirect_to(inner_url('/leads/all/'));
+          $this->redirect_to(inner_url('leads/list/'));
           return;
         }
       }
