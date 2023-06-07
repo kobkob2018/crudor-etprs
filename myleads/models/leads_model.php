@@ -17,7 +17,15 @@
 		);
 
 		$tag = Tags::get_user_tag_list();	
-			
+		if(is_null($lead_data['note'])){
+			$lead_data['note']= "";
+		}
+		if(is_null($lead_data['tag'])){
+			$lead_data['tag']= "";
+		}
+		if(is_null($lead_data['full_name'])){
+			$lead_data['full_name']= "";
+		}
 		$lead = array(
 			'row_id'=>$lead_data['id'],
 			'date_in'=>$lead_data['date_in'],
@@ -538,7 +546,7 @@
 		}
 		return $reason_list;
 	}
-	private function get_user_refund_reasons($user_id = '0'){
+	private static function get_user_refund_reasons($user_id = '0'){
 		$db = Db::getInstance();
 		$reason_list = array();
 		$sql = "SELECT * FROM  user_phone_leads_refund_reasons WHERE user_id = '0' OR user_id = $user_id";
