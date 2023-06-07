@@ -62,7 +62,7 @@
 
             $owner = Users::get_by_id($comment['last_comment_by_user'],'full_name');
             $comment['owner_name'] = $owner['full_name'];
-            $return_data = array("data"=>$comment,"msg"=>"ההערה עודכנה בהצלחה");
+            $return_data = array("success"=>"1","data"=>$comment,"msg"=>"ההערה עודכנה בהצלחה");
             
             echo json_encode($return_data);
             exit();

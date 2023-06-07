@@ -106,7 +106,7 @@
 
 
 
-            $phone_sql = "SELECT * FROM sites_leads_stat WHERE id = ".$lead_data['phone_lead_id']."";
+            $phone_sql = "SELECT * FROM user_phone_calls WHERE id = ".$lead_data['phone_id']."";
 
             $req = $db->prepare($phone_sql);
             $req->execute();   
@@ -121,12 +121,18 @@
             
             $comment_data = $req->fetch();
             
+            $lead_data['comment'] = "";
+            $lead_data['lead_by_phone'] = "";
+            $lead_data['mark_color'] = "";
+            $lead_data['last_comment_by_user'] = "";
 
-
-            $lead_data['comment'] = $comment_data['comment'];
-            $lead_data['lead_by_phone'] = $comment_data['lead_by_phone'];
-            $lead_data['mark_color'] = $comment_data['mark_color'];
-            $lead_data['last_comment_by_user'] = $comment_data['last_comment_by_user'];
+			if($comment_data){
+				$lead_data['comment'] = $comment_data['comment'];
+				$lead_data['lead_by_phone'] = $comment_data['lead_by_phone'];
+				$lead_data['mark_color'] = $comment_data['mark_color'];
+				$lead_data['last_comment_by_user'] = $comment_data['last_comment_by_user'];
+			}
+            
             if($lead_data['last_comment_by_user'] != "" && $lead_data['last_comment_by_user']!='0'){
                 $owners_list[] = $lead_data['last_comment_by_user'];
             }

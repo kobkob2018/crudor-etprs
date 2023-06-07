@@ -1,4 +1,4 @@
-        <h3>
+<h3>
             טלפונים שלא הפכו ללידים
         </h3>
         
@@ -100,8 +100,8 @@
                                     }
                                 ?>
                             </td> 
-                            <td style="background:<?php echo $info['campaign_colors'][$lead['phone_campaign_type']]; ?>"><?php echo $info['campaign_names'][$lead['phone_campaign_type']]; ?></td>
-                            <td style="background:<?php echo $info['campaign_colors'][$lead['phone_campaign_type']]; ?>"><?php echo $lead['phone_campaign_name']; ?></td>
+                            <td style="background:<?php echo $info['campaign_colors'][$lead['campaign_type']]; ?>"><?php echo $info['campaign_names'][$lead['campaign_type']]; ?></td>
+                            <td style="background:<?php echo $info['campaign_colors'][$lead['campaign_type']]; ?>"><?php echo $lead['campaign_name']; ?></td>
                             <td>
                                 <form action="" method="POST" id="misscall_comment_form_<?php echo $lead['id']; ?>" >
                                     <input type="hidden" name="edit_misscall_comment" value="<?php echo $lead['id']; ?>" />
@@ -165,8 +165,8 @@
                                             }
                                         ?>
                                     </td> 
-                                    <td><?php echo $info['campaign_names'][$appear['phone_campaign_type']]; ?></td>
-                                    <td><?php echo $appear['phone_campaign_name']; ?></td>
+                                    <td><?php echo $info['campaign_names'][$appear['campaign_type']]; ?></td>
+                                    <td><?php echo $appear['campaign_name']; ?></td>
                                     <td></td>
                                 </tr>							
                             
@@ -206,14 +206,24 @@
                     document.querySelector("#quickedit_send_msg").classList.remove('hidden');
                     let thisform = document.querySelector("#misscall_comment_form_"+lead_id);
                     let helperForm = document.querySelector("#quickedit_helper_form");
-                    let params = thisform.serialize()+"&"+helperForm.serialize();
-                    const ajax_url = "<?= current_url() ?>";
+					
+					let thisParams = new FormData(thisform);
+					let helperParams = new FormData(helperForm);
+					
+					
+					for (var pair of helperParams.entries()) {
+						thisParams.append(pair[0], pair[1]);
+					}
+					
+                    let params = thisParams;
+                    const ajax_url = "<?= inner_url('call_monitor/misscalls_comments/') ?>";
                     const xhttp = new XMLHttpRequest();
                     xhttp.responseType = 'json';
-                    xhttp.onload = function() {
+                    xhttp.onload = function(res) {
+						console.log(res.response);
                         const return_data = xhttp.response;   
                          
-                        console.log(msg);
+                        console.log(return_data);
                         document.querySelector("#quickedit_send_msg").classList.add("hidden");
                         if(return_data['success'] == '1'){	  
                             let comment_data = return_data['data'];
@@ -226,9 +236,9 @@
                         }
                         else{
                             
-                            document.querySelecto("#quickedit_err_msg").classList.remove('hidden');
-                            document.querySelecto("#quickedit_err_msg").querySelecto(".msg").innerHTML = return_data['err_msg'];
-                            setTimeout(function(){document.querySelecto("#quickedit_err_msg").classList.add('hidden')},2000);
+                            document.querySelector("#quickedit_err_msg").classList.remove('hidden');
+                            document.querySelector("#quickedit_err_msg").querySelector(".msg").innerHTML = return_data['err_msg'];
+                            setTimeout(function(){document.querySelector("#quickedit_err_msg").classList.add('hidden')},2000);
                             
                         }
                     }
