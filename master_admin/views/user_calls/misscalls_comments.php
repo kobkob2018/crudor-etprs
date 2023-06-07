@@ -161,7 +161,7 @@
                                     <td>
                                         <?php
                                             if($appear['phone_data']['recordingfile']!=""){
-                                                echo "<a target='_blank' href='".inner_url("link_recordings/download/")."?filename=".$phone_data['recordingfile']."' class='maintext'>לחץ כאן להורדת הקלטה</a><br/>"; 
+                                                echo "<a target='_blank' href='".inner_url("link_recordings/download/")."?filename=".$appear['phone_data']['recordingfile']."' class='maintext'>לחץ כאן להורדת הקלטה</a><br/>"; 
                                             }
                                         ?>
                                     </td> 
