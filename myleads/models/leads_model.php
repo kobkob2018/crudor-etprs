@@ -98,9 +98,9 @@
 		$user = Leads_user::get_leads_user_data($user);
 		if($lead_data['resource'] == "phone"){
 			
-			$sql = "SELECT * FROM sites_leads_stat WHERE id = :phone_id";
+			$sql = "SELECT * FROM sites_leads_stat WHERE id = :phone_lead_id";
 			$req = $db->prepare($sql);
-			$req->execute(array('phone_id'=>$lead_data['phone_id']));
+			$req->execute(array('phone_lead_id'=>$lead_data['phone_lead_id']));
 			$phone_lead_data = $req->fetch();
 			$lead['answer'] = $phone_lead_data['answer'];
 			$lead['cat_name'] = "שיחת טלפון";
