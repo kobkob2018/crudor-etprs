@@ -107,7 +107,7 @@
           self::handle_phone_api_send($user_phone,$lead_data,$call_data);
           self::handle_return_sms($call,$user_phone);
         }
-		print_r_help($call,$call['src']);
+
       }
 
 		self::handle_missing_user_phones($missing_dst);
