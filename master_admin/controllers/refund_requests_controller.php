@@ -336,7 +336,7 @@
                                         echo "<a target='_blank' href='".$link_records_alt_url."?menu=monitoring&action=display_record&id=".$phone_data['uniqueid']."&rawmode=yes' class='maintext'>לחץ כאן להורדת הקלטה</a><br/>";
                                     }
                                     else{
-                                        echo "<a target='_blank' href='".inner_url("Link_recordings/download/")."?filename=".$phone_data['recordingfile']."' class='maintext'>לחץ כאן להורדת הקלטה</a><br/>";
+                                        echo "<a target='_blank' href='".inner_url("link_recordings/download/")."?filename=".$phone_data['recordingfile']."' class='maintext'>לחץ כאן להורדת הקלטה</a><br/>";
                                     }
                                 }
                             }

@@ -128,12 +128,12 @@
 					if($user['access_records'] == '1'){
 						if($user['records_password'] != ""){
 							$lead['recording_link'] = "pass";
-							if(isset($_SESSION[$this->base_url_dir.'_recordings_pass'])){
-								$lead['recording_link'] = 'https://ilbiz.co.il/site-admin/recording_handlers/download.php?filename='.$phone_lead_data['recordingfile'];
+							if(session__isset('recordings_pass')){
+								$lead['recording_link'] = inner_url("link_recordings/download/")."?filename=".$phone_lead_data['recordingfile'];
 							}
 						}
 						else{
-							$lead['recording_link'] = 'https://ilbiz.co.il/site-admin/recording_handlers/download.php?filename='.$phone_lead_data['recordingfile'];
+							$lead['recording_link'] = inner_url("link_recordings/download/")."?filename=".$phone_lead_data['recordingfile'];
 						}
 					}
 				}

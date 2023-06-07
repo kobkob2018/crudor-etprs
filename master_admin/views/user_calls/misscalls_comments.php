@@ -96,7 +96,7 @@
                             <td>
                                 <?php
                                     if($lead['phone_data']['recordingfile']!=""){
-                                        echo "<a target='_blank' href='http://ilbiz.co.il/site-admin/recording_handlers/download.php?filename=".$lead['phone_data']['recordingfile']."' class='maintext'>לחץ כאן להורדת הקלטה</a><br/>"; 
+                                        echo "<a target='_blank' href='".inner_url("link_recordings/download/")."?filename=".$lead['phone_data']['recordingfile']."' class='maintext'>לחץ כאן להורדת הקלטה</a><br/>"; 
                                     }
                                 ?>
                             </td> 
@@ -161,7 +161,7 @@
                                     <td>
                                         <?php
                                             if($appear['phone_data']['recordingfile']!=""){
-                                                echo "<a target='_blank' href='http://ilbiz.co.il/site-admin/recording_handlers/download.php?filename=".$appear['phone_data']['recordingfile']."' class='maintext'>לחץ כאן להורדת הקלטה</a><br/>"; 
+                                                echo "<a target='_blank' href='".inner_url("link_recordings/download/")."?filename=".$phone_data['recordingfile']."' class='maintext'>לחץ כאן להורדת הקלטה</a><br/>"; 
                                             }
                                         ?>
                                     </td> 
