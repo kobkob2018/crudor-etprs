@@ -83,6 +83,11 @@
             'type'=>'text'
         ),
 
+        'unique_phone'=>array(
+            'label'=>'טלפון ייחודי מזהה קטגוריה',
+            'type'=>'text'
+        ),
+
         'googleADSense'=>array(
             'label'=>'קמפיין גוגל(במקום טופס)',
             'type'=>'textbox',

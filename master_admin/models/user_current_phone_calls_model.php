@@ -44,6 +44,42 @@
       $req->execute();
     }
 
+    public static function get_current_phone_calls(){
+      $db = Db::getInstance();
+  
+      $user_id_list = "SELECT user_id 
+      FROM user_lead_visability 
+      WHERE show_in_misscalls_report = '1'";
+      $sql = "SELECT * FROM user_current_phone_calls WHERE user_id IN(".$user_id_list.")";
+      $req = $db->prepare($sql);
+      $req->execute();
+      $calls = $req->fetchAll();
+      if(!$calls){
+        return array();
+      }
+      $call_list = array();
+      foreach($calls as $call_data){
+          $call_data['custom_cat'] = '0';
+          $execute_arr = array('like_did'=>'%'.$call_data['did'].'%');
+          $sql = "SELECT * FROM biz_categories WHERE unique_phone LIKE :like_did";
+          $req = $db->prepare($sql);
+          $req->execute($execute_arr);
+          $cat_data = $req->fetch();
+          if($cat_data){
+            $call_data['custom_cat'] = $cat_data['id'];
+          }
+
+          $call_date = $call_data['call_date'];
+          $call_date_arr = explode(" ",$call_date);
+          $call_hour_arr = explode(":",$call_date_arr[1]);
+          $call_data['call_hour'] = $call_hour_arr[0].":".$call_hour_arr[1];
+          $call_list[] = $call_data;
+      }
+      return $call_list;
+    }
+
   }
+
+
 
 ?>
