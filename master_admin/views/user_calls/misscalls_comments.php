@@ -230,7 +230,7 @@
                             thisform.querySelector('textarea[name="comment"]').innerHTML = comment_data['comment'];
                             thisform.querySelector('input[name="lead_by_phone"]').value = comment_data['lead_by_phone'];
                             thisform.querySelector('.last_comment_by_name').innerHTML = comment_data['owner_name'];				
-                            document.querySelector("#misscall_comment_tr_"+lead_id).css("background",comment_data['mark_color']);
+                            document.querySelector("#misscall_comment_tr_"+lead_id).style["background"] = comment_data['mark_color'];
                             document.querySelector("#quickedit_done_msg").classList.remove('hidden');
                             setTimeout(function(){document.querySelector("#quickedit_done_msg").classList.add('hidden')},2000);
                         }
