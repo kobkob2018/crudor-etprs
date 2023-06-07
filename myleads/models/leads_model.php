@@ -146,12 +146,9 @@
 		$refund_request = $req->fetch();
 		$lead['refund_reason_str'] = "";
 		if(isset($refund_request['reason'])){
-			if($lead_data['resource'] == 'phone'){
-				$reason = self::get_user_refund_reason_by_id($refund_request['reason']);
-			}
-			else{
-				$reason = self::get_refund_reason_by_id($refund_request['reason']);
-			}
+
+			$reason = self::get_refund_reason_by_id($refund_request['reason']);
+			
 			$lead['refund_reason_str'] = $reason['label'];
 			$lead['refund_request_sent'] = "1";
 			if($refund_request['denied'] == '1'){
@@ -169,12 +166,9 @@
 				$lead['has_refund_history'] = '0';
 				foreach($refund_request_history_data as $refund_request){
 					$lead['has_refund_history'] = '1';
-					if($lead_data['resource'] == 'phone'){
-						$reason_data = self::get_user_refund_reason_by_id($refund_request['reason']);
-					}
-					else{
-						$reason_data = $this->get_refund_reason_by_id($refund_request['reason']);
-					}
+
+					$reason_data = $this->get_refund_reason_by_id($refund_request['reason']);
+					
 					$reason_str = $reason_data['label'];
 					$admin_comment_str = "---ממתין לתשובה---";
 					if($refund_request['denied'] == '1'){
@@ -549,7 +543,7 @@
 	private static function get_user_refund_reasons($user_id = '0'){
 		$db = Db::getInstance();
 		$reason_list = array();
-		$sql = "SELECT * FROM  user_phone_leads_refund_reasons WHERE user_id = '0' OR user_id = $user_id";
+		$sql = "SELECT * FROM  refund_reasons WHERE user_id IS NULL user_id = '0' OR user_id = $user_id";
 		$req = $db->prepare($sql);
 		$req->execute();
 		$user_has_reasons = false;
@@ -562,46 +556,24 @@
 		}
 		return $reason_list;
 	}	
-	public static $refund_reason_list = array();
+	
 	private function get_refund_reason_by_id($reason_id){
-		if(empty(self::$refund_reason_list)){
-			$db = Db::getInstance();
-			$refund_reason_list = array();
-			$sql = "SELECT * FROM refund_reasons WHERE user_id IS NULL";
-			$req = $db->prepare($sql);
-			$req->execute();
-			foreach($req->fetchAll() as $reason) {
-				$refund_reason_list[$reason['id']] = $reason;
-			}
-			self::$refund_reason_list = $refund_reason_list;
+		
+		$db = Db::getInstance();
+		$refund_reason_list = array();
+		$sql = "SELECT * FROM refund_reasons WHERE id = :reason_id";
+		$req = $db->prepare($sql);
+		$req->execute(array('reason_id'=>$reason_id));
+		$reason = $req->fetch();
+		if(!$reason){
+			$all_reasons = self::get_user_refund_reasons();
+			return $all_reasons[0];
 		}
-		if(isset(self::$refund_reason_list[$reason_id])){
-			return self::$refund_reason_list[$reason_id];
-		}
-		else{
-			return self::$refund_reason_list[1];
-		}
+
+		
 	}
-	public static $user_refund_reason_list = array();
-	private function get_user_refund_reason_by_id($reason_id){
-		if(empty(self::$user_refund_reason_list)){
-			$db = Db::getInstance();
-			$user_refund_reason_list = array();
-			$sql = "SELECT * FROM user_phone_leads_refund_reasons";
-			$req = $db->prepare($sql);
-			$req->execute();
-			foreach($req->fetchAll() as $reason) {
-				$user_refund_reason_list[$reason['id']] = $reason;
-			}
-			self::$user_refund_reason_list = $user_refund_reason_list;
-		}
-		if(isset(self::$user_refund_reason_list[$reason_id])){
-			return self::$user_refund_reason_list[$reason_id];
-		}
-		else{
-			return self::$user_refund_reason_list[1];
-		}
-	}	
+	
+
 	
   }
 ?>
