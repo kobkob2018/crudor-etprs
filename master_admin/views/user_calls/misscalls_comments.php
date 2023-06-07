@@ -177,17 +177,17 @@
                 
             <?php endforeach; ?>
         </table>
-        <div id="quickedit_done_msg" style="position: fixed; top: 42px; background: #ffa500b5; right: 36%; padding: 40px; font-size: 30px; font-family: SANS-SERIF; border-radius: 10px; color:green; display:none;">
+        <div id="quickedit_done_msg" class="hidden" style="position: fixed; top: 42px; background: #ffa500b5; right: 36%; padding: 40px; font-size: 30px; font-family: SANS-SERIF; border-radius: 10px; color:green;">
             <div>
                 ההערה נשמרה בהצלחה
             </div>
         </div>
-        <div id="quickedit_send_msg"  style="position: fixed; top: 42px; background: #ff000038; right: 36%; padding: 40px; font-size: 30px; font-family: SANS-SERIF; border-radius: 10px; color:red; display:none;">
+        <div id="quickedit_send_msg" class="hidden" style="position: fixed; top: 42px; background: #ff000038; right: 36%; padding: 40px; font-size: 30px; font-family: SANS-SERIF; border-radius: 10px; color:red;">
             <div>
                 שולח
             </div>
         </div>
-        <div id="quickedit_err_msg"  style="position: fixed; top: 42px; background: #ff000038; right: 36%; padding: 40px; font-size: 30px; font-family: SANS-SERIF; border-radius: 10px; color:red; display:none;">
+        <div id="quickedit_err_msg" class="hidden" style="position: fixed; top: 42px; background: #ff000038; right: 36%; padding: 40px; font-size: 30px; font-family: SANS-SERIF; border-radius: 10px; color:red;">
             <div class="msg">
                 
             </div>
