@@ -543,7 +543,7 @@
 	private static function get_user_refund_reasons($user_id = '0'){
 		$db = Db::getInstance();
 		$reason_list = array();
-		$sql = "SELECT * FROM  refund_reasons WHERE user_id IS NULL user_id = '0' OR user_id = $user_id";
+		$sql = "SELECT * FROM  refund_reasons WHERE user_id IS NULL OR user_id = '0' OR user_id = $user_id";
 		$req = $db->prepare($sql);
 		$req->execute();
 		$user_has_reasons = false;
