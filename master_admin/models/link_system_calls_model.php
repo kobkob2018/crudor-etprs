@@ -106,7 +106,6 @@
          
           self::handle_phone_api_send($user_phone,$lead_data,$call_data);
           self::handle_return_sms($call,$user_phone);
-		  self::list_in_misscalls($call,$lead_data,$user_phone['user_id']);
         }
 		print_r_help($call,$call['src']);
       }
@@ -116,46 +115,6 @@
 		self::fix_todays_campaign_leads();
 
     }
-
-	protected static function list_in_misscalls($call,$lead_data,$user_id){
-		if(!self::is_user_visible_in_misscalls($user_id)){
-			return;
-		}
-		if(self::find_lead_for_call($call)){
-			return;
-		}
-		
-	}
-
-	//check if lead for the phone nu,ber exist at the same month
-	protected static function find_lead_for_call($call){
-		$db = Db::getInstance();
-		$sql = "SELECT * FROM user_leads WHERE resource = 'form' AND phone = :phone AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE))";
-		$execute_arr = array();  
-		$req = $db->prepare($sql);
-		$req->execute(array('phone'=>$call['src']));
-		return $req->fetch();	
-	}
-	
-	protected static function is_user_visible_in_misscalls($user_id){
-		$user_visability = false;
-		if(isset(self::$users_lead_visability[$user_id])){
-			$user_visability = self::$users_lead_visability[$user_id];
-		}
-		else{
-			$db = Db::getInstance();
-			$sql = "SELECT * FROM user_lead_visability WHERE user_id = :user_id";
-			$execute_arr = array();  
-			$req = $db->prepare($sql);
-			$req->execute(array('user_id'=>$user_id));
-			$user_visability = $req->fetch();
-			self::$users_lead_visability[$user_id] = $user_visability;
-		}
-		if(!$user_visability){
-			return false;
-		}
-		return $user_visability['show_in_misscalls_report']; 
-	}
 
 	protected static function fix_todays_campaign_leads(){
 		$db = Db::getInstance();

@@ -4,7 +4,9 @@
             <?= $info['biz_form']['title'] ?>
         </h3>
     </div>
-    
+    <?php if(isset($info['custom_cat_title'])): ?>
+        <h3><?= $info['custom_cat_title'] ?></h3>
+    <?php endif; ?>
     <form class="biz-form" action = "javascript://" method = "POST">
         <input type="hidden" name="submit_request" value="1" />
         <input class="cat-id-holder" type="hidden" name="biz[cat_id]" value="" />
@@ -66,7 +68,10 @@
                     class="form-input validate phoneNumber" 
                     placeholder="טלפון" 
                     required data-msg_required="יש למלא טלפון" data-msg_invalid="יש למלא טלפון תקין"
-                     />
+                    <?php if(isset($info['custom_phone'])): ?> 
+                        value = "<?= $info['custom_phone'] ?>" 
+                    <?php endif; ?>
+                    />
                 </div>  
                 
             <?php else: ?>

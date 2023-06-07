@@ -31,6 +31,22 @@
                 'input_remove'=>$input_remove
             );
 
+            if(isset($_GET['custom_phone'])){
+                $info['custom_phone'] = $_GET['custom_phone'];
+            }
+
+            if(isset($_GET['custom_cat'])){
+                $custom_cat = $_GET['custom_cat'];
+                $cat_tree = Biz_categories::get_item_parents_tree($custom_cat,'parent, label');
+                $cat_title_arr = array();
+                foreach($cat_tree as $cat){
+                    $cat_title_arr[] = $cat['label'];
+                }
+                $custom_cat_title = implode(", ",$cat_title_arr);
+                $info['custom_cat_title'] = $custom_cat_title;
+                $info['biz_form']['cat_id'] = $custom_cat;
+            }
+
             $this->include_view('biz_form/init_form.php',$info);
         }
 
