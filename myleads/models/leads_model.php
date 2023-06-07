@@ -569,7 +569,7 @@
 			$all_reasons = self::get_user_refund_reasons();
 			return $all_reasons[0];
 		}
-
+		return $reason;
 		
 	}
 	
