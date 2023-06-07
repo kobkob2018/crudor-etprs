@@ -86,6 +86,7 @@
             'user_id'=>$user_phone['user_id'],
             'date_in'=>$call['time'],
             'open_state'=>'1',
+            'send_state'=>'1',
             'phone'=>$call['src'],
             'request_id'=>'0',
             'resource'=>'phone',
