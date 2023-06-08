@@ -35,7 +35,8 @@
 				print_view(get_config('error_controller'), get_config('error_action'));
 			}
 			else{
-				echo "the pages controller for error not exist";
+
+				echo $controller.": ".$action.": the pages controller for error not exist";
 			}
 		}
 	}
