@@ -45,7 +45,6 @@
 		$controller = $init_request['controller'];
 		$action     = $init_request['action'];
 	} else {
-		exit("not set");
 		$controller = get_config('home_controller');
 		$action     = get_config('home_action');
 	}
