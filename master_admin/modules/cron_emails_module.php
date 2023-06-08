@@ -14,10 +14,10 @@
 
                     if($pending_email['lead_id'] != '0' && $pending_email['lead_id'] != ''){
                         $update_lead_arr = array('send_state'=>'1');
-                        MasterUser_leads::update($pending_email['lead_id'],$update_lead_arr);
+                        //MasterUser_leads::update($pending_email['lead_id'],$update_lead_arr);
                     }
 
-                    User_pending_emails::delete($pending_email['id']);
+                    //User_pending_emails::delete($pending_email['id']);
                 }
             }
         }

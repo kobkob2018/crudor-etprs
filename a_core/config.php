@@ -26,7 +26,7 @@ $config = array(
     'home_controller'=>'pages',
     'home_action'=>'home',
 
-    'email_sender'=>'info@ilbiz.co.il',
+    'email_sender'=>'ilan@il-biz.co.il',
     'email_sender_name'=>'מנהל הרשת',
     'is_mobile'=>false,
 
