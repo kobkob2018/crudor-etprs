@@ -14,7 +14,7 @@ function send_email_with_smtp($email_from,$name_from,$mail_to,$subject,$html_bod
 
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
-
+echo "sending emsil<br/> to $mail_to <br/>";
     try {
         $mail->CharSet = "UTF-8";
         //Server settings
