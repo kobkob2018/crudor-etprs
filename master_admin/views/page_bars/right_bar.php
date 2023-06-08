@@ -73,6 +73,17 @@
             <li class="bar-item <?= $view->a_class("missing_user_phones/list/") ?>">
                 <a href="<?= inner_url('missing_user_phones/list/') ?>" title="מספרי טלפון חסרים" class="a-link">מספרי טלפון חסרים</a>
             </li>
+            <li class="bar-item <?= $view->a_class("call_monitor/misscalls_comments/") ?>">
+                <a href="<?= inner_url('call_monitor/misscalls_comments/') ?>" title="שיחות שלא הפכו לליד" class="a-link">שיחות שלא הפכו לליד</a>
+            </li>
+
+            <li class="bar-item <?= $view->a_class("monthly_income/report/") ?>">
+                <a href="<?= inner_url('monthly_income/report/') ?>" title="דוח הכנסות חודשיות" class="a-link">דוח הכנסות חודשיות</a>
+            </li>
+
+            <li class="bar-item <?= $view->a_class("daily_income/report/") ?>">
+                <a href="<?= inner_url('daily_income/report/') ?>" title="דוח הכנסות יומיות" class="a-link">דוח הכנסות יומיות</a>
+            </li>
         <?php endif; ?>
 
     </ul>

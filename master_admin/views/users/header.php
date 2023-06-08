@@ -11,6 +11,9 @@
         <a href = "<?= inner_url('user_lounch_fee/list/') ?>?user_id=<?= $this->data['user_info']['id'] ?>" class="item-edit-a <?= $view->a_c_class('user_lounch_fee') ?>">שיגורי תשלום</a>
         | 
         <a href = "<?= inner_url('user_lead_settings/list/') ?>?user_id=<?= $this->data['user_info']['id'] ?>" class="item-edit-a <?= $view->a_c_class('user_lead_settings') ?>">לידים</a>
+        | 
+        <a href = "<?= inner_url('user_bookkeeping/list/') ?>?user_id=<?= $this->data['user_info']['id'] ?>" class="item-edit-a <?= $view->a_c_class('user_bookkeeping') ?>">אחסון ופרסום</a>
+
 
         <?php if(isset($this->data['add_leads_menu'])): ?>
             <br/>
