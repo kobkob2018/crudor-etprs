@@ -13,7 +13,7 @@ $system_config = array(
     'home_controller'=>'tasks',
     'home_action'=>'list',
 
-    'email_sender'=>'info@ilbiz.co.il',
+    'email_sender'=>'ilan@il-biz.co.il',
     'email_sender_name'=>'מנהל הרשת',
 
     'override_models'=>array('test'),
