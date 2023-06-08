@@ -5,5 +5,5 @@ $init_request = array(
     'controller'=>'cron_master',
     'action'=>'map_cron_actions'
 );
-
+$is_cron_master = true;
 require_once('index.php');

@@ -147,7 +147,6 @@ function add_url_params($url_before, $add_params){
     return $url_after;
 }
 
-$current_url = get_config('base_url') . $_SERVER["REQUEST_URI"];
 
 function is_mobile(){    
     return get_config('is_mobile');

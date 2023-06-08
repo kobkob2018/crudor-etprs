@@ -57,7 +57,13 @@ $config = array(
     'mode'=>'live', //in secret dev invierment can change to dev
 );
 
-$config['base_url'] = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on' ? 'https' : 'http' ) . '://' .  $_SERVER['HTTP_HOST'];
+if(!isset($is_cron_master)){
+    $config['base_url'] = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on' ? 'https' : 'http' ) . '://' .  $_SERVER['HTTP_HOST'];
+}
+
+else{
+    $config['base_url'] = $config['master_url'];
+}
 
 if(isset($_SERVER["HTTP_USER_AGENT"])){
     $config['is_mobile'] = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
