@@ -1,23 +1,40 @@
 <?php
   class Monthly_incomeController extends CrudController{
 
+
+    protected function get_cat_id_in($cat_filter){
+      if($cat_filter == '0'){
+        return "";
+      }
+      $this->add_model('biz_categories');
+      $cat_filter = "51";
+      $cat_offsprings = Biz_categories::simple_get_item_offsprings($cat_filter,'id,parent,label');
+      $cat_id_arr = array($cat_filter);
+      foreach($cat_offsprings as $cat){
+        $cat_id_arr[] = $cat['id'];
+      }
+      $cat_id_in = implode(",",$cat_id_arr);
+      return $cat_id_in;
+    }
+
     public function report(){
+
       $db = Db::getInstance();
       $date_from_str = date("m-Y");
       if(isset($_GET['date_from'])){
         $date_from_str = trim($_GET['date_from']);
       }
       $date_from_arr = explode("-",$date_from_str);
-      $date_from_sql =$date_from_arr[1]."-".$date_from_arr[0];
+      $date_from_sql =$date_from_arr[1]."-".$date_from_arr[0]."-01";
+      $date_from_sort = $date_from_arr[1]."-".$date_from_arr[0];
       $date_to_str = date("m-Y");
       if(isset($_GET['date_to'])){
         $date_to_str = trim($_GET['date_to']);
       }
       $date_to_arr = explode("-",$date_to_str);
-      
-      $date_to_sql_1 = $date_to_arr[1]."-".$date_to_arr[0];
-      
-      $date_to_sql = date('Y-m', strtotime("+1 month", strtotime($date_to_sql_1)));
+      $date_to_sql_1 = $date_to_arr[1]."-".$date_to_arr[0];    
+      $date_to_sql = date('Y-m-01', strtotime("+1 month", strtotime($date_to_sql_1)));
+      $date_to_sort = date('Y-m', strtotime("+1 month", strtotime($date_to_sql_1)));
       
       $cats_sql = "SELECT id,label,parent FROM  biz_categories WHERE 1 ORDER BY label";	
       $req = $db->prepare($cats_sql);
@@ -47,11 +64,14 @@
           }
         }
       }
+
+      $cat_id_in = $this->get_cat_id_in($cat_filter);
+
       $user_cat_sql = "";
       if($cat_filter != "0"){
         $user_ids = array();
         
-        $user_ids_sql = "SELECT DISTINCT user_id FROM user_cat WHERE cat_id = $cat_filter";
+        $user_ids_sql = "SELECT DISTINCT user_id FROM user_cat WHERE cat_id IN ($cat_id_in)";
         
         $req = $db->prepare($user_ids_sql);
         $req->execute();
@@ -61,7 +81,7 @@
           $user_ids[] = $user_i['user_id'];
         }
     
-        $user_ids_sql = "SELECT DISTINCT user_id FROM user_cat_city WHERE cat_id = $cat_filter";
+        $user_ids_sql = "SELECT DISTINCT user_id FROM user_cat_city WHERE cat_id IN ($cat_id_in)";
         $req = $db->prepare($user_ids_sql);
         $req->execute();
         $user_ids_res = $req->fetchAll();
@@ -78,17 +98,24 @@
           $user_cat_sql = " AND user.id IN($user_ids_in) ";
         }
       }
-    
+   
       $user_name_sql = "";
-      if(isset($_GET['user_name'])){
+      if(isset($_GET['user_name']) && $_GET['user_name'] != ""){
         $user_name_sql = ' AND user.full_name LIKE ("%'.$_GET['user_name'].'%") ';
       }
-      $sql = "SELECT user.id as user_id, full_name, advertisingPrice ,advertisingStartDate,leadPrice,domainEndDate,hostPriceMon,domainPrice,end_date 
-          FROM users user LEFT JOIN user_bookkeeping book ON book.user_id = user.id
-          WHERE user.end_date > '$date_from_sql' $user_name_sql $user_cat_sql AND active_manager = 0 AND status = 0";	
       
+      $sql = "SELECT user.id as user_id, full_name, advertisingPrice ,advertisingStartDate,lead_price,domainEndDate,hostPriceMon,domainPrice,end_date 
+          FROM users user 
+          LEFT JOIN user_bookkeeping book ON book.user_id = user.id
+          LEFT JOIN user_lead_settings uls ON uls.user_id = user.id
+          LEFT JOIN user_lead_visability ulv ON ulv.user_id = user.id
+          WHERE uls.end_date > '$date_from_sql' $user_name_sql $user_cat_sql AND show_in_income_reports = 1 AND user.active = 1 AND uls.active = 1";	
+      
+      $req = $db->prepare($sql);
+      $req->execute();
+      $res = $req->fetchAll();
+//ok here
       $income_arr = array();
-      $res = mysql_db_query(DB, $sql);
                   
       $user_list = array();
       $status_list = array(
@@ -100,8 +127,8 @@
         '4'=>array('str'=>'לא רלוונטי','id'=>'4'),
         '6'=>array('str'=>'הליד זוכה','id'=>'5'),
       );		
-      $unk_list = array();
-      while( $user = mysql_fetch_array($res) ){
+      $user_id_list = array();
+      foreach($res as $user){
         if($user['domainPrice'] == ""){
           $user['domainPrice'] = 0;
         }
@@ -111,8 +138,8 @@
         if($user['advertisingPrice'] == ""){
           $user['advertisingPrice'] = 0;
         }
-        if($user['leadPrice'] == ""){
-          $user['leadPrice'] = 0;
+        if($user['lead_price'] == ""){
+          $user['lead_price'] = 0;
         }		
         $user_static_costs = array(
           
@@ -121,55 +148,58 @@
           "hostPriceMon"=>$user['hostPriceMon'],
                   
           "advertisingPrice"=>$user['advertisingPrice'],
-          "leads"=>$user['leadPrice'],
+          "leads"=>$user['lead_price'],
         );
         $user['static_costs'] = $user_static_costs;
         $user['leads_count_total'] = 0;
         $user['deal_closed_count'] = 0;
-        $user_list[$user['unk']] = $user;
-        $unk_list[$user['unk']] = $user['unk'];
+        $user_list[$user['user_id']] = $user;
+        $user_id_list[$user['user_id']] = $user['user_id'];
       } 
-      $unk_in_sql = implode(",",$unk_list);
-      
+      $user_id_in_sql = implode(",",$user_id_list);
       
       $lead_campaign_sql = "";	
       if(isset($_REQUEST['add_campaign_leads'])){
-        $lead_campaign_sql = " AND (lead.lead_recource = 'none'";
+        $lead_campaign_sql = " AND (lead.resource = 'none'";
         if(isset($_REQUEST['add_reg_leads'])){
-          $lead_campaign_sql .= " OR ef.campaign_type = '0'  OR lead.phone_campaign_type = '0' ";
+          $lead_campaign_sql .= " OR req.campaign_type = '0'  OR lead.campaign_type = '0' ";
         }
         if(isset($_REQUEST['add_gl_leads'])){
-          $lead_campaign_sql .= " OR ef.campaign_type = '1'  OR lead.phone_campaign_type = '1' ";
+          $lead_campaign_sql .= " OR req.campaign_type = '1'  OR lead.campaign_type = '1' ";
         }		
         if(isset($_REQUEST['add_fb_leads'])){
-          $lead_campaign_sql .= " OR ef.campaign_type = '2'  OR lead.phone_campaign_type = '2' ";
+          $lead_campaign_sql .= " OR req.campaign_type = '2'  OR lead.campaign_type = '2' ";
         }
         
         $lead_campaign_sql .= ")";
       }
+      
       $phone_leads_sql = "";
       if(isset($_REQUEST['phone_leads_remove'])){
-        $phone_leads_sql = " AND lead.lead_recource = 'form' ";
+        $phone_leads_sql = " AND lead.resource = 'form' ";
       }		
       $lead_cat_sql = "";	
       if(isset($_REQUEST['cat_leads_only'])){
-        $lead_cat_sql = " AND ((lead.lead_recource != 'form' AND user.unk IN($unk_in_sql)) OR ef.cat_f = $cat_filter OR ef.cat_s = $cat_filter OR  ef.cat_spec = $cat_filter) ";
+        $lead_cat_sql = " AND ((lead.resource != 'form' AND user.id IN($user_id_in_sql)) OR req.cat_id IN ($cat_id_in)) ";
       }
       $lead_billed_sql = "";
       if(!isset($_REQUEST['add_unbilled_leads'])){
-        $lead_billed_sql = " AND lead.lead_billed = 1 ";
+        $lead_billed_sql = " AND lead.billed = 1 ";
       }	
       
-      $sql = "SELECT ef.id as ef_id, user.unk as unk,user.id as user_id,date_in,lead.status as lead_status,payByPassword,estimateFormID,lead_recource,lead_billed,phone_lead_id,cat_f,cat_s,cat_spec,lead.name,lead.phone,ef.campaign_type,lead.phone_campaign_type,sls.billsec,sls.answer
-          FROM user_contact_forms lead 
-          LEFT JOIN users user ON user.unk = lead.unk
-          LEFT JOIN estimate_form ef ON ef.id = lead.estimateFormID
-          LEFT JOIN sites_leads_stat sls ON sls.id = lead.phone_lead_id
-          WHERE user.end_date > '$date_from_sql' $phone_leads_sql $lead_cat_sql $lead_campaign_sql $user_name_sql AND active_manager = 0 AND user.status = 0 AND lead.date_in > '$date_from_sql' AND lead.date_in < '$date_to_sql' $lead_billed_sql";	
-          
+      $sql = "SELECT req.id as req_id, req.c1, req.c2, req.c3, req.c4, user.id as user_id,lead.date_in,lead.status as lead_status,open_state,request_id,resource,billed,phone_id,cat_id,lead.full_name,lead.phone,req.campaign_type as req_campaign_type, lead.campaign_type as campaign_type, upc.billsec,upc.answer
+          FROM user_leads lead 
+          LEFT JOIN users user ON user.id = lead.user_id
+          LEFT JOIN user_lead_settings uls ON user.id = uls.user_id
+          LEFT JOIN user_lead_visability ulv ON ulv.user_id = user.id
+          LEFT JOIN biz_requests req ON req.id = lead.request_id
+          LEFT JOIN user_phone_calls upc ON upc.id = lead.phone_id
+          WHERE uls.end_date > '$date_from_sql' $phone_leads_sql $lead_cat_sql $lead_campaign_sql $user_name_sql AND show_in_income_reports = 1 AND user.active = 1 AND lead.date_in > '$date_from_sql' AND lead.date_in < '$date_to_sql' $lead_billed_sql";	      
       
-      $res = mysql_db_query(DB, $sql);
-                  
+      $req = $db->prepare($sql);
+      $req->execute();
+      $res = $req->fetchAll();
+
       $lead_list = array();
       $customer_leads_list = array();
       $campaign_str = array('0'=>'רגיל','1'=>'גוגל','2'=>'פייסבוק');
@@ -177,11 +207,14 @@
       $notbilled_leads = array();
       $closed_deal_leads = array();
       $customer_phone_billsec = array();
-      while( $lead = mysql_fetch_array($res) ){
-    
+      foreach($res as $lead){
+        if($lead['campaign_type'] == ""){
+          $lead['campaign_type'] = "0";
+        }
         $lead['billsec_str'] = "--";
-        if($lead['lead_recource'] == 'phone'){
-          $lead['campaign_str'] = $campaign_str[$lead['phone_campaign_type']];
+        if($lead['resource'] == 'phone'){
+
+          $lead['campaign_str'] = $campaign_str[$lead['campaign_type']];
           if($lead['answer'] == "NO ANSWER"){
             $lead['billsec_str'] = "לא נענתה";
           }
@@ -202,41 +235,64 @@
         $lead_date = $lead_date_arr[0];
         $lead_month_arr = explode("-",$lead_date);
         $lead_month = $lead_month_arr[0]."-".$lead_month_arr[1];
-        if($lead['lead_billed'] == '1'){
+        if($lead['billed'] == '1'){
           if($lead['lead_status'] != '6'){
-            $lead_list[$lead_month][$lead['unk']][] = $lead;
-            $customer_leads_list[$lead['unk']][$lead_month]['good'][] = $lead;
+            $lead_list[$lead_month][$lead['user_id']][] = $lead;
+            $customer_leads_list[$lead['user_id']][$lead_month]['good'][] = $lead;
             if($lead['lead_status'] == '2'){
-              $closed_deal_leads[$lead_month][$lead['unk']][] = $lead;
+              $closed_deal_leads[$lead_month][$lead['user_id']][] = $lead;
             }			
           }
           else{
-            $refunded_leads[$lead_month][$lead['unk']][] = $lead;
-            $customer_leads_list[$lead['unk']][$lead_month]['refunded'][] = $lead;
+            $refunded_leads[$lead_month][$lead['user_id']][] = $lead;
+            $customer_leads_list[$lead['user_id']][$lead_month]['refunded'][] = $lead;
           }
         }
         else{
-          $notbilled_leads[$lead_month][$lead['unk']][] = $lead;
-          $customer_leads_list[$lead['unk']][$lead_month]['notbilled'][] = $lead;			
+          $notbilled_leads[$lead_month][$lead['user_id']][] = $lead;
+          $customer_leads_list[$lead['user_id']][$lead_month]['notbilled'][] = $lead;			
         }
-        if(!isset($customer_phone_billsec[$lead['unk']])){
-          $customer_phone_billsec[$lead['unk']][$lead_month] = 0;
+        if(!isset($customer_phone_billsec[$lead['user_id']])){
+          $customer_phone_billsec[$lead['user_id']] = array();
         }
-        $customer_phone_billsec[$lead['unk']][$lead_month] += $lead['billsec'];
+        if(!isset($customer_phone_billsec[$lead['user_id']][$lead_month])){
+          $customer_phone_billsec[$lead['user_id']][$lead_month] = 0;
+        }
+        $customer_phone_billsec[$lead['user_id']][$lead_month] += $lead['billsec'];
       }
       //echo "<pre>";
       //print_r($lead_list);
       //echo "</pre>";
      
+      foreach($user_id_list as $user_id){
+        if(!isset($customer_leads_list[$user_id])){
+          $customer_leads_list[$user_id] = array();  
+        }
+      }
       $all_months_income = array();
       $monthly_income_arr = array();
-      foreach($customer_leads_list as $unk=>$month_leads){
-        if(!isset($user_list[$unk])){
-          $missing_user_sql = "SELECT user.unk as unk,name, advertisingPrice ,advertisingStartDate,leadPrice,domainEndDate,hostPriceMon,domainPrice,end_date 
-          FROM users user LEFT JOIN user_bookkeeping book ON book.unk = user.unk
-          WHERE user.unk = '$unk' ";	
-          $missing_user_res = mysql_db_query(DB,$missing_user_sql);
-          $missing_user_data = mysql_fetch_array($missing_user_res);
+      foreach($user_list as $user_id=>$user_details){
+        
+        $sql = "SELECT * FROM user_lead_settings WHERE user_id = $user_id";
+        $req = $db->prepare($sql);
+        $req->execute();
+        $settings_data = $req->fetch();
+        $user_list[$user_id]['user_lead_settings'] = $settings_data;
+      }
+      foreach($customer_leads_list as $user_id=>$month_leads){
+        
+        if(!isset($user_list[$user_id])){
+          $missing_user_sql = "SELECT user.id as user_id,full_name, advertisingPrice ,advertisingStartDate,lead_price,domainEndDate,hostPriceMon,domainPrice,end_date 
+          FROM users user 
+          LEFT JOIN user_bookkeeping book ON book.user_id = user.id
+          LEFT JOIN user_lead_settings uls ON uls.user_id = user.id
+          WHERE user.id = $user_id ";
+          
+
+          $req = $db->prepare($missing_user_sql);
+          $req->execute();
+          $missing_user_data = $req->fetch();
+          
           $missing_user_data['missing'] = '1';
           if($missing_user_data['domainPrice'] == ""){
             $missing_user_data['domainPrice'] = 0;
@@ -247,8 +303,8 @@
           if($missing_user_data['advertisingPrice'] == ""){
             $missing_user_data['advertisingPrice'] = 0;
           }
-          if($missing_user_data['leadPrice'] == ""){
-            $missing_user_data['leadPrice'] = 0;
+          if($missing_user_data['lead_price'] == ""){
+            $missing_user_data['lead_price'] = 0;
           }		
           $user_static_costs = array(
             
@@ -257,22 +313,15 @@
             "hostPriceMon"=>$missing_user_data['hostPriceMon'],
                     
             "advertisingPrice"=>$missing_user_data['advertisingPrice'],
-            "leads"=>$missing_user_data['leadPrice'],
+            "leads"=>$missing_user_data['lead_price'],
           );
           $missing_user_data['static_costs'] = $user_static_costs;
           $missing_user_data['leads_count_total'] = 0;
-          $user_list[$missing_user_data['unk']] = $missing_user_data;
-        }
-        
-        foreach($user_list as $user_unk=>$user_details){
-          $sql = "SELECT * FROM user_lead_settings WHERE unk = '$user_unk'";
-          $res = mysql_db_query(DB,$sql);
-          $settings_data = mysql_fetch_array($res);
-          $user_list[$user_unk]['user_lead_settings'] = $settings_data;
+          $user_list[$missing_user_data['user_id']] = $missing_user_data;
         }
           
-        $row_date = $date_from_sql;	
-          $all_months_income[$unk] = array(
+        $row_date = $date_from_sort;	
+          $all_months_income[$user_id] = array(
             "domain"=>0, //domainPrice
             "hosting"=>0, //hostPriceMon
             "advertyzing_global"=>0, //advertisingPrice
@@ -285,34 +334,37 @@
             "billsec_sum"=>0, //time talking on the phone
           );
         $last_user_lead_count = 0;
-        while($row_date < $date_to_sql){
+        while($row_date < $date_to_sort){
           //echo $row_date."<br/>";
-          $monthly_income_arr[$unk] = array(
+          $monthly_income_arr[$user_id] = array(
             "domain"=>0, //domainPrice
             "hosting"=>0, //hostPriceMon
             "advertyzing_global"=>0, //advertisingPrice
             "leads"=>0, //leads
             "deal_closed_count"=>0,
             "billsec_sum"=>0,
+            "leads_count"=>0,
+            "refunded_leads_count"=>0
           ); 
           
-          $user = $user_list[$unk];
+          $user = $user_list[$user_id];
           
           if($user['end_date'] >= $row_date){
+            
             $user_income_row = array();
-            $user_income_row['name'] = "<a target='_blank' href='?main=user_profile&unk=".$user['unk']."&record_id=".$user['user_id']."&sesid=".SESID."'>".$user['name']."</a>";
-            if(isset($customer_leads_list[$unk][$row_date]['good'])){
+            $user_income_row['full_name'] = "<a target='_blank' href='".inner_url('users/edit/?row_id='.$user['user_id'])."'>".$user['full_name']."</a>";
+            if(isset($customer_leads_list[$user_id][$row_date]['good'])){
     
               $user_lead_count = count($month_leads[$row_date]['good']);
-              if($user['leadPrice'] != 0 && $user['leadPrice'] != ""){
-                $user_lead_monthly_outcome = $user_lead_count*$user['leadPrice'];
-                $monthly_income_arr[$unk]['leads']+=$user_lead_monthly_outcome;
+              if($user['lead_price'] != 0 && $user['lead_price'] != ""){
+                $user_lead_monthly_outcome = $user_lead_count*$user['lead_price'];
+                $monthly_income_arr[$user_id]['leads']+=$user_lead_monthly_outcome;
                 $user_income_row['leads']=$user_lead_monthly_outcome;
               }					
               $user_income_row['leads_count']=$user_lead_count;
               $user_income_row['lead_list'] = $month_leads;
-              if(isset($closed_deal_leads[$row_date][$user['unk']])){						
-                $user_income_row['closed_deal_leads'] = $closed_deal_leads[$row_date][$user['unk']];
+              if(isset($closed_deal_leads[$row_date][$user['user_id']])){						
+                $user_income_row['closed_deal_leads'] = $closed_deal_leads[$row_date][$user['user_id']];
                 $user_income_row['deal_closed_count'] = count($user_income_row['closed_deal_leads']);
                 $monthly_income_arr['deal_closed_count']+=$user_income_row['deal_closed_count'];
               }
@@ -324,7 +376,7 @@
               $user_income_row['leads_count']=0;		
             }
             
-            if(isset($customer_leads_list[$unk][$row_date]['refunded'])){
+            if(isset($customer_leads_list[$user_id][$row_date]['refunded'])){
               $user_refunded_lead_count = count($month_leads[$row_date]['refunded']);
               $user_income_row['refunded_leads_count']=$user_refunded_lead_count;
             }
@@ -354,64 +406,81 @@
             }
                     
             $last_user_lead_count = $user_income_row['leads_count'];
-            $monthly_income_arr[$unk]['leads_count']+=$user_income_row['leads_count'];
-            $monthly_income_arr[$unk]['deal_closed_count']+=$user_income_row['deal_closed_count'];
+            $monthly_income_arr[$user_id]['leads_count']+=
+            $user_income_row['leads_count'];
+            $monthly_income_arr[$user_id]['deal_closed_count']+=
+            isset($user_income_row['deal_closed_count'])?$user_income_row['deal_closed_count']:0;
             
-            $monthly_income_arr[$unk]['refunded_leads_count']+=$user_income_row['refunded_leads_count'];
-            if(isset($refunded_leads[$row_date][$user['unk']])){				
-              $user_income_row['refunded_leads'] = $refunded_leads[$row_date][$user['unk']];
+            $monthly_income_arr[$user_id]['refunded_leads_count']+=$user_income_row['refunded_leads_count'];
+            if(isset($refunded_leads[$row_date][$user['user_id']])){				
+              $user_income_row['refunded_leads'] = $refunded_leads[$row_date][$user['user_id']];
             }
-            $monthly_income_arr[$unk]['lead_count_compare'] = $user_income_row['lead_count_compare'];
-            $user_list[$unk]['leads_count_total']+=$user_income_row['leads_count'];
-            $monthly_income_arr[$unk]['hosting']+=$user['static_costs']['hostPriceMon'];
+            $monthly_income_arr[$user_id]['lead_count_compare'] = $user_income_row['lead_count_compare'];
+            $user_list[$user_id]['leads_count_total']+=$user_income_row['leads_count'];
+            $monthly_income_arr[$user_id]['hosting']+=$user['static_costs']['hostPriceMon'];
             $user_income_row['hosting']=$user['static_costs']['hostPriceMon'];
             if($user['domainEndDate'] >= $row_date){
-              $monthly_income_arr[$unk]['domain']+=$user['static_costs']['domainPrice'];
+              $monthly_income_arr[$user_id]['domain']+=$user['static_costs']['domainPrice'];
               $user_income_row['domain']=$user['static_costs']['domainPrice'];
             }
             else{
               $user_income_row['domain']=0;
             }
             if($user['advertisingStartDate'] <= $row_date){
-              $monthly_income_arr[$unk]['advertyzing_global']+=$user['static_costs']['advertisingPrice'];
+              $monthly_income_arr[$user_id]['advertyzing_global']+=$user['static_costs']['advertisingPrice'];
               $user_income_row['advertyzing_global']=$user['static_costs']['advertisingPrice'];
+            }
+            $lead_count = isset($user_income_row['leads'])?$user_income_row['leads']:0;
+            if(!isset($user_income_row['advertyzing_global'])){
+              $user_income_row['advertyzing_global'] = 0;
+            }
+            if(!isset($user_income_row['hosting'])){
+                $user_income_row['hosting'] = 0;
+            }
+            if(!isset($user_income_row['domain'])){
+                $user_income_row['domain'] = 0;
             }
             $user_income_row['sum_all'] = 
             
               $user_income_row['hosting']+
               $user_income_row['domain']+ 
               $user_income_row['advertyzing_global']+
-              $user_income_row['leads']
-              ; 
+              $lead_count; 
               
             if($user_income_row['sum_all'] != 0 || isset($user_income_row['lead_list']))
             {
-              $monthly_income_arr[$unk]['user'][$user['unk']] = $user_income_row;
+              $monthly_income_arr[$user_id]['user'][$user['user_id']] = $user_income_row;
             }
           }
           
-          if(isset($customer_phone_billsec[$unk][$row_date])){
-            $monthly_income_arr[$unk]['billsec_sum'] = $customer_phone_billsec[$unk][$row_date];
+          if(isset($customer_phone_billsec[$user_id][$row_date])){
+            $monthly_income_arr[$user_id]['billsec_sum'] = $customer_phone_billsec[$user_id][$row_date];
           }
           
-          $monthly_income_arr[$unk]['sum_all'] = $monthly_income_arr[$unk]['hosting'] + $monthly_income_arr[$unk]['domain'] + $monthly_income_arr[$unk]['advertyzing_global'] + $monthly_income_arr[$unk]['leads'];
-          $income_arr[$unk][$row_date] = $monthly_income_arr[$unk];
+          $monthly_income_arr[$user_id]['sum_all'] = $monthly_income_arr[$user_id]['hosting'] + $monthly_income_arr[$user_id]['domain'] + $monthly_income_arr[$user_id]['advertyzing_global'] + $monthly_income_arr[$user_id]['leads'];
+          $income_arr[$user_id][$row_date] = $monthly_income_arr[$user_id];
           $row_date = date('Y-m', strtotime("+1 month", strtotime($row_date)));	
           
-          $all_months_income[$unk]['domain']+=$monthly_income_arr[$unk]['domain'];
-          $all_months_income[$unk]['hosting']+=$monthly_income_arr[$unk]['hosting'];
-          $all_months_income[$unk]['advertyzing_global']+=$monthly_income_arr[$unk]['advertyzing_global'];
-          $all_months_income[$unk]['leads_count']+=$monthly_income_arr[$unk]['leads_count'];
-          $all_months_income[$unk]['refunded_leads_count']+=$monthly_income_arr[$unk]['refunded_leads_count'];
-          $all_months_income[$unk]['deal_closed_count']+=$monthly_income_arr[$unk]['deal_closed_count'];
-          $all_months_income[$unk]['leads']+=$monthly_income_arr[$unk]['leads'];
-          $all_months_income[$unk]['billsec_sum']+=$monthly_income_arr[$unk]['billsec_sum'];
-          $all_months_income[$unk]['sum_all']+=$monthly_income_arr[$unk]['sum_all'];
+          $all_months_income[$user_id]['domain']+=$monthly_income_arr[$user_id]['domain'];
+          $all_months_income[$user_id]['hosting']+=$monthly_income_arr[$user_id]['hosting'];
+          $all_months_income[$user_id]['advertyzing_global']+=$monthly_income_arr[$user_id]['advertyzing_global'];
+          $all_months_income[$user_id]['leads_count']+=$monthly_income_arr[$user_id]['leads_count'];
+          $all_months_income[$user_id]['refunded_leads_count']+=$monthly_income_arr[$user_id]['refunded_leads_count'];
+          $all_months_income[$user_id]['deal_closed_count']+=$monthly_income_arr[$user_id]['deal_closed_count'];
+          $all_months_income[$user_id]['leads']+=$monthly_income_arr[$user_id]['leads'];
+          $all_months_income[$user_id]['billsec_sum']+=$monthly_income_arr[$user_id]['billsec_sum'];
+          $all_months_income[$user_id]['sum_all']+=$monthly_income_arr[$user_id]['sum_all'];
           
           
         }
-        $all_months_income[$unk]['sum_all_2'] = $all_months_income[$unk]['domain']+$all_months_income[$unk]['hosting']+$all_months_income[$unk]['advertyzing_global']+$all_months_income[$unk]['leads'];
-        $all_months_income[$unk]['refunded_leads_precent'] = 100*$all_months_income[$unk]['refunded_leads_count']/($all_months_income[$unk]['leads_count']+$all_months_income[$unk]['refunded_leads_count']);
+        $all_months_income[$user_id]['sum_all_2'] = $all_months_income[$user_id]['domain']+$all_months_income[$user_id]['hosting']+$all_months_income[$user_id]['advertyzing_global']+$all_months_income[$user_id]['leads'];
+        if($all_months_income[$user_id]['leads_count']+$all_months_income[$user_id]['refunded_leads_count'] == '0'){
+          $all_months_income[$user_id]['refunded_leads_precent'] = 0;
+        }
+        else{
+
+          $all_months_income[$user_id]['refunded_leads_precent'] = 100*$all_months_income[$user_id]['refunded_leads_count']/($all_months_income[$user_id]['leads_count']+$all_months_income[$user_id]['refunded_leads_count']);
+        }
       }
       $compare_colors = array(
         '0'=>'#efefef',
@@ -424,10 +493,9 @@
       <h3>
         דוח הכנסות חודשיות
       </h3>
-      <a href="?sesid=<?php echo SESID; ?>" >חזרה לתפריט הראשי</a>
     
     <!-- sub categories helpers -->
-      <div style= "display:none;" id="cat_select_sub_mokups">
+      <div class="hidden" id="cat_select_sub_mokups">
         <?php foreach($cat_list_by_name['0'] as $cat_id_f): ?>
           <?php echo  $cat_list['0'][$cat_id_f]; ?>
           <select id="sub_cat_select_<?php echo $cat_id_f; ?>_mokup" class='input_style cat_selected_sub cat_selected_trig'  data-father="0" data-id="<?php echo  $cat_id_f; ?>" style="width:130px;" >
@@ -436,25 +504,28 @@
               <option value='<?php echo $cat_id; ?>'><?php echo $cat_list[$cat_id_f][$cat_id]; ?></option>
             <?php endforeach; ?>
           </select>	
-          <?php foreach($cat_list_by_name[$cat_id_f] as $cat_id_s): if(!empty($cat_list_by_name[$cat_id_s])): ?>
+          <?php if(isset($cat_list_by_name[$cat_id_f])): foreach($cat_list_by_name[$cat_id_f] as $cat_id_s): 
+            if(!empty($cat_list_by_name[$cat_id_s])): ?>
             <?php echo  $cat_list[$cat_id_f][$cat_id_s]; ?>
             <select id="sub_cat_select_<?php echo $cat_id_s; ?>_mokup" class='input_style cat_selected_sub cat_selected_trig' style="width:130px;" data-father="<?php echo $cat_id_f; ?>"  data-id="<?php echo  $cat_id_s; ?>">
               <option value='0'>בחר קטגוריה</option>
               <?php foreach($cat_list_by_name[$cat_id_s] as $cat_id_spaec): ?>
                 <option value='<?php echo $cat_id_spaec; ?>'><?php echo $cat_list[$cat_id_s][$cat_id_spaec]; ?></option>
-              <?php endforeach; ?>
+              <?php endforeach;?>
             </select>				
-          <?php endif;  endforeach; ?>					
+          <?php endif;  endforeach;  endif;  ?>					
         <?php endforeach; ?>
       </div>
       <script type="text/javascript">
-        jQuery(document).ready(function($){
-          
-          $(".cat_selected_trig").each(function(){
-            $(this).change(function(){
-              var el_id = $(this).attr("data-id");
+
+        document.addEventListener("DOMContentLoaded",()=>{
+
+          document.querySelectorAll(".cat_selected_trig").forEach(el=>{
+            el.addEventListener("change",function(){
+              
+              const el_id = el.dataset.id;
               update_sub_cat_select(el_id);
-            });				
+            });			
           });
           <?php if(isset($cat_selected[0])): ?>
             trigger_cat_select("0","<?php echo $cat_selected[0]; ?>");
@@ -472,60 +543,72 @@
         });	
     
         function trigger_cat_select(cat_id,select_val){
-          jQuery(function($){
-            jQuery("#sub_cat_select_"+cat_id).val(select_val).trigger('change');
-          });
+          console.log("#sub_cat_select_"+cat_id);
+          const cat_el = document.querySelector("#sub_cat_select_"+cat_id);
+          cat_el.value = select_val;
+            
+            const el_id = cat_el.dataset.id;
+            update_sub_cat_select(el_id);
         }
         
         function remove_select_sons(el_id){
-          jQuery(function($){
-            $("#sub_cat_place_holder").find(".cat_selected_sub").each(function(){
-              var father_cat = $(this).attr("data-father");
+          
+            document.querySelector("#sub_cat_place_holder").querySelectorAll(".cat_selected_sub").forEach(sub=>{
+              
+              const father_cat = sub.dataset.father;
               if(father_cat == el_id){
-                remove_select_sons($(this).attr("data-id"));
-                $(this).remove();
+                remove_select_sons(sub.dataset.id);
+                sub.remove();
               }
             });	
-          });			
+          		
         }
         
         function update_sub_cat_select(el_id){
           remove_select_sons(el_id);
-          jQuery(function($){
-              var select_el = $("#sub_cat_select_"+el_id);	
-              var selected_cat = select_el.val();
-              if($("#sub_cat_select_"+selected_cat+"_mokup").length != "0"){
-                var select_parent = select_el.attr("data-father");
-                var new_select_mokup = $("#sub_cat_select_"+selected_cat+"_mokup").clone();
-                var new_select_sub = new_select_mokup.clone();
-                new_select_sub.attr("id","sub_cat_select_"+selected_cat).attr("name","cat_selected[]");
-                new_select_sub.appendTo("#sub_cat_place_holder");
-                new_select_sub.change(function(){
-                  update_sub_cat_select($(this).attr("data-id"));
-                });
-              }
+          console.log("#sub_cat_select_"+el_id);
+          const select_el = document.querySelector("#sub_cat_select_"+el_id);	
+          
+          const selected_cat = select_el.value;
+          
+          const mokup = document.querySelector("#sub_cat_select_"+selected_cat+"_mokup");
+          
+          
+          
+          if(mokup){
+            
+            var select_parent = select_el.dataset.father;
+            var new_select_mokup = mokup.cloneNode(true);
+            
+            var new_select_sub = new_select_mokup.cloneNode(true);
+            
+            new_select_sub.id = "sub_cat_select_"+selected_cat;
+            new_select_sub.name = "cat_selected[]";
+            document.querySelector("#sub_cat_place_holder").append(new_select_sub);
+            new_select_sub.addEventListener("change",function(){
+              update_sub_cat_select(new_select_sub.dataset.id);
             });
+            
           }
+        }
       
       </script>
       
       <div style="padding:20px;">
-        <form action="index.php?main=&sesid=<?php echo SESID; ?>" method="GET">
-          <input type="hidden" name="main" value="monthly_income_report" />
-          <input type="hidden" name="sesid" value="<?php echo SESID; ?>" />
+        <form action="<?= inner_url("monthly_income/report/") ?>" method="GET">
           מתאריך <input type="text" name="date_from" value="<?php echo $date_from_str; ?>" />&nbsp&nbsp&nbsp
           עד תאריך  <input type="text" name="date_to" value="<?php echo $date_to_str; ?>" />&nbsp&nbsp&nbsp
-          שם לקוח  <input type="text" name="user_name" value="<?php echo $_GET['user_name']; ?>" />&nbsp&nbsp&nbsp
+          שם לקוח  <input type="text" name="user_name" value="<?php echo isset($_GET['user_name'])? $_GET['user_name']: ""; ?>" />&nbsp&nbsp&nbsp
           <br/><br/>
           <?php
-            $add_campaign_leads_style = "display:none;";
+            $add_campaign_leads_style_class = " hidden ";
             $add_campaign_leads_checked = "";
             $add_reg_leads_checked = "checked";
             $add_fb_leads_checked = "checked";
             $add_gl_leads_checked = "checked";
             
             if(isset($_GET['add_campaign_leads'])){
-              $add_campaign_leads_style = "display:block;";
+              $add_campaign_leads_style_class = "  ";
               $add_campaign_leads_checked = "checked";
               $add_reg_leads_checked = "";
               $add_fb_leads_checked = "";
@@ -551,7 +634,7 @@
           <input type="checkbox"  name="add_unbilled_leads" value="0" <?php echo $add_unbilled_leads_checked; ?>/> צפה בלידים לא מחוייבים(לחישוב זמני שיחות טלפון כללי) &nbsp&nbsp&nbsp
           <br/>
           <input type="checkbox" id="add_campaign_leads_door" name="add_campaign_leads" value="1" <?php echo $add_campaign_leads_checked; ?>/>הוסף סינון לידים לפי קמפיין:  &nbsp&nbsp&nbsp
-          <div id="add_campaign_leads_wrap" style="<?php echo $add_campaign_leads_style; ?>"><br/><b>הוסף לחישוב לידים מסוג: </b>
+          <div id="add_campaign_leads_wrap" class="<?php echo $add_campaign_leads_style_class; ?>"><br/><b>הוסף לחישוב לידים מסוג: </b>
             <input type="checkbox"  name="add_reg_leads" value="1" <?php echo $add_reg_leads_checked; ?>/> ללא קמפיין &nbsp&nbsp&nbsp
             <input type="checkbox"  name="add_fb_leads" value="1" <?php echo $add_fb_leads_checked; ?>/> מקמפיין פייסבוק &nbsp&nbsp&nbsp
             <input type="checkbox"  name="add_gl_leads" value="1" <?php echo $add_gl_leads_checked; ?>/> מקמפיין גוגל &nbsp&nbsp&nbsp
@@ -559,18 +642,19 @@
           </div>
           <br/><br/>
           <script type="text/javascript">
-            jQuery(function($){
-              $("#add_campaign_leads_door").change(function(){
-                console.log("---"+$(this).attr('checked'));
-                
-                if($(this).attr('checked')){
-                  $("#add_campaign_leads_wrap").show();
+            document.querySelector("#add_campaign_leads_door").addEventListener(
+              "change",
+              function(event){
+                const el = event.target;
+                if(el.checked){
+                  document.querySelector("#add_campaign_leads_wrap").classList.remove("hidden");
                 }
                 else{
-                  $("#add_campaign_leads_wrap").hide();
+                  document.querySelector("#add_campaign_leads_wrap").classList.add("hidden");
                 }
-              });
-            });
+              }
+            );
+            
           </script>
           קטגוריה
           <select id="sub_cat_select_0" name='cat_selected[]' class='input_style cat_selected_f cat_selected_trig' data-id='0' data-father='0' style='width:130px;'>
@@ -614,10 +698,11 @@
           <input type="submit" value="הצג" />
         </form>
       </div>
-      <?php foreach($income_arr as $unk=>$user_income_arr): ?>
+      
+      <?php foreach($income_arr as $user_id=>$user_income_arr): ?>
         
-        <h3><?php echo $user_list[$unk]['name']; ?>
-          <?php if(isset($user_list[$unk]['missing'])): ?>
+        <h3><?php echo $user_list[$user_id]['full_name']; ?>
+          <?php if(isset($user_list[$user_id]['missing'])): ?>
           <b style="color:red">(הלקוח לא התקבל בתוצאות החיפוש, והתווסף בגלל לידים שקיבל)</b>
           <?php endif; ?>
         </h3>
@@ -648,10 +733,10 @@
               <td><?php echo number_format ($month_income_arr['domain'],2); ?></td>
               <td><?php echo number_format ($month_income_arr['advertyzing_global'],2); ?></td>
               <td><?php echo $month_income_arr['leads_count']; ?></td>
-              <td><?php echo $month_income_arr['user'][$unk]['refunded_leads_count']; ?></td>
-              <td><?php echo number_format($month_income_arr['user'][$unk]['refunded_leads_precent'],2); ?>%</td>					
+              <td><?php echo $month_income_arr['user'][$user_id]['refunded_leads_count']; ?></td>
+              <td><?php echo number_format($month_income_arr['user'][$user_id]['refunded_leads_precent'],2); ?>%</td>					
               <td></td>
-              <td><?php echo number_format ($user_list[$unk]['leadPrice'],2); ?></td>
+              <td><?php echo number_format ($user_list[$user_id]['lead_price'],2); ?></td>
               <td><?php echo number_format ($month_income_arr['leads'],2); ?></td>
               <td><?php echo $month_income_arr['deal_closed_count']; ?></td>
               <td><?php echo $month_income_arr['billsec_sum']; ?></td>
@@ -662,33 +747,33 @@
           <?php endforeach; ?>
           <tr>
             <th style="color:green">סיכום</td>
-            <td style="color:green"><?php echo number_format ($all_months_income[$unk]['hosting'],2); ?></td>
-            <td style="color:green"><?php echo number_format ($all_months_income[$unk]['domain'],2); ?></td>
-            <td style="color:green"><?php echo number_format ($all_months_income[$unk]['advertyzing_global'],2); ?></td>
-            <td style="color:green"><?php echo $all_months_income[$unk]['leads_count']; ?></td>
-            <td><?php echo $all_months_income[$unk]['refunded_leads_count']; ?></td>
-            <td><?php echo number_format ($all_months_income[$unk]['refunded_leads_precent'],2); ?>%</td>
-            <td><?php echo $user_list[$unk]['user_lead_settings']['leadQry']; ?></td>
-            <td><?php echo number_format ($user_list[$unk]['leadPrice'],2); ?></td>
-            <td style="color:green"><?php echo number_format ($all_months_income[$unk]['leads'],2); ?></td>
-            <td style="color:green"><?php echo $all_months_income[$unk]['deal_closed_count']; ?></td>
-            <td><?php echo $all_months_income[$unk]['billsec_sum']; ?></td>
+            <td style="color:green"><?php echo number_format ($all_months_income[$user_id]['hosting'],2); ?></td>
+            <td style="color:green"><?php echo number_format ($all_months_income[$user_id]['domain'],2); ?></td>
+            <td style="color:green"><?php echo number_format ($all_months_income[$user_id]['advertyzing_global'],2); ?></td>
+            <td style="color:green"><?php echo $all_months_income[$user_id]['leads_count']; ?></td>
+            <td><?php echo $all_months_income[$user_id]['refunded_leads_count']; ?></td>
+            <td><?php echo number_format ($all_months_income[$user_id]['refunded_leads_precent'],2); ?>%</td>
+            <td><?php echo $user_list[$user_id]['user_lead_settings']['lead_credit']; ?></td>
+            <td><?php echo number_format ($user_list[$user_id]['lead_price'],2); ?></td>
+            <td style="color:green"><?php echo number_format ($all_months_income[$user_id]['leads'],2); ?></td>
+            <td style="color:green"><?php echo $all_months_income[$user_id]['deal_closed_count']; ?></td>
+            <td><?php echo $all_months_income[$user_id]['billsec_sum']; ?></td>
             <td style="color:green">
-              <?php echo number_format ($all_months_income[$unk]['sum_all'],2); ?>
+              <?php echo number_format ($all_months_income[$user_id]['sum_all'],2); ?>
               <br/>
               <small>
-                <?php echo number_format ($all_months_income[$unk]['sum_all_2'],2); ?>
+                <?php echo number_format ($all_months_income[$user_id]['sum_all_2'],2); ?>
               </small>
             </td>
           </tr>
         </table>
         
-        <?php if((isset($customer_leads_list[$unk]) || isset($customer_leads_list[$unk])) && isset($_GET['show_leads'])): ?>
+        <?php if((isset($customer_leads_list[$user_id]) || isset($customer_leads_list[$user_id])) && isset($_GET['show_leads'])): ?>
           <h5>פרוט לידים</h5>
     
             <table border="1"  cellpadding="3"  style="margin:10px;border-collapse: collapse;" >
               <tr>
-                <th colspan="7">לידים - <?php echo $user_income_arr['name']; ?></th>
+                <th colspan="7">לידים</th>
               </tr>
               <tr>
                 <th>יום</th>
@@ -701,31 +786,31 @@
                 <th>קמפיין</th>
                 <th>סטטוס</th>
               </tr>
-              <?php foreach($customer_leads_list[$unk] as $month=>$lead_list): ?>
-                <?php foreach($lead_list['good'] as $lid=>$lead): ?>
+              <?php foreach($customer_leads_list[$user_id] as $month=>$lead_list): ?>
+                <?php if(isset($lead_list['good'])): foreach($lead_list['good'] as $lid=>$lead): ?>
                   <tr>
                     <?php $date_in_arr = explode(" ",$lead['date_in']); ?>
                     <td><?php echo $date_in_arr[0]; ?></td>
                     <td><?php echo $date_in_arr[1]; ?></td>
                     <td>
-                      <?php if($lead['cat_f'] != 0 && $lead['cat_f'] != ""): ?>
-                        <?php echo $cat_list_names[$lead['cat_f']]; ?><br/>
+                      <?php if($lead['c1'] != 0 && $lead['c1'] != ""): ?>
+                        <?php echo $cat_list_names[$lead['c1']]; ?><br/>
                       <?php endif; ?>
-                      <?php if($lead['cat_s'] != 0 && $lead['cat_s'] != ""): ?>
-                        &nbsp&nbsp<?php echo $cat_list_names[$lead['cat_s']]; ?><br/>
+                      <?php if($lead['c2'] != 0 && $lead['c2'] != ""): ?>
+                        &nbsp&nbsp<?php echo $cat_list_names[$lead['c2']]; ?><br/>
                       <?php endif; ?>	
-                      <?php if($lead['cat_spec'] != 0 && $lead['cat_spec'] != ""): ?>
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $cat_list_names[$lead['cat_spec']]; ?><br/>
+                      <?php if($lead['c3'] != 0 && $lead['c3'] != ""): ?>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $cat_list_names[$lead['c3']]; ?><br/>
                       <?php endif; ?>											
                     </td>
-                    <td><a target="_blank" href="?main=send_estimate_form_users_list&estimate_id=<?php echo $lead['estimateFormID']; ?>&sesid=<?php echo SESID; ?>"><?php echo $lead['name']; ?></a></td>
+                    <td><a target="_blank" href="<?= inner_url('biz_requests/view/') ?>?row_id=<?= $lead['request_id']; ?>"><?= $lead['full_name'] ?></a></td>
                     <td><?php echo $lead['phone']; ?></td>
-                    <td><?php echo $lead['lead_recource']; ?></td>
+                    <td><?php echo $lead['resource']; ?></td>
                     <td><?php echo $lead['billsec_str']; ?></td>
                     <td><?php echo $lead['campaign_str']; ?></td>
                     <td><?php echo $status_list[$lead['lead_status']]['str']; ?></td>
                   </tr>	
-                <?php endforeach; ?>						
+                <?php endforeach; endif; ?>						
               <?php endforeach; ?>
     
                 <tr>
@@ -733,31 +818,31 @@
                   <th colspan="7" style='color:red;'>זיכויים</th>
                 
                 </tr>
-                <?php foreach($customer_leads_list[$unk] as $month=>$lead_list): ?>
-                  <?php foreach($lead_list['refunded'] as $lid=>$lead): ?>
+                <?php foreach($customer_leads_list[$user_id] as $month=>$lead_list): ?>
+                  <?php if(isset($lead_list['refunded'])): foreach($lead_list['refunded'] as $lid=>$lead): ?>
                     <tr>
                       <?php $date_in_arr = explode(" ",$lead['date_in']); ?>
                       <td><?php echo $date_in_arr[0]; ?></td>
                       <td><?php echo $date_in_arr[1]; ?></td>
                       <td>
-                        <?php if($lead['cat_f'] != 0 && $lead['cat_f'] != ""): ?>
-                          <?php echo $cat_list_names[$lead['cat_f']]; ?><br/>
+                        <?php if($lead['c1'] != 0 && $lead['c1'] != ""): ?>
+                          <?php echo $cat_list_names[$lead['c1']]; ?><br/>
                         <?php endif; ?>
-                        <?php if($lead['cat_s'] != 0 && $lead['cat_s'] != ""): ?>
-                          &nbsp&nbsp<?php echo $cat_list_names[$lead['cat_s']]; ?><br/>
+                        <?php if($lead['c2'] != 0 && $lead['c2'] != ""): ?>
+                          &nbsp&nbsp<?php echo $cat_list_names[$lead['c2']]; ?><br/>
                         <?php endif; ?>	
-                        <?php if($lead['cat_spec'] != 0 && $lead['cat_spec'] != ""): ?>
-                          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $cat_list_names[$lead['cat_spec']]; ?><br/>
+                        <?php if($lead['c3'] != 0 && $lead['c3'] != ""): ?>
+                          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $cat_list_names[$lead['c3']]; ?><br/>
                         <?php endif; ?>											
                       </td>
-                      <td><a target="_blank" href="?main=send_estimate_form_users_list&estimate_id=<?php echo $lead['estimateFormID']; ?>&sesid=<?php echo SESID; ?>"><?php echo $lead['name']; ?></a></td>
+                      <td><a target="_blank" href="<?= inner_url('biz_requests/view/') ?>?row_id=<?= $lead['request_id']; ?>"><?php echo $lead['full_name']; ?></a></td>
                       <td><?php echo $lead['phone']; ?></td>
-                      <td><?php echo $lead['lead_recource']; ?></td>
+                      <td><?php echo $lead['resource']; ?></td>
                       <td><?php echo $lead['billsec_str']; ?></td>
                       <td><?php echo $lead['campaign_str']; ?></td>
                       <td><?php echo $status_list[$lead['lead_status']]['str']; ?></td>
                     </tr>	
-                  <?php endforeach; ?>						
+                  <?php endforeach;  endif; ?>						
                 <?php endforeach; ?>
     
     
@@ -766,26 +851,26 @@
                   <th colspan="7" style='color:red;'>לידים לא מחוייבים</th>
                 
                 </tr>
-                <?php foreach($customer_leads_list[$unk] as $month=>$lead_list): ?>
+                <?php foreach($customer_leads_list[$user_id] as $month=>$lead_list): ?>
                   <?php foreach($lead_list['notbilled'] as $lid=>$lead): ?>
                     <tr>
                       <?php $date_in_arr = explode(" ",$lead['date_in']); ?>
                       <td><?php echo $date_in_arr[0]; ?></td>
                       <td><?php echo $date_in_arr[1]; ?></td>
                       <td>
-                        <?php if($lead['cat_f'] != 0 && $lead['cat_f'] != ""): ?>
-                          <?php echo $cat_list_names[$lead['cat_f']]; ?><br/>
+                        <?php if($lead['c1'] != 0 && $lead['c1'] != ""): ?>
+                          <?php echo $cat_list_names[$lead['c1']]; ?><br/>
                         <?php endif; ?>
-                        <?php if($lead['cat_s'] != 0 && $lead['cat_s'] != ""): ?>
-                          &nbsp&nbsp<?php echo $cat_list_names[$lead['cat_s']]; ?><br/>
+                        <?php if($lead['c2'] != 0 && $lead['c2'] != ""): ?>
+                          &nbsp&nbsp<?php echo $cat_list_names[$lead['c2']]; ?><br/>
                         <?php endif; ?>	
-                        <?php if($lead['cat_spec'] != 0 && $lead['cat_spec'] != ""): ?>
-                          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $cat_list_names[$lead['cat_spec']]; ?><br/>
+                        <?php if($lead['c3'] != 0 && $lead['c3'] != ""): ?>
+                          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $cat_list_names[$lead['c3']]; ?><br/>
                         <?php endif; ?>											
                       </td>
-                      <td><a target="_blank" href="?main=send_estimate_form_users_list&estimate_id=<?php echo $lead['estimateFormID']; ?>&sesid=<?php echo SESID; ?>"><?php echo $lead['name']; ?></a></td>
+                      <td><a target="_blank" href="<?= inner_url('biz_requests/view/') ?>?row_id=<?= $lead['request_id']; ?>"><?php echo $lead['full_name']; ?></a></td>
                       <td><?php echo $lead['phone']; ?></td>
-                      <td><?php echo $lead['lead_recource']; ?></td>
+                      <td><?php echo $lead['resource']; ?></td>
                       <td><?php echo $lead['billsec_str']; ?></td>
                       <td><?php echo $lead['campaign_str']; ?></td>
                       <td><?php echo $status_list[$lead['lead_status']]['str']; ?></td>

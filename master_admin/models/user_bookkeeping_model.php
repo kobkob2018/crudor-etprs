@@ -25,10 +25,15 @@
             'validation'=>'float'
         ), 
 
-
-
         'hostPriceMon'=>array(
             'label'=>'מחיר אכסון',
+            'type'=>'text',
+            'default'=>'0',
+            'validation'=>'float'
+        ),  
+
+        'advertisingPrice'=>array(
+            'label'=>'מחיר פרסום',
             'type'=>'text',
             'default'=>'0',
             'validation'=>'float'
@@ -70,8 +75,6 @@
             ),
             'validation'=>'required'
         ), 
-
-
 
         'advertisingStartDate'=>array(
             'label'=>'תאריך תחילת פרסום',

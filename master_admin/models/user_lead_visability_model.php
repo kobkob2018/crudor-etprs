@@ -15,6 +15,17 @@
             'validation'=>'required'
         ),
 
+        'show_in_income_reports'=>array(
+            'label'=>'הצג בדוח הכנסות חודשיות\יומיות',
+            'type'=>'select',
+            'default'=>'0',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא'),
+                array('value'=>'1', 'title'=>'כן')
+            ),
+            'validation'=>'required'
+        ),
+
         'show_in_leads_report'=>array(
             'label'=>'הצג בדוח מספור לידים',
             'type'=>'select',

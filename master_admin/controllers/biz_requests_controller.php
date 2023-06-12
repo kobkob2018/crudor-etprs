@@ -76,12 +76,12 @@
                 'checked_str'=>'',
             ),
             '1'=>array(
-                'label'=>'פייסבוק',
+                'label'=>'גוגל',
                 'value'=>'1',
                 'checked_str'=>'',
             ),
             '2'=>array(
-                'label'=>'גוגל',
+                'label'=>'פייסבוק',
                 'value'=>'2',
                 'checked_str'=>'',
             ),            
