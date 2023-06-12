@@ -184,7 +184,7 @@
         $phone_leads_sql = " AND uld.resource = 'form' ";
       }		
       $lead_cat_sql = "";	
-      if(isset($_REQUEST['cat_leads_only'])){
+      if(isset($_REQUEST['cat_leads_only']) && $cat_filter!='0'){
         $lead_cat_sql = " AND ((uld.resource != 'form' AND user.id IN($user_id_in_sql)) OR req.cat_id IN ($cat_id_in)) ";
       }
       $lead_billed_sql = "";
