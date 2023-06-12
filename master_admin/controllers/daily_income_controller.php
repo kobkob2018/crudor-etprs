@@ -7,12 +7,18 @@
             return "";
         }
         $this->add_model('biz_categories');
-        $cat_filter = "51";
+        
         $cat_offsprings = Biz_categories::simple_get_item_offsprings($cat_filter,'id,parent,label');
         $cat_id_arr = array($cat_filter);
         foreach($cat_offsprings as $cat){
             $cat_id_arr[] = $cat['id'];
         }
+		$cat_parents = Biz_categories::get_item_parents_tree($cat_filter,'id,parent,label');
+		
+		foreach($cat_parents as $cat){
+            $cat_id_arr[] = $cat['id'];
+        }
+		
         $cat_id_in = implode(",",$cat_id_arr);
         return $cat_id_in;
     }
@@ -167,18 +173,23 @@
 		$user_list[$user['user_id']] = $user;
 		$user_id_list[$user['user_id']] = $user['user_id'];
 	} 
-	$user_id_in_sql = implode(",",$user_id_list);
+	if(!empty($user_id_list)){
+		$user_id_in_sql = implode(",",$user_id_list);
+	}
+	else{
+		$user_id_in_sql = "-1";
+	}
     $lead_campaign_sql = "";	
     if(isset($_REQUEST['add_campaign_leads'])){
-      $lead_campaign_sql = " AND (lead.resource = 'none'";
+      $lead_campaign_sql = " AND (uld.resource = 'none'";
       if(isset($_REQUEST['add_reg_leads'])){
-        $lead_campaign_sql .= " OR req.campaign_type = '0'  OR lead.campaign_type = '0' ";
+        $lead_campaign_sql .= " OR req.campaign_type = '0'  OR uld.campaign_type = '0' ";
       }
       if(isset($_REQUEST['add_gl_leads'])){
-        $lead_campaign_sql .= " OR req.campaign_type = '1'  OR lead.campaign_type = '1' ";
+        $lead_campaign_sql .= " OR req.campaign_type = '1'  OR uld.campaign_type = '1' ";
       }		
       if(isset($_REQUEST['add_fb_leads'])){
-        $lead_campaign_sql .= " OR req.campaign_type = '2'  OR lead.campaign_type = '2' ";
+        $lead_campaign_sql .= " OR req.campaign_type = '2'  OR uld.campaign_type = '2' ";
       }
       
       $lead_campaign_sql .= ")";
@@ -186,29 +197,29 @@
 
 	$lead_status_sql = "";
 	if($selected_status != "all" && $selected_status != ""){
-		$lead_status_sql = " AND lead.status = $selected_status ";
+		$lead_status_sql = " AND uld.status = $selected_status ";
 	}
 	$phone_leads_sql = "";
 	if(isset($_REQUEST['phone_leads_remove'])){
-		$phone_leads_sql = " AND lead.resource = 'form' ";
+		$phone_leads_sql = " AND uld.resource = 'form' ";
 	}	
 	$form_leads_sql = "";
 	if(isset($_REQUEST['form_leads_remove'])){
-		$form_leads_sql = " AND lead.resource != 'form' ";
+		$form_leads_sql = " AND uld.resource != 'form' ";
 	}	
     $lead_cat_sql = "";	
     if(isset($_REQUEST['cat_leads_only'])){
-      $lead_cat_sql = " AND ((lead.resource != 'form' AND user.id IN($user_id_in_sql)) OR req.cat_id IN ($cat_id_in)) ";
+      $lead_cat_sql = " AND ((uld.resource != 'form' AND user.id IN($user_id_in_sql)) OR req.cat_id IN ($cat_id_in)) ";
     }
 	
-	$sql = "SELECT lead.id, user.id as user_id,lead.date_in,lead.status as lead_status,req.ip,lead.campaign_name as campaign_name,open_state,request_id,resource,billed,phone_id,req.c1, req.c2, req.c3, req.c4, lead.full_name,lead.phone,req.campaign_type as request_campaign_type ,lead.campaign_type as campaign_type,lead.tag,tagin.tag_name,lead.offer_amount
-			FROM user_leads lead 
-			LEFT JOIN users user ON user.id = lead.user_id 
+	$sql = "SELECT uld.id, user.id as user_id,uld.date_in,uld.status as lead_status,req.ip,uld.campaign_name as campaign_name,open_state,request_id,resource,billed,phone_id,req.c1, req.c2, req.c3, req.c4, uld.full_name,uld.phone,req.campaign_type as request_campaign_type ,uld.campaign_type as campaign_type,uld.tag,tagin.tag_name,uld.offer_amount
+			FROM user_leads uld 
+			LEFT JOIN users user ON user.id = uld.user_id 
             LEFT JOIN user_lead_settings uls ON user.id = uls.user_id
-			LEFT JOIN biz_requests req ON req.id = lead.request_id 
-			LEFT JOIN user_lead_tag tagin ON lead.tag = tagin.id 
+			LEFT JOIN biz_requests req ON req.id = uld.request_id 
+			LEFT JOIN user_lead_tag tagin ON uld.tag = tagin.id 
             LEFT JOIN user_lead_visability ulv ON ulv.user_id = user.id
-			WHERE uls.end_date > '$date_from_sql' $phone_leads_sql $form_leads_sql $lead_cat_sql $lead_status_sql $lead_campaign_sql $user_name_sql AND show_in_income_reports = 1 AND user.active = 1 AND lead.date_in > '$date_from_sql' AND lead.date_in < '$date_to_sql' AND lead.open_state = 1";	
+			WHERE uls.end_date > '$date_from_sql' $phone_leads_sql $form_leads_sql $lead_cat_sql $lead_status_sql $lead_campaign_sql $user_name_sql AND show_in_income_reports = 1 AND user.active = 1 AND uld.date_in > '$date_from_sql' AND uld.date_in < '$date_to_sql' AND uld.open_state = 1";	
 			
 	
     $req = $db->prepare($sql);
@@ -221,10 +232,10 @@
 	$closed_deal_leads = array();
 	foreach($res as $lead){
 		if($lead['resource'] == 'phone'){
-			//$lead['campaign_str'] = $campaign_str[$lead['phone_campaign_type']];
+			$lead['campaign_str'] = $campaign_str[$lead['campaign_type']];
 			if(isset($_GET['show_leads']) && $lead['phone_id'] != ""){
 				$phone_lead_sql = "SELECT * FROM user_phone_calls WHERE id = '".$lead['phone_id']."' ";
-                $req = $db->prepare($sql);
+                $req = $db->prepare($phone_lead_sql);
                 $req->execute();
                 $phone_lead_data = $req->fetch();
 				$lead['call_info'] = $phone_lead_data;
@@ -264,14 +275,14 @@
 	}
 
 //payByPassword 0 leads only here -----
-	$sql = "SELECT lead.id,user.id as user_id,lead.date_in,lead.status as lead_status,req.ip,lead.campaign_name as campaign_name,open_state,request_id,resource,billed,phone_id,req.c1, req.c2, req.c3, req.c4,lead.full_name,lead.phone,req.campaign_type,lead.campaign_type,lead.tag,tagin.tag_name as tag_name
-			FROM user_leads lead 
-			LEFT JOIN users user ON user.id = lead.user_id
-			LEFT JOIN biz_requests req ON req.id = lead.request_id 
-			LEFT JOIN user_lead_tag tagin ON lead.tag = tagin.id 
+	$sql = "SELECT uld.id,user.id as user_id,uld.date_in,uld.status as lead_status,req.ip,uld.campaign_name as campaign_name,open_state,request_id,resource,billed,phone_id,req.c1, req.c2, req.c3, req.c4,uld.full_name,uld.phone,req.campaign_type,uld.campaign_type,uld.tag,tagin.tag_name as tag_name
+			FROM user_leads uld 
+			LEFT JOIN users user ON user.id = uld.user_id
+			LEFT JOIN biz_requests req ON req.id = uld.request_id 
+			LEFT JOIN user_lead_tag tagin ON uld.tag = tagin.id 
             LEFT JOIN user_lead_settings uls ON user.id = uls.user_id 
             LEFT JOIN user_lead_visability ulv ON ulv.user_id = user.id
-			WHERE uls.end_date > '$date_from_sql' $phone_leads_sql $form_leads_sql $lead_cat_sql $lead_status_sql $lead_campaign_sql $user_name_sql AND show_in_income_reports = 1 AND user.active = 1 AND uls.active = 1 AND lead.date_in > '$date_from_sql' AND lead.date_in < '$date_to_sql' AND lead.open_state = 0";	
+			WHERE uls.end_date > '$date_from_sql' $phone_leads_sql $form_leads_sql $lead_cat_sql $lead_status_sql $lead_campaign_sql $user_name_sql AND show_in_income_reports = 1 AND user.active = 1 AND uls.active = 1 AND uld.date_in > '$date_from_sql' AND uld.date_in < '$date_to_sql' AND uld.open_state = 0";	
 			
 
     $req = $db->prepare($sql);
@@ -768,11 +779,13 @@
 			<td>כמות לידים</td>
 			<th>סגירה עם לקוח</th>
 			<th>לידים בכוכביות</th>
-
+			<th>כמות לידים לכל התקופה</th>
+			<th>מחיר ליד</th>
+			<th>לידים</th>
 			<th>סך הכל</th>
 			</tr>
 			
-			<?php foreach($day_income_arr['user'] as $user_id=>$user_income_arr): ?>
+			<?php if(isset($day_income_arr['user'])): foreach($day_income_arr['user'] as $user_id=>$user_income_arr): ?>
 
 				
 				<tr>
@@ -799,13 +812,7 @@
 								$call_sector_style_yellow = ' style="background:#a6d1ff;" '; 
 							?>
 							<table border="1"  cellpadding="3"  style="margin:10px;border-collapse: collapse;" >
-								<tr>
-									<th colspan="10">לידים - <?php echo $user_income_arr['full_name']; ?></th>
-									
-									<th colspan="3" <?php echo $call_sector_style; ?>>מאפייניי שיחה</th>
-									
-									<th colspan="3" <?php echo $call_sector_style; ?>>איתור גלישה בעמוד</th>
-								</tr>
+
 								<tr>
 									<th>שעה</th>
 									<th>קטגוריה</th>
@@ -821,9 +828,6 @@
 									<th <?php echo $call_sector_style; ?>>זמן שיחה/הקלטה</th>
 									<th <?php echo $call_sector_style; ?>>הפך לליד</th>
 									
-									<th <?php echo $call_sector_style; ?>>עמודים שאותרו</th>
-									<th <?php echo $call_sector_style; ?>>מספר פעמים התקשר לפני</th>
-									<th <?php echo $call_sector_style; ?>>תווך זמן התאמה לעמוד</th>
 								</tr>
 								<?php if(isset($user_income_arr['lead_list'])): foreach($user_income_arr['lead_list'] as $lead): ?>
 									<?php 
@@ -904,9 +908,7 @@
 											</td>
 											<td style='background:<?php echo $lead['has_ef_bg']; ?>'><?php echo $lead['has_ef_str']; ?></td>
 
-												<td>-</td>
-												<td>-</td>
-												<td>-</td> 
+		
 											
 										<?php endif; ?>
 									</tr>									
@@ -1039,7 +1041,7 @@
 
 				<?php endif; ?>
 			
-			<?php endforeach; ?>
+			<?php endforeach; endif; ?>
 			
 			</table>
 			

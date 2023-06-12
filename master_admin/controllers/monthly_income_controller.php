@@ -7,11 +7,16 @@
         return "";
       }
       $this->add_model('biz_categories');
-      $cat_filter = "51";
+      
       $cat_offsprings = Biz_categories::simple_get_item_offsprings($cat_filter,'id,parent,label');
       $cat_id_arr = array($cat_filter);
       foreach($cat_offsprings as $cat){
         $cat_id_arr[] = $cat['id'];
+      }
+      $cat_parents = Biz_categories::get_item_parents_tree($cat_filter,'id,parent,label');
+		
+      foreach($cat_parents as $cat){
+          $cat_id_arr[] = $cat['id'];
       }
       $cat_id_in = implode(",",$cat_id_arr);
       return $cat_id_in;
@@ -160,15 +165,15 @@
       
       $lead_campaign_sql = "";	
       if(isset($_REQUEST['add_campaign_leads'])){
-        $lead_campaign_sql = " AND (lead.resource = 'none'";
+        $lead_campaign_sql = " AND (uld.resource = 'none'";
         if(isset($_REQUEST['add_reg_leads'])){
-          $lead_campaign_sql .= " OR req.campaign_type = '0'  OR lead.campaign_type = '0' ";
+          $lead_campaign_sql .= " OR req.campaign_type = '0'  OR uld.campaign_type = '0' ";
         }
         if(isset($_REQUEST['add_gl_leads'])){
-          $lead_campaign_sql .= " OR req.campaign_type = '1'  OR lead.campaign_type = '1' ";
+          $lead_campaign_sql .= " OR req.campaign_type = '1'  OR uld.campaign_type = '1' ";
         }		
         if(isset($_REQUEST['add_fb_leads'])){
-          $lead_campaign_sql .= " OR req.campaign_type = '2'  OR lead.campaign_type = '2' ";
+          $lead_campaign_sql .= " OR req.campaign_type = '2'  OR uld.campaign_type = '2' ";
         }
         
         $lead_campaign_sql .= ")";
@@ -176,25 +181,25 @@
       
       $phone_leads_sql = "";
       if(isset($_REQUEST['phone_leads_remove'])){
-        $phone_leads_sql = " AND lead.resource = 'form' ";
+        $phone_leads_sql = " AND uld.resource = 'form' ";
       }		
       $lead_cat_sql = "";	
       if(isset($_REQUEST['cat_leads_only'])){
-        $lead_cat_sql = " AND ((lead.resource != 'form' AND user.id IN($user_id_in_sql)) OR req.cat_id IN ($cat_id_in)) ";
+        $lead_cat_sql = " AND ((uld.resource != 'form' AND user.id IN($user_id_in_sql)) OR req.cat_id IN ($cat_id_in)) ";
       }
       $lead_billed_sql = "";
       if(!isset($_REQUEST['add_unbilled_leads'])){
-        $lead_billed_sql = " AND lead.billed = 1 ";
+        $lead_billed_sql = " AND uld.billed = 1 ";
       }	
       
-      $sql = "SELECT req.id as req_id, req.c1, req.c2, req.c3, req.c4, user.id as user_id,lead.date_in,lead.status as lead_status,open_state,request_id,resource,billed,phone_id,cat_id,lead.full_name,lead.phone,req.campaign_type as req_campaign_type, lead.campaign_type as campaign_type, upc.billsec,upc.answer
-          FROM user_leads lead 
-          LEFT JOIN users user ON user.id = lead.user_id
+      $sql = "SELECT req.id as req_id, req.c1, req.c2, req.c3, req.c4, user.id as user_id,uld.date_in,uld.status as lead_status,open_state,request_id,resource,billed,phone_id,cat_id,uld.full_name,uld.phone,req.campaign_type as req_campaign_type, uld.campaign_type as campaign_type, upc.billsec,upc.answer
+          FROM user_leads uld 
+          LEFT JOIN users user ON user.id = uld.user_id
           LEFT JOIN user_lead_settings uls ON user.id = uls.user_id
           LEFT JOIN user_lead_visability ulv ON ulv.user_id = user.id
-          LEFT JOIN biz_requests req ON req.id = lead.request_id
-          LEFT JOIN user_phone_calls upc ON upc.id = lead.phone_id
-          WHERE uls.end_date > '$date_from_sql' $phone_leads_sql $lead_cat_sql $lead_campaign_sql $user_name_sql AND show_in_income_reports = 1 AND user.active = 1 AND lead.date_in > '$date_from_sql' AND lead.date_in < '$date_to_sql' $lead_billed_sql";	      
+          LEFT JOIN biz_requests req ON req.id = uld.request_id
+          LEFT JOIN user_phone_calls upc ON upc.id = uld.phone_id
+          WHERE uls.end_date > '$date_from_sql' $phone_leads_sql $lead_cat_sql $lead_campaign_sql $user_name_sql AND show_in_income_reports = 1 AND user.active = 1 AND uld.date_in > '$date_from_sql' AND uld.date_in < '$date_to_sql' $lead_billed_sql";	      
       
       $req = $db->prepare($sql);
       $req->execute();
@@ -852,7 +857,7 @@
                 
                 </tr>
                 <?php foreach($customer_leads_list[$user_id] as $month=>$lead_list): ?>
-                  <?php foreach($lead_list['notbilled'] as $lid=>$lead): ?>
+                  <?php if(isset($lead_list['notbilled'])): foreach($lead_list['notbilled'] as $lid=>$lead): ?>
                     <tr>
                       <?php $date_in_arr = explode(" ",$lead['date_in']); ?>
                       <td><?php echo $date_in_arr[0]; ?></td>
@@ -875,7 +880,7 @@
                       <td><?php echo $lead['campaign_str']; ?></td>
                       <td><?php echo $status_list[$lead['lead_status']]['str']; ?></td>
                     </tr>	
-                  <?php endforeach; ?>						
+                  <?php endforeach; endif; ?>						
                 <?php endforeach; ?>						
                             
             </table>
