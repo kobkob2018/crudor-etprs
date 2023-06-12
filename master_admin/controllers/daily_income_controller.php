@@ -165,9 +165,9 @@
 		$user['leads_count_total'] = 0;
 		$user['deal_closed_count'] = 0;
 		$user_list[$user['user_id']] = $user;
-		
+		$user_id_list[$user['user_id']] = $user['user_id'];
 	} 
-	
+	$user_id_in_sql = implode(",",$user_id_list);
     $lead_campaign_sql = "";	
     if(isset($_REQUEST['add_campaign_leads'])){
       $lead_campaign_sql = " AND (lead.resource = 'none'";
@@ -208,7 +208,7 @@
 			LEFT JOIN biz_requests req ON req.id = lead.request_id 
 			LEFT JOIN user_lead_tag tagin ON lead.tag = tagin.id 
             LEFT JOIN user_lead_visability ulv ON ulv.user_id = user.id
-			WHERE uls.end_date > '$date_from_sql' $phone_leads_sql $form_leads_sql $lead_cat_sql $lead_status_sql $lead_campaign_sql $user_name_sql AND show_in_income_reports = 1 AND user.active = 1 AND lead.date_in > '$date_from_sql' AND lead.date_in < '$date_to_sql' AND lead.billed = 1";	
+			WHERE uls.end_date > '$date_from_sql' $phone_leads_sql $form_leads_sql $lead_cat_sql $lead_status_sql $lead_campaign_sql $user_name_sql AND show_in_income_reports = 1 AND user.active = 1 AND lead.date_in > '$date_from_sql' AND lead.date_in < '$date_to_sql' AND lead.open_state = 1";	
 			
 	
     $req = $db->prepare($sql);
@@ -233,6 +233,9 @@
 		else{
 			if(isset($campaign_str[$lead['campaign_type']])){
 				$lead['campaign_str'] = $campaign_str[$lead['campaign_type']];
+			}
+			else{
+				$lead['campaign_str'] = "";
 			}
 			if((int)$lead['campaign_type'] > 999  && false){
                 /*
