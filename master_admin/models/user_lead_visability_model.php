@@ -70,8 +70,8 @@
             'validation'=>'required'
         ),
 
-        'send_lead_alerts'=>array(
-            'label'=>'שליחת התראות על עדכון לידים',
+        'send_lead_sms_alerts'=>array(
+            'label'=>'שליחת התראות SMS על עדכון לידים',
             'type'=>'select',
             'default'=>'0',
             'options'=>array(

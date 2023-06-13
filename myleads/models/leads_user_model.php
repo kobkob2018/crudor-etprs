@@ -39,7 +39,7 @@
             'show_in_sites'=>'0',
             'show_in_leads_report'=>'',
             'show_in_misscalls_report'=>'0',
-            'send_lead_alerts'=>'0',
+            'send_lead_sms_alerts'=>'0',
             'send_monthly_report'=>'0',
             'send_advanced_report'=>'0',
             'access_refunds'=>'0',
