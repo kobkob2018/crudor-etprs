@@ -169,6 +169,10 @@
 		return Helper::send_email($email_to, $email_title,$email_content);
 	}
 
+	public function send_sms($phone_to, $sms_content){ 
+		return Helper::send_sms($phone_to, $sms_content);
+	}
+
 	public function init_form_handler($form_id = 'main'){		
 		if(isset($this->form_handlers[$form_id])){
 			return $this->form_handlers[$form_id];

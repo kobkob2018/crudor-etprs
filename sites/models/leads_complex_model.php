@@ -69,7 +69,8 @@
         foreach($result as $user_info){
             $users[$user_info['id']] = array(
                 'info'=>$user_info,
-                'lead_settings'=>self::$users_arr[$user_info['id']]['lead_settings']
+                'lead_settings'=>self::$users_arr[$user_info['id']]['lead_settings'],
+                'lead_visability'=>self::$users_arr[$user_info['id']]['lead_visability']
             );
         }
         $lead_sends_arr['users'] = $users;
@@ -203,9 +204,16 @@
         $user_ids = array();
         $users_arr = array();
         foreach($result as $user_lead_settings){
+            
+            $sql = "SELECT * FROM user_lead_visability WHERE user_id = :user_id";
+            $req = $db->prepare($sql);
+            $req->execute(array('user_id'=>$user_lead_settings['user_id']));
+            $user_lead_visability = $req->fetch();
+
             $user_ids[] = $user_lead_settings['user_id'];
             $users_arr[$user_lead_settings['user_id']] = array(
-                'lead_settings'=>$user_lead_settings
+                'lead_settings'=>$user_lead_settings,
+                'lead_visability'=>$user_lead_visability
             );
         }
         self::$users_arr = $users_arr;

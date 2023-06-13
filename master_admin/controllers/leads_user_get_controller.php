@@ -186,8 +186,8 @@
                 
     
                 
-                $havaSms = ( $data['havaSms'] == "1" ) ? "כן" : "לא";
-                $haveContact = ( $data['haveContact'] == "1" ) ? "כן" : "לא";
+                $havaSms = ( $data['send_lead_sms_alerts'] == "1" ) ? "כן" : "לא";
+                $haveContact = ( $data['send_lead_email_alerts'] == "1" ) ? "כן" : "לא";
                 $freeSend = ( $data['freeSend'] == "1" ) ? "כן" : "לא";
                 
     			$bgcolor = ( $counter%2 == 0 ) ? "F9F9F9" : "F3F3F3";

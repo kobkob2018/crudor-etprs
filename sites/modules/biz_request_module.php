@@ -300,17 +300,38 @@
 
                 $email_content = $this->controller->include_ob_view('emails_send/user_lead_alert.php',$email_info);
                 
+
+                $sms_content = $this->controller->include_ob_view('emails_send/user_lead_sms_alert.php',$email_info);
                 
                 $user_send_times = Leads_complex::get_user_send_times($user_id);
                 $email_pending_message = array(
                     'user_id'=>$user['info']['id'],
                     'email_to'=>$user['info']['email'],
+                    'phone_to'=>$user['info']['phone'],
                     'title'=>"בקשה להצעת מחיר באתר",
                     'content'=>$email_content,
+                    'sms_content'=>$sms_content,
                     'send_times'=>$user_send_times,
                     'lead_id'=>$user_lead_id
                 );
+                $send_email = false;
+                $send_sms = false;
+                
+                if($user['lead_visability']){
+                    
+                    $send_email = $user['lead_visability']['send_lead_email_alerts'];
+                    $send_sms = $user['lead_visability']['send_lead_sms_alerts'];
+                }
+                if(!$send_sms == '1'){
+
+                    $email_pending_message['sms_content'] = "";
+                }
+                if(!$send_email){
+                    $email_pending_message['content'] = "";
+                }
+                
                 User_pending_emails::create($email_pending_message);
+                
             }
         }
 	}

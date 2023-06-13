@@ -10,8 +10,14 @@
                 $ok_send = $this->check_timing($pending_email['send_times']);
                
                 if($ok_send){
-                    $this->controller->send_email($pending_email['email_to'], $pending_email['title'] ,$pending_email['content']);
+                    if($pending_email['content'] != "" && $pending_email['email_to'] != ""){
+                        $this->controller->send_email($pending_email['email_to'], $pending_email['title'] ,$pending_email['content']);
+                    }
 
+                    if($pending_email['sms_content'] != "" && $pending_email['phone_to'] != ""){
+                        $this->controller->send_sms($pending_email['phone_to'],$pending_email['sms_content']);
+                    }
+                    
                     if($pending_email['lead_id'] != '0' && $pending_email['lead_id'] != ''){
                         $update_lead_arr = array('send_state'=>'1');
                         MasterUser_leads::update($pending_email['lead_id'],$update_lead_arr);

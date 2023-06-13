@@ -81,6 +81,17 @@
             'validation'=>'required'
         ),
 
+        'send_lead_email_alerts'=>array(
+            'label'=>'שליחת התראות אימייל על עדכון לידים',
+            'type'=>'select',
+            'default'=>'0',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא'),
+                array('value'=>'1', 'title'=>'כן')
+            ),
+            'validation'=>'required'
+        ),
+
         'access_refunds'=>array(
             'label'=>'גישה לבקשת זיכויים',
             'type'=>'select',
