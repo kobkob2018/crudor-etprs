@@ -22,7 +22,6 @@
                 ".$clientName."
                 ulv.user_id=sent.user_id
                 ".$s_date.$e_date ."
-                GROUP BY ulv.user_id
         ";
         
         $req = $db->prepare($sql);
