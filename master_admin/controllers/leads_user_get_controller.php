@@ -15,8 +15,8 @@
         $ex_e = explode("-",$defualt_e_date);
         $e_date = ( $defualt_e_date != "" ) ? "AND sent.date_in <= '".$ex_e[2]."-".$ex_e[1]."-".$ex_e[0]."' " : "";
         
-        $sql = "SELECT ulv.* , u.full_name AS clientName
-            FROM user_lead_visability AS ulv , user_leads AS sent , users AS u WHERE 
+        $sql = "SELECT ulv.* ,uls.*, u.full_name AS clientName
+            FROM user_lead_visability AS ulv ,user_lead_settings AS uls , user_leads AS sent , users AS u WHERE 
                 ulv.user_id=u.id AND
                 ulv.show_in_leads_report = '1' AND 
                 ".$clientName."
@@ -54,7 +54,7 @@
 					echo "<tr>";
 						echo "<td>שם לקוח</td>";
 						echo "<td width=10></td>";
-						echo "<td><input type='text' name='clientName' value='".$_GET['clientName']."' class='input_style' style='width: 100px;' /></td>";
+						echo "<td><input type='text' name='clientName' value='".(isset($_GET['clientName'])?$_GET['clientName']:"")."' class='input_style' style='width: 100px;' /></td>";
 						echo "<td width=40></td>";
 						echo "<td>מספור לידים בין התאריך</td>";
 						echo "<td width=10></td>";
@@ -188,7 +188,7 @@
                 
                 $havaSms = ( $data['send_lead_sms_alerts'] == "1" ) ? "כן" : "לא";
                 $haveContact = ( $data['send_lead_email_alerts'] == "1" ) ? "כן" : "לא";
-                $freeSend = ( $data['freeSend'] == "1" ) ? "כן" : "לא";
+                $free_send = ( $data['free_send'] == "1" ) ? "כן" : "לא";
                 
     			$bgcolor = ( $counter%2 == 0 ) ? "F9F9F9" : "F3F3F3";
 			echo "<tr bgcolor='#".$bgcolor."'><td colspan=6 height=3></td></tr>";
@@ -196,8 +196,8 @@
 				echo "<td><a href='".inner_url("user_lead_settings/list/?user_id=").$data['user_id']."' class='maintext' target='_blank'>".$data['clientName']."</a></td>";
 				echo "<td align=center>".$havaSms."</td>";
 				echo "<td align=center>".$haveContact."</td>";
-				echo "<td align=center>".$freeSend."</td>";
-				echo "<td align=center>".$data['leadQry']."</td>";
+				echo "<td align=center>".$free_send."</td>";
+				echo "<td align=center>".$data['lead_credit']."</td>";
 				echo "<td>";
 					echo "<table border='1' cellpadding=5 cellspacing=0 width=100% aligh=right>";
 						
@@ -222,7 +222,7 @@
 								echo "כפולים";
 							echo "</td>";
 							echo "<td>";
-								echo $status_list[2];
+								echo $status_list[2]['str'];
 							echo "</td>";
 						
 							echo "<td>";
@@ -333,18 +333,18 @@
 
 						echo "<tr><td colspan='20'>";
 							echo "סך הכל לתשלום: ";
-							echo "<a href='index.php?withouthtml=1&sesid=".SESID."&unk_to_see=".$data['unk']."&main=leadsUserGet_client_csv&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
+							echo "<a href='".inner_url('leads_user_get/user_csv/')."?user_id=".$data['user_id']."&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
 								echo $total_form_leads_to_pay+$total_phone_leads_to_pay;
 							echo "</a>";
 							
 							
-							echo "$nbsp&nbsp<a target='_blank' href='index.php?sesid=".SESID."&unk_to_see=".$data['unk']."&main=leadsUserGet_client_csv&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
+							echo " | <a href='".inner_url('leads_user_get/user_view_here/')."?user_id=".$data['user_id']."&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
 								echo "צפה בדוח כאן";
 							echo "</a>";
-							echo "$nbsp&nbsp<a target='_blank' href='index.php?advanced_report=1&sesid=".SESID."&unk_to_see=".$data['unk']."&main=leadsUserGet_client_csv&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
+							echo " | <a href='".inner_url('leads_user_get/user_adv_view_here/')."?user_id=".$data['user_id']."&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
 								echo "צפה בדוח מתקדם";
 							echo "</a>";
-							echo "$nbsp&nbsp<a href='index.php?withouthtml=1&advanced_report=1&sesid=".SESID."&unk_to_see=".$data['unk']."&main=leadsUserGet_client_csv&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
+							echo " | <a href='".inner_url('leads_user_get/user_adv_csv/')."?user_id=".$data['user_id']."&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
 								echo "הורד דוח מתקדם";
 							echo "</a>";							
 						echo "</td></tr>";
