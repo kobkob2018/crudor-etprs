@@ -20,8 +20,6 @@
                 ulv.user_id=u.id AND
                 ulv.show_in_leads_report = '1' AND 
                 ".$clientName."
-                ulv.user_id=sent.user_id
-                ".$s_date.$e_date ."
         ";
         
         $req = $db->prepare($sql);
