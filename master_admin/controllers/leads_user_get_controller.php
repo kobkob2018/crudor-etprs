@@ -16,7 +16,7 @@
         $e_date = ( $defualt_e_date != "" ) ? "AND sent.date_in <= '".$ex_e[2]."-".$ex_e[1]."-".$ex_e[0]."' " : "";
         
         $sql = "SELECT ulv.* ,uls.*, u.full_name AS clientName
-            FROM user_lead_visability AS ulv ,user_lead_settings AS uls , user_leads AS sent , users AS u WHERE 
+            FROM user_lead_visability AS ulv ,user_lead_settings AS uls , users AS u WHERE 
                 ulv.user_id=u.id AND
                 ulv.show_in_leads_report = '1' AND 
                 ".$clientName."
