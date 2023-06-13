@@ -5,7 +5,7 @@
     function report()
     {
         $db = Db::getInstance();
-        $clientName = (isset($_GET['clientName']) &&  $_GET['clientName'] != "" ) ? "u.full_name LIKE '%".$_GET['clientName']."%' AND " : "";
+        $client_name_sql = (isset($_GET['clientName']) &&  $_GET['clientName'] != "" ) ? " AND u.full_name LIKE '%".$_GET['clientName']."%' AND " : "";
         
         $defualt_s_date = ( isset($_GET['s_date']) && $_GET['s_date'] != "" ) ? $_GET['s_date'] : date('01-m-Y');
         $defualt_e_date = ( isset($_GET['e_date']) && $_GET['e_date'] != "" ) ? $_GET['e_date'] : date('d-m-Y');
@@ -18,8 +18,8 @@
         $sql = "SELECT ulv.* ,uls.*, u.full_name AS clientName
             FROM user_lead_visability AS ulv ,user_lead_settings AS uls , users AS u WHERE 
                 ulv.user_id=u.id AND
-                ulv.show_in_leads_report = '1' AND 
-                ".$clientName."
+                ulv.show_in_leads_report = '1' 
+                ".$client_name_sql."
         ";
         
         $req = $db->prepare($sql);
