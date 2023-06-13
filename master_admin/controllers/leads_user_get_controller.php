@@ -5,7 +5,7 @@
     function report()
     {
         $db = Db::getInstance();
-        $client_name_sql = (isset($_GET['clientName']) &&  $_GET['clientName'] != "" ) ? " AND u.full_name LIKE '%".$_GET['clientName']."%' AND " : "";
+        $client_name_sql = (isset($_GET['clientName']) &&  $_GET['clientName'] != "" ) ? " AND user.full_name LIKE '%".$_GET['clientName']."%' AND " : "";
         
         $defualt_s_date = ( isset($_GET['s_date']) && $_GET['s_date'] != "" ) ? $_GET['s_date'] : date('01-m-Y');
         $defualt_e_date = ( isset($_GET['e_date']) && $_GET['e_date'] != "" ) ? $_GET['e_date'] : date('d-m-Y');
@@ -15,9 +15,11 @@
         $ex_e = explode("-",$defualt_e_date);
         $e_date = ( $defualt_e_date != "" ) ? "AND sent.date_in <= '".$ex_e[2]."-".$ex_e[1]."-".$ex_e[0]."' " : "";
         
-        $sql = "SELECT ulv.* ,uls.*, u.full_name AS clientName
-            FROM user_lead_visability AS ulv ,user_lead_settings AS uls , users AS u WHERE 
-                ulv.user_id=u.id AND
+        $sql = "SELECT ulv.* ,uls.*, user.full_name AS clientName
+            FROM users user 
+			LEFT JOIN user_lead_visability ulv ON ulv.user_id = user.id 
+			LEFT JOIN user_lead_settings uls ON uls.user_id = user.id 
+			WHERE 
                 ulv.show_in_leads_report = '1' 
                 ".$client_name_sql."
         ";
