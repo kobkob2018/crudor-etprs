@@ -604,6 +604,14 @@ a.filter-a-clicker.selected{
     color:green;
 }
 
+.maintext-oldsys th, .maintext-oldsys td{
+    padding:5px;
+    font-size: 1.1em;
+}
+.content-oldsys{
+    font-size: 1.1em;
+}
+
 @media only screen and (max-width: 900px) {
   
     #right_bar_wrap{

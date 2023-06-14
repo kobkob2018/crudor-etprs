@@ -600,7 +600,7 @@
       </script>
       
       <div style="padding:20px;">
-        <form action="<?= inner_url("monthly_income/report/") ?>" method="GET">
+        <form class="content-oldsys" action="<?= inner_url("monthly_income/report/") ?>" method="GET">
           מתאריך <input type="text" name="date_from" value="<?php echo $date_from_str; ?>" />&nbsp&nbsp&nbsp
           עד תאריך  <input type="text" name="date_to" value="<?php echo $date_to_str; ?>" />&nbsp&nbsp&nbsp
           שם לקוח  <input type="text" name="user_name" value="<?php echo isset($_GET['user_name'])? $_GET['user_name']: ""; ?>" />&nbsp&nbsp&nbsp
@@ -713,7 +713,7 @@
         </h3>
         
         <hr/>
-        <table border="1" cellpadding="3" style="border-collapse: collapse;">
+        <table class="maintext-oldsys" border="1" cellpadding="3" style="border-collapse: collapse;">
           <tr>
             <th>חודש</th>
             <th>אחסון</th>
@@ -776,7 +776,7 @@
         <?php if((isset($customer_leads_list[$user_id]) || isset($customer_leads_list[$user_id])) && isset($_GET['show_leads'])): ?>
           <h5>פרוט לידים</h5>
     
-            <table border="1"  cellpadding="3"  style="margin:10px;border-collapse: collapse;" >
+            <table class="maintext-oldsys" border="1"  cellpadding="3"  style="margin:10px;border-collapse: collapse;" >
               <tr>
                 <th colspan="7">לידים</th>
               </tr>

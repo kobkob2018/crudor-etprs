@@ -45,7 +45,7 @@
                 }                
             }
         </script>
-        <table border="1" cellpadding="10" style="border-collapse: collapse;">
+        <table class="maintext-oldsys" border="1" cellpadding="10" style="border-collapse: collapse;">
             <tr>
                 <th>תאריך</th>
                 <th>טלפון</th>

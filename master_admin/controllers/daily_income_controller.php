@@ -683,7 +683,7 @@
 		</form>
 	</div>
 	
-	<table border="1" cellpadding="3" style="border-collapse: collapse;">
+	<table class="maintext-oldsys" border="1" cellpadding="3" style="border-collapse: collapse;">
 		<tr>
 			<th>יום</th>
 			<th>אחסון</th>
@@ -741,7 +741,7 @@
 		<?php foreach($income_arr as $day=>$day_income_arr): ?>
 			<?php $day_arr = explode("-",$day); $day_str = $day_arr[2]."-".$day_arr[1]."-".$day_arr[0]; ?>
 			<br/><br/>
-			<table border="1" cellpadding="3"  style="border-collapse: collapse;">
+			<table class="maintext-oldsys" border="1" cellpadding="3"  style="border-collapse: collapse;">
 			<tr>
                 <th>יום</th>
                 <th>אחסון</th>
@@ -770,7 +770,7 @@
 			</tr>
 			</table>
 			<br/>
-			<table border="1" cellpadding="3"  style="border-collapse: collapse;">
+			<table class="maintext-oldsys" border="1" cellpadding="3"  style="border-collapse: collapse;">
 			<tr>
             <th>לקוח</th>
 			<th>אחסון</th>
