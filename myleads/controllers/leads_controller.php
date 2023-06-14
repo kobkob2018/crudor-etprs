@@ -40,7 +40,7 @@
 	  $this->data['leads'] = $leads;
       $show_row = false;
       
-      if(session__isset('_show_row')){
+      if(session__isset('show_row')){
         $show_row = session__get('show_row');
         session__unset('show_row');
       }

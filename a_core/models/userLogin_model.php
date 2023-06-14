@@ -82,7 +82,7 @@
 		return $login_trace_data;
 	}
 
-	public static function add_login_trace($user_id,$add_sms_code = false){
+	public static function add_login_trace($user_id,$add_sms_code = false,$system_prefix = 'current'){
 		$trace_array = array(
 			'user_id'=>$user_id,
 			'session_id'=>create_session_id(),
@@ -104,7 +104,12 @@
 			'user_id'=>$trace_array['user_id'],
 			'session_id'=>$trace_array['session_id']
 		);
-		session__set('login_user',$user_session);
+		if($system_prefix == 'current'){
+			session__set('login_user',$user_session);
+		}
+		else{
+			session__set('login_user',$user_session, $system_prefix);
+		}
 		return $trace_array;
     }
 

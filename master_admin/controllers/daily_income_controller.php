@@ -864,7 +864,7 @@
 									<tr>
 										<td><?php $date_in_arr = explode(" ",$lead['date_in']); echo $date_in_arr[1]; ?>
 											<br/>
-											<a target='_BLANK' href='<?= inner_url('my_leads/quick_access/') ?>?user=<?= $user_income_arr['user_id'] ?>&lead_id=<?= $lead['id']; ?>'>צפייה במערכת ניהול לידים</a>
+											<a target='_BLANK' href='<?= inner_url('myleads/quick_access/') ?>?user_id=<?= $user_income_arr['user_id'] ?>&lead_id=<?= $lead['id']; ?>'>צפייה במערכת ניהול לידים</a>
 										</td>
                                         <td>
                                             <?php if($lead['c1'] != 0 && $lead['c1'] != ""): ?>

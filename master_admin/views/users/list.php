@@ -13,6 +13,7 @@
         <div class="col">אימייל</div>
         <div class="col">פעיל</div>
         <div class="col">תפקיד</div>
+        <div class="col">מערכת לידים</div>
         <div class="col">מחיקה</div>
     </div>
     <?php foreach($this->data['users'] as $user): ?>
@@ -30,6 +31,12 @@
             </div>
             <div class="col">
                 <?= $this->get_label_value('roll',$user) ?>
+                
+            </div>
+            <div class="col">
+                <a target="_BLANK" href="<?= inner_url('myleads/quick_access/?user_id=') ?><?= $user['id'] ?>" title="מערכת ניהול לידים">
+                    מערכת נהול לידים
+                </a>
                 
             </div>
             <div class="col">

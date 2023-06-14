@@ -13,9 +13,11 @@ function session__isset($param_name){
 
 
 
-function session__set($param_name,$param_val){
+function session__set($param_name,$param_val,$session_prefix = 'auto'){
 
-    $session_prefix = get_config('session_prefix');
+    if($session_prefix == 'auto'){
+        $session_prefix = get_config('session_prefix');
+    }
     $session_param = $session_prefix.$param_name;
     //echo "<br/>session adding".$session_param."===".$param_name."<br/>";
     $_SESSION[$session_param] = $param_val;
