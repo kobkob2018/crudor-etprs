@@ -954,8 +954,7 @@
         $req = $db->prepare($sql_check_u1);
         $req->execute();
         $res_check_u1 = $req->fetchAll();
-
-        $res_check_u1 = mysql_db_query(DB, $sql_check_u1);			
+		
         foreach ($res_check_u1 as $data_check_u1) {
             $date_in = $data_check_u1['date_in'];
             $month_check_arr = explode("-",$date_in);
@@ -1161,8 +1160,7 @@
                     $req = $db->prepare($sql_shimur);
                     $req->execute();
                     $res_shimur = $req->fetchAll();
-                    
-                    $res_shimur = mysql_db_query(DB, $sql_shimur);			
+		
                     foreach ($res_shimur as $shimur_lead){
                         $prev_lead['shimur'] = "back";
                     }
