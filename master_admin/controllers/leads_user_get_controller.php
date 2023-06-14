@@ -871,7 +871,7 @@
         if(!isset($_GET['withouthtml'])){
             echo "<div><a href='".current_url(array("phones_only"=>"1"))."'>לחץ כאן לצפות במספרי הטלפון בלבד</a></div>";		
                 
-            echo "<table border=1 style='direction:rtl; text-align:right; border-collapse: collapse;'>";
+            echo "<table class=\"maintext-oldsys\" border=1 style='direction:rtl; text-align:right; border-collapse: collapse;'>";
             $max_cols = 0;
             foreach($row_leads_arr as $row){
                 $cols_count = count($row);
@@ -1252,7 +1252,7 @@
             $current_url = current_url();
             $not_phones_only_url = str_replace("&phones_only=1","",$current_url);
             echo "<div><a href='".$not_phones_only_url."'>חזור לדוח המקורי</a></div>";
-            echo "<table border=1 style='direction:rtl; text-align:right; border-collapse: collapse;'>";
+            echo "<table class=\"maintext-oldsys\" border=1 style='direction:rtl; text-align:right; border-collapse: collapse;'>";
             $max_cols = 0;
             foreach($row_leads_arr as $row){
                 $cols_count = count($row);
