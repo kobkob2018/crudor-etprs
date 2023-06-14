@@ -270,7 +270,7 @@
 
             $user_lead_id = MasterUser_leads::add_user_lead($db_lead_info,$user_id);
 
-            $auth_link = get_config('master_url')."/myleads/leads/auth/?token=".$token;
+            $auth_link = get_config('master_url')."/myleads/leads/auth/?token=".$token."&lead=".$user_lead_id."&user=".$user_id;
 
             $requst_site = Sites::get_by_id($biz_request['site_id']);
 

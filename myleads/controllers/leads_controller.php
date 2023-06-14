@@ -6,6 +6,19 @@
 		$this->set_body('leads_body');
 		return $this->leadList();
     }
+
+	protected function handle_access($action){
+		switch ($action){
+		  case 'auth':
+			return true;
+			break;
+		  default:
+			return parent::handle_access(($action));
+			break;
+		  
+		}
+	}
+
     public function leadList() {
 		$user = Users::get_loged_in_user();
 		$user = Leads_user::get_leads_user_data($user);
@@ -483,5 +496,39 @@
 		return array("start"=>$start,"end"=>$end,"str"=>$str,'selected' => '');
 	}
 	
+	public function auth(){
+		$this->set_layout('blank');
+		if(!isset($_REQUEST['user']) || !isset($_REQUEST['token']) || !isset($_REQUEST['lead'])){
+			SystemMessages::add_err_message("בקשה לא תקינה");
+			return $this->redirect_to(outer_url());
+		}
+		$this->add_model('user_leads');
+		$lead = User_Leads::find(array(
+			'id'=>$_REQUEST['lead'],
+			'user_id'=>$_REQUEST['user'],
+			'token'=>$_REQUEST['token'],
+		));
+
+		if($lead){
+			$current_user_id = false;
+			if($this->user){
+				$current_user_id = $this->user['id'];
+			}
+			if($lead['user_id']!=$current_user_id){
+				$user_id = $lead['user_id'];
+				UserLogin::add_login_trace($user_id);
+
+			}
+			session__set('show_row',$lead['id']);
+				
+			return $this->redirect_to(inner_url(''));
+		}
+		else{
+			SystemMessages::add_err_message("פג תוקף כניסה אוטומטית של הליד");
+			return $this->redirect_to(inner_url(''));
+		}
+	}
+
   }
+  
 ?>
