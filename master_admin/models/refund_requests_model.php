@@ -80,11 +80,19 @@
     }
 
 
-    public static function get_refund_reasons_id_indexed(){
+    public static function get_refund_reasons_id_indexed($user_id = false){
         $db = Db::getInstance();
-		$sql = "SELECT * FROM refund_reasons";
+
+        $user_id_sql = "";
+        $execute_arr = array();
+        if($user_id){
+            $user_id_sql = " AND (user_id IS NULL OR user_id = :user_id) ";
+            $execute_arr['user_id'] = $user_id;
+        }
+
+		$sql = "SELECT * FROM refund_reasons WHERE 1 $user_id_sql";
 		$req = $db->prepare($sql);
-		$req->execute();
+		$req->execute($execute_arr);
         $result = $req->fetchAll();
         $refund_reasons = array();
         foreach($result as $reason){

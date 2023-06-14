@@ -709,7 +709,7 @@
         foreach($form_leads_paybypswd_arr as $lead){
             $lead_row = array( stripslashes($lead['date_in']) , stripslashes($lead['full_name']) , stripslashes($lead['email']) , stripslashes($lead['phone']), $lead['opened_str'] ,$status_options[$lead['status']] ,$tagin_arr[$lead['tag']]['tag_name']  , $lead['resource_str'],$lead['refunded_str'] , stripslashes($lead['note']));
             if(!isset($_GET['withouthtml'])){
-                $lead_row[] = "<a target='_BLANK' href='".inner_url('refund_requests/add_request/')."lead_id=".$lead['id']."'>שלח בקשה לזיכוי</a>";
+                $lead_row[] = "<a target='_BLANK' href='".inner_url('refund_requests/add_request/')."?lead_id=".$lead['id']."'>שלח בקשה לזיכוי</a>";
             }
             if($advanced_report){
                 $lead_row[] = $customer_types_str[$customer_type_phones[$lead['phone']]];
@@ -797,7 +797,7 @@
             $answ = ( $call_data['billsec'] == '0' ) ? "ללא מענה" : "שיחה של ".$call_data['billsec']." שניות";
             $lead_row = array( stripslashes($call_data['call_date']) , '' , '' , stripslashes($call_data['call_from']),'',$status_options[$lead['status']] ,$tagin_arr[$lead['tag']]['tag_name'] , 'מערכת טלפונייה',$lead['refunded_str']  , $answ);
             if(!isset($_GET['withouthtml'])){
-                $lead_row[] = "<a target='_BLANK' href='".inner_url('refund_requests/add_request/')."lead_id=".$lead['id']."'>שלח בקשה לזיכוי</a>";     
+                $lead_row[] = "<a target='_BLANK' href='".inner_url('refund_requests/add_request/')."?lead_id=".$lead['id']."'>שלח בקשה לזיכוי</a>";     
             }		
             if($advanced_report){
                 $lead_row[] = $customer_types_str[$customer_type_phones[$lead['phone']]];

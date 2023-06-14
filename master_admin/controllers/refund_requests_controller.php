@@ -412,6 +412,9 @@
     }
 
     public function add_request(){
+
+        $lead_data = Refund_requests::get_lead_data($_GET['lead_id']);
+        $user_id = $lead_data['user_id'];
 		if(isset($_POST['refund_row_id'])){
 			$insert_array = array();
 
@@ -430,6 +433,9 @@
 			echo "<a href='".inner_url('refund_requests/list/')."'>המשך אל מערכת הזיכויים</a>&nbsp&nbsp";
 			return;
 		}
+
+        $refund_reasons = Refund_requests::get_refund_reasons_id_indexed($user_id);
+
 		$refund_request_form = "	
 		
 		<form action='".current_url()."' method='POST' class='refund_form'>
@@ -440,13 +446,8 @@
 			<label for='reason'>סיבה</label>					
 			<div class='lead_form_item form-group '>
 				<input type='hidden' name='refund_row_id' value='".$_GET['lead_id']."'>
-				<select name='add_comment[reason]' class='form-select reason-select input_style'>";
-					$refund_reasons = array();
-					$refund_reasons[1] = "טלפון לא תקין";
-					$refund_reasons[2] = "לקוח לא עונה";
-					//$refund_reasons[3] = $word[LANG]['irelevant'];
-					//$refund_reasons[4] = $word[LANG]['existing_customer'];
-					
+                <input type='hidden' name='add_comment[user_id]' value='".$lead_data['user_id']."'>
+				<select name='add_comment[reason]' class='form-select reason-select input_style'>";	
 					foreach($refund_reasons as $key=>$val){
 						$refund_request_form .= "<option value='".$key."'>".$val."</option>";
 					}
