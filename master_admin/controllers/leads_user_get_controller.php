@@ -725,6 +725,13 @@
                             $billed_str = "חוייב";
                         }
                         if($prev_lead['resource'] == 'form'){
+                            if(!isset($prev_lead['refunded_str'])){
+                                $prev_lead['refunded_str'] = "לא";
+                                if($prev_lead['status'] == '6'){
+                                    $prev_lead['refunded_str'] = "כן";
+                                }
+
+                            }
                             $prev_lead_row = array( stripslashes($prev_lead['date_in']) , stripslashes($prev_lead['full_name']) , stripslashes($prev_lead['email']) ,$billed_str, $prev_lead['opened_str']  ,'טופס באתר',$prev_lead['refunded_str'] , stripslashes($prev_lead['content']));
     
                             
@@ -737,6 +744,13 @@
                             $req->execute();
                             $call_data = $req->fetch();
                             $answ = ( $call_data['billsec'] == '0' ) ? "ללא מענה" : "שיחה של ".$call_data['billsec']." שניות";
+                            if(!isset($prev_lead['refunded_str'])){
+                                $prev_lead['refunded_str'] = "לא";
+                                if($prev_lead['status'] == '6'){
+                                    $prev_lead['refunded_str'] = "כן";
+                                }
+
+                            }
                             $prev_lead_row = array( stripslashes($call_data['call_date']) , '' , '' ,$billed_str,''  , 'מערכת טלפונייה',$prev_lead['refunded_str']  , $answ);
     
                         }
@@ -799,6 +813,7 @@
                             $billed_str = "חוייב";
                         }
                         if($prev_lead['resource'] == 'form'){
+                            
                             $prev_lead_row = array( stripslashes($prev_lead['date_in']) , stripslashes($prev_lead['full_name']) , stripslashes($prev_lead['email']) ,$billed_str, $prev_lead['opened_str']  ,'טופס באתר',$prev_lead['refunded_str'] , stripslashes($prev_lead['content']));
     
                             
@@ -812,6 +827,13 @@
                             $call_data = $req->fetch();
                             
                             $answ = ( $call_data['billsec'] == '0' ) ? "ללא מענה" : "שיחה של ".$call_data['billsec']." שניות";
+                            if(!isset($prev_lead['refunded_str'])){
+                                $prev_lead['refunded_str'] = "לא";
+                                if($prev_lead['status'] == '6'){
+                                    $prev_lead['refunded_str'] = "כן";
+                                }
+
+                            }
                             $prev_lead_row = array( stripslashes($call_data['call_date']) , '' , '' ,$billed_str,'',$status_options[$lead['status']] ,$tagin_arr[$lead['tag']]['tag_name'] , 'מערכת טלפונייה',$prev_lead['refunded_str']  , $answ);
     
                         }
