@@ -170,7 +170,7 @@
             }
         }
         echo "<h3>בקשות לזיכויים</h3>";
-        echo "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"maintext\">";
+        echo "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"maintext-oldsys\">";
 
             echo "<tr><td colspan=20 height=15></td><td>";
             echo "<tr><td colspan=20 height=15></td><td>";
@@ -179,7 +179,7 @@
             echo "<tr>";
                 echo "<td colspan=20>";
                     echo "<form action='".inner_url("refund_requests/list/")."' name='searchForm' method='get' style='padding:0; margin:0;'>";
-                    echo "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"maintext\">";
+                    echo "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"maintext-oldsys\">";
                         echo "<tr>";
                             echo "<td>מתאריך</td>";
                             echo "<td width=10></td>";
@@ -370,7 +370,7 @@
             
             echo "<tr>";
                     echo "<td colspan=20 align=center style=\"border-top: 1px solid gray;\">";
-                        echo "<table align=center border=0 cellspacing=\"0\" width=100% cellpadding=\"3\" class=\"maintext\">";
+                        echo "<table align=center border=0 cellspacing=\"0\" width=100% cellpadding=\"3\" class=\"maintext-oldsys\">";
                             echo "<tr>";
                                 echo "<td align=center>סך הכל ".$num_rows." בקשות</td>";
                             echo "</tr>";

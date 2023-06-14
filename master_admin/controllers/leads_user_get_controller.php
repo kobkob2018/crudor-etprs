@@ -43,13 +43,13 @@
             '6'=>array('str'=>'הליד זוכה','id'=>'5'),
         );		
         
-        echo "<table class=\"maintext\" cellpadding=0 cellspacing=0>";
+        echo "<table class=\"maintext-oldsys\" cellpadding=0 cellspacing=0>";
 		echo "<tr><td colspan=6 height=10></td></tr>";
 		echo "<tr>";
 			echo "<td colspan=6>";
             echo "<form action='".inner_url("leads_user_get/report/")."' name='serachForm' method='get' style='padding:0;margin:0'>";
 
-				echo "<table class=\"maintext\" cellpadding=0 cellspacing=0>";
+				echo "<table class=\"maintext-oldsys\" cellpadding=0 cellspacing=0>";
 					echo "<tr>";
 						echo "<td>שם לקוח</td>";
 						echo "<td width=10></td>";
