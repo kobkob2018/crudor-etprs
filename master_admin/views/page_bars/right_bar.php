@@ -84,6 +84,10 @@
             <li class="bar-item <?= $view->a_class("daily_income/report/") ?>">
                 <a href="<?= inner_url('daily_income/report/') ?>" title="דוח הכנסות יומיות" class="a-link">דוח הכנסות יומיות</a>
             </li>
+
+            <li class="bar-item <?= $view->a_c_class("leads_user_get/report/") ?>">
+                <a href="<?= inner_url('leads_user_get/report/') ?>" title="מספור קבלת לידים ללקוח" class="a-link">מספור קבלת לידים ללקוח</a>
+            </li>
         <?php endif; ?>
 
     </ul>

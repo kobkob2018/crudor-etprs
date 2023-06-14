@@ -41,7 +41,8 @@
             '3'=>array('str'=>'לקוח רשום','id'=>'3'),
             '4'=>array('str'=>'לא רלוונטי','id'=>'4'),
             '6'=>array('str'=>'הליד זוכה','id'=>'5'),
-        );		
+        );	
+        echo "<h2>מספור קבלת לידים ללקוח</h2>";	
         
         echo "<table class=\"maintext-oldsys\" cellpadding=0 cellspacing=0>";
 		echo "<tr><td colspan=6 height=10></td></tr>";
@@ -337,10 +338,10 @@
 							echo "</a>";
 							
 							
-							echo " | <a href='".inner_url('leads_user_get/user_csv/')."?user_id=".$data['user_id']."&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
+							echo " | <a target='_BLANK' href='".inner_url('leads_user_get/user_csv/')."?user_id=".$data['user_id']."&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
 								echo "צפה בדוח כאן";
 							echo "</a>";
-							echo " | <a href='".inner_url('leads_user_get/user_csv/')."?advanced_report=1&user_id=".$data['user_id']."&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
+							echo " | <a  target='_BLANK' href='".inner_url('leads_user_get/user_csv/')."?advanced_report=1&user_id=".$data['user_id']."&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
 								echo "צפה בדוח מתקדם";
 							echo "</a>";
 							echo " | <a href='".inner_url('leads_user_get/user_csv/')."?withouthtml=1&advanced_report=1&user_id=".$data['user_id']."&s_date=".$defualt_s_date."&e_date=".$defualt_e_date."'>";
@@ -813,7 +814,7 @@
                             $billed_str = "חוייב";
                         }
                         if($prev_lead['resource'] == 'form'){
-                            
+
                             $prev_lead_row = array( stripslashes($prev_lead['date_in']) , stripslashes($prev_lead['full_name']) , stripslashes($prev_lead['email']) ,$billed_str, $prev_lead['opened_str']  ,'טופס באתר',$prev_lead['refunded_str'] , stripslashes($prev_lead['content']));
     
                             

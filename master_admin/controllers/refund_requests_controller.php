@@ -412,7 +412,64 @@
     }
 
     public function add_request(){
-        echo "המודול בבנייה";
+		if(isset($_POST['refund_row_id'])){
+			$insert_array = array();
+
+            $new_comment = $_REQUEST['add_comment'];
+
+            $insert_array = array(
+                'user_id'=>$new_comment['user_id'],
+                'row_id'=>$new_comment['row_id'],
+                'reason'=>$new_comment['reason'],
+                'comment'=>$new_comment['comment']
+            );
+
+            Refund_requests::create($insert_array);
+			echo "<h3>הבקשה לזיכוי נשלחה</h3>";
+			echo "<a href='javascript://' onclick='window.close();'>חזור לרשימת הלידים</a>&nbsp&nbsp";
+			echo "<a href='".inner_url('refund_requests/list/')."'>המשך אל מערכת הזיכויים</a>&nbsp&nbsp";
+			return;
+		}
+		$refund_request_form = "	
+		
+		<form action='".current_url()."' method='POST' class='refund_form'>
+			<div class='lead_form_item form-group'>
+				<h4>בקשה לזיכוי ליד: <br/><span class='lead-refund-name lead-name-holder'></span></h4>
+			</div>
+			
+			<label for='reason'>סיבה</label>					
+			<div class='lead_form_item form-group '>
+				<input type='hidden' name='refund_row_id' value='".$_GET['lead_id']."'>
+				<select name='add_comment[reason]' class='form-select reason-select input_style'>";
+					$refund_reasons = array();
+					$refund_reasons[1] = "טלפון לא תקין";
+					$refund_reasons[2] = "לקוח לא עונה";
+					//$refund_reasons[3] = $word[LANG]['irelevant'];
+					//$refund_reasons[4] = $word[LANG]['existing_customer'];
+					
+					foreach($refund_reasons as $key=>$val){
+						$refund_request_form .= "<option value='".$key."'>".$val."</option>";
+					}
+				$refund_request_form .= "</select>
+			</div>
+			<br/>								
+			<label for='reason'>נא לכתוב את סיבת בקשת זיכוי הליד </label>					
+			<div class='lead_form_item form-group '>
+					<textarea name='add_comment[comment]' class='input_style textarea refund-comment' style='height:60px;'></textarea>
+			</div>
+			<br/>
+			<div class='lead_form_btn form-group'>
+				<button type='button'  id='close_refun_form_button'  onclick='window.close();' class='lead_form_refund_cancel form-button'>ביטול</button>
+				<button type='submit' class='lead_form_refund_send form-button'>שלח</button>		
+			</div>	
+			
+		</form>	
+		
+		";
+		echo $refund_request_form;
+		
+		
+		echo "<div><a href='javascript://' onclick='window.close();'>חזרה לרשימת הלידים</a></div>";
         
     }
   }
