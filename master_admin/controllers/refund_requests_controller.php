@@ -422,7 +422,7 @@
 
             $insert_array = array(
                 'user_id'=>$new_comment['user_id'],
-                'row_id'=>$new_comment['row_id'],
+                'row_id'=>$_POST['refund_row_id'],
                 'reason'=>$new_comment['reason'],
                 'comment'=>$new_comment['comment']
             );
