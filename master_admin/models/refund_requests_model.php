@@ -1,7 +1,7 @@
 <?php
   class Refund_requests extends TableModel{
 
-    protected static $main_table = 'refund_requests';
+    protected static $main_table = 'lead_refund_requests';
 
     public static function get_lead_status($lead_id){
         $execute_arr = array('lead_id'=>$lead_id);
