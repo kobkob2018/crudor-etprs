@@ -367,14 +367,18 @@
 		
 		$lead_data = new Leads($lead,true);
 		$lead_cat = $lead_data->estimate_form_data['final_cat'];
+		$user = Users::get_loged_in_user();
 		if($lead_data->estimate_form_data['resource'] == 'phone'){
-			$user = Users::get_loged_in_user();
-			$cat_refund_reasons = self::get_user_refund_reasons($user['id'],"'phone', 'all'");
+			$all_refund_reasons = self::get_user_refund_reasons($user['id'],"'phone', 'all'");
 		}
 		else{
-			$cat_refund_reasons = self::get_cat_refund_reasons($lead_cat);
+			$all_refund_reasons = self::get_cat_refund_reasons($lead_cat);
+			$user_refund_reasons = self::get_user_refund_reasons($user['id'],"'form', 'all'");
+			foreach($user_refund_reasons as $key=>$reason){
+				$all_refund_reasons[$key] = $reason;
+			}
 		}
-		$lead_data->estimate_form_data['cat_refund_reasons'] = $cat_refund_reasons;
+		$lead_data->estimate_form_data['cat_refund_reasons'] = $all_refund_reasons;
 		$req = $db->prepare("UPDATE user_leads SET open_state ='1' WHERE id = :id");
 		// the query was prepared, now we replace :id with our actual $id value
 		$req->execute(array('id' => $id));		
@@ -513,10 +517,10 @@
 		self::$cats_list = $cats_list;
 		return self::$cats_list;
 	}	
-	public static function get_cat_refund_reasons($cat_id = '0',$lead_types = "'form','all'"){
+	public static function get_cat_refund_reasons($cat_id = '0'){
 		$db = Db::getInstance();
 		$reason_list = array();
-		$sql = "SELECT * FROM  refund_reasons WHERE user_id IS NULL AND ((cat_id = '0' OR cat_id IS NULL) AND lead_type IN($lead_types)  ) OR cat_id = $cat_id)";
+		$sql = "SELECT * FROM  refund_reasons WHERE user_id IS NULL AND (cat_id = '0' OR cat_id IS NULL OR cat_id = $cat_id)";
 		
 		
 		$req = $db->prepare($sql);
