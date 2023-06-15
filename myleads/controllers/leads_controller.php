@@ -510,6 +510,7 @@
 		));
 
 		if($lead){
+			$lead = User_Leads::update($lead['id'], array('token'=>''));
 			$current_user_id = false;
 			if($this->user){
 				$current_user_id = $this->user['id'];
