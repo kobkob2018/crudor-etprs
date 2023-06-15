@@ -449,7 +449,7 @@
 										<select name='request_reason' class="form-select reason-select input_style">
 										
 											
-											<option ng-repeat="reason in lead_data['cat_refund_reasons']" value='{{reason.id}}'>{{reason.title}}</option>		
+											<option ng-repeat="reason in lead_data['cat_refund_reasons']" value='{{reason.id}}'>{{reason.label}}</option>		
 											
 										</select>
 									</div>	
