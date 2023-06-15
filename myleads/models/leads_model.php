@@ -369,7 +369,7 @@
 		$lead_cat = $lead_data->estimate_form_data['final_cat'];
 		if($lead_data->estimate_form_data['resource'] == 'phone'){
 			$user = Users::get_loged_in_user();
-			$cat_refund_reasons = self::get_user_refund_reasons($user['id']);
+			$cat_refund_reasons = self::get_user_refund_reasons($user['id'],"'phone', 'all'");
 		}
 		else{
 			$cat_refund_reasons = self::get_cat_refund_reasons($lead_cat);
@@ -513,10 +513,10 @@
 		self::$cats_list = $cats_list;
 		return self::$cats_list;
 	}	
-	public static function get_cat_refund_reasons($cat_id = '0'){
+	public static function get_cat_refund_reasons($cat_id = '0',$lead_types = "'form','all'"){
 		$db = Db::getInstance();
 		$reason_list = array();
-		$sql = "SELECT * FROM  refund_reasons WHERE user_id IS NULL AND (cat_id = '0' OR cat_id IS NULL OR cat_id = $cat_id)";
+		$sql = "SELECT * FROM  refund_reasons WHERE user_id IS NULL AND ((cat_id = '0' OR cat_id IS NULL) AND lead_type IN($lead_types)  ) OR cat_id = $cat_id)";
 		
 		
 		$req = $db->prepare($sql);
@@ -540,10 +540,11 @@
 		}
 		return $reason_list;
 	}
-	private static function get_user_refund_reasons($user_id = '0'){
+	private static function get_user_refund_reasons($user_id = '0',$lead_types = "'form', 'phone', 'all'"){
 		$db = Db::getInstance();
 		$reason_list = array();
-		$sql = "SELECT * FROM  refund_reasons WHERE user_id IS NULL OR user_id = '0' OR user_id = $user_id";
+		
+		$sql = "SELECT * FROM  refund_reasons WHERE (user_id IS NULL OR user_id = '0' OR user_id = $user_id) AND lead_type IN($lead_types)";
 		$req = $db->prepare($sql);
 		$req->execute();
 		$user_has_reasons = false;
