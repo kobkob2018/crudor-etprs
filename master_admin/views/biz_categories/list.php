@@ -19,6 +19,8 @@
         <div class="table-th row">
             <div class="co col-tiny">מיקום</div>
             <div class="col">קטגוריה</div>
+            <div class="col">טלפון</div>
+            <div class="col">מקסימום לידים</div>
             <div class="col">עריכה</div>
             <div class="col">העברה</div>
             <div class="col">מחיקה</div>
@@ -30,6 +32,12 @@
                 </div>
                 <div class="col">
                     <a href = "<?= inner_url('biz_categories/list/') ?>?row_id=<?= $cat['id'] ?>" title="בחירה"><?= $cat['label'] ?></a>
+                </div>
+                <div class="col">
+                    <?= $cat['unique_phone'] ?>
+                </div>
+                <div class="col">
+                    <?= $cat['max_lead_send'] ?>
                 </div>
                 <div class="col">
                     <a href = "<?= inner_url('biz_categories/edit/') ?>?row_id=<?= $cat['id'] ?>" title="עריכה">עריכה</a>
