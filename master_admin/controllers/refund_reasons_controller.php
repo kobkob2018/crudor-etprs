@@ -6,6 +6,12 @@
         $this->data['add_leads_menu'] = true;
         $user_id = $this->add_user_info_data();
         $cat_id = $this->add_cat_info_data();
+
+        if($cat_id){
+            $item_parent_tree = Biz_categories::get_item_parents_tree($cat_id,'id, label');
+            $this->data['item_parent_tree'] = $item_parent_tree;
+            $this->data['current_item_id'] = $cat_id;
+        }
         return parent::init_setup($action);
     }
 
@@ -140,7 +146,12 @@
     }
 
     protected function get_fields_collection(){
-      return Refund_reasons::setup_field_collection();
+      $reasons = Refund_reasons::setup_field_collection();
+      if(isset($this->data['cat_info']) && $this->data['cat_info']){
+        $reasons['lead_type']['default'] = 'form';
+        $reasons['lead_type']['type'] = 'hidden';
+      }
+      return $reasons;
     }
 
     protected function update_item($item_id,$update_values){

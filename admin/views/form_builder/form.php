@@ -9,121 +9,114 @@
 
             
         <?php foreach($this->data['form_builder']['fields_collection'] as $field_key=>$build_field): ?>
-            <div class='form-group <?= isset($build_field['css_class'])? $build_field['css_class']: "" ?>'>
-                    
-                <div class='form-group-st'>                
-                    <label for='row[<?= $field_key ?>]'><?= $build_field['label'] ?></label>
-                </div>
-                <div class='form-group-en'> 
-                    <?php if($build_field['type'] == 'text' || $build_field['type'] == 'date'): ?>
+            <?php if($build_field['type'] == 'hidden'): ?>
+                <input type='hidden' name='row[<?= $field_key ?>]" id="row_<?= $field_key ?>' class='' value="<?= $this->get_form_input($field_key); ?>"  />
+            <?php else: ?>
+                <div class='form-group <?= isset($build_field['css_class'])? $build_field['css_class']: "" ?>'>
                         
-                    
-                        <input type='text' name='row[<?= $field_key ?>]" id="row_<?= $field_key ?>' class='form-input <?= $build_field['validate_frontend'] ?>' data-msg-required='*' value="<?= $this->get_form_input($field_key); ?>"  />
-                    
+                    <div class='form-group-st'>                
+                        <label for='row[<?= $field_key ?>]'><?= $build_field['label'] ?></label>
+                    </div>
+                    <div class='form-group-en'> 
+                        <?php if($build_field['type'] == 'text' || $build_field['type'] == 'date'): ?>
                         
-                    <?php endif; ?>
-
-                    <?php if($build_field['type'] == 'password'): ?>
+                            <input type='text' name='row[<?= $field_key ?>]" id="row_<?= $field_key ?>' class='form-input <?= $build_field['validate_frontend'] ?>' data-msg-required='*' value="<?= $this->get_form_input($field_key); ?>"  />
                         
-                    
-                        <input type='password' name='row[<?= $field_key ?>]" id="row_<?= $field_key ?>' class='form-input <?= $build_field['validate_frontend'] ?>' data-msg-required='*' value=""  />
-                    
-                        
-                    <?php endif; ?>                
-                        
-                    <?php if($build_field['type'] == 'select'): ?>
-                    
-                        
-                        <select  id='row_<?= $field_key ?>' name='row[<?= $field_key ?>]' class='form-select <?= $build_field['validate_frontend'] ?>' data-msg='יש לבחור <?= $build_field['label'] ?>'>
-                            <?php if(isset($build_field['select_blank'])  && $build_field['select_blank']): ?>
-                                <option value="<?= $build_field['select_blank']['value'] ?>"><?= $build_field['select_blank']['label'] ?></option>
-                            <?php endif; ?>
-                            <?php foreach($this->get_select_options($field_key) as $option): ?>
-                                <option value="<?= $option['value'] ?>" <?= $option['selected'] ?>><?= $option['title'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        
-                    <?php endif; ?>
-                        
-                    <?php if($build_field['type'] == 'textbox'): ?>
-                        <?php if(isset($build_field['reachtext']) && $build_field['reachtext'] === 'optional'): ?>              
-                            <a href="javascript://" onClick = "initReachEditor(this)" >פתח עורך טקסט עשיר</a>  
-                        <?php endif; ?>
-                        <textarea name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>_textarea" class="form-input form-textarea" data-msg-required="*"><?= $this->get_form_input($field_key); ?></textarea>
-                        <?php if(isset($build_field['reachtext']) && $build_field['reachtext']): ?>
-                            <?php $this->register_script('js','tinymce',global_url('vendor/tinymce/tinymce/tinymce.min.js')); ?>
-                            <?php $this->register_script('js','tinymce_helper',styles_url('style/js/tinymce_helper.js')); ?>
                             
-                            <script type="text/javascript">
-                                function initReachEditor(a_el){
-                                    if(a_el !== null){
-                                        a_el.remove();
-                                    }
+                        <?php endif; ?>
+
+                        <?php if($build_field['type'] == 'password'): ?>
+                            
+                        
+                            <input type='password' name='row[<?= $field_key ?>]" id="row_<?= $field_key ?>' class='form-input <?= $build_field['validate_frontend'] ?>' data-msg-required='*' value=""  />
+                        
+                            
+                        <?php endif; ?>                
+                            
+                        <?php if($build_field['type'] == 'select'): ?>
+                        
+                            
+                            <select  id='row_<?= $field_key ?>' name='row[<?= $field_key ?>]' class='form-select <?= $build_field['validate_frontend'] ?>' data-msg='יש לבחור <?= $build_field['label'] ?>'>
+                                <?php if(isset($build_field['select_blank'])  && $build_field['select_blank']): ?>
+                                    <option value="<?= $build_field['select_blank']['value'] ?>"><?= $build_field['select_blank']['label'] ?></option>
+                                <?php endif; ?>
+                                <?php foreach($this->get_select_options($field_key) as $option): ?>
+                                    <option value="<?= $option['value'] ?>" <?= $option['selected'] ?>><?= $option['title'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            
+                        <?php endif; ?>
+                            
+                        <?php if($build_field['type'] == 'textbox'): ?>
+                            
+                                
+                            <textarea name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>_textarea" class="form-input form-textarea" data-msg-required="*"><?= $this->get_form_input($field_key); ?></textarea>
+                            <?php if(isset($build_field['reachtext']) && $build_field['reachtext']): ?>
+                                <?php $this->register_script('js','tinymce',global_url('vendor/tinymce/tinymce/tinymce.min.js')); ?>
+                                <?php $this->register_script('js','tinymce_helper',styles_url('style/js/tinymce_helper.js')); ?>
+
+                                <script type="text/javascript">
                                     init_tinymce(
                                         'textarea#row_<?= $field_key ?>_textarea', 
                                         '<?= inner_url('media/upload/') ?>',
                                         '<?= inner_url('media/librarypopup/') ?>'
                                     );
-                                }
-
-                                <?php if(isset($build_field['reachtext']) && $build_field['reachtext'] === true): ?>
-                                    initReachEditor(null);
-                                <?php endif; ?>
-                            </script>
-                        <?php endif; ?>
-                    
-                    <?php endif; ?>
-
-                    <?php if($build_field['type'] == 'file'): ?>
+                                </script>
+                            <?php endif; ?>
                         
-                        <?php if($build_field['file_type'] == 'img'): ?>
-                            <input type="file" name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>" accept="image/png, image/gif, image/jpeg, image/x-icon" class="form-input" value="" />
-                        <?php elseif($build_field['file_type'] == 'video'): ?>
-                            <input type="file" name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>" accept="video/mp4,video/x-m4v,video/*" class="form-input" value="" />
-                        <?php else: ?>
-                            <input type="file" name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>" class="form-input" value="" />
                         <?php endif; ?>
-                        <?php if($file_url = $this->get_form_file_url($field_key)): ?>
-                        <div>
+
+                        <?php if($build_field['type'] == 'file'): ?>
                             
-                            <a href="<?= $file_url ?>" target="_BLANK">
-                                <?php if($build_field['file_type'] == 'img'): ?>
-                                    <img src='<?= $file_url ?>?cache=<?= rand() ?>'  style="max-width:200px;"/>
-                                <?php elseif($build_field['file_type'] == 'video'): ?>
-                                    <video width="320" height="240" controls>
-                                        <source src="<?= $file_url ?>?cache=<?= rand() ?>" type="<?= $view->get_video_embed_type($this->get_form_input($field_key));  ?>">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                <?php else: ?>
-                                    צפה בקובץ
-                                <?php endif; ?>
-                            </a>
-                            <br/>
-                            <a href="<?= current_url(array('remove_file'=>$field_key)) ?>">הסר <?= $build_field['label'] ?></a>
-                        </div>
+                            <?php if($build_field['file_type'] == 'img'): ?>
+                                <input type="file" name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>" accept="image/png, image/gif, image/jpeg, image/x-icon" class="form-input" value="" />
+                            <?php elseif($build_field['file_type'] == 'video'): ?>
+                                <input type="file" name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>" accept="video/mp4,video/x-m4v,video/*" class="form-input" value="" />
+                            <?php else: ?>
+                                <input type="file" name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>" class="form-input" value="" />
+                            <?php endif; ?>
+                            <?php if($file_url = $this->get_form_file_url($field_key)): ?>
+                            <div>
+                                
+                                <a href="<?= $file_url ?>" target="_BLANK">
+                                    <?php if($build_field['file_type'] == 'img'): ?>
+                                        <img src='<?= $file_url ?>?cache=<?= rand() ?>'  style="max-width:200px;"/>
+                                    <?php elseif($build_field['file_type'] == 'video'): ?>
+                                        <video width="320" height="240" controls>
+                                            <source src="<?= $file_url ?>?cache=<?= rand() ?>" type="<?= $view->get_video_embed_type($this->get_form_input($field_key));  ?>">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    <?php else: ?>
+                                        צפה בקובץ
+                                    <?php endif; ?>
+                                </a>
+                                <br/>
+                                <a href="<?= current_url() ?>&remove_file=<?= $field_key ?>">הסר <?= $build_field['label'] ?></a>
+                            </div>
+                            <?php endif; ?>
+                            
                         <?php endif; ?>
-                        
-                    <?php endif; ?>
 
-                    <?php if($build_field['type'] == 'build_method' && isset($build_field['build_method'])): ?>
-                        <?php $build_method = $build_field['build_method']; ?>
-                        <?php $this->$build_method($field_key, $build_field); ?>
-                    <?php endif; ?>
-                </div>
-            </div>
-            
-            <?php if($build_field['type'] == 'password'): ?>
-
-                
-                <div class='form-group <?= isset($build_field['css_class'])? $build_field['css_class']: "" ?>'>
-                    <div class="form-group-st">
-                        <label for='row[<?= $field_key ?>_confirm]'>אימות <?= $build_field['label'] ?></label>
+                        <?php if($build_field['type'] == 'build_method' && isset($build_field['build_method'])): ?>
+                            <?php $build_method = $build_field['build_method']; ?>
+                            <?php $this->$build_method($field_key, $build_field); ?>
+                        <?php endif; ?>
                     </div>
-                    <div class='form-group-en'>
-                        <input type='password' name='row[<?= $field_key ?>_confirm]" id="row_<?= $field_key ?>_confirm' class='form-input' data-msg-required='*' value=""  />
-                    </div>	
                 </div>
-            <?php endif; ?>   
+                
+                <?php if($build_field['type'] == 'password'): ?>
+
+                    
+                    <div class='form-group <?= isset($build_field['css_class'])? $build_field['css_class']: "" ?>'>
+                        <div class="form-group-st">
+                            <label for='row[<?= $field_key ?>_confirm]'>אימות <?= $build_field['label'] ?></label>
+                        </div>
+                        <div class='form-group-en'>
+                            <input type='password' name='row[<?= $field_key ?>_confirm]" id="row_<?= $field_key ?>_confirm' class='form-input' data-msg-required='*' value=""  />
+                        </div>	
+                    </div>
+                <?php endif; ?> 
+            <?php endif; ?>  
         <?php endforeach; ?>
         <div class="form-group submit-form-group">
             <div class="form-group-st">

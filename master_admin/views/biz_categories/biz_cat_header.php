@@ -31,7 +31,8 @@
             <a href = "<?= inner_url('biz_categories/select_cities/') ?>?row_id=<?= $this->data['current_item_id'] ?>" class="item-edit-a <?= $view->a_class('biz_categories/select_cities/') ?>">שיוך ערים</a> 
             <br/>
             <a href = "<?= inner_url('cat_phone_display_hours/list/') ?>?cat_id=<?= $this->data['current_item_id'] ?>" class="item-edit-a <?= $view->a_c_class('cat_phone_display_hours') ?>">תצוגת טלפון</a> 
-            
+            | 
+            <a href = "<?= inner_url('refund_reasons/list/') ?>?cat_id=<?= $this->data['current_item_id'] ?>" class="item-edit-a <?= $view->a_c_class('refund_reasons') ?>">סיבות זיכוי</a>             
         </div>
         <hr/>
 
