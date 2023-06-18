@@ -96,5 +96,23 @@
       $req = $db->prepare($sql);
       return $req->execute($execute_arr);
     }
+
+    public static function update_lead_send_state($row_id){
+        $lead_data = self::get_by_id($row_id);
+        if(!$lead_data){
+            return;
+        }
+
+        $update_lead_arr = array('send_state'=>'1');
+
+        if($lead_data['billed'] == '1'){
+            $db = Db::getInstance();
+            $sql = "UPDATE user_lead_settings SET lead_credit = lead_credit - 1 WHERE user_id = :user_id";
+            $execute_arr = array('user_id'=>$lead_data['user_id']);
+            $req = $db->prepare($sql);
+            $req->execute($execute_arr);
+        }
+        return self::simple_update($row_id, $update_lead_arr);
+    }
 }
 ?>
