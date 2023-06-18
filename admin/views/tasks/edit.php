@@ -1,6 +1,6 @@
-<h3>ניהול משימה: <?= $this->data['task_info']['title'] ?></h3>
+<h3>ניהול משימה: <?= $this->data['item_info']['title'] ?></h3>
 <div class="eject-box">
-        <a href="<?= inner_url("tasks/all/") ?>">חזרה</a>
+        <a href="<?= inner_url("tasks/list/") ?>">חזרה</a>
 </div>
 <hr/>
 <div id="task_form_wrap" class="form-gen task-form">

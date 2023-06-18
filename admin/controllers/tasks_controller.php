@@ -2,20 +2,36 @@
 	class TasksController extends CrudController{
 		public $add_models = array("tasks");
         protected function handle_access($action){
-            switch ($action){
-                case 'token_login':
-                    return true;
-                    break;
-                default:
-                    return parent::handle_access($action);
-                    break;               
-            }
+            return parent::handle_access($action);         
         }
 
-		public function all(){
-            $tasks = array();
+        public function list(){
+            //if(session__isset())
+            $filter_arr = $this->get_base_filter();
+            $payload = array(
+                'order_by'=>'priority'
+            );
+            $task_list = Tasks::get_list($filter_arr,"*", $payload);  
 
-            foreach(Tasks::get_list() as $task){
+            $status_list = Tasks::$fields_collection['status']['options'];
+            $status_list = Helper::eazy_index_arr_by('value',$status_list,'title');
+
+            $user_options = Tasks::get_select_user_options();
+            
+
+                
+            foreach($user_options as $key=>$option){
+                $selected = "";
+                if(isset($filter_arr['user_id'])){
+                    if($filter_arr['user_id'] == $option['value']){
+                        $selected = "selected";
+                    }
+                }
+                $user_options[$key]['selected_str'] = $selected;
+                    
+            }
+            
+            foreach($task_list as $key=>$task){
                 $user_name_arr = Users::get_by_id($task['user_id'],"full_name");
                 if($user_name_arr){
                     $task['user_name'] = $user_name_arr['full_name'];
@@ -23,150 +39,132 @@
                 else{
                     $task['user_name'] = "USER DELETED!!!";
                 }
-                $tasks[] = $task;
+                $task_list[$key] = $task;
             }
-            $this->data['task_list'] = $tasks;
-            $this->include_view('tasks/all.php');
-		}
-
-        public function view(){
-            if(!isset($_GET['row_id'])){
-                return $this->redirect_to(inner_url('tasks/all/'));
-            }
-
-            $this->data['task_info'] = Tasks::get_by_id($_GET['row_id']);
-            if(!$this->data['task_info']){
-                return $this->redirect_to(inner_url('tasks/all/'));
-            }
-
-            $fields_collection = Tasks::setup_field_collection();
-
-            $form_handler = $this->init_form_handler();
-            $form_handler->update_fields_collection($fields_collection);
-            $form_handler->setup_db_values($this->data['task_info']);
-
-            if(isset($_REQUEST['remove_file'])){
-                $form_handler->remove_file($_REQUEST['remove_file']);
-                $update_values = array('banner'=>'');
-                Tasks::update($_GET['row_id'],$update_values);
-                SystemMessages::add_success_message("הבאנר הוסר");
-                return $this->redirect_to(inner_url("tasks/view/?row_id=".$_GET['row_id']));
-            }
-
-            $this->send_action_proceed();
-
-            $form_builder_data = array();
-            $form_builder_data['enctype_str'] = 'enctype="multipart/form-data"';
-            $form_builder_data['sendAction'] = "updateSend";
-            $form_builder_data['row_id'] = $this->data['task_info']['id'];
-            $form_builder_data['fields_collection'] = $fields_collection;
-            $this->data['form_builder'] = $form_builder_data;           
-
-            $this->include_view('tasks/view.php');
-            
-		}
-
-        public function updateSend(){
-            if(!isset($_REQUEST['row_id'])){
-                return;
-            }
-            $row_id = $_REQUEST['row_id'];
-            $form_handler = $this->init_form_handler();
-            $validate_result = $form_handler->validate();
-            $fixed_values = $validate_result['fixed_values'];
-            foreach($fixed_values as $key=>$value){
-                $fixed_values[$key] = str_replace('{{row_id}}',$row_id,$value);
-            }
-            $validate_result['fixed_values'] = $fixed_values;
-            if($validate_result['success']){
-                Tasks::update($row_id,$fixed_values);
-                $files_result = $form_handler->upload_files($validate_result, $row_id);
-                SystemMessages::add_success_message("המשימה נשמרה בהצלחה");
-                $this->redirect_to(current_url());
-            }
-            else{
-                if(!empty($validate_result['err_messages'])){
-                    $this->data['form_err_messages'] = $validate_result['err_messages'];
-                }
-            }
-        }
-
-        public function add(){
-            
-            $fields_collection = Tasks::setup_field_collection();
-            $form_handler = $this->init_form_handler();
-            $form_handler->update_fields_collection(Tasks::setup_field_collection());
-
-            $this->send_action_proceed();
-
-            $form_builder_data = array();
-            $form_builder_data['enctype_str'] = 'enctype="multipart/form-data"';
-            $form_builder_data['sendAction'] = "createSend";
-            $form_builder_data['row_id'] = 'new';
-            $form_builder_data['fields_collection'] = $fields_collection;
-            $this->data['form_builder'] = $form_builder_data;
-
-            $this->send_action_proceed();
-
-
-            $this->include_view('tasks/add.php');           
-		}       
-
-        public function createSend(){
-            $work_on_site = Sites::get_user_workon_site();
-            $site_id = $work_on_site['id'];
-            $form_handler = $this->init_form_handler();
-            $validate_result = $form_handler->validate();
-            
-            if($validate_result['success']){
-                $fixed_values = $validate_result['fixed_values'];
-                $fixed_values['site_id'] = $site_id;
-                $row_id = Tasks::create($fixed_values);
-
-                $fixed_row_values = array();
-                foreach($fixed_values as $key=>$value){
-                    $fixed_row_value = str_replace('{{row_id}}',$row_id,$value);
-                    if($fixed_row_value != $value){
-                        $fixed_row_values[$key] = $fixed_row_value;
-                    }
-                }
-                if(!empty($fixed_row_values)){
-                    Tasks::update($row_id,$fixed_row_values);
-                }
-                $validate_result['fixed_values'] = $fixed_values;
-                $files_result = $form_handler->upload_files($validate_result, $row_id);
-                SystemMessages::add_success_message("המשימה נוספה בהצלחה");
-                $this->redirect_to(inner_url("tasks/view/?row_id=$row_id"));
-            }
-            else{
-                if(!empty($validate_result['err_messages'])){
-                    $this->data['form_err_messages'] = $validate_result['err_messages'];
-                }
-            }
-        }
-
-        public function delete(){
-            if(!isset($_REQUEST['row_id'])){
-                SystemMessages::add_err_message("לא נבחרה שורה");
-                return $this->redirect_to(inner_url("tasks/all/"));
-            }
-
-            $row_id = $_REQUEST['row_id'];
-            Tasks::delete($row_id);
-            SystemMessages::add_success_message("המשימה נמחקה בהצלחה");
-            return $this->redirect_to(inner_url("tasks/all/"));
-                
-		}
-
-        public function task_email_validate_by($value){
-            $return_array =  array(
-                'success'=>true
+            $this->data['task_list'] = $task_list;
+            $info = array(
+                'user_options'=>$user_options,
+                'status_list'=>$status_list
             );
-            if($value == 'notgood@gmail.com'){
-                $return_array['success'] = false;
-                $return_array['message'] = "האימייל שבחרת לא מותר";
-            }
-            return $return_array;
+            $this->include_view('tasks/list.php',$info);
+    
         }
+    
+        protected function get_base_filter(){
+            $user_id = $this->user['id'];
+            if($this->view->user_is('master_admin')){
+                if(session__isset('tasks_user_id')){
+                    $user_id = session__get('tasks_user_id');
+                }
+                if(isset($_GET['user_id'])){
+                    $user_id = $_GET['user_id'];
+                    session__set('tasks_user_id',$_GET['user_id']);
+                }
+            }
+           
+            $filter_arr = array(
+                'user_id'=>$user_id,
+            );  
+
+            if($user_id == 'all'){
+                unset($filter_arr['user_id']);
+            }
+
+            return $filter_arr;     
+        }
+    
+        public function edit(){
+            return parent::edit();
+        }
+    
+        public function updateSend(){
+            return parent::updateSend();
+        }
+    
+        public function add(){
+            return parent::add();
+        }       
+    
+        public function createSend(){
+            return parent::createSend();
+        }
+    
+        public function delete(){
+            return parent::delete();      
+        }
+    
+        public function set_priority(){
+            return parent::set_priority();
+        }
+    
+        public function rearange_priority($filter_arr){
+            return Tasks::rearange_priority($this->get_base_filter());
+        }
+    
+    
+    
+        public function include_edit_view(){
+            $this->include_view('tasks/edit.php');
+        }
+    
+        public function include_add_view(){
+            $this->include_view('tasks/add.php');
+        }   
+    
+        protected function update_success_message(){
+            SystemMessages::add_success_message("המשימה עודכנה בהצלחה");
+    
+        }
+    
+        protected function create_success_message(){
+            SystemMessages::add_success_message("המשימה נוצרה בהצלחה");
+    
+        }
+    
+        protected function delete_success_message(){
+            SystemMessages::add_success_message("המשימה נמחקה");
+        }
+    
+        protected function row_error_message(){
+          SystemMessages::add_err_message("לא נבחרה משימה");
+        }   
+    
+        protected function delete_item($row_id){
+          return Tasks::delete($row_id);
+        }
+    
+        protected function get_item_info($row_id){
+          return Tasks::get_by_id($row_id);
+        }
+    
+        public function eject_url(){
+          return inner_url("tasks/list/");
+        }
+    
+        public function url_back_to_item($item_info){
+          return inner_url("tasks/list/");
+        }
+
+        public function delete_url($item_info){
+            return inner_url("tasks/delete/?row_id=".$item_info['id']);
+        }        
+
+        protected function get_fields_collection(){
+          return Tasks::setup_field_collection();
+        }
+    
+        protected function update_item($item_id,$update_values){
+          return Tasks::update($item_id,$update_values);
+        }
+    
+        protected function get_priority_space($filter_arr, $item_to_id){
+            return Tasks::get_priority_space($filter_arr, $item_to_id);
+          }
+    
+        protected function create_item($fixed_values){
+            return Tasks::create($fixed_values);
+        }
+
+
 	}
 ?>

@@ -2,14 +2,7 @@
 	class TasksController extends CrudController{
 		public $add_models = array("tasks");
         protected function handle_access($action){
-            switch ($action){
-                case 'token_login':
-                    return true;
-                    break;
-                default:
-                    return $this->call_module(get_config('main_module'),'handle_access_login_only',$action);
-                    break;               
-            }
+            return $this->call_module(get_config('main_module'),'handle_access_login_only',$action);
         }
 
         public function list(){
@@ -19,15 +12,64 @@
                 'order_by'=>'priority'
             );
             $task_list = Tasks::get_list($filter_arr,"*", $payload);  
+
+            $status_list = Tasks::$fields_collection['status']['options'];
+            $status_list = Helper::eazy_index_arr_by('value',$status_list,'title');
+
+            $user_options = Tasks::get_select_user_options();
+            
+
+                
+            foreach($user_options as $key=>$option){
+                $selected = "";
+                if(isset($filter_arr['user_id'])){
+                    if($filter_arr['user_id'] == $option['value']){
+                        $selected = "selected";
+                    }
+                }
+                $user_options[$key]['selected_str'] = $selected;
+                    
+            }
+            
+            foreach($task_list as $key=>$task){
+                $user_name_arr = Users::get_by_id($task['user_id'],"full_name");
+                if($user_name_arr){
+                    $task['user_name'] = $user_name_arr['full_name'];
+                }
+                else{
+                    $task['user_name'] = "USER DELETED!!!";
+                }
+                $task_list[$key] = $task;
+            }
             $this->data['task_list'] = $task_list;
-            $this->include_view('tasks/list.php');
+            $info = array(
+                'user_options'=>$user_options,
+                'status_list'=>$status_list
+            );
+            $this->include_view('tasks/list.php',$info);
     
         }
     
         protected function get_base_filter(){
+            $user_id = $this->user['id'];
+            if($this->view->user_is('master_admin')){
+                if(session__isset('tasks_user_id')){
+                    $user_id = session__get('tasks_user_id');
+                }
+                if(isset($_GET['user_id'])){
+                    $user_id = $_GET['user_id'];
+                    session__set('tasks_user_id',$_GET['user_id']);
+                }
+            }
+           
             $filter_arr = array(
-                'user_id'=>$this->user['id'],
+                'user_id'=>$user_id,
             );  
+
+            if($user_id == 'all'){
+                unset($filter_arr['user_id']);
+            }
+
             return $filter_arr;     
         }
     

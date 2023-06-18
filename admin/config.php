@@ -11,7 +11,7 @@ $system_config = array(
     'error_action'=>'error',
 
     'home_controller'=>'tasks',
-    'home_action'=>'all',
+    'home_action'=>'list',
 
     'email_sender'=>'ilan@il-biz.co.il',
     'email_sender_name'=>'מנהל הרשת',

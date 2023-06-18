@@ -379,7 +379,7 @@
 			}
 		}
 		$lead_data->estimate_form_data['cat_refund_reasons'] = $all_refund_reasons;
-		$req = $db->prepare("UPDATE user_leads SET open_state ='1' WHERE id = :id");
+		$req = $db->prepare("UPDATE user_leads SET view_state ='1' WHERE id = :id");
 		// the query was prepared, now we replace :id with our actual $id value
 		$req->execute(array('id' => $id));		
 		return $lead_data;
