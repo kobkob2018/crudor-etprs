@@ -721,6 +721,9 @@
                 if(!empty($lead['previous_sends'])){
                     $row_leads_arr[] = array("פניות קודמות","פניות קודמות","פניות קודמות");
                     foreach($lead['previous_sends'] as $prev_lead){
+                        if(!isset($prev_lead['opened_str'])){
+                            $prev_lead['opened_str'] = "";
+                        }
                         $billed_str = "לא חוייב";
                         if($prev_lead['billed'] == '1'){
                             $billed_str = "חוייב";
@@ -733,7 +736,7 @@
                                 }
 
                             }
-                            $prev_lead_row = array( stripslashes($prev_lead['date_in']) , stripslashes($prev_lead['full_name']) , stripslashes($prev_lead['email']) ,$billed_str, $prev_lead['opened_str']  ,'טופס באתר',$prev_lead['refunded_str'] , stripslashes($prev_lead['content']));
+                            $prev_lead_row = array( stripslashes($prev_lead['date_in']) , stripslashes($prev_lead['full_name']) , stripslashes($prev_lead['email']) ,$billed_str, $prev_lead['opened_str']  ,'טופס באתר',$prev_lead['refunded_str'] , stripslashes($prev_lead['note']));
     
                             
                         }

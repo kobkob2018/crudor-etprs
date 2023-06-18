@@ -128,7 +128,40 @@
       file_put_contents($log_filename, $log_text, FILE_APPEND);
     }
 
+
+    public static function array_to_csv_download2($data, $filename = "export.csv", $delimiter=";") {
+      // open raw memory as file so no temp files needed, you might run out of memory though
+      $f = fopen('php://memory', 'w'); 
+      // loop over the input array
+      //UTF-16LE BOM
+      fputs($f, chr(0xFF) . chr(0xFE));
+      foreach ($data as $fields) {
+        $out = '';
+        foreach ($fields as $k => $v){
+          if($v){
+            $fields[$k] = mb_convert_encoding($v, 'UTF-16LE', 'UTF-8');          
+          }
+        }
+      
+        // UTF-16LE tab
+        $out = implode(chr(0x09).chr(0x00), $fields);
+      
+        // UTF-16LE new line
+        fputs($f, $out.chr(0x0A).chr(0x00));
+      }
+      
+      // reset the file pointer to the start of the file
+      fseek($f, 0);
+      // tell the browser it's going to be a csv file
+      header('Content-Type: application/csv');
+      // tell the browser we want to save it instead of displaying it
+      header('Content-Disposition: attachment; filename="'.$filename.'";');
+      // make php send the generated csv lines to the browser
+      fpassthru($f);
+  }
     public static function array_to_csv_download($data, $filename = "export.csv", $delimiter=";") {
+        
+      ob_clean();
         // open raw memory as file so no temp files needed, you might run out of memory though
         $f = fopen('php://memory', 'w'); 
         // loop over the input array
@@ -138,10 +171,12 @@
         // reset the file pointer to the start of the file
         fseek($f, 0);
         // tell the browser it's going to be a csv file
-        header('Content-Type: application/csv');
+        header('Content-Encoding: UTF-8');
+        header('Content-Type: application/csv; charset=UTF-8');
         // tell the browser we want to save it instead of displaying it
         header('Content-Disposition: attachment; filename="'.$filename.'";');
         // make php send the generated csv lines to the browser
+        echo "\xEF\xBB\xBF"; // UTF-8 BOM
         fpassthru($f);
     }
   }

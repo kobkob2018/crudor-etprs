@@ -222,36 +222,12 @@
 				}
 			echo "</table>";		
 			return;		
-		}	
-		$csv_str = $this->str_putcsv($report_arr);
+		}
 
-	
-		header("Pragma: public");
-		header("Expires: 0"); 
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		header("Content-Type: text/x-csv");
-		header("Content-Disposition: attachment;filename=\"leads_report.csv\"");
-		echo $csv_str;
+		return Helper::array_to_csv_download($report_arr,"leads_report.csv");
 		
 	}
-	private function str_putcsv($data) {
-			# Generate CSV data from array
-			$fh = fopen('php://temp', 'rw'); # don't create a file, attempt
-											 # to use memory instead
 
-			# write out the headers
-			fputcsv($fh, array_keys(current($data)));
-
-			# write out the data
-			foreach ( $data as $row ) {
-					fputcsv($fh, $row);
-			}
-			rewind($fh);
-			$csv = stream_get_contents($fh);
-			fclose($fh);
-
-			return $csv;
-	}
     public function ajax_lead_data() {
 		$lead_id = $_REQUEST['lead_id'];
 		$this->print_json_page(array("lead"=>Leads::find($lead_id)));
