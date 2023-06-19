@@ -7,8 +7,11 @@
         $link_records_url = get_config("link_records_url");
         $outputName = $link_records_url.$_GET['filename'].".mp3";
         header('Content-Disposition: attachment; filename="call_recording.mp3"');
-        header("Content-Type: audio/mpeg3");
+        
+        //this line not working anymore...
+        //header("Content-Type: audio/mpeg3");
         header("Content-Length: " . filesize($outputName));
+        ob_clean();
         echo (file_get_contents($outputName));
         unlink($outputName);
     }
