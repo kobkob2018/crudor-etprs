@@ -54,15 +54,15 @@
                 }
                 if(isset($time_group['d'][$today_index])){
                     if((
-                        $time_group['hf'] > $now_arr['hour'] || (
+                        $time_group['hf'] < $now_arr['hour'] || (
                             $time_group['hf'] == $now_arr['hour'] && 
-                            $time_group['mf'] >= $now_arr['hour'])
+                            $time_group['mf'] <= $now_arr['hour'])
                         )
                          && 
                         (
-                            $time_group['ht'] < $now_arr['hour'] || (
+                            $time_group['ht'] > $now_arr['hour'] || (
                                 $time_group['ht'] == $now_arr['hour'] && 
-                                $time_group['mt'] <= $now_arr['hour'])
+                                $time_group['mt'] >= $now_arr['hour'])
                         )){
                             $ok_found = true;
                             break;
