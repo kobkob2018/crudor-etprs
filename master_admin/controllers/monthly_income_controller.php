@@ -349,7 +349,8 @@
             "deal_closed_count"=>0,
             "billsec_sum"=>0,
             "leads_count"=>0,
-            "refunded_leads_count"=>0
+            "refunded_leads_count"=>0,
+			"refunded_leads_precent"=>0,
           ); 
           
           $user = $user_list[$user_id];
@@ -371,7 +372,7 @@
               if(isset($closed_deal_leads[$row_date][$user['user_id']])){						
                 $user_income_row['closed_deal_leads'] = $closed_deal_leads[$row_date][$user['user_id']];
                 $user_income_row['deal_closed_count'] = count($user_income_row['closed_deal_leads']);
-                $monthly_income_arr['deal_closed_count']+=$user_income_row['deal_closed_count'];
+                $monthly_income_arr[$user_id]['deal_closed_count']+=$user_income_row['deal_closed_count'];
               }
               else{
                 $user_income_row['deal_closed_count'] = 0;
@@ -389,6 +390,7 @@
               $user_income_row['refunded_leads_count']=0;		
             }	
             $user_income_row['refunded_leads_precent']=0;
+			$monthly_income_arr[$user_id]['refunded_leads_precent']=0;
             if($user_income_row['refunded_leads_count'] != 0){
               if($user_income_row['leads_count'] == 0){
                 $user_income_row['refunded_leads_precent'] = 100;
@@ -400,7 +402,7 @@
                 $user_income_row['refunded_leads_precent'] = $refunded_leads_precent;
               }
             }	
-                      
+            $monthly_income_arr[$user_id]['refunded_leads_precent']=$user_income_row['refunded_leads_precent'];      
             $user_income_row['lead_count_compare'] = '0';
             
             if($user_income_row['leads_count'] > $last_user_lead_count){
@@ -738,8 +740,8 @@
               <td><?php echo number_format ($month_income_arr['domain'],2); ?></td>
               <td><?php echo number_format ($month_income_arr['advertyzing_global'],2); ?></td>
               <td><?php echo $month_income_arr['leads_count']; ?></td>
-              <td><?php echo $month_income_arr['user'][$user_id]['refunded_leads_count']; ?></td>
-              <td><?php echo number_format($month_income_arr['user'][$user_id]['refunded_leads_precent'],2); ?>%</td>					
+              <td><?php echo $month_income_arr['refunded_leads_count']; ?></td>
+              <td><?php echo number_format($month_income_arr['refunded_leads_precent'],2); ?>%</td>					
               <td></td>
               <td><?php echo number_format ($user_list[$user_id]['lead_price'],2); ?></td>
               <td><?php echo number_format ($month_income_arr['leads'],2); ?></td>
