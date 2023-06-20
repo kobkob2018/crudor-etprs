@@ -190,7 +190,7 @@ function initAccNavItems(){
 function afterAccAnchorClick(withFixTop){
     toggleAccNav();
     closeDrawer('accessibility');
-    if(withFixTop){
+    if(false && withFixTop){
 
         setTimeout(function(){
             window.scrollBy(0, -100);

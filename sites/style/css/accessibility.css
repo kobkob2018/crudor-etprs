@@ -15,6 +15,13 @@
     font-size: 20px;
 }
 
+:target::before {
+    content: '';
+    display: block;
+    height:      180px;
+    margin-top: -180px;
+}
+
 .acc-nav-wrap{
     margin-bottom:20px;
 }
