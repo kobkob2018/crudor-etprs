@@ -180,16 +180,22 @@ function initAccNavItems(){
         aItem.href = anchor;
         aItem.title = h2.innerText;
         aItem.addEventListener("click",function(){
-            toggleAccNav();
-            closeDrawer('accessibility');
-            setTimeout(function(){
-                window.scrollBy(0, -100);
-            },100);
-            
-            document.querySelector("#accessibility_wrap").scrollTop = '0';
-            
+            afterAccAnchorClick(true);
         });
         liItem.append(aItem);  
         navUl.append(liItem);       
     });
+}
+
+function afterAccAnchorClick(withFixTop){
+    toggleAccNav();
+    closeDrawer('accessibility');
+    if(withFixTop){
+
+        setTimeout(function(){
+            window.scrollBy(0, -100);
+        },100);
+    }
+    
+    document.querySelector("#accessibility_wrap").scrollTop = '0';
 }

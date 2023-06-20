@@ -13,6 +13,19 @@
                 </span>
             </a>
             <ul class="hidden acc-nav">
+            
+                <li class="acc-nav-item">
+                    <a href="#page_wrap" title="עבור לראש הדף" onclick="afterAccAnchorClick(true)">
+                    עבור לראש הדף
+                    </a>
+
+                </li>
+                <li class="acc-nav-item">
+                    <a href="#footer" title="עבור לתחתית הדף" onclick="afterAccAnchorClick(false)">
+                        עבור לתחתית הדף
+                    </a>
+
+                </li>             
             </ul>
         </div>
     
