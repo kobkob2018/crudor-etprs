@@ -139,3 +139,57 @@ function get_acc_cookie_name(){
     }
     return cookie_name;
 }
+
+function toggleAccNav(){
+    
+    const accNav = document.querySelector(".acc-nav");
+    const doorEl = document.querySelector(".acc-nav-door");
+    if(!doorEl.classList.contains("init")){
+        initAccNavItems();
+        doorEl.classList.add("init");
+    }
+    if(!accNav){
+        return;
+    }
+    if(accNav.classList.contains("hidden")){
+        document.querySelector(".acc-nav").classList.remove("hidden");
+        doorEl.querySelector(".open-label").classList.add("hidden");
+        doorEl.querySelector(".close-label").classList.remove("hidden");
+
+    }
+    else{
+        document.querySelector(".acc-nav").classList.add("hidden");
+        doorEl.querySelector(".open-label").classList.remove("hidden");
+        doorEl.querySelector(".close-label").classList.add("hidden");
+    }
+}
+
+function initAccNavItems(){
+    let index = 0;
+    const navUl = document.querySelector(".acc-nav");
+    document.querySelectorAll("h2").forEach(h2=>{
+        if(h2.id == ""){
+            index++;
+            h2.id = "acc_item_"+index;
+        }
+        const anchor = "#"+h2.id;
+        const liItem = document.createElement('li');
+        liItem.classList.add("acc-nav-item");
+        const aItem = document.createElement('a');
+        aItem.innerHTML = h2.innerText;
+        aItem.href = anchor;
+        aItem.title = h2.innerText;
+        aItem.addEventListener("click",function(){
+            toggleAccNav();
+            closeDrawer('accessibility');
+            setTimeout(function(){
+                window.scrollBy(0, -100);
+            },100);
+            
+            document.querySelector("#accessibility_wrap").scrollTop = '0';
+            
+        });
+        liItem.append(aItem);  
+        navUl.append(liItem);       
+    });
+}

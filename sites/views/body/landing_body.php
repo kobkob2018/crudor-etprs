@@ -1,5 +1,5 @@
+<?php $this->include_view('modules/accessibility.php'); ?>
 <div id="page_wrap" class="page-wrap landing-page-wrap">
-	<?php $this->include_view('modules/accessibility.php'); ?>
     <?php if($this->data['page_style'] && $this->data['page_style']['header_html'] != ''): ?>
         <?= $this->data['page_style']['header_html'] ?>
     <?php endif; ?>

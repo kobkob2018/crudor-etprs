@@ -3,8 +3,22 @@
 <div id="accessibility_wrap" class="accessibility-wrap side-drawer-wrap left-side-drawer">
     <a href="javascript:void(0)" class="closebtn" onclick="closeDrawer('accessibility')">&times;</a>
     <div class="accessibility side-drawer">
+    <div class="acc-nav-wrap">
+            <a class="acc-nav-door" href="javascript://" onclick="toggleAccNav()">
+                <span class="open-label">
+                    לחץ לנווט מהיר
+                </span>
+                <span class="close-label hidden">
+                    לחץ לסגירת נווט מהיר  
+                </span>
+            </a>
+            <ul class="hidden acc-nav">
+            </ul>
+        </div>
+    
         <h3>תפריט נגישות</h3>
-        <ul class="accessibility-menu nav-ul">
+
+        <ul class="accessibility-menu">
 
             <li class="accessibility-item font-size-control item">
                 <labe class="label">גודל פונט</labe>

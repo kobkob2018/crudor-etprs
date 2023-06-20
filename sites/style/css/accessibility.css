@@ -7,6 +7,32 @@
 #accessibility_wrap a {
     color: black;
 }
+
+#accessibility_wrap  .acc-nav-wrap a{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.acc-nav-wrap{
+    margin-bottom:20px;
+}
+.acc-nav{
+    
+}
+ul.acc-nav li{
+    display: block;
+    margin-top:10px;
+    border-top: 1px solid gray ;
+    padding-right: 10px;
+}
+
+.acc-nav-door{
+    display: block;
+    font-size: 22px;
+}
+
 .accessibility .item {
     font-size: 25px;
     border-bottom: 1px solid;
@@ -54,17 +80,28 @@ body.biggerfont-3 {
 body.contrastOn img {
     -webkit-filter: grayscale(100%);
 }
-body.contrastOn .main-content, body.contrastOn .main-content *, body.contrastOn .site-footer, body.contrastOn .top-menu .main-cat {
+body.contrastOn .page-wrap *{
     background: white !important;
     color: black !important;
     border-color: black;
 }
-body.contrastOn .main-content a, body.contrastOn .main-content * a, body.contrastOn .site-footer a, body.contrastOn .top-menu .main-cat a {
+body.contrastOn .page-wrap a{
     color: blue !important;
+    text-decoration: underline !important;
 }
-body.contrastOn .site-footer {
+body.contrastOn .footer {
     border-top: 1px solid black;
 }
+
+body.contrastOn .top-fix,body.contrastOn .big-title{
+    border-bottom:1px solid black;
+}
+
+body.contrastOn .color-button, body.contrastOn .color-button a,body.contrastOn a.color-button{
+    background: black !important;
+    color: white !important;
+}
+
 body.linksOn .header a, body.linksOn .main-content a {
     text-decoration: underline !important;
 }
