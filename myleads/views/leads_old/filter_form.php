@@ -61,4 +61,4 @@
 
 </div>
 
-<?php $this->register_script('js','validate_forms',styles_url('style/js/validate_forms.js'),'foot'); ?> 
+<?php $this->register_script('js','validate_forms',styles_url('style/js/validate_forms.js?cache='.get_config('cash_version')),'foot'); ?> 

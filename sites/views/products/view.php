@@ -132,8 +132,8 @@
                     </div>
                 </div>
             </div>
-            <?php $this->register_script('js','my_carusel_js',styles_url('style/js/my_carusel.js'),'foot'); ?> 
-            <?php $this->register_script('style','my_carusel_css',styles_url('style/css/my_carusel.css'),'foot'); ?>
+            <?php $this->register_script('js','my_carusel_js',styles_url('style/js/my_carusel.js?cache='.get_config('cash_version')),'foot'); ?> 
+            <?php $this->register_script('style','my_carusel_css',styles_url('style/css/my_carusel.css?cache='.get_config('cash_version')),'foot'); ?>
 
 
 

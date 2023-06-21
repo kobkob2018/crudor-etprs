@@ -133,5 +133,5 @@
 <?php if(isset($info['recapcha_data'])): ?>
     <?php $this->register_script('js','google_recapcha',"https://www.google.com/recaptcha/api.js?render=".$info['recapcha_data']['public_key'],'foot'); ?> 
 <?php endif; ?>
-<?php $this->register_script('js','biz_form_js',styles_url('style/js/biz_form.js'),'foot'); ?> 
+<?php $this->register_script('js','biz_form_js',styles_url('style/js/biz_form.js?cache='.get_config('cash_version')),'foot'); ?> 
 

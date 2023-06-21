@@ -1,7 +1,7 @@
 <?php if(isset($_REQUEST['testit'])): ?>
 <script src="style/js/apps/leads_test.js?v=2"></script>
 <?php else: ?>
-	<?php $this->register_script('js','tree_selector',styles_url('style/v1/js/apps/leads.js')); ?> 
+	<?php $this->register_script('js','tree_selector',styles_url('style/v1/js/apps/leads.js?cache='.get_config('cash_version'))); ?> 
 <?php $filter = $this->data['filter']; ?>
 <?php $leads = $this->data['leads']; ?>
 <?php $pages_data = $this->data['pages']; ?>

@@ -25,5 +25,5 @@
             </div>
         </div>
     </div>
-    <?php $this->register_script('js','news_ticker',styles_url('style/js/news_ticker.js'),'foot'); ?> 
+    <?php $this->register_script('js','news_ticker',styles_url('style/js/news_ticker.js?cache='.get_config('cash_version')),'foot'); ?> 
 <?php endif; ?>
