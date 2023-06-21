@@ -129,7 +129,26 @@
             'label'=>'מילות מפתח',
             'type'=>'textbox',
             'css_class'=>'small-text left-text'
-        ) 
+        ),
+
+        'use_recapcha'=>array(
+            'label'=>'הוספת קאבצה בטפסים(בתנאי שיש מפתחות לאתר)',
+            'type'=>'select',
+            'default'=>'1',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא'),
+                array('value'=>'1', 'title'=>'כן')
+            ),
+            'validation'=>'required'
+        ),
+        'recapcha_public'=>array(
+            'label'=>'מפתח קאבצה ציבורי',
+            'type'=>'text'
+        ), 
+        'recapcha_secret'=>array(
+            'label'=>'מפתח קאבצה סודי',
+            'type'=>'text'
+        ), 
 
     );
 }

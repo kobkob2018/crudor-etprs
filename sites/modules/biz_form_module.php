@@ -31,6 +31,23 @@
                 'input_remove'=>$input_remove
             );
 
+            $global_settings = Global_settings::get();
+            $add_capcha = false;
+            if(isset($global_settings['add_capcha']) && $global_settings['add_capcha'] == '1'){
+                $add_capcha = true;
+            }
+            if($add_capcha && $this->controller->data['site']['use_recapcha'] != '1'){
+                $add_capcha = false;
+            }
+
+            if($add_capcha){
+                if($this->controller->data['site']['recapcha_public'] != "" && $this->controller->data['site']['recapcha_secret'] != ""){
+                    $info['recapcha_data'] = array(
+                        'public_key'=>$this->controller->data['site']['recapcha_public'],
+                    );
+                }
+            }
+
             if(isset($_GET['custom_phone'])){
                 $info['custom_phone'] = $_GET['custom_phone'];
             }

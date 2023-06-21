@@ -16,7 +16,10 @@
         <?php else: ?>
             <input type="hidden" name="biz[page_id]" value="-1" />
         <?php endif; ?>
-        
+        <?php if(isset($info['recapcha_data'])): ?>
+            <input type="hidden" class="recapcha-key" vlaue="<?= $info['recapcha_data']['public_key'] ?>" />
+            <input type="hidden" class="recapcha-token" name="g_recaptcha_token" />
+        <?php endif; ?>
         <input type="hidden" name="biz[form_id]" value="<?= $this->data['biz_form']['id'] ?>" />
         <input type="hidden" name="biz[referrer]" value="<?= current_url() ?>" />
         <input type="hidden" name="biz[site_ref]" value="<?= $_SERVER['HTTP_HOST'] ?>" />
@@ -45,7 +48,7 @@
                     <input 
                     type="text" 
                     name="biz[full_name]" 
-                    id="biz_phone" 
+                    id="biz_name" 
                     class="form-input validate" 
                     placeholder="שם מלא" 
                     required 
@@ -127,4 +130,8 @@
     <?php endif; ?>
 </div>
 
+<?php if(isset($info['recapcha_data'])): ?>
+    <?php $this->register_script('js','google_recapcha',"https://www.google.com/recaptcha/api.js?render=".$info['recapcha_data']['public_key'],'foot'); ?> 
+<?php endif; ?>
 <?php $this->register_script('js','biz_form_js',styles_url('style/js/biz_form.js'),'foot'); ?> 
+

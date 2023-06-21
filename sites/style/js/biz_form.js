@@ -206,7 +206,20 @@ class BizForm{
                 return;
             }
             if(this.formValidator.validate()){
-                this.submitForm();
+                const recapcha_key_input = this.formElement.querySelector(".recapcha-key");
+                
+                if(!recapcha_key_input){
+                    return this.submitForm();
+                }
+                const recapcha_token_input = this.formElement.querySelector(".recapcha-token");
+                const recapcha_key = recapcha_key_input.value;
+                grecaptcha.ready(function() {
+                    grecaptcha.execute(recapcha_key, {action: 'submit'}).then(function(token) {
+                        // Add your logic to submit to your backend server here.
+                        recapcha_token_input.value = token;
+                        return this.submitForm();
+                    });
+                });
             }
             
         }

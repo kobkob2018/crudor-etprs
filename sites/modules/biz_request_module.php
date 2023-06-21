@@ -28,6 +28,13 @@
                 return $return_array;
             }
 
+            $recapcha_valid = $this->validate_recapcha();
+            if(!$recapcha_valid){
+                $return_array['html'] = $this->controller->include_ob_view('biz_form/request_success_mokup_recapcha.php',array('token'=> $_REQUEST['g_recaptcha_token']));
+                
+                return $return_array;
+            }
+
             $have_meny_phone_duplications = $this->validate_phone_duplications($return_array);
 
         
@@ -107,6 +114,27 @@
             }
             $return_array['have_redirect'] = $have_redirect;
             return $return_array;
+        }
+
+        protected function validate_recapcha(){
+            $global_settings = Global_settings::get();
+            $add_capcha = false;
+            if(isset($global_settings['add_capcha']) && 
+                $global_settings['add_capcha'] == '1' && 
+                $this->controller->data['site']['use_recapcha'] == '1' && 
+                $this->controller->data['site']['recapcha_public'] != "" && 
+                $this->controller->data['site']['recapcha_secret'] != ""
+            ){
+                $add_capcha = true;
+            }
+
+            if(!$add_capcha){
+                return true;
+            }
+            
+            $token = $_REQUEST['g_recaptcha_token'];
+            $secret_key = $this->controller->data['site']['recapcha_secret'];
+            return false;
         }
 
         protected function validate_request($return_array){
