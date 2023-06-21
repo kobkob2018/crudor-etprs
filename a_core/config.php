@@ -3,7 +3,7 @@
 
 $config = array(
     'system_name'=>'mymvc',
-    'cash_version'=>'1.5',
+    'cash_version'=>'1.6',
 
     'db_host'=>'', //update in  a_core/secret.php that is in gitignore
     'db_database'=>'', //update in  a_core/secret.php that is in gitignore
