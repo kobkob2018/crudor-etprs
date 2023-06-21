@@ -172,7 +172,7 @@ function initAccNavItems(){
             index++;
             h2.id = "acc_item_"+index;
         }
-        const anchor = "/#"+h2.id;
+        const anchor = "#"+h2.id;
         const liItem = document.createElement('li');
         liItem.classList.add("acc-nav-item");
         const aItem = document.createElement('a');
@@ -180,10 +180,19 @@ function initAccNavItems(){
         aItem.href = anchor;
         aItem.title = h2.innerText;
         aItem.addEventListener("click",function(){
-            afterAccAnchorClick(true);
+            
         });
         liItem.append(aItem);  
         navUl.append(liItem);       
+    });
+    navUl.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault(e);
+    
+            document.location.hash=this.getAttribute('href').replace("#","");
+
+            afterAccAnchorClick(true);
+        });
     });
 }
 

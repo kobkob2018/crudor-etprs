@@ -55,7 +55,7 @@
 		ob_start();
 		$this->action_result = $this->$action();
 		$this->action_output = ob_get_clean();
-
+		
 		//send_action_proceed can be also caled from the view function
 		$this->send_action_proceed();
 
