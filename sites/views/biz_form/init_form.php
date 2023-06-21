@@ -17,7 +17,7 @@
             <input type="hidden" name="biz[page_id]" value="-1" />
         <?php endif; ?>
         <?php if(isset($info['recapcha_data'])): ?>
-            <input type="hidden" class="recapcha-key" vlaue="<?= $info['recapcha_data']['public_key'] ?>" />
+            <input type="hidden" class="recapcha-key" value="<?= $info['recapcha_data']['public_key'] ?>" />
             <input type="hidden" class="recapcha-token" name="g_recaptcha_token" />
         <?php endif; ?>
         <input type="hidden" name="biz[form_id]" value="<?= $this->data['biz_form']['id'] ?>" />

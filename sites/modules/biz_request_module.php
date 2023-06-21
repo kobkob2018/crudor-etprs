@@ -30,8 +30,7 @@
 
             $recapcha_valid = $this->validate_recapcha();
             if(!$recapcha_valid){
-                $return_array['html'] = $this->controller->include_ob_view('biz_form/request_success_mokup_recapcha.php',array('token'=> $_REQUEST['g_recaptcha_token']));
-                
+                $return_array['html'] = $this->controller->include_ob_view('biz_form/request_success_mokup.php');               
                 return $return_array;
             }
 
@@ -131,10 +130,36 @@
             if(!$add_capcha){
                 return true;
             }
-            
-            $token = $_REQUEST['g_recaptcha_token'];
-            $secret_key = $this->controller->data['site']['recapcha_secret'];
-            return false;
+
+            $recaptcha_secret = $this->controller->data['site']['recapcha_secret'];
+            $recaptcha_response = $_REQUEST['g_recaptcha_token'];
+            $score_threshold = 0.5; // Set a threshold score here
+
+            $url = 'https://www.google.com/recaptcha/api/siteverify';
+            $data = array(
+                'secret' => $recaptcha_secret,
+                'response' => $recaptcha_response
+            );
+
+            $options = array(
+                'http' => array (
+                    'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+                    'method' => 'POST',
+                    'content'=> http_build_query($data)
+                )
+            );
+
+            $context  = stream_context_create($options);
+            $response = file_get_contents($url, false, $context);
+            $result = json_decode($response, true);
+
+            if ($result['success'] && $result['score'] >= $score_threshold) {
+                // User is likely human - perform form submission logic here
+                return true;
+            } else {
+                // User is likely a bot or suspicious - take appropriate action here
+                return false;
+            }
         }
 
         protected function validate_request($return_array){

@@ -213,11 +213,12 @@ class BizForm{
                 }
                 const recapcha_token_input = this.formElement.querySelector(".recapcha-token");
                 const recapcha_key = recapcha_key_input.value;
+                const thisClass = this;
                 grecaptcha.ready(function() {
                     grecaptcha.execute(recapcha_key, {action: 'submit'}).then(function(token) {
                         // Add your logic to submit to your backend server here.
                         recapcha_token_input.value = token;
-                        return this.submitForm();
+                        return thisClass.submitForm();
                     });
                 });
             }

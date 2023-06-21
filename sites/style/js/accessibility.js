@@ -172,7 +172,7 @@ function initAccNavItems(){
             index++;
             h2.id = "acc_item_"+index;
         }
-        const anchor = "#"+h2.id;
+        const anchor = "/#"+h2.id;
         const liItem = document.createElement('li');
         liItem.classList.add("acc-nav-item");
         const aItem = document.createElement('a');
