@@ -34,9 +34,8 @@
                 'input_remove'=>$input_remove
             );
 
-            $global_settings = Global_settings::get();
             $add_capcha = false;
-            if(isset($global_settings['add_capcha']) && $global_settings['add_capcha'] == '1'){
+            if(get_config('add_capcha') == '1'){
                 $add_capcha = true;
             }
             if($add_capcha && $this->controller->data['site']['use_recapcha'] != '1'){

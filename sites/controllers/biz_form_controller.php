@@ -15,6 +15,16 @@
       return parent::init_setup($action);
     }
 
+    public function special_access_for_unlimited_requests(){
+        session__set('biz_unlimited_count','1');
+        SystemMessages::add_success_message("OK! NOW YOU CAN FILL FORMS WITHOUT LIMIT");
+    }
+
+    public function remove_access_for_unlimited_requests(){
+        session__unset('biz_unlimited_count');
+        SystemMessages::add_success_message("OK! NOW YOU CAN NOT !!! FILL FORMS WITHOUT LIMIT");
+    }
+
     public function fetch(){
 
         $return_array = $this->init_form_data();

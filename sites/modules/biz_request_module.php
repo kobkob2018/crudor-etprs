@@ -16,6 +16,11 @@
             $form_info = $this->controller->data['form_info'];
             $return_array = $action_data['return_array'];
            
+            if(!$this->validate_multiple_requests()){
+                $return_array['html'] = $this->controller->include_ob_view('biz_form/request_success_mokup.php');               
+                return $return_array;
+            }
+
             if(!$form_info){
                 return;
             }
@@ -115,11 +120,26 @@
             return $return_array;
         }
 
+        protected function validate_multiple_requests(){
+            $biz_request_count = 0;
+            if(session__isset('biz_request_count')){
+                $biz_request_count = session__get('biz_request_count');
+            }
+            $biz_request_count++;
+            session__set('biz_request_count',$biz_request_count);
+            if($biz_request_count > 2){
+                if(!session__isset('biz_unlimited_count')){
+                    return false;
+                }
+            }
+            return true;
+        }
+
         protected function validate_recapcha(){
-            $global_settings = Global_settings::get();
+            $global_settings_add_capcha = get_config('add_capcha');
             $add_capcha = false;
-            if(isset($global_settings['add_capcha']) && 
-                $global_settings['add_capcha'] == '1' && 
+            if(
+                $global_settings_add_capcha == '1' && 
                 $this->controller->data['site']['use_recapcha'] == '1' && 
                 $this->controller->data['site']['recapcha_public'] != "" && 
                 $this->controller->data['site']['recapcha_secret'] != ""
@@ -170,11 +190,29 @@
                 return $return_array;
             }
 
+
+            else{
+                $blocked_ips = get_config('blocked_ips');
+                if(str_contains($blocked_ips, $_SERVER['REMOTE_ADDR'])){
+                    $return_array['success'] = false;
+                    $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
+                    return $return_array;
+                }
+            }
             
             if(!isset($_REQUEST['biz']) || ! is_array($_REQUEST['biz'])){
                 $return_array['success'] = false;
                 $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
                 return $return_array;
+            }
+
+            if(isset($_REQUEST['biz']['phone'])){
+                $blocked_phones = get_config('blocked_phones');
+                if(str_contains($blocked_phones, $_REQUEST['biz']['phone'])){
+                    $return_array['success'] = false;
+                    $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
+                    return $return_array;
+                }
             }
 
             $this->lead_info = $_REQUEST['biz'];

@@ -1,4 +1,7 @@
 <h2>רשימת משימות</h2>
+
+<a href="<?= global_url('biz_form/special_access_for_unlimited_requests/') ?>" title="special access">לחץ כאן לגישה בלתי מוגבלת למילוי טפסים</a>
+
 <?php if($this->view->user_is('master_admin')): ?>
         <h4>צפה במשימות למשתמש</h4>
         <form action = "" method = "GET">
