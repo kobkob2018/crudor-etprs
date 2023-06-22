@@ -11,6 +11,10 @@
         if(!isset(self::$sites_arr['current'])){
             if(session__isset("site_id")){
                 self::$sites_arr['current'] = self::get_by_id(session__get("site_id"));
+				if(self::$sites_arr['current']['domain'] != $_SERVER["HTTP_HOST"]){
+					session__unset("site_id");
+					header('Location: http://'.$_SERVER["HTTP_HOST"]);
+				}
             }
             else{              
                 $current_site = self::get_by_domain($_SERVER["HTTP_HOST"]);
