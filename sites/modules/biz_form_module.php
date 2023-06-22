@@ -5,6 +5,9 @@
         
         public $add_models = array("biz_categories","siteBiz_forms","cities");
         public function fetch_form(){
+            if(get_config('biz_forms_on') != '1'){
+                return;
+            }
             $biz_form_data = siteBiz_forms::get_current_biz_form();
             if(!$biz_form_data){
                 return;

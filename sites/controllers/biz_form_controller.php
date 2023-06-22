@@ -3,6 +3,13 @@
   class Biz_formController extends CrudController{
     public $add_models = array("sitePages","biz_categories","siteBiz_forms","cities","sitesCat_city");
 
+    protected function handle_access($action){
+        if(get_config('biz_forms_on') != '1'){
+            $this->set_layout("blank");
+            exit();
+        }
+        return parent::handle_access(($action));
+    }
 
     protected function init_setup($action){
       return parent::init_setup($action);
