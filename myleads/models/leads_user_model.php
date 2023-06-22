@@ -37,7 +37,8 @@
 
         $lead_visability_default_values = array(
             'show_in_sites'=>'0',
-            'show_in_leads_report'=>'',
+            'show_in_leads_report'=>'0',
+            'show_in_leads_user_get_report'=>'0',
             'show_in_misscalls_report'=>'0',
             'send_lead_sms_alerts'=>'0',
             'send_lead_email_alerts'=>'0',

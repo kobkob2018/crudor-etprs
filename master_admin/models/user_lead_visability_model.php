@@ -27,7 +27,7 @@
         ),
 
         'show_in_leads_report'=>array(
-            'label'=>'הצג בדוח מספור לידים',
+            'label'=>'הצג בדוח לידים מרוכז',
             'type'=>'select',
             'default'=>'0',
             'options'=>array(
@@ -37,6 +37,17 @@
             'validation'=>'required'
         ),
 
+        'show_in_leads_user_get_report'=>array(
+            'label'=>'הצג בדוח מספור לידים',
+            'type'=>'select',
+            'default'=>'0',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא'),
+                array('value'=>'1', 'title'=>'כן')
+            ),
+            'validation'=>'required'
+        ),
+        
         'show_in_misscalls_report'=>array(
             'label'=>'הצג בדוח שיחות שלא נענו',
             'type'=>'select',

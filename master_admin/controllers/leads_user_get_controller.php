@@ -20,7 +20,7 @@
 			LEFT JOIN user_lead_visability ulv ON ulv.user_id = user.id 
 			LEFT JOIN user_lead_settings uls ON uls.user_id = user.id 
 			WHERE 
-                ulv.show_in_leads_report = '1' 
+                ulv.show_in_leads_user_get_report = '1' 
                 ".$client_name_sql."
         ";
         
