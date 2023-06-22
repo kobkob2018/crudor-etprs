@@ -4,6 +4,13 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeDrawer('accessibility')">&times;</a>
     <div class="accessibility side-drawer">
     <div class="acc-nav-wrap">
+    
+            <a target="_BLANK" href="<?= inner_url("negishut/") ?>" title="הצהרת נגישות">
+            הצהרת נגישות
+            </a>
+            <br/>
+            
+            <hr/><br/>
             <a class="acc-nav-door" href="javascript://" onclick="toggleAccNav()">
                 <span class="open-label">
                     לחץ לנווט מהיר
@@ -12,8 +19,7 @@
                     לחץ לסגירת נווט מהיר  
                 </span>
             </a>
-            <ul class="hidden acc-nav">
-            
+            <ul class="hidden acc-nav">          
                 <li class="acc-nav-item">
                     <a href="#page_wrap" title="עבור לראש הדף" onclick="afterAccAnchorClick(true)">
                     עבור לראש הדף
@@ -28,7 +34,7 @@
                 </li>             
             </ul>
         </div>
-    
+        <hr/><br/>
         <h3>תפריט נגישות</h3>
 
         <ul class="accessibility-menu">

@@ -34,7 +34,7 @@ class CitiesController extends CrudController{
       $filter_arr['parent'] = $this->data['current_item_id'];
 
       $payload = array(
-          'order_by'=>'label'
+          'order_by'=>'priority, label'
       );
       $city_list = Cities::get_list($filter_arr,"*", $payload);
       $this->data['city_list'] = $this->prepare_forms_for_all_list($city_list);

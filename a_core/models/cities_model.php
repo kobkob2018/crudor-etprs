@@ -58,7 +58,7 @@
         $deep++;
         $filter_arr = array('parent'=>$parent_id);
         $payload = array(
-            'order_by'=>'label'
+            'order_by'=>'priority, label'
         );
         $children = self::get_list($filter_arr, 'id, parent, label',$payload);
         if($children){
