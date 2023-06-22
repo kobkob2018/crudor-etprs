@@ -10,5 +10,10 @@
     </div>
 </div>
 <?php if($this->data['page_style']): ?>
+    <?php
+     /*  this is not so safe.. we will probebly remove it later. 
+    it is meant to simulate style behaviour inside admin  
+     */  
+    ?>
     <?= $this->data['page_style']['styling_tags'] ?>
 <?php endif; ?>

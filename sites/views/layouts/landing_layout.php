@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-  <script type="text/javascript">
-        const cookie_prefix = "<?= get_config('cookie_prefix') ?>";
-    </script>
+		<script type="text/javascript">
+			const cookie_prefix = "<?= get_config('cookie_prefix') ?>";
+		</script>
   		<base href="<?= outer_url(); ?>" />
 		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />	
@@ -24,10 +24,11 @@
 		<?php if($this->data['page_style'] && $this->data['page_style']['styling_tags'] != ''): ?>
 			<?= $this->data['page_style']['styling_tags'] ?>
 		<?php endif; ?>
+		<?= $this->data['site_styling']['styling_tags'] ?>
   </head>
   <body style="direction:rtl; text-align:right;" class="<?= $this->body_class ?>">
 	<?php $this->print_body();  ?>
 	<?php $this->include_view('registered_scripts/foot.php'); ?>
-
+	<?= $this->data['site_styling']['bottom_styling_tags'] ?>
   </body>
 <html>

@@ -19,7 +19,13 @@
         ),
 
         'styling_tags'=>array(
-            'label'=>'עיצוב חפשי',
+            'label'=>'תגיות עיצוב חפשי בHEAD',
+            'type'=>'textbox',
+            'css_class'=>'big-text left-text',
+        ),
+
+        'bottom_styling_tags'=>array(
+            'label'=>'תגיות עיצוב חפשי בFOOT',
             'type'=>'textbox',
             'css_class'=>'big-text left-text',
         ),

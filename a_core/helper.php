@@ -5,6 +5,14 @@ function get_config($param){
     return $config[$param];
 }
 
+function update_config($params_arr){
+    global $config;
+    foreach($params_arr as $param_key=>$param_value){
+        $config[$param_key] = $param_value;
+    }
+    return;
+}
+
 function session__isset($param_name){
     $session_prefix = get_config('session_prefix');
     $session_param = $session_prefix.$param_name;

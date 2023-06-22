@@ -179,16 +179,11 @@ i.fa{
 .footer-bottom-wrap{
     margin-top: 30px;
     margin-bottom: 5px;
+    text-align: center;
 }
 
 .bottom-menu .main-menu-ietm-wrap{
     font-size: 1.3em;
-}
-
-.footer-bottom-wrap{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .a-wrap{
@@ -831,6 +826,11 @@ a.news-ticker-a-content{
     margin-top: 0px;
 }
 
+.footer{
+    max-width: 100%;
+    overflow: auto;
+}
+
 @media only screen and (min-width: 890px) {
     .wide-fix-top-right{
         margin-left:auto;
@@ -962,6 +962,13 @@ a.news-ticker-a-content{
     }
     .quote-wrap .col-first{
         width: 110px;
+    }
+
+    .footer-bottom-wrap{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
     }
 }
 

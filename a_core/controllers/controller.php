@@ -22,6 +22,9 @@
 		foreach($this->add_models as $add_model){
 			$this->add_model($add_model);
 		}
+		$global_settings = Global_settings::get();
+		update_config($global_settings);
+
 		$this->view = new View($this);
 		$this->user = Users::get_loged_in_user();
 		global $controller,$action;
@@ -55,7 +58,7 @@
 		ob_start();
 		$this->action_result = $this->$action();
 		$this->action_output = ob_get_clean();
-		
+
 		//send_action_proceed can be also caled from the view function
 		$this->send_action_proceed();
 
