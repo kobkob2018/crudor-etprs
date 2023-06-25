@@ -3,9 +3,19 @@
 		<div id="logo_wrap" class="">
 			<img src="style/image/logo.png" alt="מערכת הלידים של איי-אל-ביז" />
 		</div>	
-		<?php if($this->data['work_on_site']): ?>
-			<h2 class="admin-title">ניהול אתר <?= $this->data['work_on_site']['title'] ?></h2>
-		<?php endif; ?>	
+		<div class="admin-title-wrap">
+			<?php if($this->data['work_on_site']): ?>
+				<h2 class="admin-title">ניהול אתר <?= $this->data['work_on_site']['title'] ?></h2>
+			<?php else: ?>
+				<h2 class="admin-title">ניהול אתרים - איי אל ביז</h2>
+			<?php endif; ?>	
+			
+			<?php if($view->user_is('master_admin')): ?>
+				<a href="<?= inner_url('master_admin/',array('system')) ?>" title="מעבר לניהול אתרים">
+					ניהול ראשי
+				</a>
+			<?php endif; ?>
+		</div>
 		<div class="clear"></div>	
 	</div>
 

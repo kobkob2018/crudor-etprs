@@ -44,7 +44,7 @@ h4{
     align-items: baseline;
 }
 
-.header .admin-title{
+.header .admin-title-wrap{
     font-size:22px;
     flex-grow: 1;
     text-align: left;
