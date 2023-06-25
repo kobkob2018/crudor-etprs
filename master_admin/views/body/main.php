@@ -7,7 +7,7 @@
 
 			<h2 class="admin-title">ניהול ראשי של מערכת איי אל ביז</h2>
 			<?php if($view->user_is('master_admin')): ?>
-				<a href="<?= inner_url('admin/',array('system')) ?>" title="מעבר לניהול אתרים">
+				<a href="<?= inner_url('admin/userSites/list/',array('system')) ?>" title="מעבר לניהול אתרים">
 					ניהול אתרים
 				</a>
 			<?php endif; ?>
