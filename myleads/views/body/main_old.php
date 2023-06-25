@@ -20,9 +20,14 @@
         </div>
     </div>	
 	<div id="footer" class="footer">
-	<?php /*
-	 © כל הזכויות שומורות <a href="http://www.ilbiz.co.il" class="copyrightBottom" title="פורטל עסקים ישראל">פורטל עסקים ישראל</a>&nbsp;&nbsp;&nbsp; <a href="http://www.il-biz.com" class="copyrightBottom" target="_blank" title="IL-BIZ קידום עסקים באינטרנט">IL-BIZ קידום עסקים באינטרנט</a>&nbsp;&nbsp;&nbsp; <a href="http://kidum.ilbiz.co.il/" class="copyrightBottom" target="_blank" title="קידום באינטרנט">קידום באינטרנט</a> - אילן שוורץ&nbsp;&nbsp;&nbsp; <a href="http://www.il-biz.co.il/" class="copyrightBottom" target="_blank" title="בניית אתרים">בניית אתרים</a>
-	*/ 
-	?>
+		<a href="https://ilbiz.co.il" class="copyrightBottom" title="איי אל ביז - קידום עסקים באינטרנט">
+			<img src = "<?= styles_url('style/image/logo-il-biz.png') ?>" alt="איי אל ביז" />
+			
+
+		</a> 
+		&nbsp;&nbsp;&nbsp;
+		<a href="https://ilbiz.co.il" class="copyrightBottom" title="איי אל ביז - קידום עסקים באינטרנט">
+			קידום עסקים באינטרנט
+		</a> 
 	</div>
 </div>
