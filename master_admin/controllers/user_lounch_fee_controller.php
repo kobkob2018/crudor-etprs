@@ -3,15 +3,26 @@
     public $add_models = array("user_lounch_fee");
 
     protected function init_setup($action){
+        return parent::init_setup($action);
+    }
+
+    protected function validate_user_id(){
         $user_id = $this->add_user_info_data();
         if(!$user_id){
             return $this->redirect_to(inner_url("users/list/"));
             return false;
         }
-        return parent::init_setup($action);
+        return $user_id;
     }
 
+    
+
     public function list(){
+       // $user_id = $this->add_user_info_data();
+        if(!$this->add_user_info_data()){
+            return $this->all_users_pending_list();
+        }
+
         //if(session__isset())
         $filter_arr = $this->get_base_filter();
         $payload = array(
@@ -22,6 +33,25 @@
         $this->data['user_fee_lounches'] = $user_fee_lounches;
         $this->include_view('user_lounch_fee/list.php');
     }
+
+    public function all_users_pending_list(){
+        $filter_arr = array('pay_status'=>'0');
+        $payload = array(
+            'order_by'=>'id desc'
+        );
+        $user_fee_lounches = User_lounch_fee::get_list($filter_arr,"*",$payload);
+        $fee_users = array();
+        foreach($user_fee_lounches as $fee_key=>$user_fee){
+            if(!isset($fee_users[$user_fee['user_id']])){
+                $fee_users[$user_fee['user_id']] = Users::get_by_id($user_fee['user_id'],'id, full_name');
+            }
+            $fee_user = $fee_users[$user_fee['user_id']];
+            $user_fee_lounches[$fee_key]['user'] = $fee_user;
+        }
+        $this->data['fields_collection'] = User_lounch_fee::setup_list_field_collections();
+        $this->data['user_fee_lounches'] = $user_fee_lounches;
+        $this->include_view('user_lounch_fee/all_users_pending_list.php');
+    }   
 
     protected function add_user_info_data(){
         if(isset($this->data['user_info'])){
@@ -57,6 +87,9 @@
     }
 
     public function add(){
+        if(!$this->validate_user_id()){
+            return;
+        }
         //override bcoz we need some special default values
         $fields_collection = User_lounch_fee::setup_add_field_collections($this->data['user_info']);
         $form_handler = $this->init_form_handler();
@@ -73,12 +106,14 @@
     }
 
     public function delete(){
+        $this->add_user_info_data();
         if(!isset($_GET['row_id'])){
             $this->row_error_message();
             return $this->eject_redirect();
         }
         $deleted_values = array('deleted'=>'1','pay_status'=>'5');
         User_lounch_fee::update($_GET['row_id'],$deleted_values);
+        $this->delete_success_message();
         //return parent::delete();      
         return $this->eject_redirect();
     }
@@ -101,7 +136,12 @@
     }   
 
     public function eject_url(){
-      return inner_url('user_lounch_fee/list/?user_id='.$this->data['user_info']['id']);
+        if($this->data['user_info']){
+            return inner_url('user_lounch_fee/list/?user_id='.$this->data['user_info']['id']);
+        }
+        else{
+            return inner_url('user_lounch_fee/list/');
+        }
     }
 
     public function delete_url($item_info){

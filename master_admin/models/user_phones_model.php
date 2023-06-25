@@ -51,7 +51,9 @@
         'misscall_sms'=>array(
             'label'=>'SMS בלא מענה',
             'type'=>'textbox',
+            'default'=>'מייד נתפנה ונחזור אלייך',
             'css_class'=>'tiny-text',
+            'validation'=>'required',
         ),
 
         'aftercall_sms_send'=>array(
@@ -67,7 +69,9 @@
         'aftercall_sms'=>array(
             'label'=>'SMS לאחר שיחה',
             'type'=>'textbox',
+            'default'=>'מייד נתפנה ונחזור אלייך',
             'css_class'=>'tiny-text',
+            'validation'=>'required',
         ),
 
     );

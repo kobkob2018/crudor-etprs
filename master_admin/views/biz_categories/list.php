@@ -26,12 +26,16 @@
             <div class="col">מחיקה</div>
         </div>
         <?php foreach($this->data['cat_list'] as $cat): ?>
-            <div class="table-tr row">
+            <div class="table-tr row  pale-0<?= $cat['visible'] ?>">
                 <div class="col col-tiny">
                     <?= $cat['priority'] ?>
                 </div>
                 <div class="col">
                     <a href = "<?= inner_url('biz_categories/list/') ?>?row_id=<?= $cat['id'] ?>" title="בחירה"><?= $cat['label'] ?></a>
+                    <?php if($cat['visible'] == '0'): ?>
+                        <br/>
+                        לא נראה באתר
+                    <?php endif; ?>
                 </div>
                 <div class="col">
                     <?= $cat['unique_phone'] ?>
@@ -41,6 +45,7 @@
                 </div>
                 <div class="col">
                     <a href = "<?= inner_url('biz_categories/edit/') ?>?row_id=<?= $cat['id'] ?>" title="עריכה">עריכה</a>
+
                 </div>
                 <div class="col">
 

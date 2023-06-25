@@ -60,6 +60,18 @@
                 <a href="<?= inner_url('net_messages/list/') ?>" title="הודעות רשת" class="a-link">הודעות רשת</a>
             </li> 
 
+            <li class="bar-item <?= $view->a_class('content/find_in_sites/') ?>">
+                <a href="<?= inner_url('content/find_in_sites/') ?>" title="חפש ערך בכל האתרים" class="a-link">חפש ערך בכל האתרים</a>
+            </li> 
+
+            <h4>
+                שיגורי תשלום
+            </h4>
+
+            <li class="bar-item <?= $view->a_class('user_lounch_fee/list/') ?>">
+                <a href="<?= inner_url('user_lounch_fee/list/') ?>" title="שיגורי התשלום שלא שולמו" class="a-link">שיגורי התשלום שלא שולמו</a>
+            </li> 
+
             <h4>ניהול לידים</h4>
             <li class="bar-item <?= $view->a_class('biz_requests/list/') ?>">
                 <a href="<?= inner_url('biz_requests/list/?reset_filter=1') ?>" title="בקשות להצעת מחיר" class="a-link">בקשות להצעת מחיר</a>

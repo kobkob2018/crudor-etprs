@@ -243,6 +243,11 @@ h4{
     vertical-align: middle;
 }
 
+.flex-table .row.pale-00{
+    background: #dddddd;
+    color: gray;
+}
+
 .delete-item-x{
     text-decoration: none;
     font-family: sans-serif;
@@ -610,6 +615,19 @@ a.filter-a-clicker.selected{
 }
 .content-oldsys{
     font-size: 1.1em;
+}
+
+.custom-list-item{
+    margin: 10px 0px;
+    padding: 10px;
+}
+
+.custom-list-item.visible-00{
+    background: #dddddd;
+}
+
+.custom-list-item.active-00{
+    background: #ffa0a0;
 }
 
 @media only screen and (max-width: 900px) {

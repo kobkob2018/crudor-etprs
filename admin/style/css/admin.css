@@ -256,6 +256,11 @@ h4{
     vertical-align: middle;
 }
 
+.flex-table .row.pale-00{
+    background: #dddddd;
+    color: gray;
+}
+
 .delete-item-x{
     text-decoration: none;
     font-family: sans-serif;

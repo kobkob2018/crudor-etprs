@@ -231,20 +231,22 @@
     }
 
     protected static function handle_return_sms($call,$user_phone){
-      if($call['answer'] == "NO ANSWER" && $user_phone['misscall_sms_return'] == '1'){
+      if($call['answer'] == "NO ANSWER" && $user_phone['misscall_sms_return'] == '1' && $user_phone['misscall_sms'] != ''){
         $phone = $call['src'];
         $msg = $user_phone['misscall_sms'];
         $smsResult = Helper::send_sms($phone,$msg);
         if(strpos($smsResult, "OK") === false){
+          Helper::send_email("ilan@il-biz.com","Error with sms sending","misscall_sms_return to phone".$phone." with message: ".$msg);
           // todo: send some note to ilan
         }
       }
     
-      if($call['answer'] == "ANSWERED" && $user_phone['aftercall_sms_send'] == '1'){
+      if($call['answer'] == "ANSWERED" && $user_phone['aftercall_sms_send'] == '1' && $user_phone['aftercall_sms'] != ''){
         $phone = $call['src'];
         $msg = $user_phone['aftercall_sms'];
         $smsResult = Helper::send_sms($phone,$msg);
         if(strpos($smsResult, "OK") === false){
+          Helper::send_email("ilan@il-biz.com","Error with sms sending","aftercall_sms_send to phone".$phone." with message: ".$msg);
           // todo: send some note to ilan
         }
       }
