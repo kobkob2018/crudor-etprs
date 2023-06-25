@@ -66,7 +66,7 @@
 			<script type="text/javascript">
 				check_notifications_interval();
 			</script>
-		<?php else: ?>
+		<?php elseif(false): ?>
 			<a href = "<?= inner_url("userLogin/login/"); ?>">כניסה למערכת</a>
 		  	<a href = "<?= inner_url("userLogin/register/"); ?>">הרשמה</a>
 		  	<a href = "<?= inner_url(""); ?>">דף הבית</a>
