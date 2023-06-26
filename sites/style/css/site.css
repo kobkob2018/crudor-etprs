@@ -49,7 +49,7 @@ i.fa{
 .page-flex-top{
     display: flex;
     align-items: center;
-    padding: 0px 15px 5px;
+    padding: 5px 15px 5px;
     justify-content: space-between;
 }
 
@@ -77,7 +77,6 @@ i.fa{
 .fix-top-left{
     margin-right:auto;
     margin-left: 10px;
-    margin-top: 5px;
 }
 
 .fix-top-right{
@@ -225,9 +224,9 @@ i.fa{
 
 .top-search button {
     all: unset;
-    padding: 9px;
+    padding: 5px;
     cursor: pointer;
-    font-size: 17px;
+    font-size: 15px;
     margin-right: 6px;
     border: 2px solid;
     border-radius: 50%;
@@ -839,6 +838,10 @@ a.news-ticker-a-content{
 }
 
 @media only screen and (min-width: 890px) {
+
+    .page-flex-top{
+        flex-wrap: wrap;
+    }
     .wide-fix-top-right{
         margin-left:auto;
         margin-right: 10px;
