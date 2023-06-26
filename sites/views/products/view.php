@@ -64,7 +64,14 @@
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
+                <?php if($info['product']['price']): ?>
+                    <div class="box-price color-b">
+                        <?= $info['product']['price'] ?> ש"ח 
+                    </div> 
+                <?php endif; ?>
             </div>
+
+
             <script type="text/javascript">
                 document.addEventListener("DOMContentLoaded",()=>{                   
                     let currentThumb = false;
@@ -139,6 +146,13 @@
 
         <?php endif; ?>
         <div class="product-content">
+            <?php if($info['product']['price']): ?>
+                <div class="color-b">
+                    <b>מחיר: <?= $info['product']['price'] ?> ש"ח </b>
+                    
+                </div> 
+                <br/>
+            <?php endif; ?>
             <?= $info['product']['content'] ?>
             <div class="clear"></div>
         </div>
@@ -156,7 +170,7 @@
     <div class="product-list flex-row flex-wrap box-list">
         <?php foreach($info['product_list'] as $product): ?>
             <div class="product-box list-box">
-                <div class="box-title color-b">
+                <div class="box-title big-title">
                     <?= $product['label'] ?>
                 </div>
 
@@ -194,7 +208,7 @@
     <div class="product-list flex-row flex-wrap box-list">
         <?php foreach($info['more_products'] as $product): ?>
             <div class="product-box list-box">
-                <div class="box-title color-b">
+                <div class="box-title big-title">
                     <?= $product['label'] ?>
                 </div>
 

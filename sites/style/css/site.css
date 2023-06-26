@@ -369,8 +369,8 @@ a.nice-button{
   }
 
   .list-box .box-title{
-    background: #e2e2e2;
-    padding: 10px;  
+    padding: 5px;  
+    font-size: 14px;
   }
   .list-box .box-content{
     padding: 10px;
