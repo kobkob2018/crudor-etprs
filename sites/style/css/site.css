@@ -1024,7 +1024,7 @@ a.news-ticker-a-content{
         left: 8px;
         top: 73px;
         border-top-right-radius: 50%;
-        border-top-left-radius: 50%;
+        border-bottom-right-radius: 50%;
     }
     .acc-fix-door .fa.fa-wheelchair{
         font-size: 22px;
