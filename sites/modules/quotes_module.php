@@ -29,7 +29,7 @@
             $quote_cat['title_html'] = $this->clean_browser_type_html($quote_cat['title_html']);
             $quote_list = array();
             foreach($quotes_arr['list'] as $key=>$quote){
-                $quote['img_url'] = $this->controller->file_url_of('quote_img',$quote['image']);
+                $quote['img_url'] = $this->controller->file_url_of('quote_img',$quote['image'],'master');
                 $quote['html'] = $this->proccess_quote_html($quote_cat['custom_html'],$quote);
                 $quote_list[$key] = $quote;
             }

@@ -53,6 +53,7 @@
             'validation'=>'img',
             'img_max'=>'1000000',
             'upload_to'=>'quotes',
+            'assets_dir'=>'master',
             'name_file'=>'quote_{{row_id}}.{{ext}}'
         ),
 

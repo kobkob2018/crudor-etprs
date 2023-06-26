@@ -148,6 +148,7 @@
 
     public function upload_files($validate_result){
       $assets_dir = $this->controller_interface->get_assets_dir();
+      $master_assets_dir = $this->controller_interface->get_assets_dir('master');
       foreach($validate_result['upload_files'] as $field_key=>$field){
 
         $old_file_name = '';
@@ -158,6 +159,9 @@
         $new_file_name = $validate_result['fixed_values'][$field_key];
 
         $dir_path = $assets_dir['path'];
+        if(isset($field['assets_dir']) && $field['assets_dir'] == "master"){
+          $dir_path = $master_assets_dir['path'];
+        }
         /*
           To be alble to upload files to a website directory, make sure you have an avaiable directory with valid permissions
           1 - create a directory : domains/<YOUR DOMAIN>/public_html/assets
@@ -303,6 +307,11 @@
       $assets_dir = $this->controller_interface->get_assets_dir();
       if(!isset($this->fields_collection[$key])){
         return false;
+      }
+      $field = $this->fields_collection[$key];
+      
+      if(isset($field['assets_dir']) && $field['assets_dir'] == "master"){
+        $assets_dir = $this->controller_interface->get_assets_dir("master");
       }
       if(!isset($this->db_values[$key]) || $this->db_values[$key] == ''){
         return false;
