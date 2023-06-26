@@ -130,6 +130,7 @@ i.fa{
     max-width: 33%;
     width: 13%;
     height: 82px;
+    padding-top: 18px;
 }
 
 .hero-menu li a{
@@ -139,14 +140,18 @@ i.fa{
     font-weight: normal;
 }
 
+.hero-menu li a:hover{
+    text-decoration: underline;
+}
+
 .hero-a-icon{
-    height: 30px;
+    height: 23px;
     width: 100%;
 
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    margin: 12px 0px 5px;
+    margin-bottom: 7px;
     box-sizing: border-box;
 }
 
@@ -1131,5 +1136,10 @@ a.news-ticker-a-content{
 
     .list-box{
         min-width: 50%;
+      }
+
+      .hero-wrap{
+        background-size: contain;
+        padding-top: 34vw;
       }
 }
