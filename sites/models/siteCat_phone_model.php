@@ -7,6 +7,7 @@
             'display_class'=>'show-normal'
         );
         if(empty($cat_tree)){
+            $cat_phone_arr['display_class'] = 'hidden';
             return $cat_phone_arr;
         }
         
