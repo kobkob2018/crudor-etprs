@@ -138,6 +138,7 @@ i.fa{
     width: 100%;
     height: 100%;
     font-weight: normal;
+    font-size: 14px;
 }
 
 .hero-menu li a:hover{
@@ -1093,7 +1094,7 @@ a.news-ticker-a-content{
         
         text-align: center;
         padding: 9px;
-        margin-top: 4px;
+        margin-top: 2px;
         border-bottom-left-radius: 30px;
         border-bottom-right-radius: 30px;
         margin-right: 10px;
@@ -1101,7 +1102,6 @@ a.news-ticker-a-content{
         box-sizing: border-box;
         display: block;
         font-size: 18px;
-        font-weight: bold;
     }
 
     .hero-menu{
@@ -1115,6 +1115,9 @@ a.news-ticker-a-content{
         height: 82px;
     }
 
+    .hero-menu li a{
+        font-size: 12px;
+    }
     .hero-form-holder{
         margin: 50px auto;
         border-radius: 5px;
@@ -1126,7 +1129,9 @@ a.news-ticker-a-content{
 
       .hero-wrap{
         background-size: contain;
-        padding-top: 34vw;
-        margin-top: -44px;
+        margin-top: -41px;
+      }
+      .hero-bg-thin img{
+        width: 100%;
       }
 }
