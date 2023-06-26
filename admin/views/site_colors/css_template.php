@@ -6,7 +6,7 @@ a{
     color: <?= $info['colors']['a-color'] ?>;
 }
 
-.top-fix, a.biz-form-door-button-a{
+.bg-top, a.biz-form-door-button-a{
     background: <?= $info['colors']['top-fix-bg'] ?>;
     color: <?= $info['colors']['top-fix-color'] ?>;
 }

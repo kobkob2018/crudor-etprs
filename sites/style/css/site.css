@@ -41,14 +41,16 @@ i.fa{
     width: 100%;
     top: 0px;
     right: 0px;
-    max-height: 90px;
     overflow: hidden;
+    z-index: 2;
+    
+}
+
+.page-flex-top{
     display: flex;
     align-items: center;
     padding: 0px 15px 5px;
     justify-content: space-between;
-    z-index: 2;
-    flex-wrap: wrap;
 }
 
 .alt-page-fixed-top{
@@ -1001,7 +1003,7 @@ a.news-ticker-a-content{
 
 @media only screen and (max-width: 890px) {
 
-    .page-fixed-top{
+    .page-flex-top{
         padding: 0px 0px 5px;
     }
 
@@ -1014,7 +1016,7 @@ a.news-ticker-a-content{
     .top-menu-drawer{
         transition: 0.5s;
         position: fixed;
-        top: 60px;
+        top: 40px;
         background: inherit;
         right: 0px;
         max-height: 80vh;
@@ -1073,9 +1075,8 @@ a.news-ticker-a-content{
     }
 
     .biz-form-door-button-wrap{
-        width: 100%;
-        background: white;
-        border-bottom:10px solid white;
+        max-width: 80%;
+        margin: auto;
     }
     a.biz-form-door-button-a{
         
@@ -1090,32 +1091,6 @@ a.news-ticker-a-content{
         display: block;
         font-size: 18px;
         font-weight: bold;
-    }
-
-    .biz-form-door-button-wrap::before{
-        display: block;
-        content: "*";
-        background: white;
-        width: 19px;
-        height: 30px;
-        border-top-left-radius: 18px;
-        float: right;
-        margin-top: 9px;
-    }
-
-    .biz-form-door-button-wrap::after{
-        display: block;
-        content: "*";
-        background: white;
-        width: 19px;
-        height: 30px;
-        border-top-right-radius: 18px;
-        float: left;
-        margin-top: 9px;
-        position: absolute;
-        left: 0px;
-        bottom: 0px;
-        font-size: 0px;
     }
 
     .hero-menu{
@@ -1141,5 +1116,6 @@ a.news-ticker-a-content{
       .hero-wrap{
         background-size: contain;
         padding-top: 34vw;
+        margin-top: -40px;
       }
 }
