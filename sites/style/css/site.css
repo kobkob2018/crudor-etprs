@@ -1023,7 +1023,12 @@ a.news-ticker-a-content{
         padding: 5px 4px 5px 12px;
         left: 8px;
         top: 73px;
-        border-radius: 5px;
+        border-top-right-radius: 50%;
+        border-top-left-radius: 50%;
+    }
+    .acc-fix-door .fa.fa-wheelchair{
+        font-size: 22px;
+        width: 19px;
     }
     .top-menu-drawer{
         transition: 0.5s;
