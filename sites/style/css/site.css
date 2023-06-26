@@ -1129,9 +1129,9 @@ a.news-ticker-a-content{
 
       .hero-wrap{
         background-size: contain;
-        margin-top: -41px;
       }
       .hero-bg-thin img{
         width: 100%;
+        margin-top: -39px;
       }
 }
