@@ -41,7 +41,9 @@
         if($selected_cat){
             $gallery_list = siteGallery::get_cat_gallery_list($selected_cat);
         }
-
+        if(!$gallery_list){
+            $gallery_list = array();
+        }
         foreach($gallery_list as $gallery_key=>$galery){
             $gallery_list[$gallery_key]['selected_str'] = "";
         }
