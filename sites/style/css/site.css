@@ -83,6 +83,16 @@ i.fa{
     margin-right: 10px;
 }
 
+.acc-fix-door{
+    position: fixed;
+    z-index: 5;
+    background: gray;
+    padding: 5px 4px 5px 12px;
+    left: 8px;
+    top: 73px;
+    border-radius: 5px;
+}
+
 .cat-phone-gap{
     font-size: 30px;
 }
