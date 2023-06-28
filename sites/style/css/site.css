@@ -1138,4 +1138,12 @@ a.news-ticker-a-content{
         width: 100%;
         margin-top: -39px;
       }
+
+      #content_wrap{
+        overflow: auto;
+      }
+
+      #content_wrap .page-block{
+        overflow: auto;
+      }
 }
