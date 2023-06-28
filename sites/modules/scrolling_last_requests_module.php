@@ -26,7 +26,7 @@
                     if(!isset($city_names[$cat_id])){
                         $city_name = Cities::get_by_id($city_id,'label');
                         if(!$city_name){
-                            $city_name = "";
+                            $city_name = array("label"=>"");
                         }
                         $city_names[$city_id] = $city_name['label'];
                     }
