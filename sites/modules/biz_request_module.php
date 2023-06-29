@@ -17,6 +17,7 @@
             $return_array = $action_data['return_array'];
            
             if(!$this->validate_multiple_requests()){
+				$return_array['c-token'] = "904";
                 $return_array['html'] = $this->controller->include_ob_view('biz_form/request_success_mokup.php');               
                 return $return_array;
             }
@@ -30,11 +31,13 @@
             
 
             if(!$return_array['success']){
+				$return_array['c-token'] = "905";
                 return $return_array;
             }
 
             $recapcha_valid = $this->validate_recapcha();
             if(!$recapcha_valid){
+				$return_array['c-token'] = "906";
                 $return_array['html'] = $this->controller->include_ob_view('biz_form/request_success_mokup.php');               
                 return $return_array;
             }
@@ -304,6 +307,8 @@
         }
 
         protected function add_city_info_to_lead_info(){
+            $city_offsrings = Cities::simple_get_item_offsprings($this->lead_info['city_id'],"id");
+            $this->lead_info['city_offsrings'] = $city_offsrings;
             $city_tree = Cities::simple_get_item_parents_tree($this->lead_info['city_id'],"*");
             $this->lead_info['city_tree'] = $city_tree;
 

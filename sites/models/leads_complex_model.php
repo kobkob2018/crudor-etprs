@@ -9,7 +9,9 @@
         $lead_info = self::get_category_defaults($lead_info);
         $lead_info['cat_id_arr'] = self::get_tree_id_arr($lead_info['cat_tree']);
         $lead_info['city_id_arr'] = self::get_tree_id_arr($lead_info['city_tree']);
-
+        foreach($lead_info['city_offsrings'] as $city){
+            $lead_info['city_id_arr'][] = $city['id'];
+        }
         
         $optional_user_ids = self::get_cat_user_ids($lead_info);
         

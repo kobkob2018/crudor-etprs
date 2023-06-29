@@ -707,7 +707,10 @@ a.news-ticker-a-content{
 .quote-galley .quote-link a{
     margin: auto;
 }
-
+.quote-list-wrap .flex-table{
+    display: table;
+    width: 100%;
+}
 .quote-list-wrap .flex-table-th .col{
     border-bottom:none;
     padding: 5px 10px 5px;
