@@ -406,6 +406,7 @@ a.nice-button{
     border-radius: 5px; 
     box-shadow: 12px 12px 14px #e3e3e3;
     position: relative;
+    margin-bottom: 30px;
  }
  
  .biz-form-wrap .biz-form{
