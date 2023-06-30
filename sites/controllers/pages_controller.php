@@ -26,7 +26,9 @@
       $this->data['content_blocks'] = SiteBlocks::get_current_page_blocks();
       $page_style = SitePage_style::get_current_page_style();
       $this->data['page_style'] = $page_style;
+      $this->data['page_layout'] = '0';
       if($page_style){
+        $this->data['page_layout'] = $page_style['page_layout'];
         if($page_style['page_layout'] == '1'){
           $this->set_layout('landing_layout');
           $this->set_body('landing_body');
