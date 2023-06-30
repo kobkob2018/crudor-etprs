@@ -179,6 +179,9 @@ relocateBizForm = ()=>{
     if(!formHolder){
         return;
     }
+    if(!formHolder.classList.contains("alt-style")){
+        formHolder.classList.add("hero-form-style");
+    }
     if(window.innerWidth < 890){
         if(formHolder.classList.contains("wide-only")){
             return;
