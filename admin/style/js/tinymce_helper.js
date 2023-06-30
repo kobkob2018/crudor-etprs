@@ -19,21 +19,35 @@ function init_tinymce(selector_identifier,media_uploader_url, media_library_url)
 
     global_media_library_url = media_library_url;
     tinymce.init({
-/*
+        /*
+        setup: (ed) => {
+        ed.ui.registry.addButton('mybutton', {
+            title: 'fix-video', 
+            class: 'fix-video', 
+            image: 'MyCoolBtn.png', 
+            onclick: function() { 
+              // Add your own code to execute something on click 
+              ed.focus();
+              ed.selection.setContent('<tag>' + ed.selection.getContent() + '</tag>');
+            }
+          });
+        },
+        */
+
         setup: (editor) => {
-            editor.ui.registry.addButton('kovaDiv', {
-                text: '(:::)',
+            editor.ui.registry.addButton('videoWrap', {
+                text: '(fix-video)',
                 onAction: function (_) {
                     editor.focus();
-                    editor.selection.setContent('<div class="kova">' + editor.selection.getContent() + '</div>');
+                    editor.selection.setContent('<div class="video-container">' + editor.selection.getContent() + '</div>');
                 }
             });
           },
 
-          */
+          
         selector: selector_identifier,
-        plugins: 'image media mediaembed code link lists codesample advlist autosave emoticons fullscreen help insertdatetime nonbreaking preview searchreplace table' ,
-        toolbar: ['undo redo | image media code align link hr insertdatetime kovaDiv | numlist bullist table',
+        plugins: 'image media code link lists codesample advlist autosave emoticons fullscreen help insertdatetime nonbreaking preview searchreplace table' ,
+        toolbar: ['undo redo | image media videoWrap code align link hr insertdatetime | numlist bullist table',
             'bold italic underline blocks | forecolor backcolor fontsize fontfamily styles | restoredraft preview | nonbreaking codesample emoticons | fullscreen help'],
         contextmenu: "link image inserttable | cell row column deletetable",
         directionality : "rtl",
