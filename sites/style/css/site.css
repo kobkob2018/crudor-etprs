@@ -110,16 +110,6 @@ i.fa{
     font-size: 20px;
 }
 
-.hero-wrap{
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: black;
-    min-height: 36vw;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
 .hero-menu{
     display: flex;
     margin-top: auto;
@@ -278,6 +268,10 @@ i.fa{
 
 .page-block{
     margin-bottom: 31px;
+}
+
+.page-block.no-margin{
+    margin-bottom: 0px;
 }
 
 .c-block h2{
@@ -1136,14 +1130,6 @@ a.news-ticker-a-content{
 
     .list-box{
         min-width: 50%;
-      }
-
-      .hero-wrap{
-        background-size: contain;
-      }
-      .hero-bg-thin img{
-        width: 100%;
-        margin-top: -39px;
       }
 
       #content_wrap{
