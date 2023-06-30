@@ -104,7 +104,7 @@ body.contrastOn .top-fix,body.contrastOn .big-title{
     border-bottom:1px solid black;
 }
 
-body.contrastOn .color-button, body.contrastOn .color-button a,body.contrastOn a.color-button{
+body.contrastOn .color-button, body.contrastOn .color-button a,body.contrastOn a.color-button,body.contrastOn a.color-button i{
     background: black !important;
     color: white !important;
 }
