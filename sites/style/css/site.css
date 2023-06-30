@@ -401,11 +401,14 @@ a.nice-button{
   .biz-form-wrap{
     border: 1px solid #e3e3e3;
     border-radius: 5px; 
-    box-shadow: 12px 12px 14px #e3e3e3;
     position: relative;
     margin-bottom: 30px;
  }
  
+.left-bar .biz-form-wrap{
+    box-shadow: 12px 12px 14px #e3e3e3;
+}
+
  .biz-form-wrap .biz-form{
      padding: 0px ;
  }
