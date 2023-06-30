@@ -19,20 +19,6 @@ function init_tinymce(selector_identifier,media_uploader_url, media_library_url)
 
     global_media_library_url = media_library_url;
     tinymce.init({
-        /*
-        setup: (ed) => {
-        ed.ui.registry.addButton('mybutton', {
-            title: 'fix-video', 
-            class: 'fix-video', 
-            image: 'MyCoolBtn.png', 
-            onclick: function() { 
-              // Add your own code to execute something on click 
-              ed.focus();
-              ed.selection.setContent('<tag>' + ed.selection.getContent() + '</tag>');
-            }
-          });
-        },
-        */
 
         setup: (editor) => {
             editor.ui.registry.addButton('videoWrap', {

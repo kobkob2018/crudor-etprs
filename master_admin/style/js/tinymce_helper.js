@@ -16,12 +16,25 @@ function update_from_media_library(file_name){
 }
 
 function init_tinymce(selector_identifier,media_uploader_url, media_library_url){
+
     global_media_library_url = media_library_url;
     tinymce.init({
+
+        setup: (editor) => {
+            editor.ui.registry.addButton('videoWrap', {
+                text: '(fix-video)',
+                onAction: function (_) {
+                    editor.focus();
+                    editor.selection.setContent('<div class="video-container">' + editor.selection.getContent() + '</div>');
+                }
+            });
+          },
+
+          
         selector: selector_identifier,
-        plugins: 'image code textcolor link colorpicker lists codesample advlist autosave contextmenu emoticons fullscreen help hr insertdatetime nonbreaking paste preview print searchreplace table' ,
-        toolbar: ['undo redo | image code link hr insertdatetime | numlist bullist table',
-            'bold italic underline blocks | forecolor backcolor fontsize fontfamily styles | restoredraft paste preview print | nonbreaking codesample emoticons | fullscreen help'],
+        plugins: 'image media code link lists codesample advlist autosave emoticons fullscreen help insertdatetime nonbreaking preview searchreplace table' ,
+        toolbar: ['undo redo | image media videoWrap code align link hr insertdatetime | numlist bullist table',
+            'bold italic underline blocks | forecolor backcolor fontsize fontfamily styles | restoredraft preview | nonbreaking codesample emoticons | fullscreen help'],
         contextmenu: "link image inserttable | cell row column deletetable",
         directionality : "rtl",
         insertdatetime_dateformat: "%Y-%m-%d",
@@ -30,8 +43,13 @@ function init_tinymce(selector_identifier,media_uploader_url, media_library_url)
         content_style: 'img {max-width: 100%; height:auto;}',
         file_picker_callback: function(callback, value, meta) {
             return tiny_mce_callback_handler.init(callback, value, meta);
-        }
-        
+        },
+        image_class_list: [
+            { title: 'None', value: '' },
+            { title: 'Left', value: 'leftish-image' },
+            { title: 'Right', value: 'rightish-imag' }
+        ],
+        content_style: "body .leftish-image{ float: left; } body .rightish-image{ float: right; }"
     });
 
 }
