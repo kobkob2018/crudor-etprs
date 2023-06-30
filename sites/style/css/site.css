@@ -437,21 +437,6 @@ a.nice-button{
     position: relative;
 }
 
-.hero-form-holder .biz-form-bg{
-    background: #ffffffb0;
-}
-
-.hero-form-holder .request-success-wrap{
-    background: #ffffffb0;
-    padding: 20px;
-}
-
-.hero-form-holder .submit-wrap input{
-    display: inline-block;
-    width: auto;
-    padding: 10px 100px;
-}
-
 .form-group .form-input{
     font-size: 18px;
     line-height: 20px;
@@ -932,7 +917,20 @@ a.news-ticker-a-content{
     }
 
 
-
+    .hero-form-holder .biz-form-bg{
+        background: #ffffffb0;
+    }
+    
+    .hero-form-holder .request-success-wrap{
+        background: #ffffffb0;
+        padding: 20px;
+    }
+    
+    .hero-form-holder .submit-wrap input{
+        display: inline-block;
+        width: auto;
+        padding: 10px 100px;
+    }
 
 
     .hero-form-holder .biz-form-wrap{
@@ -1122,10 +1120,6 @@ a.news-ticker-a-content{
 
     .hero-menu li a{
         font-size: 12px;
-    }
-    .hero-form-holder{
-        margin: 50px auto;
-        border-radius: 5px;
     }
 
     .list-box{
