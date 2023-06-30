@@ -16,6 +16,7 @@ function update_from_media_library(file_name){
 }
 
 function init_tinymce(selector_identifier,media_uploader_url, media_library_url){
+
     global_media_library_url = media_library_url;
     tinymce.init({
 /*
@@ -31,8 +32,8 @@ function init_tinymce(selector_identifier,media_uploader_url, media_library_url)
 
           */
         selector: selector_identifier,
-        plugins: 'image code link lists codesample advlist autosave emoticons fullscreen help insertdatetime nonbreaking preview searchreplace table' ,
-        toolbar: ['undo redo | image code align link hr insertdatetime kovaDiv | numlist bullist table',
+        plugins: 'image media mediaembed code link lists codesample advlist autosave emoticons fullscreen help insertdatetime nonbreaking preview searchreplace table' ,
+        toolbar: ['undo redo | image media code align link hr insertdatetime kovaDiv | numlist bullist table',
             'bold italic underline blocks | forecolor backcolor fontsize fontfamily styles | restoredraft preview | nonbreaking codesample emoticons | fullscreen help'],
         contextmenu: "link image inserttable | cell row column deletetable",
         directionality : "rtl",
