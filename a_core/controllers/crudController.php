@@ -163,6 +163,9 @@
         if($validate_result['success']){
             $fixed_values = $validate_result['fixed_values'];
             $row_id = $this->create_item($form_handler->fix_values_for_update($fixed_values));
+            if(!$row_id){
+                return;
+            }
             $fixed_row_values = array();
             foreach($fixed_values as $key=>$value){
                 $fixed_row_value = str_replace('{{row_id}}',$row_id,$value);

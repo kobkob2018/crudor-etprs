@@ -1,6 +1,6 @@
 <?php
 class Link_phone_switchboardController extends CrudController{
-
+//this is the controller who recives calls sent directly from link, at real time
     protected function handle_access($action){
         $client_ip = $_SERVER['REMOTE_ADDR'];
         if($client_ip != '62.128.52.101' && $client_ip != '62.90.6.141' && $client_ip != '82.166.145.101'){
