@@ -3,3 +3,5 @@
 <div id="page_form_wrap" class="focus-box form-gen page-form">
 	<?php $this->include_view('form_builder/form.php'); ?>
 </div>
+
+<a href="<?= inner_url("site_migration/llist/") ?>">לחץ כאן לייבוא דפים ממערכת ישנה</a>
