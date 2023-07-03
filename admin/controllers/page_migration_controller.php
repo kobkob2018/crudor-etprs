@@ -7,12 +7,16 @@
         $filter_arr = $this->get_base_filter();
         $site_migration = Site_migration::find($filter_arr);      
         $this->data['site_migration'] = $site_migration;
-        if(empty($site_migration)){
-            return $this->redirect_to(inner_url("site_migration/add/"));
+        if(!$site_migration){
+          SystemMessages::add_err_message("יש לבחור אתר לייבוא");
+          return $this->redirect_to(inner_url("site_migration/list/"));
         }
         else{
-            $site_migration_id = $site_migration[0]['id'];
-            return $this->redirect_to(inner_url("site_migration/edit/?row_id=$site_migration_id"));
+            $site_migration_id = $site_migration['id'];
+            $migrate_page_list = Page_migration::get_old_site_page_list($site_migration);
+            foreach($migrate_page_list as $migrate_page){
+              print_help($migrate_page['name']);
+            }
         }
     }
 
