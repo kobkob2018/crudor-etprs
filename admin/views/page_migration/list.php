@@ -25,7 +25,7 @@
         <div class="col"></div>
     </div>
     <?php foreach($this->data['migrate_page_list'] as $migrate_page): ?>
-        <div class="table-tr row is-deleted-0<?= $migrate_page['deleted'] ?>">
+        <div class="table-tr row is-deleted-0<?= $migrate_page['deleted'] ?> has-301-0<?= $migrate_page['redierct_301'] == ""? "1" : "0" ?>">
             <div class="col col-tiny">
                 <?= $migrate_page['id'] ?>
                 <?php if($migrate_page['deleted']): ?>
@@ -39,7 +39,7 @@
                 <?= $migrate_page['hide_page'] ?>
             </div>
             <div class="col">
-                <?= $migrate_page['redierct_301'] ?>
+                <?= $migrate_page['redierct_301']== "" ? "" : "יש הפנייה" ?>
             </div>
             <div class="col">
                 <?php if($migrate_page['migrated_page']['migrated']): ?>
@@ -79,5 +79,7 @@
 
 
 <style type="text/css">
+    .has-301-01{{background:orange;}
     .is-deleted-01{background:red;}
+
 </style>
