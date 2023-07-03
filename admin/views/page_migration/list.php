@@ -1,5 +1,5 @@
 <h3>ייבוא עמודים ממערכת ישנה</h3>
-
+<?php $this->include_view("site_migration/header.php"); ?>
 <div class="focus-box">
 
     <b>דומיין:</b> <?= $this->data['site_migration']['old_domain'] ?> <br/>
