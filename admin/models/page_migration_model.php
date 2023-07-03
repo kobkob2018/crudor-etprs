@@ -61,11 +61,11 @@
 
         foreach($content_pages as $key=>$content_page){
             $migrated_page = array(
-                'migrated'=>"no",
+                'migrated'=>false,
                 'id'=>'',
                 'page_id'=>'',
                 'version'=>'',
-                'has_form'=>'no',
+                'has_form'=>false,
             );
             if(isset($migrated_pages_indexed[$content_page['id']])){
                 $migrated_page = $migrated_pages_indexed[$content_page['id']];

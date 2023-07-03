@@ -14,10 +14,9 @@
         else{
             $site_migration_id = $site_migration['id'];
             $migrate_page_list = Page_migration::get_old_site_page_list($site_migration);
-            foreach($migrate_page_list as $migrate_page){
-              print_help($migrate_page['name'].", ".$migrate_page['cat_str']);
-            }
+            $this-data['migrate_page_list'] = $migrate_page_list;
         }
+        return $this->include_view("page_migration/list/");
     }
 
     protected function get_base_filter(){
