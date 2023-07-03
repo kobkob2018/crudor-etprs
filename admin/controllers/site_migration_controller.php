@@ -92,7 +92,19 @@
     }
 
     protected function update_item($item_id,$update_values){
-      return Site_migration::update($item_id,$update_values);
+
+
+        $old_domain = $update_values['old_domain'];
+        $old_site_data = Site_migration::get_old_site_data_by_domain($old_domain);
+        if(!$old_site_data){
+            SystemMessages::add_err_message("לא נמצא אתר עם הדומיין שציינת במערכת הישנה");
+            $this->eject_redirect();
+            return false;
+        }
+        $update_values['old_unk'] = $old_site_data['unk'];
+        $update_values['old_id'] = $old_site_data['site_id'];
+        $update_values['old_title'] = $old_site_data['title'];
+        return Site_migration::update($item_id,$update_values);
     }
 
     protected function get_priority_space($filter_arr, $item_to_id){

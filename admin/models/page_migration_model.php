@@ -21,6 +21,7 @@
 		LEFT JOIN estimate_miniSite_defualt_block form ON form.type= page.id
 		WHERE page.unk = :unk 
         AND page.deleted = '0' 
+        LIMIT 200 
         ";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('unk'=>$site_migration['old_unk']));
