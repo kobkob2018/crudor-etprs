@@ -79,7 +79,7 @@
 
 
 <style type="text/css">
-    .has-301-01{{background:orange;}
+    .has-301-01{background:orange;}
     .is-deleted-01{background:red;}
 
 </style>
