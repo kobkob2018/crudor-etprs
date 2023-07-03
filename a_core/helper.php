@@ -182,6 +182,9 @@ function wigt($val){
 	return iconv("UTF-8","windows-1255",$val);
 }
 
+function utgt($val){
+	return iconv("windows-1255", "UTF-8", $val);
+}
 
 function system_path($file_path){
     global $init_request;

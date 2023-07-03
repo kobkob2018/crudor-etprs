@@ -29,13 +29,14 @@
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('domain'=>$domain));
         $result = $req->fetch();
-        
+
         if($result){
+			$title = utgt($result['name']);
             return array(
                 'domain'=>$result['domain'],
                 'unk'=>$result['unk'],
                 'site_id'=>$result['id'],
-                'title'=>$result['name']
+                'title'=>$title
             );
         }
         return false;
