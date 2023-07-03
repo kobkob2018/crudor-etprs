@@ -12,17 +12,34 @@
 <div class="items-table flex-table">
     <div class="table-th row">
         <div class="col col-tiny">מספר דף</div>
+        <div class="col col-tiny">type</div>
+        <div class="col col-tiny">נסתר</div>
+        <div class="col col-tiny">redierct_301</div>
+        
         <div class="col">מצב ייבוא</div>
         <div class="col">כותרת</div>
         <div class="col">קטגוריה</div>
+        <div class="col">תוכן נוסף בטופס</div>
         <div class="col">גרסת ייבוא</div>
-        <div class="col">יש טופס</div>
+        <div class="col">הועתק טופס</div>
         <div class="col"></div>
     </div>
     <?php foreach($this->data['migrate_page_list'] as $migrate_page): ?>
-        <div class="table-tr row">
+        <div class="table-tr row is-deleted-0<?= $migrate_page['deleted'] ?>">
             <div class="col col-tiny">
                 <?= $migrate_page['id'] ?>
+                <?php if($migrate_page['deleted']): ?>
+                    <b class="red">מחוק!</b>
+                <?php endif; ?>
+            </div>
+            <div class="col col-tiny">
+                <?= $migrate_page['type'] ?>
+            </div>
+            <div class="col col-tiny">
+                <?= $migrate_page['hide_page'] ?>
+            </div>
+            <div class="col">
+                <?= $migrate_page['redierct_301'] ?>
             </div>
             <div class="col">
                 <?php if($migrate_page['migrated_page']['migrated']): ?>
@@ -37,6 +54,13 @@
             <div class="col">
                 <?= $migrate_page['cat_str'] ?>
             </div>
+            <div class="col">
+                <?php if($migrate_page['form_content'] != ""): ?>
+                    קיים תוכן נוסף
+                <?php endif; ?>
+            </div>
+            
+
             <div class="col">
                 <?= $migrate_page['migrated_page']['version'] ?>
             </div>
@@ -54,4 +78,6 @@
 </div>
 
 
-
+<style type="text/css">
+    .is-deleted-01{background:red;}
+</style>
