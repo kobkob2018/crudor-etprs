@@ -4,4 +4,4 @@
 	<?php $this->include_view('form_builder/form.php'); ?>
 </div>
 
-<a href="<?= inner_url("site_migration/llist/") ?>">לחץ כאן לייבוא דפים ממערכת ישנה</a>
+<a href="<?= inner_url("site_migration/list/") ?>">לחץ כאן לייבוא דפים ממערכת ישנה</a>
