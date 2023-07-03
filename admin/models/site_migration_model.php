@@ -25,14 +25,17 @@
 
     public static function get_old_site_data_by_domain($domain){
         $ilbiz_db = self::getIlbizDb();
-        var_dump($ilbiz_db);
-        exit();
-        if($domain == "yes"){
+        $sql = "select id, domain, unk, title from users WHERE domain = :domain";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('domain'=>$domain));
+        $result = $req->fetchAll();
+        
+        if($result){
             return array(
-                'domain'=>$domain,
-                'unk'=>"12345",
-                'site_id'=>'6',
-                'title'=>'בךה בךה בלה '
+                'domain'=>$result['domain'],
+                'unk'=>$result['unk'],
+                'site_id'=>$result['id'],
+                'title'=>$result['title']
             );
         }
         return false;
