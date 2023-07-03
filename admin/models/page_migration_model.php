@@ -29,7 +29,7 @@
             foreach($result as $content_page){
                 foreach($formated_params as $param)
                 $content_page[$param] = utgt($content_page[$param]);
-                $content_pages[] = $content_page
+                $content_pages[] = $content_page;
             }
         }
 
