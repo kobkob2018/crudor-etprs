@@ -28,7 +28,7 @@
         $sql = "select id, domain, unk, name from users WHERE domain = :domain";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('domain'=>$domain));
-        $result = $req->fetchAll();
+        $result = $req->fetch();
         
         if($result){
             return array(
