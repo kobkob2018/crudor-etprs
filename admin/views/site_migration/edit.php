@@ -6,7 +6,6 @@
         <b>מספר:</b> <?= $this->data['item_info']['old_id'] ?> <br/>
         <b>unk:</b> <?= $this->data['item_info']['old_unk'] ?> <br/>
         <b>כותרת:</b> <?= $this->data['item_info']['old_title'] ?> <br/>
-
         
     </div>
     <hr/>
