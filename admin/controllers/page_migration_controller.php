@@ -16,7 +16,7 @@
             $migrate_page_list = Page_migration::get_old_site_page_list($site_migration);
             $this->data['migrate_page_list'] = $migrate_page_list;
         }
-        return $this->include_view("page_migration/list/");
+        return $this->include_view("page_migration/list.php");
     }
 
     protected function get_base_filter(){
