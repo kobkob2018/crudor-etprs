@@ -19,7 +19,7 @@
         $ilbiz_db = self::getIlbizDb();
         $sql = "select * from content_pages WHERE unk = :unk";
         $req = $ilbiz_db->prepare($sql);
-        $req->execute(array('domain'=>$domain));
+        $req->execute(array('unk'=>$site_migration['unk']));
         $result = $req->fetchAll();
         $content_pages = array();
         $formated_params = array(
