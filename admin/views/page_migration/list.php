@@ -2,7 +2,7 @@
 
 <div class="focus-box">
 
-    <b>דומיין:</b> <?= $this->data['site_migration']['domain'] ?> <br/>
+    <b>דומיין:</b> <?= $this->data['site_migration']['old_domain'] ?> <br/>
     <b>מספר:</b> <?= $this->data['site_migration']['old_id'] ?> <br/>
     <b>unk:</b> <?= $this->data['site_migration']['old_unk'] ?> <br/>
     <b>כותרת:</b> <?= $this->data['site_migration']['old_title'] ?> <br/>
@@ -32,20 +32,22 @@
                 <?php endif; ?>
             </div>
             <div class="col">
-                <?= $migrate_page['migrated_page']['name'] ?>
+                <?= $migrate_page['name'] ?>
             </div>
             <div class="col">
-                <?= $migrate_page['migrated_page']['cat_str'] ?>
+                <?= $migrate_page['cat_str'] ?>
             </div>
             <div class="col">
-                <?= $migrate_page['migrated_page']['migrated_page']['version'] ?>
+                <?= $migrate_page['migrated_page']['version'] ?>
             </div>
             <div class="col">
-                <?= $migrate_page['migrated_page']['migrated_page']['has_form'] ?>
+                <?= $migrate_page['migrated_page']['has_form'] ?>
             </div>
             
             <div class="col">
-                <a href = "<?= inner_url('page_migration/delete_migration/') ?>?row_id=<?= $migrate_page['id'] ?>" title="מחק">מחק</a>
+                <?php if($migrate_page['migrated_page']['migrated']): ?>
+                    <a href = "<?= inner_url('page_migration/delete_migration/') ?>?row_id=<?= $migrate_page['migrate_page']['id'] ?>" title="מחק">מחק</a>
+                <?php endif; ?>
             </div>
         </div>
     <?php endforeach; ?>
