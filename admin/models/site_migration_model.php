@@ -35,7 +35,7 @@
                 'domain'=>$result['domain'],
                 'unk'=>$result['unk'],
                 'site_id'=>$result['id'],
-                'title'=>$result['title']
+                'title'=>$result['name']
             );
         }
         return false;
