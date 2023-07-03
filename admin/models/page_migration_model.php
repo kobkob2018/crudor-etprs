@@ -40,7 +40,7 @@
         foreach($content_pages as $key=>$content_page){
             $migrated_page = array(
                 'migrated'=>"no",
-                'id'=>''
+                'id'=>'',
                 'page_id'=>'',
                 'version'=>'',
                 'has_form'=>'no',
