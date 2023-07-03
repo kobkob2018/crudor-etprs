@@ -25,7 +25,7 @@
 
     public static function get_old_site_data_by_domain($domain){
         $ilbiz_db = self::getIlbizDb();
-        $sql = "select id, domain, unk, title from users WHERE domain = :domain";
+        $sql = "select id, domain, unk, name from users WHERE domain = :domain";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('domain'=>$domain));
         $result = $req->fetchAll();
