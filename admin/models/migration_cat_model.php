@@ -35,6 +35,7 @@
 				
                 $cat['deep'] = $deep;
                 $cat_tree[] = $cat;
+                $cat_tree = self::get_old_cat_tree($cat['id'],$cat_tree,$deep);
             }  
         }
 		
