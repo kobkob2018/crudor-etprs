@@ -4,7 +4,7 @@
 <div class="items-table flex-table">
     <div class="table-th row">
         <div class="col col-tiny">#</div>
-        <div class="col col-tiny">שם</div>
+        <div class="col">שם</div>
 
         <div class="col col-tiny">סטטוס</div>
         <div class="col"></div>
@@ -20,8 +20,10 @@
 					<b class="red">לא פעיל!</b>
 				<?php endif; ?>
             </div>
-            <div class="col col-tiny">
-                <?= $cat['cat_name'] ?>
+            <div class="col">
+                <div class="deep-0<?=  $cat['deep'] ?>">
+                    <?= $cat['cat_name'] ?>
+                </div>
             </div>
             <div class="col col-tiny">
                 <?= $cat['status'] ?>
@@ -38,5 +40,7 @@
 
 <style type="text/css">
 	.is-hidden-01{background: gray; }
-
+    .deep-02{padding-right: 10px;}
+    .deep-03{padding-right: 20px;}
+    .deep-04{padding-right: 30px;}
 </style>
