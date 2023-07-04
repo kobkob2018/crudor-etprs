@@ -1,11 +1,11 @@
 <h3>ייבוא עמודים ממערכת ישנה</h3>
-<?php $this->include_view("migration_site/header.php"); ?>
+<?php $this->include_view("site_migration/header.php"); ?>
 <div class="focus-box">
 
-    <b>דומיין:</b> <?= $this->data['migration_site']['old_domain'] ?> <br/>
-    <b>מספר:</b> <?= $this->data['migration_site']['old_id'] ?> <br/>
-    <b>unk:</b> <?= $this->data['migration_site']['old_unk'] ?> <br/>
-    <b>כותרת:</b> <?= $this->data['migration_site']['old_title'] ?> <br/>
+    <b>דומיין:</b> <?= $this->data['site_migration']['old_domain'] ?> <br/>
+    <b>מספר:</b> <?= $this->data['site_migration']['old_id'] ?> <br/>
+    <b>unk:</b> <?= $this->data['site_migration']['old_unk'] ?> <br/>
+    <b>כותרת:</b> <?= $this->data['site_migration']['old_title'] ?> <br/>
 
 </div>
 
@@ -60,7 +60,7 @@
             
             <div class="col">
                 <?php if($migrate_page['migrated_page']['migrated']): ?>
-                    <a href = "<?= inner_url('migration_page/delete_migration/') ?>?row_id=<?= $migrate_page['migrate_page']['id'] ?>" title="מחק">מחק</a>
+                    <a href = "<?= inner_url('page_migration/delete_migration/') ?>?row_id=<?= $migrate_page['migrate_page']['id'] ?>" title="מחק">מחק</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -70,4 +70,5 @@
 
 <style type="text/css">
 	.is-hidden-01{background: gray; }
+
 </style>
