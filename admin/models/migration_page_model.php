@@ -3,7 +3,7 @@
 
     private static $ilbiz_db = NULL;
 
-    protected static $main_table = 'page_migration';
+    protected static $main_table = 'migration_page';
 
     protected static function getIlbizDb() {
         if (!isset(self::$ilbiz_db)) {

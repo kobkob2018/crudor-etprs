@@ -60,7 +60,7 @@
             
             <div class="col">
                 <?php if($migrate_page['migrated_page']['migrated']): ?>
-                    <a href = "<?= inner_url('page_migration/delete_migration/') ?>?row_id=<?= $migrate_page['migrate_page']['id'] ?>" title="מחק">מחק</a>
+                    <a href = "<?= inner_url('migration_page/delete_migration/') ?>?row_id=<?= $migrate_page['migrate_page']['id'] ?>" title="מחק">מחק</a>
                 <?php endif; ?>
             </div>
         </div>
