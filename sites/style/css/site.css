@@ -324,7 +324,9 @@ a.nice-button{
 .left-bar .page-block:first h5{
     margin-top: 0px;
 }
-
+.left-bar .leftbar-item{
+    margin-bottom: 15px;
+}
 .right-bar-banner{
     border: 1px solid #a4a4bd;
     padding: 4px;

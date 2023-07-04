@@ -1,6 +1,6 @@
 <?php foreach($info['net_banners'] as $banner): ?>
     
-    <div class="leftbar-net-banner net-banner">
+    <div class="leftbar-net-banner net-banner leftbar-item">
         <img src="<?= inner_url("banner_count/views/") ?>?banner_id=<?= $banner['id'] ?>" style="display:none" />
         <?php if($banner['image'] != ''): ?>
             <a href = "javascript://" class="banner-clicker" data-link="<?= add_url_params($banner['goto_href'],array('banner_id'=>$banner['id'])) ?>" data-count_url="<?= inner_url("banner_count/clicks/") ?>?banner_id=<?= $banner['id'] ?>">

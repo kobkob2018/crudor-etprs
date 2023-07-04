@@ -66,7 +66,23 @@
                 $info['biz_form']['cat_id'] = $custom_cat;
             }
 
-            $this->include_view('biz_form/init_form.php',$info);
+            $cat_id = $info['biz_form']['cat_id'];
+
+            $cat_tree = Biz_categories::get_item_parents_tree($cat_id,'id, googleADSense');
+            $googleADSense = false;
+            foreach($cat_tree as $cat){
+                if($cat['googleADSense'] != ""){
+                    $googleADSense = $cat['googleADSense'];
+                }
+            }
+
+            if($googleADSense){
+                $info = array('googleADSense'=>$googleADSense);
+                $this->include_view('biz_form/googleADSense.php',$info);
+            }
+            else{
+                $this->include_view('biz_form/init_form.php',$info);
+            }
         }
 
 	}
