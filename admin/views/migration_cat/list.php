@@ -40,7 +40,7 @@
 
 <style type="text/css">
 	.is-hidden-01{background: gray; }
-    .deep-02{padding-right: 50px;}
-    .deep-03{padding-right: 100px;}
-    .deep-04{padding-right: 150px;}
+    .deep-02{padding-right: 50px; background: #ffff11;}
+    .deep-03{padding-right: 100px; background: #ffff71;}
+    .deep-04{padding-right: 150px;background: #ffffa1;}
 </style>
