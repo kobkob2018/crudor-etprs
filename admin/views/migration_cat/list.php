@@ -1,5 +1,5 @@
 <h3>התאמת קטגוריות ממערכת ישנה</h3>
-<?php $this->include_view("site_migration/header.php"); ?>
+<?php $this->include_view("migration_site/header.php"); ?>
 
 <div class="items-table flex-table">
     <div class="table-th row">

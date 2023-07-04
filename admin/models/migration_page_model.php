@@ -13,7 +13,7 @@
         return self::$ilbiz_db;
     }
 
-    public static function get_old_site_page_list($site_migration){
+    public static function get_old_site_page_list($migration_site){
 
 
         $ilbiz_db = self::getIlbizDb();
@@ -27,7 +27,7 @@
 		
         ";
         $req = $ilbiz_db->prepare($sql);
-        $req->execute(array('unk'=>$site_migration['old_unk']));
+        $req->execute(array('unk'=>$migration_site['old_unk']));
         $result = $req->fetchAll();
         $content_pages = array();
         $formated_params = array(
@@ -61,7 +61,7 @@
             }
         }
 		
-        $migrated_pages = self::get_list(array('site_id'=>$site_migration['site_id']));
+        $migrated_pages = self::get_list(array('site_id'=>$migration_site['site_id']));
 
         $migrated_pages_indexed = Helper::eazy_index_arr_by('old_page_id',$migrated_pages);
 
