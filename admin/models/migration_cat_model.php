@@ -17,7 +17,7 @@
 
         $deep++;
         $ilbiz_db = self::getIlbizDb();
-        $sql = "SELECT cat_name, id, father FROM biz_categories WHERE status != '9' AND googleADSense = '' AND father = '$cat_id'";
+        $sql = "SELECT cat_name, id, father FROM biz_categories WHERE status != '9' AND googleADSense = '' AND father = :cat_id";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('cat_id'=>$cat_id));
         $result = $req->fetchAll();
