@@ -1,9 +1,9 @@
 <?php
-  class Page_migration extends TableModel{
+  class Migration_page extends TableModel{
 
     private static $ilbiz_db = NULL;
 
-    protected static $main_table = 'page_migration';
+    protected static $main_table = 'migration_page';
 
     protected static function getIlbizDb() {
         if (!isset(self::$ilbiz_db)) {
@@ -13,18 +13,21 @@
         return self::$ilbiz_db;
     }
 
-    public static function get_old_site_page_list($site_migration){
+    public static function get_old_site_page_list($migration_site){
 
 
         $ilbiz_db = self::getIlbizDb();
-        $sql = "select page.*, form.content as form_content, cat_spec, subCat, primeryCat from content_pages page 
+        $sql = "select page.*, cat_spec, subCat, primeryCat from content_pages page 
 		LEFT JOIN estimate_miniSite_defualt_block form ON form.type= page.id
 		WHERE page.unk = :unk 
         AND page.deleted = '0' 
+		AND page.redierct_301 = '' 
+		AND page.type NOT IN('text','net','gb','contact')  
         LIMIT 200 
+		
         ";
         $req = $ilbiz_db->prepare($sql);
-        $req->execute(array('unk'=>$site_migration['old_unk']));
+        $req->execute(array('unk'=>$migration_site['old_unk']));
         $result = $req->fetchAll();
         $content_pages = array();
         $formated_params = array(
@@ -58,7 +61,7 @@
             }
         }
 		
-        $migrated_pages = self::get_list(array('site_id'=>$site_migration['site_id']));
+        $migrated_pages = self::get_list(array('site_id'=>$migration_site['site_id']));
 
         $migrated_pages_indexed = Helper::eazy_index_arr_by('old_page_id',$migrated_pages);
 

@@ -1,9 +1,9 @@
 <?php
-  class Site_migration extends TableModel{
+  class Migration_site extends TableModel{
 
     private static $ilbiz_db = NULL;
 
-    protected static $main_table = 'site_migration';
+    protected static $main_table = 'migration_site';
 
     protected static function getIlbizDb() {
         if (!isset(self::$ilbiz_db)) {

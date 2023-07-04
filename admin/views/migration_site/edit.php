@@ -1,6 +1,6 @@
 <div class="focus-box">
     <h3>תיאום ייבוא לאתר מהמערכת הישנה</h3>
-    <?php $this->include_view("site_migration/header.php"); ?>
+    <?php $this->include_view("migration_site/header.php"); ?>
     <div class="focus-box">
 
         <b>דומיין:</b> <?= $this->data['item_info']['old_domain'] ?> <br/>
