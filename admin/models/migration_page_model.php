@@ -1,5 +1,5 @@
 <?php
-  class Page_migration extends TableModel{
+  class Migration_page extends TableModel{
 
     private static $ilbiz_db = NULL;
 
