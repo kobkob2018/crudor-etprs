@@ -6,10 +6,55 @@
         //if(session__isset())
 
         $migration_cat_list = Migration_cat::get_old_cat_tree();
+        $current_cat_list = Migration_cat::get_new_cat_tree();
         
         $this->data['migrate_cat_list'] = $migration_cat_list;
+        $this->data['current_cat_list'] = $current_cat_list;
         return $this->include_view("migration_cat/list.php");
         
+    }
+
+    public function pair_remove(){
+        $this->set_layout("blank");
+        $cat_id = $_REQUEST['cat_id'];
+        $return_array = array(
+            "success"=>true,
+            "cat_id"=>$cat_id,
+            "old_cat_remove"=>"-1"
+        );
+        $current_cat_pair = Migration_cat::get_current_cat_pair($cat_id);
+        
+        if($current_cat_pair){
+            $return_array['old_cat_remove'] = $current_cat_pair['old_cat_id'];
+            Migration_cat::remove_current_cat_pair($cat_id);
+        }
+        print(json_encode($return_array));
+        exit();
+    }
+
+    public function pair_go(){
+        $this->set_layout("blank");
+        $cat_id = $_REQUEST['cat_id'];
+        $pair_cat = $_REQUEST['pair_cat'];
+        $return_array = array(
+            "success"=>true,
+            "cat_id"=>$cat_id,
+            "cat_label"=>"",
+            "old_cat_label"=>"",
+            "old_cat_remove"=>"-1"
+        );
+        $current_cat_pair = Migration_cat::get_current_cat_pair($cat_id);
+        
+        if($current_cat_pair){
+            $return_array['old_cat_remove'] = $current_cat_pair['old_cat_id'];
+            Migration_cat::remove_current_cat_pair($cat_id);
+        }
+
+        Migration_cat::add_cat_pair($cat_id, $pair_cat);                 
+        $return_array['cat_label'] = Migration_cat::get_cat_label($cat_id);
+        $return_array['old_cat_label'] = Migration_cat::get_old_cat_label($cat_id);
+        print(json_encode($return_array));
+        exit();
     }
 
   }
