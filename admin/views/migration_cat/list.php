@@ -39,7 +39,7 @@
                     </div>
                     <div class="col">
                         <small class="pair-label">
-                           <?= $cat['pair_lalbel'] ?>
+                           <?= $cat['pair_label'] ?>
                         </small>
                     </div>
                     <div class="col col-tiny">
@@ -98,7 +98,7 @@
                     <div class="col">
                         <div class="pair-label">
                             <small class="pair-label">
-                                <?= $cat['pair_lalbel'] ?>
+                                <?= $cat['pair_label'] ?>
                             </small>
                         </div>
                     </div>
