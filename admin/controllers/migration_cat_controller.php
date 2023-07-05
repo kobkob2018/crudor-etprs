@@ -52,7 +52,7 @@
 
         Migration_cat::add_cat_pair($cat_id, $pair_cat);                 
         $return_array['cat_label'] = Migration_cat::get_cat_label($cat_id);
-        $return_array['old_cat_label'] = Migration_cat::get_old_cat_label($cat_id);
+        $return_array['old_cat_label'] = Migration_cat::get_old_cat_label($pair_cat);
         print(json_encode($return_array));
         exit();
     }

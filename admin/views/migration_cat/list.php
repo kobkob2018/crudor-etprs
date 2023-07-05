@@ -136,6 +136,11 @@
         height: 100%;
         width: 100%;
     }
+
+    .new-cat-list,.old-cat-list{
+        max-height: 80vh;
+        overflow: auto;
+    }
 </style>
 
 <script type="text/javascript">
@@ -160,8 +165,8 @@
         const url = "<?= inner_url("migration_cat/pair_remove/?cat_id=") ?>"+a_el.dataset.cat_id;
         fetch(url).then((res) => res.json()).then(info => {
             a_el.closest(".new-cat").querySelector(".pair-label").innerHTML = "";
-            if(info.old_cat_remove != ""){
-                document.querySelector(".old-cat-"+info.old_cat_remove).closest(".pair-label").innerHTML = "";
+            if(info.old_cat_remove != "-1"){
+                document.querySelector(".old-cat-"+info.old_cat_remove).querySelector(".pair-label").innerHTML = "";
             }
             console.log(info);
             hide_loading();
