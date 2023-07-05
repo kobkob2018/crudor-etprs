@@ -131,7 +131,7 @@
         
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('cat_id'=>$cat_id));
-        $result = $req->fetchAll();
+        $result = $req->fetch();
         if(!$result){
             return "";
         }
