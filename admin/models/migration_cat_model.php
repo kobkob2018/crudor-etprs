@@ -31,8 +31,14 @@
 					if($cat[$param] != ""){
 						$cat[$param] = utgt($cat[$param]);
 					}
-				}
-				$cat['pair_lalbel'] = self::get_old_cat_label($cat['id']);
+				
+                }
+                $cat['pair_label'] = "";
+                $cat_pair = self::get_old_cat_pair($cat['id']);
+                if($cat_pair){
+                    $cat['pair_label'] = self::get_cat_label($cat_pair['cat_id']);
+                }
+				
                 $cat['deep'] = $deep;
                 $cat_tree[] = $cat;
                 $cat_tree = self::get_old_cat_tree($cat['id'],$cat_tree,$deep);
@@ -56,7 +62,11 @@
             foreach($result as $cat){
 				
                 $cat['deep'] = $deep;
-                $cat['pair_lalbel'] = self::get_cat_label($cat['id']);
+                $cat['pair_label'] = "";
+                $cat_pair = self::get_current_cat_pair($cat['id']);
+                if($cat_pair){
+                    $cat['pair_label'] = self::get_old_cat_label($cat_pair['old_cat_id']);
+                }
                 $cat_tree[] = $cat;
                 
                 $cat_tree = self::get_new_cat_tree($cat['id'],$cat_tree,$deep);
@@ -75,7 +85,18 @@
         $result = $req->fetch();
         
         return $result;
-    }   
+    }  
+    
+    public static function get_old_cat_pair($cat_id){
+
+        $db = Db::getInstance();
+        $sql = "SELECT cat_id FROM migration_cat WHERE old_cat_id = :cat_id";
+        $req = $db->prepare($sql);
+        $req->execute(array('cat_id'=>$cat_id));
+        $result = $req->fetch();
+        
+        return $result;
+    }  
 
     public static function remove_current_cat_pair($cat_id){
         $db = Db::getInstance();
