@@ -17,7 +17,7 @@
         
         $deep++;
         $ilbiz_db = self::getIlbizDb();
-        $sql = "SELECT cat_name, id, father, status, hidden FROM biz_categories WHERE status != '9' AND googleADSense = '' AND father = :cat_id";
+        $sql = "SELECT cat_name, id, father, status, hidden FROM biz_categories WHERE status != '9' AND googleADSense = '' AND father = :cat_id ORDER BY cat_name ";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('cat_id'=>$cat_id));
         $result = $req->fetchAll();
@@ -53,7 +53,7 @@
 
         $deep++;
         $db = Db::getInstance();
-        $sql = "SELECT label, id, parent, active, visible FROM biz_categories WHERE parent = :cat_id";
+        $sql = "SELECT label, id, parent, active, visible FROM biz_categories WHERE parent = :cat_id ORDER BY label";
         $req = $db->prepare($sql);
         $req->execute(array('cat_id'=>$cat_id));
         $result = $req->fetchAll();
