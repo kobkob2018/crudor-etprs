@@ -14,7 +14,7 @@
     }
 
     public static function get_old_cat_tree($cat_id = '0', $cat_tree = array() , $deep = 0){
-        return array();
+        
         $deep++;
         $ilbiz_db = self::getIlbizDb();
         $sql = "SELECT cat_name, id, father, status, hidden FROM biz_categories WHERE status != '9' AND googleADSense = '' AND father = :cat_id";
