@@ -127,6 +127,7 @@
         border: 1px solid red;
         padding: 5px;
         margin: 5px;
+        border-radius: 3px;
     }
     .new-cat-pair .pair-x{
         font-size: 18px;
@@ -134,7 +135,7 @@
         color: red;
         font-family: Arial;
         display: block;
-        border-radius: 3px;
+        
     }
     .loading-tag-wrap{
         top:0px;
