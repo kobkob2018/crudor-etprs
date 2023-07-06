@@ -190,6 +190,14 @@
         const url = "<?= inner_url("migration_cat/pair_go/?cat_id=") ?>"+a_el.dataset.cat_id + "&pair_cat="+pair_a_el.dataset.cat_id;
         fetch(url).then((res) => res.json()).then(info => {
             const labels_col = a_el.closest(".new-cat").querySelector(".pair-label").closest(".col");
+            const new_label_html = 
+                "<small class='new-cat-pair pair-label'> " + 
+                    "<a class='pair-x' href='javascript://' onclick='pair_remove(this)' data-old_cat_id='"+pair_cat+"' > " + 
+                        "X" + 
+                    "</a>" + 
+                    old_cat_label + 
+                "</small>'";
+
             labels_col.innerHTML = labels_col.innerHTML + info.old_cat_label;
             pair_a_el.closest(".old-cat").querySelector(".pair-label").innerHTML = info.cat_label;
 
