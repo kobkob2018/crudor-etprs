@@ -94,7 +94,7 @@
     public static function get_old_cat_pair($cat_id){
 
         $db = Db::getInstance();
-        $sql = "SELECT cat_id FROM migration_cat WHERE old_cat_id = :cat_id";
+        $sql = "SELECT cat_id, old_cat_id FROM migration_cat WHERE old_cat_id = :cat_id";
         $req = $db->prepare($sql);
         $req->execute(array('cat_id'=>$cat_id));
         $result = $req->fetch();
