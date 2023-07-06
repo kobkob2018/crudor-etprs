@@ -82,6 +82,11 @@
                         <?php if($cat['status'] == '2'): ?>
                             <b class="red">לא פעיל!</b>
                         <?php endif; ?>
+
+                        <?php if($cat['googleADSense'] != ''): ?>
+                            <br/><br/>
+                            <b class="red">מכיל פרסומת!</b>
+                        <?php endif; ?>
                     </div>
                     <div class="col">
                         <div class="deep-0<?=  $cat['deep'] ?>">
