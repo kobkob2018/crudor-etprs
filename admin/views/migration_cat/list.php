@@ -129,9 +129,12 @@
         margin: 5px;
     }
     .new-cat-pair .pair-x{
-        text-align: left;
         font-size: 18px;
+        text-decoration: none;
+        color: red;
+        font-family: Arial;
         display: block;
+        border-radius: 3px;
     }
     .loading-tag-wrap{
         top:0px;
