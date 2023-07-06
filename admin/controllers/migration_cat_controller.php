@@ -43,7 +43,8 @@
             "old_cat_label"=>""
         );
 
-
+        Migration_cat::remove_old_cat_pair($pair_cat);
+        
         Migration_cat::add_cat_pair($cat_id, $pair_cat);                 
         $return_array['cat_label'] = Migration_cat::get_cat_label($cat_id);
         $old_cat_label = Migration_cat::get_old_cat_label($pair_cat);
