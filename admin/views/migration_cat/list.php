@@ -170,7 +170,7 @@
 
     function pair_remove(a_el){
         show_loading();
-        const url = "<?= inner_url("migration_cat/pair_remove/?old_cat_id=") ?>"+a_el.dataset.cat_id;
+        const url = "<?= inner_url("migration_cat/pair_remove/?old_cat_id=") ?>"+a_el.dataset.old_cat_id;
         fetch(url).then((res) => res.json()).then(info => {
             a_el.closest(".new-cat").querySelector(".pair-label").remove();
             if(info.old_cat_remove != "-1"){
