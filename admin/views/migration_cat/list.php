@@ -192,7 +192,7 @@
             const labels_col = a_el.closest(".new-cat").querySelector(".pair-label").closest(".col");
             const new_label_html = 
                 "<small class='new-cat-pair pair-label'> " + 
-                    "<a class='pair-x' href='javascript://' onclick='pair_remove(this)' data-old_cat_id='"+pair_cat+"' > " + 
+                    "<a class='pair-x' href='javascript://' onclick='pair_remove(this)' data-old_cat_id='"+pair_a_el.dataset.cat_id+"' > " + 
                         "X" + 
                     "</a>" + 
                     old_cat_label + 
