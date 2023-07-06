@@ -68,7 +68,7 @@
                 foreach($cat_pairs as $key=>$cat_pair){
                     $cat_pairs[$key]['label'] = self::get_old_cat_label($cat_pair['old_cat_id']);
                 }
-                $cat['pairs'] = $cat_pair;
+                $cat['pairs'] = $cat_pairs;
                 $cat_tree[] = $cat;
                 
                 $cat_tree = self::get_new_cat_tree($cat['id'],$cat_tree,$deep);
