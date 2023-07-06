@@ -198,7 +198,7 @@
                     info.old_cat_label + 
                 "</small>'";
 
-            labels_col.innerHTML = labels_col.innerHTML + info.old_cat_label;
+            labels_col.innerHTML = labels_col.innerHTML + new_label_html;
             pair_a_el.closest(".old-cat").querySelector(".pair-label").innerHTML = info.cat_label;
 
             console.log(info);
