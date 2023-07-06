@@ -37,10 +37,10 @@
                     <div class="col col-tiny">
                         <?= $cat['active'] ?>
                     </div>
-                    <div class="col">
+                    <div class="col pairs-col">
                         <?php foreach($cat['pairs'] as $cat_pair): ?> 
                         <small class="new-cat-pair pair-label">
-                            <a class="pair-x" href="javascript://" onclick="pair_remove(this)" data-olld_cat_id="<?= $cat_pair['old_cat_id'] ?>" >X</a>
+                            <a class="pair-x" href="javascript://" onclick="pair_remove(this)" data-old_cat_id="<?= $cat_pair['old_cat_id'] ?>" >X</a>
                            <?= $cat_pair['label'] ?>
                         </small>
                         <?php endforeach; ?>
@@ -189,7 +189,7 @@
 
         const url = "<?= inner_url("migration_cat/pair_go/?cat_id=") ?>"+a_el.dataset.cat_id + "&pair_cat="+pair_a_el.dataset.cat_id;
         fetch(url).then((res) => res.json()).then(info => {
-            const labels_col = a_el.closest(".new-cat").querySelector(".pair-label").closest(".col");
+            const labels_col = a_el.closest(".new-cat").querySelector(".pairs-col");
             const new_label_html = 
                 "<small class='new-cat-pair pair-label'> " + 
                     "<a class='pair-x' href='javascript://' onclick='pair_remove(this)' data-old_cat_id='"+pair_a_el.dataset.cat_id+"' > " + 
