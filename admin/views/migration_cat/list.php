@@ -39,8 +39,8 @@
                     </div>
                     <div class="col pairs-col">
                         <?php foreach($cat['pairs'] as $cat_pair): ?> 
-                        <small class="new-cat-pair pair-label">
-                            <a class="pair-x cat-pair-for-old-<?= $cat_pair['old_cat_id'] ?>" href="javascript://" onclick="pair_remove(this)" data-old_cat_id="<?= $cat_pair['old_cat_id'] ?>" >X</a>
+                        <small class="new-cat-pair pair-label cat-pair-for-old-<?= $cat_pair['old_cat_id'] ?>">
+                            <a class="pair-x" href="javascript://" onclick="pair_remove(this)" data-old_cat_id="<?= $cat_pair['old_cat_id'] ?>" >X</a>
                            <?= $cat_pair['label'] ?>
                         </small>
                         <?php endforeach; ?>
