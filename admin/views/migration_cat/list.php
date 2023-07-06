@@ -38,22 +38,18 @@
                         <?= $cat['active'] ?>
                     </div>
                     <div class="col">
-                        <small class="pair-label">
-                           <?= $cat['pair_label'] ?>
+                        <?php foreach($cat['pairs'] as $cat_pair): ?> 
+                        <small class="new-cat-pair pair-label">
+                            <a class="pair-x" href="javascript://" onclick="pair_remove(this)" data-olld_cat_id="<?= $cat_pair['old_cat_id'] ?>" >X</a>
+                           <?= $cat_pair['label'] ?>
                         </small>
+                        <?php endforeach; ?>
                     </div>
                     <div class="col col-tiny">
 
                         <a class="pair-cat-prepare" href="javascript://" onclick="pair_cat_prepare(this)" data-cat_id="<?= $cat['id'] ?>">
                             <<-
                         </a> 
-
-                        <div class="pair-button-mark-ready">
-
-                            <a href="javascript://" onclick="pair_remove(this)" data-cat_id="<?= $cat['id'] ?>">
-                                הסר תיאום אם קיים
-                            </a> 
-                        </div>
                     </div>           
                 </div>
             <?php endforeach; ?>
@@ -124,7 +120,19 @@
     .pair-button-mark-ready{display: none;}
     .current-cat-el-prepare .pair-button-mark-ready{display: block;}
     .current-cat-el-prepare{background: #c2c2f7;}
-
+    .new-cat-pair{
+        position: relative;
+        display: block;
+        background: pink;
+        border: 1px solid red;
+        padding: 5px;
+        margin: 5px;
+    }
+    .new-cat-pair .pair-x{
+        text-align: left;
+        font-size: 18px;
+        display: block;
+    }
     .loading-tag-wrap{
         top:0px;
         left: 0px;
@@ -162,9 +170,9 @@
 
     function pair_remove(a_el){
         show_loading();
-        const url = "<?= inner_url("migration_cat/pair_remove/?cat_id=") ?>"+a_el.dataset.cat_id;
+        const url = "<?= inner_url("migration_cat/pair_remove/?old_cat_id=") ?>"+a_el.dataset.cat_id;
         fetch(url).then((res) => res.json()).then(info => {
-            a_el.closest(".new-cat").querySelector(".pair-label").innerHTML = "";
+            a_el.closest(".new-cat").querySelector(".pair-label").remove();
             if(info.old_cat_remove != "-1"){
                 document.querySelector(".old-cat-"+info.old_cat_remove).querySelector(".pair-label").innerHTML = "";
             }
@@ -181,12 +189,10 @@
 
         const url = "<?= inner_url("migration_cat/pair_go/?cat_id=") ?>"+a_el.dataset.cat_id + "&pair_cat="+pair_a_el.dataset.cat_id;
         fetch(url).then((res) => res.json()).then(info => {
-            a_el.closest(".new-cat").querySelector(".pair-label").innerHTML = info.old_cat_label;
+            const labels_col = a_el.closest(".new-cat").querySelector(".pair-label").closest(".col");
+            labels_col.innerHTML = labels_col.innerHTML + info.old_cat_label;
             pair_a_el.closest(".old-cat").querySelector(".pair-label").innerHTML = info.cat_label;
-            if(info.old_cat_remove != "-1"){
-                console.log(info.old_cat_remove );
-                document.querySelector(".old-cat-"+info.old_cat_remove).querySelector(".pair-label").innerHTML = "";
-            }
+
             console.log(info);
             hide_loading();
         });

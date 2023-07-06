@@ -16,17 +16,17 @@
 
     public function pair_remove(){
         $this->set_layout("blank");
-        $cat_id = $_REQUEST['cat_id'];
+        $old_cat_id = $_REQUEST['old_cat_id'];
         $return_array = array(
             "success"=>true,
-            "cat_id"=>$cat_id,
+            "old_cat_id"=>$old_cat_id,
             "old_cat_remove"=>"-1"
         );
-        $current_cat_pair = Migration_cat::get_current_cat_pair($cat_id);
+        $old_cat_pair = Migration_cat::get_old_cat_pair($old_cat_id);
         
-        if($current_cat_pair){
-            $return_array['old_cat_remove'] = $current_cat_pair['old_cat_id'];
-            Migration_cat::remove_current_cat_pair($cat_id);
+        if($old_cat_pair){
+            $return_array['old_cat_remove'] = $old_cat_pair['old_cat_id'];
+            Migration_cat::remove_old_cat_pair($old_cat_id);
         }
         print(json_encode($return_array));
         exit();
@@ -40,18 +40,21 @@
             "success"=>true,
             "cat_id"=>$cat_id,
             "cat_label"=>"",
-            "old_cat_label"=>"",
-            "old_cat_remove"=>"-1"
+            "old_cat_label"=>""
         );
-        $current_cat_pair = Migration_cat::get_current_cat_pair($cat_id);
-        
-        if($current_cat_pair){
-            $return_array['old_cat_remove'] = $current_cat_pair['old_cat_id'];
-            Migration_cat::remove_current_cat_pair($cat_id);
-        }
+
 
         Migration_cat::add_cat_pair($cat_id, $pair_cat);                 
         $return_array['cat_label'] = Migration_cat::get_cat_label($cat_id);
+        $old_cat_label = Migration_cat::get_old_cat_label($pair_cat);
+        ob_start();
+        ?>
+        <small class="new-cat-pair pair-label">
+            <a class="pair-x" href="javascript://" onclick="pair_remove(this)" data-olld_cat_id="<?= $pair_cat ?>" >X</a>
+            <?= $old_cat_label ?>
+        </small>
+        <?php
+        $old_cat_html = ob_flush();       
         $return_array['old_cat_label'] = Migration_cat::get_old_cat_label($pair_cat);
         print(json_encode($return_array));
         exit();

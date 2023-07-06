@@ -63,10 +63,12 @@
 				
                 $cat['deep'] = $deep;
                 $cat['pair_label'] = "";
-                $cat_pair = self::get_current_cat_pair($cat['id']);
-                if($cat_pair){
-                    $cat['pair_label'] = self::get_old_cat_label($cat_pair['old_cat_id']);
+                $cat_pairs = self::get_current_cat_pairs($cat['id']);
+
+                foreach($cat_pairs as $key=>$cat_pair){
+                    $cat_pairs[$key]['label'] = self::get_old_cat_label($cat_pair['old_cat_id']);
                 }
+                $cat['pairs'] = $cat_pair;
                 $cat_tree[] = $cat;
                 
                 $cat_tree = self::get_new_cat_tree($cat['id'],$cat_tree,$deep);
@@ -76,14 +78,16 @@
         return $cat_tree;
     }
 
-    public static function get_current_cat_pair($cat_id){
+    public static function get_current_cat_pairs($cat_id){
 
         $db = Db::getInstance();
         $sql = "SELECT old_cat_id FROM migration_cat WHERE cat_id = :cat_id";
         $req = $db->prepare($sql);
         $req->execute(array('cat_id'=>$cat_id));
-        $result = $req->fetch();
-        
+        $result = $req->fetchAll();
+        if(!$result){
+            return array();
+        }
         return $result;
     }  
     
@@ -98,11 +102,11 @@
         return $result;
     }  
 
-    public static function remove_current_cat_pair($cat_id){
+    public static function remove_old_cat_pair($old_cat_id){
         $db = Db::getInstance();
-        $sql = "DELETE FROM migration_cat WHERE cat_id = :cat_id";
+        $sql = "DELETE FROM migration_cat WHERE old_cat_id = :old_cat_id";
         $req = $db->prepare($sql);
-        $req->execute(array('cat_id'=>$cat_id));
+        $req->execute(array('old_cat_id'=>$old_cat_id));
     }
 
     public static function add_cat_pair($cat_id, $old_cat_id){
