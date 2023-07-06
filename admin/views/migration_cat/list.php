@@ -142,7 +142,7 @@
         left: 0px;
         text-align: center;
         position: fixed;
-        background: #c2c2f7aa;
+        # background: #c2c2f7aa;
         font-size: 150px;
         padding-top: 50px;
         height: 100%;
@@ -176,7 +176,7 @@
         show_loading();
         const url = "<?= inner_url("migration_cat/pair_remove/?old_cat_id=") ?>"+a_el.dataset.old_cat_id;
         fetch(url).then((res) => res.json()).then(info => {
-            a_el.closest(".new-cat").querySelector(".pair-label").remove();
+            a_el.closest(".pair-label").remove();
             if(info.old_cat_remove != "-1"){
                 document.querySelector(".old-cat-"+info.old_cat_remove).querySelector(".pair-label").innerHTML = "";
             }
@@ -189,7 +189,7 @@
 
         show_loading();
         const a_el = document.querySelector(".current-cat-el-prepare").querySelector(".pair-cat-prepare");
-        a_el.dataset.cat_id;
+        
         document.querySelectorAll(".cat-pair-for-old-"+pair_a_el.dataset.cat_id).forEach(el=>{el.remove()});
         const url = "<?= inner_url("migration_cat/pair_go/?cat_id=") ?>"+a_el.dataset.cat_id + "&pair_cat="+pair_a_el.dataset.cat_id;
         fetch(url).then((res) => res.json()).then(info => {
