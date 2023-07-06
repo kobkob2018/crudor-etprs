@@ -195,7 +195,7 @@
                     "<a class='pair-x' href='javascript://' onclick='pair_remove(this)' data-old_cat_id='"+pair_a_el.dataset.cat_id+"' > " + 
                         "X" + 
                     "</a>" + 
-                    old_cat_label + 
+                    info.old_cat_label + 
                 "</small>'";
 
             labels_col.innerHTML = labels_col.innerHTML + info.old_cat_label;
