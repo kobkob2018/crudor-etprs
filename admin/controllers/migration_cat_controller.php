@@ -47,15 +47,14 @@
         Migration_cat::add_cat_pair($cat_id, $pair_cat);                 
         $return_array['cat_label'] = Migration_cat::get_cat_label($cat_id);
         $old_cat_label = Migration_cat::get_old_cat_label($pair_cat);
-        ob_start();
-        ?>
+        $old_cat_html = '
         <small class="new-cat-pair pair-label">
-            <a class="pair-x" href="javascript://" onclick="pair_remove(this)" data-olld_cat_id="<?= $pair_cat ?>" >X</a>
-            <?= $old_cat_label ?>
+            <a class="pair-x" href="javascript://" onclick="pair_remove(this)" data-olld_cat_id="'.$pair_cat.'" >X</a>
+            '.$old_cat_label.'
         </small>
-        <?php
-        $old_cat_html = ob_flush();       
-        $return_array['old_cat_label'] = Migration_cat::get_old_cat_label($pair_cat);
+        ';
+        
+        $return_array['old_cat_label'] = $old_cat_html;
         print(json_encode($return_array));
         exit();
     }
