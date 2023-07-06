@@ -200,7 +200,7 @@
                         "X" + 
                     "</a>" + 
                     info.old_cat_label + 
-                "</small>'";
+                "</small>";
 
             labels_col.innerHTML = labels_col.innerHTML + new_label_html;
             pair_a_el.closest(".old-cat").querySelector(".pair-label").innerHTML = info.cat_label;
