@@ -12,7 +12,7 @@
         return $this->redirect_to(inner_url("migration_site/list/"));
       }
       else{
-          $migration_site_id = $migration_site['id'];
+          
           $migrate_page_list = Migration_page::get_old_site_page_list($migration_site);
           $this->data['migrate_page_list'] = $migrate_page_list;
       }

@@ -16,7 +16,9 @@
 
         <div class="col">מצב ייבוא</div>
         <div class="col">כותרת</div>
-        <div class="col">קטגוריה</div>
+        <div class="col">
+            קטגוריה ישנה <hr/> קטגוריה חדשה
+        </div>
         <div class="col">גרסת ייבוא</div>
         <div class="col">הועתק טופס</div>
         <div class="col"></div>
@@ -47,7 +49,9 @@
                 <?= $migrate_page['name'] ?>
             </div>
             <div class="col">
-                <?= $migrate_page['cat_str'] ?>
+                <?= $migrate_page['old_cat_str'] ?>
+                <hr/>
+                <?= $migrate_page['new_cat_str'] ?>
             </div>
             
 

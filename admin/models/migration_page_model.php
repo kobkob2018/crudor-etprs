@@ -50,13 +50,19 @@
 				if($content_page['cat_spec'] != "" && $content_page['cat_spec'] != '0'){
 					$cat_id = $content_page['cat_spec'];
 				}
-				$cat_str_arr = array();
-				if(!isset($cat_str_arr[$cat_id])){
-					$cat_str_arr[$cat_id] = self::get_ilbiz_cat_str($cat_id);
+				$old_cat_str_arr = array();
+				if(!isset($old_cat_str_arr[$cat_id])){
+					$old_cat_str_arr[$cat_id] = self::get_ilbiz_cat_str($cat_id);
 				}
-				$cat_str = $cat_str_arr[$cat_id];
+
+                $new_cat_str_arr = array();
+				if(!isset($new_cat_str_arr[$cat_id])){
+					$new_cat_str_arr[$cat_id] = self::get_ilbiz_migrate_cat_str($cat_id);
+				}
+
+				$cat_str = $new_cat_str_arr[$cat_id];
 				$content_page['cat_id'] = $cat_id;
-				$content_page['cat_str'] = $cat_str;
+				$content_page['old_cat_str'] = $cat_str;
                 $content_pages[] = $content_page;
             }
         }
@@ -84,6 +90,9 @@
 
 	protected static function get_ilbiz_cat_str($cat_id, $str = ""){
 		if($cat_id == '0'){
+            if($str == ""){
+                return "קטגוריה ראשית";
+            }
 			return $str;
 		}
 		$ilbiz_db = self::getIlbizDb();
@@ -103,5 +112,47 @@
 		}
 		return self::get_ilbiz_cat_str($result['father'], $str);
 	}
+
+    protected static function get_ilbiz_migrate_cat_str($ilbiz_cat_id, $cat_id = "-1",  $str = ""){
+        if($cat_id == "-1"){
+            $cat_id = self::get_migrate_cat_id($ilbiz_cat_id);
+            if(!$cat_id == "-1"){
+                return "פרסומת!!!";
+            }
+        }
+		if($cat_id == '0'){
+            if($str == ""){
+                return "קטגוריה ראשית";
+            }
+			return $str;
+		}
+		$db = DB::getInstance();
+        $sql = "SELECT label, parent FROM biz_categories WHERE id = :cat_id";
+        $req = $db->prepare($sql);
+        $req->execute(array('cat_id'=>$cat_id));
+        $result = $req->fetch();
+		if(!$result){
+			return $str;
+		}
+		if($str == ""){
+			$str = $result['label'];
+		}
+		else{
+			$str = $result['label']. ", ".$str;
+		}
+		return self::get_ilbiz_migrate_cat_str($result['parent'], $str);
+	}
+
+    protected static function get_migrate_cat_id($ilbiz_cat_id) {
+        $db = DB::getInstance();
+        $sql = "SELECT cat_id FROM migration_cat WHERE old_cat_id = :ilbiz_cat_id";
+        $req = $db->prepare($sql);
+        $req->execute(array('ilbiz_cat_id'=>$ilbiz_cat_id));
+        $result = $req->fetch();
+		if(!$result){
+			return "-1";
+		}
+        return $result['cat_id'];
+    }
 }
 ?>
