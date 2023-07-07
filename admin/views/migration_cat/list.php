@@ -19,7 +19,7 @@
                 <div class="col">כפתור שיוך</div>
             </div>
             <?php foreach($this->data['current_cat_list'] as $cat): ?>
-                <div class="new-cat table-tr row active-0<?= $cat['active'] ?> is-visible-0<?= $cat['visible'] ?> deep-0<?=  $cat['deep'] ?> has-ad-0<?= $cat['googleADSense'] == '' ? '0': '1' ?>">
+                <div class="new-cat table-tr row active-0<?= $cat['active'] ?> is-visible-0<?= $cat['visible'] ?> deep-0<?=  $cat['deep'] ?>">
                     <div class="col col-tiny">
                         <?= $cat['id'] ?>
                         <?php if($cat['visible'] == '0'): ?>
@@ -72,7 +72,7 @@
                 <div class="col">תיאום</div>
             </div>
             <?php foreach($this->data['migrate_cat_list'] as $cat): ?>
-                <div class="old-cat old-cat-<?= $cat['id'] ?> table-tr row cat_status-0<?= $cat['status'] ?>  is-hidden-0<?= $cat['status'] ?> deep-0<?=  $cat['deep'] ?>">
+                <div class="old-cat old-cat-<?= $cat['id'] ?> table-tr row cat_status-0<?= $cat['status'] ?>  is-hidden-0<?= $cat['status'] ?> deep-0<?=  $cat['deep'] ?> has-ad-0<?= $cat['googleADSense'] == '' ? '0': '1' ?>">
                     <div class="col col-tiny">
                         <a class="pair-button" href="javascript://" onclick="pair_cat_go(this)" data-cat_id="<?= $cat['id'] ?>">
                         <<-
@@ -228,7 +228,10 @@
 
     function toggle_ads(checkbox){
         if(checkbox.checked){
-            alert("blue");
+            document.querySelector(".old-cats").classList.add('hide-ads');
+        }
+        else{
+            document.querySelector(".old-cats").classList.remove('hide-ads');
         }
     }
 
