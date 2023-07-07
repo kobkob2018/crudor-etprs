@@ -60,9 +60,12 @@
 					$new_cat_str_arr[$cat_id] = self::get_ilbiz_migrate_cat_str($cat_id);
 				}
 
-				$cat_str = $new_cat_str_arr[$cat_id];
+				
 				$content_page['cat_id'] = $cat_id;
-				$content_page['old_cat_str'] = $cat_str;
+                $old_cat_str = $old_cat_str_arr[$cat_id];
+				$content_page['old_cat_str'] = $old_cat_str;
+                $new_cat_str = $new_cat_str_arr[$cat_id];
+				$content_page['new_cat_str'] = $new_cat_str;
                 $content_pages[] = $content_page;
             }
         }
