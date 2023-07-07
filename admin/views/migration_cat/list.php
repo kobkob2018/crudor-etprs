@@ -72,7 +72,7 @@
                 <div class="col">תיאום</div>
             </div>
             <?php foreach($this->data['migrate_cat_list'] as $cat): ?>
-                <div class="old-cat old-cat-<?= $cat['id'] ?> table-tr row cat_status-0<?= $cat['status'] ?>  is-hidden-0<?= $cat['status'] ?> deep-0<?=  $cat['deep'] ?> has-ad-0<?= $cat['googleADSense'] == '' ? '0': '1' ?>">
+                <div class="old-cat old-cat-<?= $cat['id'] ?> table-tr row cat_status-0<?= $cat['status'] ?>  is-hidden-0<?= $cat['hidden'] ?> deep-0<?=  $cat['deep'] ?> has-ad-0<?= $cat['googleADSense'] == '' ? '0': '1' ?>">
                     <div class="col col-tiny">
                         <a class="pair-button" href="javascript://" onclick="pair_cat_go(this)" data-cat_id="<?= $cat['id'] ?>">
                         <<-
