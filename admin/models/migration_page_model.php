@@ -33,6 +33,8 @@
         $formated_params = array(
             'name', 'content', 'keywords', 'description'
         );
+        $old_cat_str_arr = array();
+        $new_cat_str_arr = array();
         if($result){
             foreach($result as $content_page){
                 foreach($formated_params as $param){
@@ -50,12 +52,11 @@
 				if($content_page['cat_spec'] != "" && $content_page['cat_spec'] != '0'){
 					$cat_id = $content_page['cat_spec'];
 				}
-				$old_cat_str_arr = array();
+				
 				if(!isset($old_cat_str_arr[$cat_id])){
 					$old_cat_str_arr[$cat_id] = self::get_ilbiz_cat_str($cat_id);
 				}
 
-                $new_cat_str_arr = array();
 				if(!isset($new_cat_str_arr[$cat_id])){
 					$new_cat_str_arr[$cat_id] = self::get_ilbiz_migrate_cat_str($cat_id);
 				}
@@ -119,7 +120,7 @@
     protected static function get_ilbiz_migrate_cat_str($ilbiz_cat_id, $cat_id = "-1",  $str = ""){
         if($cat_id == "-1"){
             $cat_id = self::get_migrate_cat_id($ilbiz_cat_id);
-            if(!$cat_id == "-1"){
+            if($cat_id == "-1"){
                 return "פרסומת!!!";
             }
         }

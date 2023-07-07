@@ -47,6 +47,10 @@
             </div>
             <div class="col">
                 <?= $migrate_page['name'] ?>
+                <?php if($migrate_page['ld_page_add'] != ""): ?>
+                    <hr/>
+                    תוספת של דף נחיתה <?= $migrate_page['ld_page_add'] ?>
+                <?php endif; ?>
             </div>
             <div class="col">
                 <?= $migrate_page['old_cat_str'] ?>
