@@ -19,7 +19,7 @@
                 <div class="col">כפתור שיוך</div>
             </div>
             <?php foreach($this->data['current_cat_list'] as $cat): ?>
-                <div class="new-cat table-tr row active-0<?= $cat['active'] ?> is-visible-0<?= $cat['visible'] ?> deep-0<?=  $cat['deep'] ?>">
+                <div class="new-cat table-tr row active-0<?= $cat['active'] ?> is-visible-0<?= $cat['visible'] ?> deep-0<?=  $cat['deep'] ?> has-ad-0<?= $cat['googleADSense'] == '' ? '0': '1' ?>">
                     <div class="col col-tiny">
                         <?= $cat['id'] ?>
                         <?php if($cat['visible'] == '0'): ?>
@@ -58,6 +58,10 @@
 
     <div class="old-cats">
         <h3>קטגוריות ישנות</h3>
+
+        <div>
+            <input type="checkbox" onchange="toggle_ads(this)" /> הסתר קטגוריות עם פרסומת
+        </div>
         <div class="items-table flex-table old-cat-list">
             <div class="table-th row">
                 <div class="col col-tiny"></div>
@@ -153,6 +157,13 @@
         height: 100%;
         width: 100%;
     }
+    .hide-ads .has-ad-01{
+        display: none;
+    }
+
+    .hide-ads .has-ad-01.deep-01{
+        display: block;
+    }
 
     .new-cat-list,.old-cat-list{
         max-height: 80vh;
@@ -213,6 +224,12 @@
             console.log(info);
             hide_loading();
         });
+    }
+
+    function toggle_ads(checkbox){
+        if(checkbox.checked){
+            alert("blue");
+        }
     }
 
     function show_loading(){
