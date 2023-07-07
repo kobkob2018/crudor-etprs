@@ -151,7 +151,6 @@
         left: 0px;
         text-align: center;
         position: fixed;
-        # background: #c2c2f7aa;
         font-size: 150px;
         padding-top: 50px;
         height: 100%;
@@ -162,7 +161,7 @@
     }
 
     .hide-ads .has-ad-01.deep-01{
-        display: block;
+        display: table-row;
     }
 
     .new-cat-list,.old-cat-list{
