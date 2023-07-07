@@ -143,7 +143,7 @@
 		else{
 			$str = $result['label']. ", ".$str;
 		}
-		return self::get_ilbiz_migrate_cat_str($result['parent'], $str);
+		return self::get_ilbiz_migrate_cat_str($ilbiz_cat_id, $result['parent'], $str);
 	}
 
     protected static function get_migrate_cat_id($ilbiz_cat_id) {
