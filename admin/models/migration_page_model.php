@@ -118,7 +118,7 @@
         }
 
         return array(
-            'row_count'=>$page_count,
+            'row_count'=>$row_count,
             'content_pages'=>$content_pages,
         );
     }
