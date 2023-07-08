@@ -10,10 +10,10 @@
 </div>
 
 <div class="focus-box">
-    <form action = "<?= inner_url("migration_page/list/") ?>" method = "GET">
+    <form class="filter-form" action = "<?= inner_url("migration_page/list/") ?>" method = "GET">
         <div class='lead_form_item form-group'>
             <label for="page">עמוד</label>
-            <select name="page" class="form-input">
+            <select name="page" class="form-input" onchange="submit_filter_form(this)">
                 <?php foreach($this->data['page_options'] as $option): ?>
                     <option value = "<?= $option['index'] ?>" <?= $option['selected_str'] ?> >
                         <?= $option['index'] ?>
@@ -116,6 +116,10 @@
 </style>
 
 <script type="text/javascript">
+    function submit_filter_form(select){
+        select.closest(".filter-form").submit();
+    }
+
 	function import_page_fetch(a_el){
 		
 		const page_id = a_el.dataset.page_id;
