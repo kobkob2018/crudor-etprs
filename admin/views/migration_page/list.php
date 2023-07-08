@@ -41,7 +41,18 @@
 		<div class="col">קטגוריה בדף הקיים</div>
         <div class="col">גרסת ייבוא</div>
         
-        <div class="col"></div>
+        <div class="col">
+            <a class="button-focus auto-import-button off" href="javascript://" onclick="run_auto_import(this)" data-state="off">
+                <span class="off-label">
+                    התחלת ייבוא רציף
+                </span>
+                <span class="on-label">
+                    הפסק ייבוא רציף
+                </span>
+                
+            </a>
+
+        </div>
     </div>
     <?php foreach($this->data['migrate_page_list'] as $migrate_page): ?>
         <div class="table-tr row is-hidden-0<?= $migrate_page['hide_page'] ?>">
@@ -87,7 +98,7 @@
                     <a href="javascript://" onclick = "delete_page_fetch(this)"  data-page_id="<?= $migrate_page['migrated_page']['page_id'] ?>" title="מחק">מחק את הדף המיובא</a>
 				<?php else: ?>
 				
-					<a class="button-focus" href = "javascript://" onclick="import_page_fetch(this)" data-page_id = "<?= $migrate_page['id'] ?>" />ייבוא</a>
+					<a class="button-focus page-import-button" href = "javascript://" onclick="import_page_fetch(this)" data-page_id = "<?= $migrate_page['id'] ?>" />ייבוא</a>
 				<?php endif; ?>
             </div>
         </div>
@@ -113,9 +124,43 @@
         
         width: 100%;
     }
+    .auto-import-button.on .off-label{display:none;}
+    .auto-import-button.off .on-label{display:none;}
 </style>
 
 <script type="text/javascript">
+
+    function run_auto_import(a_el){
+        if(a_el.dataset.state == "off"){
+            if(!confirm("האם אתה בטוח שברצונך להתחיל ייבוא רציף של כל הדפים בעמוד זה?")){
+                return;
+            }
+            a_el.dataset.state = "on";
+            a_el.classList.remove("off");
+            a_el.classList.add("on");
+            auto_import_next_page();
+        }
+        else{
+            a_el.dataset.state = "off";
+            a_el.classList.remove("on");
+            a_el.classList.add("off"); 
+        }
+    }
+
+    function auto_import_next_page(){
+        const auto_import_button = document.querySelector(".auto-import-button");
+        if(auto_import_button.dataset.state != "on"){
+            return;
+        }
+        setTimeout(function(){
+            const next_import_button = document.querySelector(".page-import-button");
+            if(!next_import_button){
+                return;
+            }
+            next_import_button.click();
+        }, 500);
+    }
+
     function submit_filter_form(select){
         select.closest(".filter-form").submit();
     }
@@ -141,6 +186,7 @@
 			
 			state_holder.innerHTML = '<a target="_BLANK" href="<?= inner_url("pages/edit/?row_id=") ?>'+info.page_id+'" title="ערוך">עריכת דף</a>';
 			 
+            auto_import_next_page();
 		});
 	}
 
