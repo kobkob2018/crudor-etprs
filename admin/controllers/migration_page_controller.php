@@ -166,7 +166,7 @@
       file_put_contents($file_path, file_get_contents($img_url));
       $return_array['new_img_src'] = "/".$file_path;
       Migration_page::simple_create_by_table_name(array(
-        'new_src'=>$file_path,
+        'new_src'=>"/".$file_path,
         'old_src'=>$img_url,
         'site_id'=>$migration_site['site_id']
       ),'migration_image');
