@@ -12,9 +12,41 @@
         return $this->redirect_to(inner_url("migration_site/list/"));
       }
       else{
+          $filter = array(
+            'row_limit' => '20',
+            'page'=>'-1'
+          );
+          if(isset($_REQUEST['page'])){
+            $filter['page'] = $_REQUEST['page'];
+          }
+          $migrate_page_info = Migration_page::get_old_site_page_list($migration_site,$filter);
+          $this->data['migrate_page_list'] = $migrate_page_info['content_pages'];
           
-          $migrate_page_list = Migration_page::get_old_site_page_list($migration_site);
-          $this->data['migrate_page_list'] = $migrate_page_list;
+          $row_count = $migrate_page_info['row_count'];
+          $next_page = true;
+          $row_limit = intval($filter['row_limit']);
+          $page_i = 1;
+          $page_options = array();
+          $page = intval($filter['page']);
+          while($next_page){
+              $page_option = array(
+                  'index'=>$page_i,
+                  'selected_str'=>'',
+              );
+
+              if($page_i == $page){
+                  $page_option['selected_str'] = ' selected ';
+              }
+              $page_options[] = $page_option;
+              $limit_count = $page_i*$row_limit;
+              if($limit_count < $row_count){
+                  $page_i++;
+              }
+              else{
+                  $next_page = false;
+              }
+          }
+          $this->data['page_options'] = $page_options;
       }
       return $this->include_view("migration_page/list.php");
     }

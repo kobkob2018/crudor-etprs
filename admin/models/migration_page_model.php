@@ -13,8 +13,31 @@
         return self::$ilbiz_db;
     }
 
-    public static function get_old_site_page_list($migration_site){
+    public static function get_old_site_page_list($migration_site, $filter){
 
+
+        $ilbiz_db = self::getIlbizDb();
+        $sql = "select COUNT(id) as row_count FROM content_pages page 
+		
+		WHERE page.unk = :unk 
+        AND page.deleted = '0' 
+		AND page.redierct_301 = '' 
+		AND page.type NOT IN('text','net','gb','contact')  
+        ";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('unk'=>$migration_site['old_unk']));
+        $result = $req->fetch();
+
+        $row_count = $result['row_count'];
+
+        $page = intval($filter['page']);
+        $page = $page - 1;
+        if($page<0){
+            $row_limit = 0;
+        }
+        $row_limit = intval($filter['row_limit']);
+        $limit_count = $page*$row_limit;
+        $limit_str = " LIMIT $limit_count, $row_limit ";
 
         $ilbiz_db = self::getIlbizDb();
         $sql = "select page.*, cat_spec, subCat, primeryCat from content_pages page 
@@ -23,8 +46,7 @@
         AND page.deleted = '0' 
 		AND page.redierct_301 = '' 
 		AND page.type NOT IN('text','net','gb','contact')  
-        LIMIT 200 
-		
+        $limit_str 
         ";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('unk'=>$migration_site['old_unk']));
@@ -98,7 +120,10 @@
             $content_pages[$key]['migrated_page'] = $migrated_page;
         }
 
-        return $content_pages;
+        return array(
+            'row_count'=>$page_count,
+            'content_pages'=>$content_pages,
+        )
     }
 
     protected static function get_migrated_page_info($page_id){
@@ -320,7 +345,7 @@
 		);
 		if($page_block['content'] != ""){
 			$page_block['content'] = utgt($page_block['content']);
-			$page_block['content'] = str_replace("white-block","c-block",$page_block['content']);
+			$page_block['content'] = str_replace("white-cube","c-block",$page_block['content']);
 		}
 		self::simple_create_by_table_name($page_block, 'content_blocks');
 		

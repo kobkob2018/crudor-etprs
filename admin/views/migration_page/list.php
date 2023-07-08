@@ -9,6 +9,25 @@
 
 </div>
 
+<div class="focus-box">
+    <form action = "<?= inner_url("migration_page/list/") ?>" method = "GET">
+        <div class='lead_form_item form-group'>
+            <label for="page">עמוד</label>
+            <select name="page" class="form-input">
+                <?php foreach($this->data['page_options'] as $option): ?>
+                    <option value = "<?= $option['index'] ?>" <?= $option['selected_str'] ?> >
+                        <?= $option['index'] ?>
+                    </option>
+
+                    
+                <?php endforeach; ?>
+            </select> 
+            <br/>
+            מתוך <?= count($this->data['page_options']) ?>
+        </div>
+    </form>
+</div>
+
 <div class="items-table flex-table">
     <div class="table-th row">
         <div class="col col-tiny">מספר דף</div>
