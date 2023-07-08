@@ -91,6 +91,7 @@
 	}
 
   public function get_page_blocks(){
+    $this->set_layout("blank");
     $page_id = $_REQUEST['page_id'];
     $page_blocks = Migration_page::get_page_blocks($page_id);
     $this->data['page_blocks'] = $page_blocks;
