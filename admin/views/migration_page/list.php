@@ -122,8 +122,11 @@
         WAIT...
     </div>
 </div>
-
+<form class="helper-block-form">
+    <textarea class="helper-block-content" name="block_html"></textarea>
+</form>
 <style type="text/css">
+    .helper-block-form{display:none;}
 	.is-hidden-01{background: gray; }
 	.loading-tag-wrap{
         top:0px;
@@ -263,12 +266,15 @@
                     const fixed_html = block.innerHTML;
                     const block_id = block.dataset.block_id;
                     const fix_block_url = "<?= inner_url("migration_page/fix_block/") ?>?block_id="+block_id;
+                    document.querySelector(".helper-block-content").innerHTML = fixed_html;
+                    const helper_form = document.getElementById(".helper-block-form");
+                    const data = new FormData(helper_form);
                     show_loading("fixing block"+block_id);
                     fetch(fix_block_url,{
 
                         
                         method: 'POST', // Specify the HTTP method
-                        body: "&block_html="+fixed_html
+                        body: data
 
                     }
                     ).then((res) => res.json()).then(info => {
