@@ -413,5 +413,10 @@
 		
 		return $return_array;
 	}	
+
+    public static function get_page_blocks($page_id){
+        $filter_arr = array('page_id'=>$page_id);
+        return self::simple_get_list_by_table_name($filter_arr,'content_blocks');
+    }
 }
 ?>

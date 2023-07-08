@@ -227,7 +227,7 @@
 			cat_holder.innerHTML = info.cat_str;
 			version_holder.innerHTML = info.version;
 			
-			button_holder.innerHTML = '<a href="javascript://" onclick = "delete_page_fetch(this)"  data-page_id="'+info.page_id+'" title="מחק">מחק את הדף המיובא</a>';
+			button_holder.innerHTML = '<a class="page-delete-button" href="javascript://" onclick = "delete_page_fetch(this)"  data-page_id="'+info.page_id+'" title="מחק">מחק את הדף המיובא</a>';
 			
 			state_holder.innerHTML = '<a target="_BLANK" href="<?= inner_url("pages/edit/?row_id=") ?>'+info.page_id+'" title="ערוך">עריכת דף</a>';
 
@@ -236,6 +236,19 @@
             auto_import_next_page();
 		});
 	}
+
+    function fix_page_fetch(a_el){
+        const page_id = a_el.dataset.page_id;
+        show_loading("please wait! <br/>removing page #"+page_id);
+		const url = "<?= inner_url("migration_page/get_page_blocks/") ?>?page_id="+page_id;
+		const page_row = a_el.closest(".row");
+        const div_holder = document.createElement("div");
+        fetch(url).then((res) => {
+            div_holder.innerHTML = res;
+            a_el.closest(".row").append(div_holder);
+
+        });
+    }
 
 	function delete_page_fetch(a_el){
 		
