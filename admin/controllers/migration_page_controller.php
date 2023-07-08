@@ -111,35 +111,35 @@
     $return_array = array(
       'new_img_src'=>$img_url
     );
-    if(str_starts_with($check_url, $img_url)){
-      $image_row = Migration_page::simple_find_by_table_name($filter_arr,'migration_image');
-      if($image_row){
-        $return_array['new_img_src'] = $image_row['new_src'];
-      }
-      else{
-        $file_name = basename($img_url).PHP_EOL;
-        $dir_path = $this->create_uploads_path($migration_site);
-        $file_path = $dir_path.$file_name;
-        $limit_attampts = 1;
-        while($limit_attampts < 5){
-          if(file_exists($file_path)){
-            $limit_attampts++;
-            $new_filename = "f".$limit_attampts.$file_name;
-            $file_path = $dir_path.$new_filename;
-          }
-          else{
-            $limit_attampts = 10;
-          }
-        }
-        file_put_contents($file_path, file_get_contents($img_url));
-        $return_array['new_img_src'] = $file_path;
-        Migration_page::simple_create_by_table_name(array(
-          'new_src'=>$file_path,
-          'old_src'=>$img_url,
-          'site_id'=>$migration_site['site_id']
-        ),'migration_image');
-      }
+    $img_filter_arr = array('old_src'=>$img_url);
+    $image_row = Migration_page::simple_find_by_table_name($img_filter_arr,'migration_image');
+    if($image_row){
+      $return_array['new_img_src'] = $image_row['new_src'];
     }
+    else{
+      $file_name = basename($img_url).PHP_EOL;
+      $dir_path = $this->create_uploads_path($migration_site);
+      $file_path = $dir_path.$file_name;
+      $limit_attampts = 1;
+      while($limit_attampts < 5){
+        if(file_exists($file_path)){
+          $limit_attampts++;
+          $new_filename = "f".$limit_attampts.$file_name;
+          $file_path = $dir_path.$new_filename;
+        }
+        else{
+          $limit_attampts = 10;
+        }
+      }
+      file_put_contents($file_path, file_get_contents($img_url));
+      $return_array['new_img_src'] = $file_path;
+      Migration_page::simple_create_by_table_name(array(
+        'new_src'=>$file_path,
+        'old_src'=>$img_url,
+        'site_id'=>$migration_site['site_id']
+      ),'migration_image');
+    }
+    
     print(json_encode($return_array));
 
   }  
