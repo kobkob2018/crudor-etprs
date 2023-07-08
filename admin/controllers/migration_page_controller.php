@@ -196,5 +196,18 @@
     }
     return $dir_path;
   }
+
+  public function fix_block(){
+    $this->set_layout("blank");
+    $block_id = $_REQUEST['block_id'];
+    $block_html = $_REQUEST['block_html'];
+    $return_array = array(
+      'block_id'=>$block_id,
+      'success'=>'true'
+    );
+   Migration_page::simple_update_by_table_name($block_id,array('content'=>$block_html),"content_blocks");
+   print(json_encode($return_array));
+   return;
+  }
 }
 ?>
