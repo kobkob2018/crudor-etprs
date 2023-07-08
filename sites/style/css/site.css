@@ -6,6 +6,11 @@
     list-style: none;
 }
 
+p{
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
 textarea, input { outline: none; }
 
 .hidden{

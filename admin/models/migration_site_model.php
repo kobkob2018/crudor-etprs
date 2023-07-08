@@ -25,18 +25,22 @@
 
     public static function get_old_site_data_by_domain($domain){
         $ilbiz_db = self::getIlbizDb();
-        $sql = "select id, domain, unk, name from users WHERE domain = :domain";
+        $sql = "select id, domain, unk, name, has_ssl from users WHERE domain = :domain";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('domain'=>$domain));
         $result = $req->fetch();
-
+        $has_ssl = '0';
+        if($result['has_ssl'] != '0'){
+            $has_ssl = '1';
+        }
         if($result){
 			$title = utgt($result['name']);
             return array(
                 'domain'=>$result['domain'],
                 'unk'=>$result['unk'],
                 'site_id'=>$result['id'],
-                'title'=>$title
+                'title'=>$title,
+                'has_ssl'=>$has_ssl
             );
         }
         return false;
