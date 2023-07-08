@@ -14,7 +14,7 @@
       else{
           $filter = array(
             'row_limit' => '20',
-            'page'=>'-1'
+            'page'=>'0'
           );
           if(isset($_REQUEST['page'])){
             $filter['page'] = $_REQUEST['page'];

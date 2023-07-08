@@ -31,10 +31,7 @@
         $row_count = $result['row_count'];
 
         $page = intval($filter['page']);
-        $page = $page - 1;
-        if($page<0){
-            $row_limit = 0;
-        }
+
         $row_limit = intval($filter['row_limit']);
         $limit_count = $page*$row_limit;
         $limit_str = " LIMIT $limit_count, $row_limit ";
@@ -46,7 +43,7 @@
         AND page.deleted = '0' 
 		AND page.redierct_301 = '' 
 		AND page.type NOT IN('text','net','gb','contact')  
-        $limit_str 
+         $limit_str 
         ";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('unk'=>$migration_site['old_unk']));
