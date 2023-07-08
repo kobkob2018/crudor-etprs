@@ -123,7 +123,7 @@
         return array(
             'row_count'=>$page_count,
             'content_pages'=>$content_pages,
-        )
+        );
     }
 
     protected static function get_migrated_page_info($page_id){
