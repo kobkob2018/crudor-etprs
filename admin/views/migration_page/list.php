@@ -248,7 +248,7 @@
             a_el.closest(".row").append(div_holder);
             div_holder.querySelectorAll("img").forEach(img => {
                 const img_src = img.src;
-                const migrate_image_url = "<?= inner_url("migration_page/migrate_image/") ?>?img_url="+img_url;
+                const migrate_image_url = "<?= inner_url("migration_page/migrate_image/") ?>?img_url="+img_src;
                 fetch(url).then((res) => res.json()).then(info => {
                     img.src = info.new_img_src;
                 });
