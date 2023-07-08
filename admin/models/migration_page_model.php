@@ -319,7 +319,7 @@
 			'priority'=>'10',
 		);
 		if($page_block['content'] != ""){
-			$page_block['content'] = utget($page_block['content']);
+			$page_block['content'] = utgt($page_block['content']);
 			$page_block['content'] = str_replace("white-block","c-block",$page_block['content']);
 		}
 		self::simple_create_by_table_name($page_block, 'content_blocks');
