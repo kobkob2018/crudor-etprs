@@ -118,6 +118,7 @@
     }
     else{
       $file_name = basename($img_url).PHP_EOL;
+      $file_name = str_replace(" ","-",$file_name);
       $dir_path = $this->create_uploads_path($migration_site);
       $file_path = $dir_path.$file_name;
       $limit_attampts = 1;
