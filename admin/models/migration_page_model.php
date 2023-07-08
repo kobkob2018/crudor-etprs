@@ -31,7 +31,7 @@
         $row_count = $result['row_count'];
 
         $page = intval($filter['page']);
-
+        $page = $page-1;
         $row_limit = intval($filter['row_limit']);
         $limit_count = $page*$row_limit;
         $limit_str = " LIMIT $limit_count, $row_limit ";
