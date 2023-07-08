@@ -239,7 +239,7 @@
 
     function fix_page_fetch(a_el){
         const page_id = a_el.dataset.page_id;
-        show_loading("please wait! <br/>removing page #"+page_id);
+        show_loading("please wait! <br/>fixing page #"+page_id);
 		const url = "<?= inner_url("migration_page/get_page_blocks/") ?>?page_id="+page_id;
 		const page_row = a_el.closest(".row");
         const div_holder = document.createElement("div");
@@ -252,7 +252,30 @@
                 fetch(migrate_image_url).then((res) => res.json()).then(info => {
                     img.src = info.new_img_src;
                 });
+
             });
+            div_holder.querySelectorAll(".white-cube").forEach(cube=>{
+                cube.classList.add("c-block");
+            });
+            div_holder.querySelectorAll("style").forEach(style_el=>{style_el.remove()});
+            setTimeout(function(){
+                div_holder.querySelectorAll(".page-content-block").forEach(block=>{
+                    const fixed_html = block.innerHTML;
+                    const block_id = block.dataset.block_id;
+                    const fix_block_url = "<?= inner_url("migration_page/fix_block/") ?>?block_id="+block_id;
+                    show_loading("fixing block"+block_id);
+                    fetch(fix_block_url,{
+
+                        
+                        method: 'POST', // Specify the HTTP method
+                        body: "&block_html="+fixed_html
+
+                    }
+                    ).then((res) => res.json()).then(info => {
+                        alert("ok now!");
+                    });
+                });
+            },1000);
         });
     }
 
