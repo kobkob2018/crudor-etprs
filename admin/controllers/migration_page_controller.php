@@ -95,6 +95,7 @@
     $page_id = $_REQUEST['page_id'];
     $page_blocks = Migration_page::get_page_blocks($page_id);
     $this->data['page_blocks'] = $page_blocks;
+    return $this->include_view("migration_page/page_blocks.php");
   }
 }
 ?>
