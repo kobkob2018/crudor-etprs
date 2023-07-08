@@ -99,6 +99,7 @@
   }
 
   public function migrate_image(){
+
     $this->set_layout("blank");
     $filter_arr = $this->get_base_filter();
     $migration_site = Migration_site::find($filter_arr);
@@ -116,9 +117,39 @@
     if($image_row){
       $return_array['new_img_src'] = $image_row['new_src'];
     }
+	
     else{
       $file_name = basename($img_url).PHP_EOL;
-      $file_name = str_replace(" ","-",$file_name);
+	  $ext_arr = explode(".",$file_name);
+	  $file_ext = $ext_arr[count($ext_arr) - 1];
+	  $file_ext = trim(strtolower($file_ext));
+	  $extentions_arr = array(
+		"png","ico","gif","jpg" , "jpeg" , "jfif" , "pjpeg" , "pjp","svg"
+	  );
+	  $file_is_img = false;
+	  foreach($extentions_arr as $allowed_ext){
+		
+		  if($file_ext == $allowed_ext){
+			 
+			  $file_is_img = true;
+		  }
+	  }
+	  if(!$file_is_img){
+		  
+		  $return_array['new_img_src'] = $img_url;
+		  print(json_encode($return_array));
+		  return;
+	  }
+	  unset($ext_arr[count($ext_arr) - 1]);
+	  $file_name = implode(".",$ext_arr);
+	  $file_name = str_replace(" ","",$file_name);
+	  $file_check_name = trim(str_replace(".","",$file_name));
+	  
+	  if (strlen($file_check_name) != strlen(utf8_decode($file_check_name))){
+		  $file_name = "img-".time();
+		}
+		$file_name = $file_name.".".$file_ext;
+		
       $dir_path = $this->create_uploads_path($migration_site);
       $file_path = $dir_path.$file_name;
       $limit_attampts = 1;
@@ -133,7 +164,7 @@
         }
       }
       file_put_contents($file_path, file_get_contents($img_url));
-      $return_array['new_img_src'] = $file_path;
+      $return_array['new_img_src'] = "/".$file_path;
       Migration_page::simple_create_by_table_name(array(
         'new_src'=>$file_path,
         'old_src'=>$img_url,
