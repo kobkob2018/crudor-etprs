@@ -267,7 +267,7 @@
                     const block_id = block.dataset.block_id;
                     const fix_block_url = "<?= inner_url("migration_page/fix_block/") ?>?block_id="+block_id;
                     document.querySelector(".helper-block-content").innerHTML = fixed_html;
-                    const helper_form = document.getElementById(".helper-block-form");
+                    const helper_form = document.querySelector(".helper-block-form");
                     const data = new FormData(helper_form);
                     show_loading("fixing block"+block_id);
                     fetch(fix_block_url,{
