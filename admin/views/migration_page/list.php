@@ -246,6 +246,13 @@
         fetch(url).then((res) => res.text()).then(html => {
             div_holder.innerHTML = html;
             a_el.closest(".row").append(div_holder);
+            div_holder.querySelector("img").forEach(img => {
+                const img_src = img.src;
+                const migrate_image_url = "<?= inner_url("migration_page/migrate_image/") ?>?img_url="+img_url;
+                fetch(url).then((res) => res.json()).then(info => {
+                    img.src = info.new_img_src;
+                });
+            });
         });
     }
 

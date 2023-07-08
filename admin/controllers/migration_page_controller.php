@@ -97,5 +97,72 @@
     $this->data['page_blocks'] = $page_blocks;
     return $this->include_view("migration_page/page_blocks.php");
   }
+
+  public function migrate_image(){
+    $this->set_layout("blank");
+    $filter_arr = $this->get_base_filter();
+    $migration_site = Migration_site::find($filter_arr);
+    $img_url = $_REQUEST['img_url'];
+    $check_url = "http://";
+    if($migration_site['old_has_ssl']){
+      $check_url = "https://";
+    }
+    $check_url.=$migration_site['old_domain'];
+    $return_array = array(
+      'new_img_src'=>$img_url
+    );
+    if(str_starts_with($check_url, $img_url)){
+      $image_row = Migration_page::simple_find_by_table_name($filter_arr,'migration_image');
+      if($image_row){
+        $return_array['new_img_src'] = $image_row['new_src'];
+      }
+      else{
+        $file_name = basename($img_url).PHP_EOL;
+        $dir_path = $this->create_uploads_path($migration_site);
+        $file_path = $dir_path.$file_name;
+        $limit_attampts = 1;
+        while($limit_attampts < 5){
+          if(file_exists($file_path)){
+            $limit_attampts++;
+            $new_filename = "f".$limit_attampts.$file_name;
+            $file_path = $dir_path.$new_filename;
+          }
+          else{
+            $limit_attampts = 10;
+          }
+        }
+        file_put_contents($file_path, file_get_contents($img_url));
+        $return_array['new_img_src'] = $file_path;
+        Migration_page::simple_create_by_table_name(array(
+          'new_src'=>$file_path,
+          'old_src'=>$img_url,
+          'site_id'=>$migration_site['site_id']
+        ),'migration_image');
+      }
+    }
+    print(json_encode($return_array));
+
+  }  
+  protected function create_uploads_path($migration_site){
+    $dir_path = 'assets_s/'.$migration_site['site_id']."/";
+    if( !is_dir($dir_path)){
+      $oldumask = umask(0) ;
+      $mkdir = @mkdir( $dir_path, 0755 ) ;
+      umask( $oldumask ) ;
+    }
+    $dir_path = $dir_path."media/";
+    if( !is_dir($dir_path)){
+      $oldumask = umask(0) ;
+      $mkdir = @mkdir( $dir_path, 0755 ) ;
+      umask( $oldumask ) ;
+    }
+    $dir_path = $dir_path."uploads/";
+    if( !is_dir($dir_path)){
+      $oldumask = umask(0) ;
+      $mkdir = @mkdir( $dir_path, 0755 ) ;
+      umask( $oldumask ) ;
+    }
+    return $dir_path;
+  }
 }
 ?>
