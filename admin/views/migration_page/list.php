@@ -80,6 +80,10 @@
             <div class="col migrate-state-holder">
                 <?php if($migrate_page['migrated_page']['migrated']): ?>
                     <a target="_BLANK" href = "<?= inner_url('pages/edit/') ?>?row_id=<?= $migrate_page['migrated_page']['page_id'] ?>" title="צפה בדף">ערוך דף</a>
+
+                    <br/>
+
+                    <a class="button-focus fix-page-button" onclick = "fix_page_fetch(this)" data-page_id="<?= $migrate_page['migrated_page']['page_id'] ?>" href = "javascript://"  title="תקן תכנים">תקן תכנים</a>
                 <?php else: ?>
                 לא
                 <?php endif; ?>
@@ -226,6 +230,8 @@
 			button_holder.innerHTML = '<a href="javascript://" onclick = "delete_page_fetch(this)"  data-page_id="'+info.page_id+'" title="מחק">מחק את הדף המיובא</a>';
 			
 			state_holder.innerHTML = '<a target="_BLANK" href="<?= inner_url("pages/edit/?row_id=") ?>'+info.page_id+'" title="ערוך">עריכת דף</a>';
+
+            state_holder.innerHTML += '<br/><a class="button-focus fix-page-button" onclick = "fix_page_fetch(this)" href = "javascript://" data-page_id="'+info.page_id+'" title="תיקון תוכן">תקן תמונות ותכנים אחרים</a>';
 			 
             auto_import_next_page();
 		});
