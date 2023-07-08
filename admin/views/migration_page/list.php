@@ -51,7 +51,15 @@
                 </span>
                 
             </a>
-
+            <a class="auto-delete-button off" href="javascript://" onclick="run_auto_delete(this)" data-state="off">
+                <span class="off-label">
+                    התחלת מחיקה רציפה
+                </span>
+                <span class="on-label">
+                    הפסק מחיקה רציפה
+                </span>
+                
+            </a>
         </div>
     </div>
     <?php foreach($this->data['migrate_page_list'] as $migrate_page): ?>
@@ -95,7 +103,7 @@
             
             <div class="col migrate-button-holder">
                 <?php if($migrate_page['migrated_page']['migrated']): ?>
-                    <a href="javascript://" onclick = "delete_page_fetch(this)"  data-page_id="<?= $migrate_page['migrated_page']['page_id'] ?>" title="מחק">מחק את הדף המיובא</a>
+                    <a class="page-delete-button" href="javascript://" onclick = "delete_page_fetch(this)"  data-page_id="<?= $migrate_page['migrated_page']['page_id'] ?>" title="מחק">מחק את הדף המיובא</a>
 				<?php else: ?>
 				
 					<a class="button-focus page-import-button" href = "javascript://" onclick="import_page_fetch(this)" data-page_id = "<?= $migrate_page['id'] ?>" />ייבוא</a>
@@ -147,6 +155,23 @@
         }
     }
 
+    function run_auto_delete(a_el){
+        if(a_el.dataset.state == "off"){
+            if(!confirm("האם אתה בטוח שברצונך להתחיל מחיקה רציפה של כל הדפים בעמוד זה?")){
+                return;
+            }
+            a_el.dataset.state = "on";
+            a_el.classList.remove("off");
+            a_el.classList.add("on");
+            auto_delete_next_page();
+        }
+        else{
+            a_el.dataset.state = "off";
+            a_el.classList.remove("on");
+            a_el.classList.add("off"); 
+        }
+    }
+
     function auto_import_next_page(){
         const auto_import_button = document.querySelector(".auto-import-button");
         if(auto_import_button.dataset.state != "on"){
@@ -155,9 +180,25 @@
         setTimeout(function(){
             const next_import_button = document.querySelector(".page-import-button");
             if(!next_import_button){
+                alert("אין עוד דפים לייבוא");
                 return;
             }
             next_import_button.click();
+        }, 500);
+    }
+
+    function auto_delete_next_page(){
+        const auto_import_button = document.querySelector(".auto-delete-button");
+        if(auto_import_button.dataset.state != "on"){
+            return;
+        }
+        setTimeout(function(){
+            const next_delete_button = document.querySelector(".page-delete-button");
+            if(!next_delete_button){
+                alert("אין עוד דפים למחיקה");
+                return;
+            }
+            next_delete_button.click();
         }, 500);
     }
 
@@ -208,7 +249,7 @@
 			version_holder.innerHTML = "";
 			button_holder.innerHTML = '<a class="button-focus" href="javascript://" onclick="import_page_fetch(this)" data-page_id="'+info.old_page_id+'">ייבוא</a>';
 			state_holder.innerHTML = "לא";
-			 
+            auto_delete_next_page();
 		});
 	}
 	
