@@ -33,7 +33,18 @@
         <div class="col col-tiny">מספר דף</div>
         <div class="col col-tiny">type</div>
 
-        <div class="col">מצב ייבוא</div>
+        <div class="col">מצב ייבוא
+            <br/>
+            <a class="button-focus auto-fix-button off" href="javascript://" onclick="run_auto_fix(this)" data-state="off">
+                <span class="off-label">
+                    התחלת תיקון רציף
+                </span>
+                <span class="on-label">
+                    הפסק תיקון רציף
+                </span>
+                
+            </a>
+        </div>
         <div class="col">כותרת</div>
         <div class="col">
             קטגוריה ישנה <hr/> קטגוריה חדשה
@@ -83,7 +94,7 @@
 
                     <br/>
 
-                    <a class="button-focus fix-page-button" onclick = "fix_page_fetch(this)" data-page_id="<?= $migrate_page['migrated_page']['page_id'] ?>" href = "javascript://"  title="תקן תכנים">תקן תכנים</a>
+                    <a class="button-focus page-fix-button" onclick = "fix_page_fetch(this)" data-page_id="<?= $migrate_page['migrated_page']['page_id'] ?>" href = "javascript://"  title="תקן תכנים">תקן תכנים</a>
                 <?php else: ?>
                 לא
                 <?php endif; ?>
@@ -162,6 +173,24 @@
         }
     }
 
+
+    function run_auto_fix(a_el){
+        if(a_el.dataset.state == "off"){
+            if(!confirm("עכשיו יתחיל תהליך תיקון של תמונות וניקוי התכנים המיובאים?")){
+                return;
+            }
+            a_el.dataset.state = "on";
+            a_el.classList.remove("off");
+            a_el.classList.add("on");
+            auto_fix_next_page();
+        }
+        else{
+            a_el.dataset.state = "off";
+            a_el.classList.remove("on");
+            a_el.classList.add("off"); 
+        }
+    }
+    
     function run_auto_delete(a_el){
         if(a_el.dataset.state == "off"){
             if(!confirm("האם אתה בטוח שברצונך להתחיל מחיקה רציפה של כל הדפים בעמוד זה?")){
@@ -193,6 +222,22 @@
             next_import_button.click();
         }, 500);
     }
+
+    function auto_fix_next_page(){
+        const auto_fix_button = document.querySelector(".auto-fix-button");
+        if(auto_fix_button.dataset.state != "on"){
+            return;
+        }
+        setTimeout(function(){
+            const next_fix_button = document.querySelector(".page-fix-button");
+            if(!next_fix_button){
+                alert("אין עוד דפים לתקן");
+                return;
+            }
+            next_fix_button.click();
+        }, 500);
+    }
+    
 
     function auto_delete_next_page(){
         const auto_import_button = document.querySelector(".auto-delete-button");
@@ -234,7 +279,7 @@
 			
 			state_holder.innerHTML = '<a target="_BLANK" href="<?= inner_url("pages/edit/?row_id=") ?>'+info.page_id+'&go_to_page=1" title="ערוך">עריכת דף</a>';
 
-            state_holder.innerHTML += '<br/><a class="button-focus fix-page-button" onclick = "fix_page_fetch(this)" href = "javascript://" data-page_id="'+info.page_id+'" title="תיקון תוכן">תקן תמונות ותכנים אחרים</a>';
+            state_holder.innerHTML += '<br/><a class="button-focus page-fix-button" onclick = "fix_page_fetch(this)" href = "javascript://" data-page_id="'+info.page_id+'" title="תיקון תוכן">תקן תמונות ותכנים אחרים</a>';
 			 
             auto_import_next_page();
 		});
@@ -287,6 +332,8 @@
 						if(!check_blocks){
 							hide_loading();
 							div_holder.remove();
+                            a_el.remove();
+                            auto_fix_next_page();
 						}
                     });
 					
