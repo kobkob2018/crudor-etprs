@@ -224,9 +224,11 @@
     }
 
     function auto_fix_next_page(){
-        show_loading("next_page_fix");
+        
         const auto_fix_button = document.querySelector(".auto-fix-button");
         if(auto_fix_button.dataset.state != "on"){
+            hide_loading();
+            alert("הפעולה בוצעה בהצלחה");
             return;
         }
         setTimeout(function(){
