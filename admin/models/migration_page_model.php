@@ -265,7 +265,7 @@
 		);
 		
 		if($new_page_info['content']!= ""){
-			$new_page_info['content'] = utgt($new_page_info['content']);
+			$new_page_info['content'] = utgt(stripslashes($new_page_info['content']));
 		}
 		if($new_page_info['description']!= ""){
 			$new_page_info['description'] = utgt($new_page_info['description']);
@@ -324,7 +324,7 @@
 				'site_id'=>$migration_site['site_id'],
 				'page_id'=>$new_page_id,
 				'label'=>'imported-form',
-				'content'=>utgt($ilbiz_form_info['content']),
+				'content'=>utgt(stripslashes($ilbiz_form_info['content'])),
 				'css_class'=>'mgrt mgrt-frm',
 				'priority'=>'10',
 			);

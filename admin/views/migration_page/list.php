@@ -232,6 +232,7 @@
             const next_fix_button = document.querySelector(".page-fix-button");
             if(!next_fix_button){
                 alert("אין עוד דפים לתקן");
+                hide_loading();
                 return;
             }
             next_fix_button.click();
@@ -294,54 +295,83 @@
         fetch(url).then((res) => res.text()).then(html => {
             div_holder.innerHTML = html;
            // a_el.closest(".row").append(div_holder);
-            div_holder.querySelectorAll("img").forEach(img => {
-                const img_src = img.src;
-                const migrate_image_url = "<?= inner_url("migration_page/migrate_image/") ?>?img_url="+img_src;
-                fetch(migrate_image_url).then((res) => res.json()).then(info => {
-                    img.src = info.new_img_src;
-                });
+           div_holder.querySelectorAll("img").forEach(img => {
+                img.classList.add("img-tofix");
+           });
+           
 
-            });
             div_holder.querySelectorAll(".white-cube").forEach(cube=>{
                 cube.classList.add("c-block");
             });
             div_holder.querySelectorAll("style").forEach(style_el=>{style_el.remove()});
-            setTimeout(function(){
-                div_holder.querySelectorAll(".page-content-block").forEach(block=>{
-                    const fixed_html = block.innerHTML;
-                    const block_id = block.dataset.block_id;
-                    const fix_block_url = "<?= inner_url("migration_page/fix_block/") ?>?block_id="+block_id;
-                    // document.querySelector(".helper-block-content").innerHTML = fixed_html;
-                    const helper_form = document.createElement("form");
-					const helper_block = document.createElement("textarea");
-					helper_block.name = "block_html";
-					helper_block.innerHTML = fixed_html;
-					helper_form.append(helper_block);
-                    const data = new FormData(helper_form);
-                    show_loading("fixing block"+block_id);
-                    fetch(fix_block_url,{
 
-                        
-                        method: 'POST', // Specify the HTTP method
-                        body: data
+            next_img_fix(div_holder, a_el);
+            return;
 
-                    }
-                    ).then((res) => res.json()).then(info => {
-						block.remove();
-						const check_blocks = div_holder.querySelector(".page-content-block");
-						if(!check_blocks){
-							hide_loading();
-							div_holder.remove();
-                            a_el.remove();
-                            auto_fix_next_page();
-						}
-                    });
-					
-					helper_form.remove();
-                });
-            },1000);
         });
     }
+
+    function next_block_fix(div_holder,a_el){
+        const block_fix = div_holder.querySelector(".page-content-block");
+        if(!block_fix){
+            div_holder.remove();
+            a_el.remove();
+            setTimeout(function(){
+                auto_fix_next_page(); 
+            },500);
+                       
+            return;
+        }
+        const fixed_html = block_fix.innerHTML;
+        const block_id = block_fix.dataset.block_id;
+        add_loading("<br/>fixing block:" + block_id);
+        const fix_block_url = "<?= inner_url("migration_page/fix_block/") ?>?block_id="+block_id;
+                   
+        const helper_form = document.createElement("form");
+        const helper_block = document.createElement("textarea");
+        helper_block.name = "block_html";
+        helper_block.innerHTML = fixed_html;
+        helper_form.append(helper_block);
+        const data = new FormData(helper_form);
+        show_loading("fixing block"+block_id);
+        fetch(fix_block_url,{            
+            method: 'POST', // Specify the HTTP method
+            body: data
+
+        }).then((res) => res.json()).then(info => {
+            block_fix.remove();
+            helper_form.remove();
+            setTimeout(function(){
+                next_block_fix(div_holder,a_el);
+            },500);
+            
+        });
+    }
+
+    function next_img_fix(div_holder,a_el){
+        const img_tofix = div_holder.querySelector(".img-tofix");
+        if(!img_tofix){
+            setTimeout(function(){
+                next_block_fix(div_holder,a_el);
+            },500);
+            
+            return;
+        }
+        img_tofix.classList.remove("img-tofix");
+        const img_src = img_tofix.src;
+        add_loading("<br/>fixing image: "+img_src);
+        const migrate_image_url = "<?= inner_url("migration_page/migrate_image/") ?>?img_url="+img_src;
+        fetch(migrate_image_url).then((res) => res.json()).then(info => {
+            img.src = info.new_img_src;
+            setTimeout(function(){
+                next_img_fix(div_holder,a_el);
+            },500);
+            
+        });
+        
+        
+    }
+
 
 	function delete_page_fetch(a_el){
 		
@@ -370,6 +400,10 @@
         document.querySelector(".loading-tag-wrap").classList.remove("hidden");
     }
     
+    function add_loading(str){
+        document.querySelector(".loading-tag-wrap").innerHTML += "<br/>"+str;
+    }
+
     function hide_loading(){
 		document.querySelector(".loading-tag-wrap").innerHTML = "WAIT...";
         document.querySelector(".loading-tag-wrap").classList.add("hidden");
