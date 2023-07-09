@@ -248,7 +248,7 @@
         const div_holder = document.createElement("div");
         fetch(url).then((res) => res.text()).then(html => {
             div_holder.innerHTML = html;
-            a_el.closest(".row").append(div_holder);
+           // a_el.closest(".row").append(div_holder);
             div_holder.querySelectorAll("img").forEach(img => {
                 const img_src = img.src;
                 const migrate_image_url = "<?= inner_url("migration_page/migrate_image/") ?>?img_url="+img_src;
@@ -266,8 +266,12 @@
                     const fixed_html = block.innerHTML;
                     const block_id = block.dataset.block_id;
                     const fix_block_url = "<?= inner_url("migration_page/fix_block/") ?>?block_id="+block_id;
-                    document.querySelector(".helper-block-content").innerHTML = fixed_html;
-                    const helper_form = document.querySelector(".helper-block-form");
+                    // document.querySelector(".helper-block-content").innerHTML = fixed_html;
+                    const helper_form = document.createElement("form");
+					const helper_block = document.createElement("textarea");
+					helper_block.name = "block_html";
+					helper_block.innerHTML = fixed_html;
+					helper_form.append(helper_block);
                     const data = new FormData(helper_form);
                     show_loading("fixing block"+block_id);
                     fetch(fix_block_url,{
@@ -278,8 +282,15 @@
 
                     }
                     ).then((res) => res.json()).then(info => {
-                        alert("ok now!");
+						block.remove();
+						const check_blocks = div_holder.querySelector(".page-content-block");
+						if(!check_blocks){
+							hide_loading();
+							div_holder.remove();
+						}
                     });
+					
+					helper_form.remove();
                 });
             },1000);
         });
