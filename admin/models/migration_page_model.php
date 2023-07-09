@@ -291,7 +291,9 @@
 		}
 		
 		$new_cat_id = self::get_migrate_cat_id($cat_id);
-		
+		if($new_cat_id == "-1"){
+            $new_cat_id = "254";
+        }
 		$new_cat_str = self::get_ilbiz_migrate_cat_str(null, $new_cat_id);
 		
 		
