@@ -362,7 +362,7 @@
         add_loading("<br/>fixing image: "+img_src);
         const migrate_image_url = "<?= inner_url("migration_page/migrate_image/") ?>?img_url="+img_src;
         fetch(migrate_image_url).then((res) => res.json()).then(info => {
-            img.src = info.new_img_src;
+            img_tofix.src = info.new_img_src;
             setTimeout(function(){
                 next_img_fix(div_holder,a_el);
             },500);
