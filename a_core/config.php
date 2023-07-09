@@ -18,7 +18,7 @@ $config = array(
 
     'master_domain'=>'webushka.com',
 
-    'master_url'=>'https://webushka.com',
+    'master_url'=>'https://webushka.com', 
     'error_controller'=>'pages',
     'error_action'=>'error',
 
