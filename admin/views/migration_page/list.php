@@ -144,10 +144,11 @@
         left: 0px;
         text-align: center;
         position: fixed;
-        font-size: 30px;
+        font-size: 20px;
 		background: #eeaaffa1;
         padding-top: 50px;
-        
+        max-height: 200px;
+        overflow: auto;
         width: 100%;
     }
     .auto-import-button.on .off-label{display:none;}
@@ -220,7 +221,7 @@
                 return;
             }
             next_import_button.click();
-        }, 500);
+        }, 400);
     }
 
     function auto_fix_next_page(){
@@ -239,7 +240,7 @@
                 return;
             }
             next_fix_button.click();
-        }, 500);
+        }, 400);
     }
     
 
@@ -255,7 +256,7 @@
                 return;
             }
             next_delete_button.click();
-        }, 500);
+        }, 400);
     }
 
     function submit_filter_form(select){
@@ -321,7 +322,7 @@
             a_el.remove();
             setTimeout(function(){
                 auto_fix_next_page(); 
-            },500);
+            },300);
                        
             return;
         }
@@ -346,7 +347,7 @@
             helper_form.remove();
             setTimeout(function(){
                 next_block_fix(div_holder,a_el);
-            },500);
+            },100);
             
         });
     }
@@ -356,7 +357,7 @@
         if(!img_tofix){
             setTimeout(function(){
                 next_block_fix(div_holder,a_el);
-            },500);
+            },100);
             
             return;
         }
@@ -368,11 +369,9 @@
             img_tofix.src = info.new_img_src;
             setTimeout(function(){
                 next_img_fix(div_holder,a_el);
-            },500);
+            },100);
             
         });
-        
-        
     }
 
 
@@ -404,7 +403,9 @@
     }
     
     function add_loading(str){
-        document.querySelector(".loading-tag-wrap").innerHTML += "<br/>"+str;
+        const loading = document.querySelector(".loading-tag-wrap");
+        loading.innerHTML += "<br/>"+str;
+        loading.scrollTop = loading.scrollHeight;
     }
 
     function hide_loading(){

@@ -13,7 +13,7 @@
       }
       else{
           $filter = array(
-            'row_limit' => '20',
+            'row_limit' => '100',
             'page'=>'1'
           );
           if(isset($_REQUEST['page'])){
