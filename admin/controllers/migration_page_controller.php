@@ -114,10 +114,15 @@
     );
     $img_filter_arr = array('old_src'=>$img_url);
     $image_row = Migration_page::simple_find_by_table_name($img_filter_arr,'migration_image');
+    $new_img_filter_arr = array('new_src'=>$img_url);
+    $new_image_row = Migration_page::simple_find_by_table_name($new_img_filter_arr,'migration_image');
+    
     if($image_row){
       $return_array['new_img_src'] = $image_row['new_src'];
     }
-	
+    elseif($new_image_row){
+      $return_array['new_img_src'] = $new_image_row['new_src'];
+    }
     else{
       $file_name = basename($img_url).PHP_EOL;
 	  $ext_arr = explode(".",$file_name);
