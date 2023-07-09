@@ -114,9 +114,10 @@
     );
     $img_filter_arr = array('old_src'=>$img_url);
     $image_row = Migration_page::simple_find_by_table_name($img_filter_arr,'migration_image');
-    
-    $img_url_check = str_replace(outer_url(''),"",$img_url);
-    $new_img_filter_arr = array('new_src'=>$img_url_check);
+	
+	$domain_fix = "https://".$_SERVER['HTTP_HOST'];
+	$new_img_check = str_replace($domain_fix,"",$img_url);
+    $new_img_filter_arr = array('new_src'=>$new_img_check);
     $new_image_row = Migration_page::simple_find_by_table_name($new_img_filter_arr,'migration_image');
     
     if($image_row){
