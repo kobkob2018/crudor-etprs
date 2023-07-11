@@ -80,7 +80,7 @@
                         <?php if($build_field['type'] == 'file'): ?>
                             
                             <?php if($build_field['file_type'] == 'img'): ?>
-                                <input type="file" name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>" accept="image/png, image/gif, image/jpeg, image/x-icon" class="form-input" value="" />
+                                <input type="file" name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>" accept="image/png, image/gif, image/jpeg, image/x-icon, image/svg+xml" class="form-input" value="" />
                             <?php elseif($build_field['file_type'] == 'video'): ?>
                                 <input type="file" name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>" accept="video/mp4,video/x-m4v,video/*" class="form-input" value="" />
                             <?php else: ?>

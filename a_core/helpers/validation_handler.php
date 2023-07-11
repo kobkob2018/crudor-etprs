@@ -197,7 +197,7 @@
             //special check for svg, that not contained with the previous check
             $file_name = $file["name"];   
             $ext = strtolower(pathinfo($file_name,PATHINFO_EXTENSION));
-            if(!$ext == "svg"){
+            if($ext == "svg"){
                 $check = true;
             }
         }
