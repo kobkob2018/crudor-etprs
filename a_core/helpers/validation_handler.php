@@ -192,13 +192,22 @@
         $file = $validate_payload['user_file'];
         $file_name = $file["name"];
         $check = getimagesize($file["tmp_name"]);
+        if(!$check){
 
+            //special check for svg, that not contained with the previous check
+            $file_name = $file["name"];   
+            $ext = strtolower(pathinfo($file_name,PATHINFO_EXTENSION));
+            if(!$ext == "svg"){
+                $check = true;
+            }
+        }
         if(!$check){
             $is_valid = false;
             $return_array['success'] = false;
             $return_array['message'] = $this->error_messages['img_format'];
             $return_array['fixed_value'] = $validate_payload['db_value'];
         }
+        
         if(!$is_valid){
             return $return_array;
         }
