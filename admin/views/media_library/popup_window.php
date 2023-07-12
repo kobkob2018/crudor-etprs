@@ -17,6 +17,7 @@
                 a_el.classList.add("item-selected");
 
                 document.getElementById('submit_a_button').classList.add('active');
+                document.getElementById('delete_a_button').classList.add('active');
             }
 
             function submit_image_select(){
@@ -38,6 +39,26 @@
                 window.opener.update_from_media_library(image_url);
                 window.close();
             }
+
+            function delete_selected_image(){
+                if(!confirm("האם למחוק תמונה זו?")){
+                    return;
+                }
+                const s_el = document.querySelector('.item-selected');
+                const image_url = s_el.dataset.image_url;
+                fetch("<?= inner_url("media/delete_image/") ?>?image="+image_url).then((res) => res.json()).then(info => {
+                    if(info.success){
+                        alert("התמונה נמחקה בהצלחה");
+                        s_el.remove();
+                    }
+                    else{
+                        if(info.message != ""){
+                            alert(info.message);
+                        }
+                        return;
+                    }
+                });
+            }
         </script>
 
         <style type ="text/css">
@@ -46,7 +67,9 @@
             }
 
             .buttom-buttons{
-                display: block;
+                display: flex;
+                align-items: self-end;
+                justify-content: space-between;
                 position: fixed;
                 bottom: 0px;
                 width: 100%;
@@ -103,10 +126,14 @@
                 padding: 10px 37px;
                 box-shadow: 5px 5px 5px grey;
             }
-            .submit-a{
+            .delete-a{
+                color:red;
+                font-size: 20px;
+            }
+            .submit-a, .delete-a{
                 display: none;
             }
-            a.submit-a.active{
+            a.submit-a.active,a.delete-a.active{
                 display: block;
             }
         </style>
@@ -126,11 +153,13 @@
             
         </div>
     <?php endforeach; ?>
-    <div class="buttom-buttons">
-        <a id = "submit_a_button" class="submit-a" href="javascript://" onClick = "submit_image_select()" >
-            בחירה
-            
-        </a>
-    </div>
+        <div class="buttom-buttons">
+            <a id = "delete_a_button" class="delete-a" href="javascript://" onClick = "delete_selected_image()" >
+                מחיקת תמונה       
+            </a>
+            <a id = "submit_a_button" class="submit-a" href="javascript://" onClick = "submit_image_select()" >
+                בחירה       
+            </a>
+        </div>
   </body>
 <html>

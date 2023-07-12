@@ -128,5 +128,27 @@
 
     }
 
+
+    public function delete_image(){
+
+        $this->set_layout("blank");
+        $image_url = $_REQUEST['image'];
+        $image_url = str_replace("/assets_s","assets_s",$image_url);
+        if(file_exists($image_url)){
+            unlink($image_url);
+            $return_array = array(
+                'success'=>true
+            );
+        }
+        else{
+            $return_array = array(
+                'success'=>false,
+                'message'=>'הקובץ אינו קיים('.$image_url.')'
+            );
+        }
+        print json_encode($return_array);
+        return;
+    }
+
   }
 ?>
