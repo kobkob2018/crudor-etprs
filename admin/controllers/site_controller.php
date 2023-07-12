@@ -102,6 +102,8 @@
     }
 
     protected function delete_item($row_id){
+      $site_directory = "assets_s/$row_id/";
+      self::rmdir_recursive($site_directory, $delete_parent = null);
       AdminSites::delete($row_id);
       session__unset('workon_site');
       return;
@@ -213,6 +215,21 @@
 
     protected function after_add_redirect($new_row_id){
       return $this->redirect_to(inner_url('site_colors/edit/?row_id='.$new_row_id));
+    }
+
+
+    public static function rmdir_recursive($directory, $delete_parent = null){
+      $files = glob($directory . '/{,.}[!.,!..]*',GLOB_MARK|GLOB_BRACE);
+      foreach ($files as $file) {
+        if (is_dir($file)) {
+          self::rmdir_recursive($file, 1);
+        } else {
+          unlink($file);
+        }
+      }
+      if ($delete_parent) {
+        rmdir($directory);
+      }
     }
   }
 ?>
