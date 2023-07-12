@@ -8,9 +8,13 @@
 <?php endif; ?>
 <div id="content_wrap">
     <?php foreach($this->data['content_blocks'] as $content_block): ?>
-        <div class="page-block <?= $content_block['css_class'] ?>">
+        <?php if($content_block['css_class'] != "nowrap"): ?>
+            <div class="page-block <?= $content_block['css_class'] ?>">
+                <?= $content_block['content'] ?>
+                <div class="clear"></div>
+            </div>
+        <?php else: ?>
             <?= $content_block['content'] ?>
-            <div class="clear"></div>
-        </div>
+        <?php endif; ?>
     <?php endforeach; ?>
 </div>
