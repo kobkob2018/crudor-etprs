@@ -45,5 +45,35 @@
         }
         return false;
     } 
+
+    public static function get_site_by_unk($unk){
+        $ilbiz_db = self::getIlbizDb();
+        $sql = "select id, domain, unk, name, has_ssl from users WHERE unk = :unk";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('unk'=>$unk));
+        $result = $req->fetch();
+        return $result;
+    }
+
+    public static function fix_quotes_images(){
+        $sites_by_unk = array();
+        $all_quotes = Quotes::get_list(array(),'unk, id, image');
+        $all_images = array();
+        foreach($all_quotes as $quote){
+            if($quote['image'] == '' || $quote['unk'] == ''){
+                continue;
+            }
+            if(!isset($sites_by_unk[$quote['unk']])){
+                $sites_by_unk[$quote['unk']] = self::get_site_by_unk($quote['unk']);
+            }
+            $site = $sites_by_unk[$quote['unk']];
+            $image_url = "http://";
+            if($site['has_ssl']){
+                $image_url = "https://";
+            }
+            $image_url.= $site['domain']."/user_service_offers/".$quote['image'];
+            echo "<br/>".$image_url;
+        }
+    }
 }
 ?>

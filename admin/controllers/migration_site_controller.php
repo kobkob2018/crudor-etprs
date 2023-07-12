@@ -131,5 +131,10 @@
         return Migration_site::create($fixed_values);
     }
 
+    public function fix_quotes_images(){
+        $this->add_model('quotes');
+        Migration_site::fix_quotes_images();
+    }
+
   }
 ?>
