@@ -115,8 +115,8 @@
     $img_filter_arr = array('old_src'=>$img_url);
     $image_row = Migration_page::simple_find_by_table_name($img_filter_arr,'migration_image');
 	
-	$domain_fix = "https://".$_SERVER['HTTP_HOST'];
-	$new_img_check = str_replace($domain_fix,"",$img_url);
+	  $domain_fix = "https://".$_SERVER['HTTP_HOST'];
+	  $new_img_check = str_replace($domain_fix,"",$img_url);
     $new_img_filter_arr = array('new_src'=>$new_img_check);
     $new_image_row = Migration_page::simple_find_by_table_name($new_img_filter_arr,'migration_image');
     
@@ -209,6 +209,14 @@
     $this->set_layout("blank");
     $block_id = $_REQUEST['block_id'];
     $block_html = $_REQUEST['block_html'];
+
+    //{{service_offers open 278 service_offers}}
+    //{{% mod | quotes | print_cat | cat_id:162 state:open %}}
+
+    $pattern = '{{service_offers open (.*) service_offers}}';
+    $replacement = '{{% mod | quotes | print_cat | cat_id:$1 state:open %}}';
+    $block_html = preg_replace($pattern, $replacement, $block_html);
+
     $return_array = array(
       'block_id'=>$block_id,
       'success'=>'true'
