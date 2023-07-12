@@ -76,11 +76,10 @@
             if(!file_exists($new_image_url)){
 
                 file_put_contents($new_image_url, file_get_contents($image_url));
-                echo "<br/>$image_url<br/><img src='$image_url' width='100px' height='100px' />";
+                
             }
-
+            echo "<br/>$image_url<br/><img src='$image_url' width='100px' height='100px' />";
             echo "<br/>/$new_image_url<br/><img src='/$new_image_url' width='100px' height='100px' />";
-            exit();
 
             echo "<br/>$image_url<br/><img src='$image_url' width='100px' height='100px' />";
         }
