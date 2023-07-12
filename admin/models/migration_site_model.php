@@ -72,8 +72,9 @@
                 $image_url = "https://";
             }
             $image_url.= $site['domain']."/user_service_offers/".$quote['image'];
-            echo "<br/>".$image_url;
+            echo "<br/>$image_url<br/><img src='$image_url' width='100px' height='100px' />";
         }
+        echo "<h3>done</h3>";
     }
 }
 ?>
