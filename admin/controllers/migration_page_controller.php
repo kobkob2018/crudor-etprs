@@ -214,11 +214,11 @@
     //{{% mod | quotes | print_cat | cat_id:162 state:open %}}
 
     $pattern = '{{service_offers open (.*) service_offers}}';
-    $replacement = '{{% mod | quotes | print_cat | cat_id:$1 state:open %}}';
+    $replacement = '{% mod | quotes | print_cat | cat_id:$1 state:open %}';
     $block_html = preg_replace($pattern, $replacement, $block_html);
 
     $pattern = '{{service_offers (.*) service_offers}}';
-    $replacement = '{{% mod | quotes | print_cat | cat_id:$1 %}}';
+    $replacement = '{% mod | quotes | print_cat | cat_id:$1 %}';
     $block_html = preg_replace($pattern, $replacement, $block_html);
 
     $return_array = array(
