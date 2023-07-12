@@ -217,6 +217,10 @@
     $replacement = '{{% mod | quotes | print_cat | cat_id:$1 state:open %}}';
     $block_html = preg_replace($pattern, $replacement, $block_html);
 
+    $pattern = '{{service_offers (.*) service_offers}}';
+    $replacement = '{{% mod | quotes | print_cat | cat_id:$1 %}}';
+    $block_html = preg_replace($pattern, $replacement, $block_html);
+
     $return_array = array(
       'block_id'=>$block_id,
       'success'=>'true'
@@ -225,5 +229,6 @@
    print(json_encode($return_array));
    return;
   }
+
 }
 ?>
