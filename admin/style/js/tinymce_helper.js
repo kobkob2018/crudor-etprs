@@ -28,12 +28,19 @@ function init_tinymce(selector_identifier,media_uploader_url, media_library_url)
                     editor.selection.setContent('<div class="video-container">' + editor.selection.getContent() + '</div>');
                 }
             });
+            editor.ui.registry.addButton('noP', {
+                text: '<no-p>',
+                onAction: function (_) {
+                    editor.focus();
+                    editor.selection.setContent('<div class="no-p">' + editor.selection.getContent() + '</div>');
+                }
+            });
           },
 
           
         selector: selector_identifier,
         plugins: 'image media code link lists codesample advlist autosave emoticons fullscreen help insertdatetime nonbreaking preview searchreplace table' ,
-        toolbar: ['undo redo | image media videoWrap code align link hr insertdatetime | numlist bullist table',
+        toolbar: ['undo redo | image media videoWrap code align link hr insertdatetime | numlist bullist table | noP',
             'bold italic underline blocks | forecolor backcolor fontsize fontfamily styles | restoredraft preview | nonbreaking codesample emoticons | fullscreen help'],
         contextmenu: "link image inserttable | cell row column deletetable",
         directionality : "rtl",

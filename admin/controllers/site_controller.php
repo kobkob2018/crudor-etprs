@@ -103,7 +103,7 @@
 
     protected function delete_item($row_id){
       $site_directory = "assets_s/$row_id/";
-      self::rmdir_recursive($site_directory, $delete_parent = null);
+      self::rmdir_recursive($site_directory, true);
       AdminSites::delete($row_id);
       session__unset('workon_site');
       return;
