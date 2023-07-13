@@ -1,6 +1,6 @@
 <?php if($info['product_list']): ?>
     <div class="midpage-title-wrap">
-        <h3 class="color-title">מוצרים באתר</h3>
+        <h3 class="color-title med-title">קטלוג מוצרים</h3>
     </div>
     <div class="product-list">
         <?php foreach($info['product_list'] as $product): ?>
