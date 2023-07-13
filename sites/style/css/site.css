@@ -215,7 +215,10 @@ i.fa{
     width: 100%;
     font-weight: bold;
     border-radius: 3px;
+    margin-bottom: 20px;
 }
+
+.module-sub-menu{margin-bottom: 10px;}
 
 .top-search button {
     all: unset;
@@ -314,10 +317,6 @@ a.nice-button{
     box-shadow: 3px 3px 3px gray;
 }
 
-.left-bar .page-block{
-    padding: 0 20px 30px;
-}
-
 .left-bar .page-block h1, 
 .left-bar .page-block h2,  
 .left-bar .page-block h3,
@@ -328,7 +327,7 @@ a.nice-button{
 }
 
 .left-bar .page-block:first h1,
-.left-bar .page-block:first h2t,
+.left-bar .page-block:first h2,
 .left-bar .page-block:first h3,
 .left-bar .page-block:first h4,
 .left-bar .page-block:first h5{
@@ -383,9 +382,12 @@ a.nice-button{
     min-width: 30%;
   }
 
+  .left-bar .list-box{margin: 10px 0px;}
+
   .list-box .box-title{
-    padding: 5px;  
-    font-size: 14px;
+    padding: 10px 5px 0px;
+    font-size: 15px;
+    text-align: center;
   }
   .list-box .box-content{
     padding: 10px;
@@ -400,9 +402,13 @@ a.nice-button{
   .list-box .box-image img{
     max-width: 100%;
   }
+
+  .list-box .box-text{
+    margin: 10px 0px;
+  } 
+
   .list-box .box-go-to{
     align-self: end;
-    margin-top: 10px;
   }
 
   @keyframes spin {
