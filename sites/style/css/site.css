@@ -278,6 +278,8 @@ i.fa{
     margin-bottom: 31px;
 }
 
+.max-1300{max-width: 1300px; margin: auto;}
+
 .page-block.no-margin{
     margin-bottom: 0px;
 }
@@ -1161,4 +1163,7 @@ a.news-ticker-a-content{
       #content_wrap .page-block{
         overflow: auto;
       }
+
+      .max-1300{margin: 20px;}
+
 }
