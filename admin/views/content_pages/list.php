@@ -1,4 +1,16 @@
 <h3>דפים באתר</h3>
+
+<?php if(isset($this->data['page_import_prepare']) && $view->site_user_is('master_admin')): ?>
+	<a href="<?= inner_url("pages/import_page/") ?>">
+		הדף "<?= $this->data['page_import_prepare']['title'] ?>" מוכן להעתקה. לחץ כאן להעתיק את הדף
+	</a>
+    <br/>
+    <br/>
+    <a href="<?= inner_url("pages/page_import_unset/") ?>">
+		לחץ כאן לשחרר את ההעתקה
+	</a>
+<?php endif; ?>
+
 <div class="items-table flex-table">
     <div class="table-th row">
         <div class="col">עדכון דף</div>

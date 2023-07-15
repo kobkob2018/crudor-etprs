@@ -18,6 +18,13 @@
       
       $this->add_asset_mapping(SitePages::$assets_mapping);
       if(!$page){
+
+        if(isset($_REQUEST['page'])){
+          $check_retirect = $this->check_link_redirect($_REQUEST['page']);
+          if($check_retirect){
+            return;
+          }
+        }
         return $this->error();
       }
       $this->data['page'] = $page;
@@ -57,8 +64,78 @@
     }
 
     protected function home(){
+      if(isset($_GET['m'])){
+        $check_redirect = $this->check_redirect();
+        if($check_redirect){
+          return;
+        }
+      }
       $this->data['is_home_page'] = true;
       return $this->page_view();
+    }
+
+    protected function check_link_redirect($link){
+      $this->add_model('siteRedirections');
+      $filter_arr = array(
+        'site_id'=>$this->data['site']['id'],
+        'm_param'=>'link',
+        'id_param'=>'link',
+        'item_id'=>$link
+      );
+      $redirection = SiteRedirections::find($filter_arr,'url, label');
+      if($redirection){
+        $found_redirection = $redirection['url'];
+        header("Location: $found_redirection", true, 301);
+        return true;
+      }
+    }
+
+    protected function check_redirect(){
+      $this->add_model('siteRedirections');
+      $main_param = $_GET['m'];
+      
+      $options_arr = array(
+        's.pr'=>array(
+          'sub','cat','ud'
+        ),
+        'products'=>array(
+          'sub','cat'
+        ),
+        'pr'=>array(
+          'sub'
+        ),
+        'ga'=>array(
+          'sub','cat'
+        ),
+      );
+
+      if(!isset($options_arr[$main_param])){
+        return false;
+      }
+      
+      $found_redirection = false;
+      foreach($options_arr[$main_param] as $id_param){
+        if(!isset($_GET[$id_param]) || $_GET[$id_param] == ""){
+          continue;
+        }
+        
+        $item_id = $_GET[$id_param];
+        $filter_arr = array(
+          'site_id'=>$this->data['site']['id'],
+          'm_param'=>$main_param,
+          'id_param'=>$id_param,
+          'item_id'=>$item_id
+        );
+        $redirection = SiteRedirections::find($filter_arr,'url, label');
+        if($redirection){
+          $found_redirection = $redirection['url'];
+        }
+      }
+      if($found_redirection){
+        header("Location: $found_redirection", true, 301);
+        return true;
+      }
+      return false;
     }
 
   }

@@ -124,5 +124,13 @@
             </li>
 
         </ul>
+
+        <ul class="item-group">
+
+            <li class="bar-item <?= $view->a_class("redirections/list/") ?>">
+                <a href="<?= inner_url('redirections/list/') ?>" title="הפניות 301" class="a-link">הפניות 301</a>
+            </li>
+
+        </ul>
     <?php endif; ?>
 </div>

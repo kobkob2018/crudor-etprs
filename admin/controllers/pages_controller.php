@@ -29,6 +29,11 @@
       
       $this->data['content_pages'] = $content_pages;
 
+      if(session__isset('page_export_prepare')){
+        $import_filter_arr = array('id'=>session__get('page_export_prepare'));
+        $this->data['page_import_prepare'] = AdminPages::find($import_filter_arr, 'id, title, link');
+      }
+
       $this->include_view('content_pages/list.php');
 
     }
@@ -120,5 +125,77 @@
 
       return AdminPages::create($fixed_values);
     }
+
+    public function prepare_export(){
+      $page_id = $_REQUEST['row_id'];
+      session__set('page_export_prepare',$page_id);
+      SystemMessages::add_success_message("הדף מוכן להעתקה באתר אחר");
+      return $this->redirect_to(inner_url("pages/edit/?row_id=").$page_id);
+    }
+
+    public function page_import_unset(){
+      session__unset('page_export_prepare');
+      SystemMessages::add_success_message("הדף שוחרר מהעתקה");
+      return $this->redirect_to(inner_url("pages/list/"));
+    }
+    
+    public function import_page(){
+      if(!session__isset('page_export_prepare')){
+        SystemMessages::add_err_message("לא נבחר דף להעתקה");
+        return $this->redirect_to(inner_url("pages/list/"));
+      }
+      $site_id = $this->data['work_on_site']['id'];
+      $duplicate_page_id = session__get('page_export_prepare');
+      $duplicate_page = AdminPages::get_by_id($duplicate_page_id);
+      if(!$duplicate_page){
+        SystemMessages::add_err_message("לא נבחר דף להעתקה");
+        return $this->redirect_to(inner_url("pages/list/"));
+      }
+      $duplicate_page_filter = array(
+        'site_id'=>$duplicate_page['site_id'],
+        'page_id'=>$duplicate_page_id
+      );
+
+      $duplicate_page['site_id'] = $site_id;
+      unset($duplicate_page['id']);
+      $new_page_id = AdminPages::create($duplicate_page);
+
+      $this->add_model("page_style");
+      $this->add_model("biz_forms");
+      $this->add_model("adminBlocks");
+
+      $duplicte_blocks = AdminBlocks::get_list($duplicate_page_filter);
+      if($duplicte_blocks){
+        foreach($duplicte_blocks as $duplicate_block){
+          $duplicate_block['site_id'] = $site_id;
+          $duplicate_block['page_id'] = $new_page_id;
+          unset($duplicate_block['id']);
+          AdminBlocks::create($duplicate_block);
+        }
+      }
+      $page_style_duplicate = Page_style::find($duplicate_page_filter);
+
+      if($page_style_duplicate){
+        $page_style_duplicate['site_id'] = $site_id;
+        $page_style_duplicate['page_id'] = $new_page_id;
+        unset($page_style_duplicate['id']);
+        Page_style::create($page_style_duplicate);
+      }
+    
+      $this->add_model("biz_forms");
+
+      $biz_form_duplicate = Biz_forms::find($duplicate_page_filter);
+      if($biz_form_duplicate){
+        $biz_form_duplicate['site_id'] = $site_id;
+        $biz_form_duplicate['page_id'] = $new_page_id;
+        unset($biz_form_duplicate['id']);
+        Biz_forms::create($biz_form_duplicate);
+      }
+      SystemMessages::add_success_message("הדף שוכפל בהצלחה");
+      session__unset("page_export_prepare");
+      return $this->redirect_to(inner_url("pages/edit/?row_id=".$new_page_id));
+
+    }
+
   }
 ?>

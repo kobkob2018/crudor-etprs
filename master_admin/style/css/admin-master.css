@@ -223,6 +223,10 @@ h4{
     width: 100px;
 }
 
+.flex-table .big-text .table-input{
+    width:300px;
+}
+
 .flex-table .col-tiny .table-input{
     width: 30px;
 }
