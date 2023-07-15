@@ -1,4 +1,6 @@
 
+<h2>הפניות 301 באתר</h2>
+    
     <h4>הוספת הפנייה</h4>
     <div class="items-table flex-table">
         <div class="table-th row">
@@ -116,5 +118,5 @@
         <?php endforeach; ?>
     </div>
 <?php else: ?>
-    <h4>אין תתי ערים</h4>
+    <h4>אין הפניות</h4>
 <?php endif; ?>
