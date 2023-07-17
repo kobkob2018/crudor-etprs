@@ -164,11 +164,24 @@ rearangeLeftBar = ()=>{
         );
     }
     document.querySelectorAll(".grab-content").forEach(
-        grabber=>{   
-            const grabClass = grabber.dataset.grab;
-            document.querySelectorAll("."+grabClass).forEach(grabbedContent=>{
-                grabber.append(grabbedContent);
-            });
+        grabber=>{  
+            let dograb = true;
+            if(window.innerWidth < 890){
+                if(grabber.classList.contains("wide-only")){
+                    dograb = false;
+                }
+            }
+            else{
+                if(grabber.classList.contains("thin-only")){
+                    dograb = false;
+                }
+            }
+            if(dograb){
+                const grabClass = grabber.dataset.grab;
+                document.querySelectorAll("."+grabClass).forEach(grabbedContent=>{
+                    grabber.append(grabbedContent);
+                });
+            }
         }
     );
 } 
