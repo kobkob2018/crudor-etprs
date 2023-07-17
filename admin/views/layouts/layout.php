@@ -8,7 +8,7 @@
 
 		<script src="<?= styles_url('style/js/admin.js') ?>?v=<?= get_config("cash_version") ?>"></script>
 		<link rel="stylesheet" href="<?= styles_url('style/css/admin.css') ?>?v=<?= get_config("cash_version") ?>"  type="text/css" />	
-		<link rel="stylesheet" href="<?= styles_url("style/css/icons.css") ?>?v=<?= get_config("cash_version") ?>"  type="text/css" />
+		<link rel="stylesheet" href="<?= global_url("global_style/css/icons.css") ?>?v=<?= get_config("cash_version") ?>"  type="text/css" />
 		<title><?= $this->data['meta_title'] ?></title>
 		<?php $this->include_view('registered_scripts/head.php'); ?>
 
