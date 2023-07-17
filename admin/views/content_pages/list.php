@@ -19,7 +19,7 @@
         <div class="col">בחירה</div>
     </div>
     <?php foreach($this->data['content_pages'] as $content_page): ?>
-        <div class="table-tr row is-visibla-0<?= $content_page['visible'] ?>">
+        <div class="table-tr row is-visible-0<?= $content_page['visible'] ?>">
             <div class="col">
                 <?php if($content_page['visible'] != '1'): ?>
                     <span class="fa fa-eye-slash" title="דף נסתר"></span>
