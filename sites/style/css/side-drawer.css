@@ -24,10 +24,8 @@
   }
 
 .side-drawer-wrap.left-side-drawer{
-    left: 0;
-    
+    left: -15px; 
     right: auto;
-    
 }
 
 

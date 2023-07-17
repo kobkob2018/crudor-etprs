@@ -1049,7 +1049,7 @@ a.news-ticker-a-content{
         position: fixed;
         z-index: 5;
         padding: 5px 4px 5px 12px;
-        left: 8px;
+        left: 0px;
         top: 58px;
         border-top-right-radius: 50%;
         border-bottom-right-radius: 50%;
