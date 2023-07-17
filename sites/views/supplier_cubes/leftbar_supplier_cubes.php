@@ -10,19 +10,15 @@
 
                 <img src="<?= inner_url("banner_count/views/") ?>?banner_id=<?= $cube['banner']['id'] ?>" style="display:none" />
                 <a href = "javascript://" class="net-banner banner-clicker" data-link="<?= add_url_params($cube['banner']['goto_href'],array('banner_id'=>$cube['banner_id'])) ?>" data-count_url="<?= inner_url("banner_count/clicks/") ?>?banner_id=<?= $cube['banner']['id'] ?>">
-                <?php if($cube['banner']['image']): ?>
-                    <img class='cube-banner-img' src="<?= $this->file_master_url_of('net_banners', $cube['banner']['image']) ?>" alt="<?= $cube['banner']['label'] ?>" />
-                    <?php endif; ?>
-                    <br/>
-                    <br/>
-                    <?php if($cube['banner']['video']): ?>
-                        
-                        <video class='cube-banner-vid' width="100%" controls="">
+                    <?php if($cube['banner']['video']): ?>       
+                        <video class='cube-banner-vid' width="100%" controls="" autoplay loop muted playsinline>
                             <source src="<?= $this->file_master_url_of('net_banners', $cube['banner']['video']) ?>" alt="<?= $cube['banner']['label'] ?>" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                        <?php endif; ?>
-                    </a>
+                    <?php elseif($cube['banner']['image']): ?>
+                        <img class='cube-banner-img' src="<?= $this->file_master_url_of('net_banners', $cube['banner']['image']) ?>" alt="<?= $cube['banner']['label'] ?>" />
+                    <?php endif; ?>
+                </a>
             </div>
 
         <?php endif; ?>
