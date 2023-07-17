@@ -19,6 +19,8 @@
     content: "\e2ce";
 }
 
+
+
 .fa-wheelchair:before {
     content: "\f193";
 }
@@ -40,8 +42,11 @@
 .fa-hamburger::before {
   content: "\f805"; }
 
-  .fa-bars::before {
+.fa-bars::before {
     content: "\f0c9"; }
+
+.fa-eye-slash::before {
+    content: "\f070"; }
 
   @font-face {
     font-family: 'faFont';
