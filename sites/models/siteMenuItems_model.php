@@ -9,13 +9,14 @@
         $page_item = self::match_page_menu_item($site_id, $menu_id, $page_id);
         $root_items = false;
         $child_items = false;
+        $payload = array('order_by'=>'priority');
         if($page_item){
             $filter_arr = array('site_id'=>$site_id,'menu_id'=>$menu_id,'parent'=>$page_item['id'],'active'=>'1');
             $root_items = self::simple_get_item_parents_tree($page_item['id']);
-            $child_items = self::simple_get_list($filter_arr);
+            $child_items = self::simple_get_list($filter_arr,"*",$payload);
             if(!$child_items && $page_item['parent'] != '0'){
                 $filter_arr['parent'] = $page_item['parent'];
-                $child_items = self::simple_get_list($filter_arr);
+                $child_items = self::simple_get_list($filter_arr,"*",$payload);
                 foreach($child_items as $item_key=>$item){
                     if($item['id'] == $page_item['id']){
                         unset($child_items[$item_key]);
@@ -25,7 +26,7 @@
         }
         else{
             $filter_arr = array('site_id'=>$site_id,'menu_id'=>$menu_id,'parent'=>'0', 'active'=>'1');
-            $child_items = self::simple_get_list($filter_arr);
+            $child_items = self::simple_get_list($filter_arr,"*",$payload);
         }
         if($root_items){
             $items_arr = array_merge($items_arr,$root_items);
@@ -80,7 +81,8 @@
             'menu_id'=>$menu_id,
             'parent'=>$menu_item_id
         );
-        $items = self::simple_get_list($filter_arr);
+        $payload = array('order_by'=>'priority');
+        $items = self::simple_get_list($filter_arr,"*",$payload);
         if(is_array($items)){
             
             foreach($items as $item_key=>$menu_item){
