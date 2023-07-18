@@ -156,21 +156,6 @@ i.fa{
 .footer-item{
     margin: 5px 0px 40px;
 }
-.bottom-menu{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
-    font-size: 22px;
-}
-
-.bottom-menu .bar-item {
-    margin: 0px 40px;
-}
-
-.bottom-menu .main-a{
-    font-size: 38px;
-}
 
 .bottom-menu .sub-item{
     margin-top:5px ;
@@ -1007,6 +992,22 @@ a.news-ticker-a-content{
         width: 110px;
     }
 
+    .bottom-menu{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        font-size: 22px;
+    }
+    
+    .bottom-menu .bar-item {
+        margin: 0px 40px;
+    }
+    
+    .bottom-menu .main-a{
+        font-size: 38px;
+    }
+    
     .footer-bottom-wrap{
         display: flex;
         justify-content: space-between;
