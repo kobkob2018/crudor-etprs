@@ -65,6 +65,7 @@
             $body_output = $this->clean_mobile_conditions($body_output);
             $body_output = $this->setup_cat_phone_text($body_output);  
             $body_output = $this->setup_text_modules($body_output);
+            $body_output = $this->setup_text_replaces($body_output);
             return $body_output;
         }
 
@@ -94,6 +95,23 @@
             return $text_return;
         }
 
+
+        protected function setup_text_replaces($text){
+          $site_data = $this->controller->data['site'];
+          $replace_arr = array(
+            'site_url' => outer_url(),
+            'site_title' => $site_data['title'],
+            'site_domain' => $site_data['domain'],
+            'site_logo' => $this->controller->file_url_of('logo',$site_data['logo']),
+          );
+          
+          foreach($replace_arr as $search=>$replace){
+            $text = str_replace('{{'.$search.'}}',$replace,$text);
+          }
+          return $text;
+        }
+
+        
         protected function setup_cat_phone_text($text){
             $biz_form_data = siteBiz_forms::get_current_biz_form();
 
