@@ -881,6 +881,10 @@ a.news-ticker-a-content{
         padding: 3px 8px;
     }
 
+    .top-menu .bar-item:first .main-spn{
+        border-right: none;
+    }
+
     .alt-page-fixed-top .top-menu .bar-item .main-spn{
         border-right: none;
         font-size: 14px;
