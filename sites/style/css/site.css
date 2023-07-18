@@ -836,6 +836,8 @@ a.news-ticker-a-content{
     overflow: auto;
 }
 
+.max-1300{margin: 20px;}
+
 @media only screen and (min-width: 890px) {
 
     .page-flex-top{
@@ -1166,8 +1168,6 @@ a.news-ticker-a-content{
       #content_wrap .page-block{
         overflow: auto;
       }
-
-      .max-1300{margin: 20px;}
 
 }
 
