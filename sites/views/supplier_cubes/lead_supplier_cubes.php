@@ -9,7 +9,7 @@
                     <?= $cube['label'] ?>
                 </a>
             </div>
-            <div class="amin-section section flex-section">
+            <div class="amin-section section">
                 <div class="amin-logo">
                     <?php if($cube['cube_image'] != ""): ?>
                         <img src="<?= $this->file_master_url_of('cube_image', $cube['cube_image']) ?>" alt="<?= $cube['label'] ?>" />

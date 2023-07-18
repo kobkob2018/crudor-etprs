@@ -524,9 +524,11 @@ a.nice-button{
 .amin-logo{
     max-width: 100px;
     padding-left: 10px;
+    float: right;
 }
 .amin-logo img{
     max-width: 100%;
+    min-width: 80px;
 }
 .roundish-cube .whatsapp-phone a{
     display: flex;
