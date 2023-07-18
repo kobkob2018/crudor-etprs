@@ -263,8 +263,6 @@ i.fa{
     margin-bottom: 31px;
 }
 
-.max-1300{max-width: 1300px; margin: auto;}
-
 .page-block.no-margin{
     margin-bottom: 0px;
 }
@@ -1007,7 +1005,7 @@ a.news-ticker-a-content{
     .bottom-menu .main-a{
         font-size: 38px;
     }
-    
+
     .footer-bottom-wrap{
         display: flex;
         justify-content: space-between;
@@ -1171,4 +1169,11 @@ a.news-ticker-a-content{
 
       .max-1300{margin: 20px;}
 
+}
+
+@media only screen and (min-width: 1300px) {
+    .max-1300{
+        max-width: 1200px;
+        margin: auto;
+    }
 }
