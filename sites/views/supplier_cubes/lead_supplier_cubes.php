@@ -22,7 +22,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="amin-text">
-                    <a href = "<?= $cube['link'] ?>" title="<?= $cube['label'] ?>">
+                    <a class="cube-title" href = "<?= $cube['link'] ?>" title="<?= $cube['label'] ?>">
                         <?= $cube['label'] ?>
                     </a>
                     <br/> 

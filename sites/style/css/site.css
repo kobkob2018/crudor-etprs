@@ -530,6 +530,11 @@ a.nice-button{
     max-width: 100%;
     min-width: 80px;
 }
+
+.cube-title{
+    font-size: 20px;
+}
+
 .roundish-cube .whatsapp-phone a{
     display: flex;
     align-items: center;
