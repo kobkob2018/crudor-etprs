@@ -42,6 +42,9 @@ h4{
     background: #e5e5ec;
     padding: 10px;
     align-items: baseline;
+    box-shadow: -4px 9px 5px #8e6464;
+    border-top: 2px solid #5d5d8a;
+    border-bottom: 2px solid #010101;
 }
 
 .header .admin-title-wrap{
@@ -174,6 +177,11 @@ h4{
     padding-top: 10px;
 }
 
+.form-group .form-group-st{
+    display: table-cell;
+    padding-left: 10px;
+}
+
 .form-group .form-group-color{
     display: table-cell;
     padding-right: 10px;
@@ -181,10 +189,6 @@ h4{
     cursor: pointer;
 }
 
-.form-group .form-group-st{
-    display: table-cell;
-    padding-left: 10px;
-}
 .submit-form-group{
     text-align: left;
 }
@@ -236,7 +240,7 @@ h4{
     width:300px;
 }
 
-.flex-table  .longer-col .table-input{
+.flex-table .longer-col .table-input{
     width: 250px;
 }
 
@@ -320,10 +324,12 @@ h4{
     background: #fefdf0;
     max-width:300px;
     margin:10px;
+    transition: transform 0.5s;    
 }
 
 .button-focus:hover{
     background: #fffafa;
+    transform: scale(1.1);    
 }
 
 .go-button, .button-focus{
@@ -342,6 +348,19 @@ h4{
 
 .item-edit-menu{
     text-align: center;
+}
+
+.item-edit-menu a{
+    font-size: 18px;
+    display: inline-block;
+    padding: 10px 2px;
+    transition: all 0.5s;
+    color: blue;
+}
+
+.item-edit-menu a:hover{
+    transform: scale(1.1);
+    color: #121223;
 }
 
 .item-edit-menu a.c-selected, .item-edit-menu a.a-selected{
@@ -378,7 +397,6 @@ h4{
     justify-content: space-between;
     font-size: 20px;
     padding: 8px 37px;
-
 }
 
 .content-block .block-label, .content-block .block-buttons{
@@ -396,8 +414,11 @@ h4{
     border: 1px solid #b6b6ec;
     min-width: 200px;
 }
-.form-group .check-assign-group{
 
+.form-group .check-assign-group input{
+    min-width: auto;
+    width: 20px;
+    height: 20px;
 }
 
 .form-group.assign-checks input{
@@ -432,9 +453,17 @@ h4{
     background: #ffffe3;
 }
 
-
 .time-selector{
     direction: ltr;
+}
+
+.time-selector select, .day-check-wrap input{
+    width: auto;
+    min-width: auto;
+}
+
+.group-times .time-to{
+    margin-right: 20px;
 }
 
 .hour-groups-template{
@@ -518,6 +547,15 @@ h4{
     display: none;
 }
 
+.user_fee_state_5{
+    background: #ddd;
+    color: #555;
+}
+
+.user_fee_state_1{
+    background: rgb(196, 219, 196);
+}
+
 .filter-menu{
     display: flex;
 }
@@ -575,6 +613,10 @@ a.filter-a-clicker.selected{
     border-radius: 5px;
     border: 1px solid;
     padding: 10px;
+}
+
+.thumb-wrap img{
+    max-width: 150px;
 }
 
 @media only screen and (max-width: 900px) {

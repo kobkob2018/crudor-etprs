@@ -20,6 +20,10 @@ body{
 
 .row-fluid.space-around{justify-content: space-around;}
 
+.row-fluid .col-spaced-left{
+    margin-left: 20px;
+}
+
 ul li{
     list-style: none;
 }
@@ -172,10 +176,19 @@ h4{
     display: table-cell;
     padding-top: 10px;
 }
+
 .form-group .form-group-st{
     display: table-cell;
     padding-left: 10px;
 }
+
+.form-group .form-group-color{
+    display: table-cell;
+    padding-right: 10px;
+    margin-bottom: -10px;
+    cursor: pointer;
+}
+
 .submit-form-group{
     text-align: left;
 }
@@ -227,6 +240,10 @@ h4{
     width:300px;
 }
 
+.flex-table .longer-col .table-input{
+    width: 250px;
+}
+
 .flex-table .col-tiny .table-input{
     width: 30px;
 }
@@ -251,6 +268,8 @@ h4{
     background: #dddddd;
     color: gray;
 }
+
+.flex-table .row.is-visible-00, .flex-table .row.is-hidden-01{background: #82a4a391; }
 
 .delete-item-x{
     text-decoration: none;
@@ -296,6 +315,11 @@ h4{
     background: #fefdf07d;
 }
 
+.focus-box.right-focus{
+    margin-right:0;
+    margin-left: 20px;
+}
+
 .button-focus{
     background: #fefdf0;
     max-width:300px;
@@ -305,8 +329,7 @@ h4{
 
 .button-focus:hover{
     background: #fffafa;
-    transform: scale(1.1);
-    
+    transform: scale(1.1);   
 }
 
 .go-button, .button-focus{
@@ -372,6 +395,16 @@ h4{
 .block-buttons{
     display: flex;
     justify-content: space-between;
+    font-size: 20px;
+    padding: 8px 37px;
+}
+
+.content-block .block-label, .content-block .block-buttons{
+    visibility: hidden;
+}
+
+.content-block:hover .block-buttons, .content-block:hover .block-label{
+    visibility: inherit;
 }
 
 .form-group select, .form-group input, .form-group textarea{
@@ -386,6 +419,17 @@ h4{
     min-width: auto;
     width: 20px;
     height: 20px;
+}
+
+.form-group.assign-checks input{
+    min-width: auto;
+    width: 20px;
+    height: 20px;
+    padding: 17px;
+    border-spacing: 27px;
+    margin-left: 5px;
+    margin-top: 10px;
+
 }
 
 .form-group select.tree-select{
@@ -409,8 +453,7 @@ h4{
     background: #ffffe3;
 }
 
-.time-selector{
-    
+.time-selector{   
     direction: ltr;
 }
 
@@ -503,7 +546,6 @@ h4{
 .a-open .replacable-plus-sign{
     display: none;
 }
-
 
 .user_fee_state_5{
     background: #ddd;

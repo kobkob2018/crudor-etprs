@@ -15,7 +15,7 @@
             <div class="col">
                 
                 <a href = "<?= inner_url('gallery_images/edit/') ?>?gallery_id=<?= $this->data['gallery_info']['id'] ?>&row_id=<?= $image['id'] ?>" title="ערוך תמונה"><?= $image['label'] ?></a>
-                <div class="gallery-image-small">
+                <div class="gallery-image-small thumb-wrap">
                     <img src ="<?= $image['form_handler']->get_form_file_url('small_image'); ?>" />
                 </div>
             </div>
