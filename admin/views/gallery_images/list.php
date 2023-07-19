@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col item-description">
-                <?= nl2br($image['description']) ?> ?>
+                <?= nl2br($image['description']) ?>
             </div>
             <div class="col">
                 <a href = "<?= inner_url('gallery_images/delete/') ?>?row_id=<?= $image['id'] ?>&gallery_id=<?= $this->data['gallery_info']['id'] ?>" title="מחק">מחק</a>
