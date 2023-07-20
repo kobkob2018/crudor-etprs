@@ -123,8 +123,8 @@
                     <br/>
                     יתרת לידים
                 </div>
-                <div class="col">התאמה בעיר</div>
                 <div class="col">התאמה בקטגוריה</div>
+                <div class="col">התאמה בעיר</div>
                 <div class="col">שליחה אוטומטית</div>
                 <div class="col"> מצב שליחה</div>
                 <div class="col">התאמה סופית</div>
@@ -141,7 +141,10 @@
                         <?php endif; ?>
                     </div>
 
-                    <div class="col"><?= $user['info']['user']['biz_name'] ?>
+                    <div class="col">
+                        <a target="_BLANK" href="<?= inner_url("users/edit/?&row_id=") ?><?= $user['info']['user']['id'] ?>">
+                            <?= $user['info']['user']['biz_name'] ?>
+                        </a>
                         <br/>
                         <?= hebdt($user['info']['lead_settings']['end_date'],"d-m-Y") ?>
                         <?php if(!$user['is_active']): ?>
