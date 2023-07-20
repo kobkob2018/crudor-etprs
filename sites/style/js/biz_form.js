@@ -135,11 +135,18 @@ class BizForm{
             
             if(!allowed_cities.includes(optionVal)){
                 option.classList.add("disabled");
+                option.classList.add("hidden");
                 option.selected = false;
                 option.disabled = true;
             }
             else{
+                const parent_id = option.dataset.parent;
+                const parent_option = this.citySelect.querySelector(".hidden.city_"+option.dataset.parent);
+                if(parent_option){
+                    parent_option.classList.remove("hidden");
+                }
                 option.classList.remove("disabled");
+                option.classList.remove("hidden");
                 option.disabled = false;
             }
         });
