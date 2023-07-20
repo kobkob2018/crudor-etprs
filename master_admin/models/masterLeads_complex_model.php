@@ -198,7 +198,7 @@
                 AND city_id  = :city_id";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
-        $req->execute(array('city_id'=>$lead_info['cat_id']));
+        $req->execute(array('city_id'=>$lead_info['city_id']));
         $result = $req->fetchAll();
         $user_ids = array();
         foreach($result as $user){
