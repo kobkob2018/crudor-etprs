@@ -444,6 +444,10 @@ a.nice-button{
     position: relative;
 }
 
+.biz-form .city-option.disabled{
+    color: silver;
+}
+
 .form-group .form-input{
     font-size: 18px;
     line-height: 20px;

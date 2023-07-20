@@ -134,11 +134,13 @@ class BizForm{
             const optionVal = parseInt(option.value);
             
             if(!allowed_cities.includes(optionVal)){
-                option.classList.add("hidden");
+                option.classList.add("disabled");
                 option.selected = false;
+                option.disabled = true;
             }
             else{
-                option.classList.remove("hidden");
+                option.classList.remove("disabled");
+                option.disabled = false;
             }
         });
         
