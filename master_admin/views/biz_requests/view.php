@@ -124,6 +124,7 @@
                     יתרת לידים
                 </div>
                 <div class="col">התאמה בעיר</div>
+                <div class="col">התאמה בקטגוריה</div>
                 <div class="col">שליחה אוטומטית</div>
                 <div class="col"> מצב שליחה</div>
                 <div class="col">התאמה סופית</div>
@@ -160,6 +161,13 @@
                     <?= $user['monthly_sent_leads'] ?>
                     <br/>    
                     <?= $user['info']['lead_settings']['lead_credit'] ?>
+                    </div>
+                    <div class="col">
+                        <?php if($user['fit_cat'] == '1'): ?>
+                            <b class="green">כן</b>
+                        <?php else: ?>
+                            <b class="red">לא</b>
+                        <?php endif; ?>
                     </div>
                     <div class="col">
                         <?php if($user['fit_city'] == '1'): ?>

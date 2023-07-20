@@ -15,8 +15,10 @@
 
         $optional_users_data = array();
 
-        $optional_user_ids = self::get_cat_user_ids($lead_info);
+        $optional_user_ids = self::get_cat_tree_user_ids($lead_info); //including all cat_tree users
         
+        $cat_user_ids = self::get_cat_user_ids($lead_info); //only specific cat users
+
         foreach($optional_user_ids as $user_id){
             
             $user_info = self::get_user_info($user_id);
@@ -26,6 +28,7 @@
             $optional_user = array(
                 'id'=>$user_id,
                 'fit_city'=>false,
+                'fit_cat'=>false,
                 'is_active'=>false,
                 'lead_sent'=>false,
                 'final_fit'=>false,
@@ -34,6 +37,10 @@
             );
             if($user_lead){
                 $optional_user['lead_sent'] = true;
+            }
+
+            if(in_array($user_id,$cat_user_ids)){
+                $optional_user['fit_cat'] = true;
             }
 
             $optional_users_data[$user_id] = $optional_user;
@@ -185,15 +192,13 @@
             return $optional_user_ids;
         }
         $user_id_in = implode(",",$optional_user_ids);
-        $cat_id_in =  implode(",",$lead_info['cat_id_arr']);
-        $city_id_in =  implode(",",$lead_info['city_id_arr']);
 
         $sql = "SELECT distinct user_id FROM user_city 
                 WHERE user_id IN($user_id_in)
-                AND city_id IN($city_id_in)";
+                AND city_id  = :city_id";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
-        $req->execute();
+        $req->execute(array('city_id'=>$lead_info['cat_id']));
         $result = $req->fetchAll();
         $user_ids = array();
         foreach($result as $user){
@@ -202,11 +207,11 @@
 
         $sql = "SELECT distinct user_id FROM user_cat_city 
                 WHERE user_id IN($user_id_in)
-                AND city_id IN($city_id_in) 
-                AND cat_id IN($cat_id_in)";
+                AND city_id = :city_id 
+                AND cat_id = :cat_id";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
-        $req->execute();
+        $req->execute(array('city_id'=>$lead_info['city_id'],'cat_id'=>$lead_info['cat_id']));
         $result = $req->fetchAll();
         foreach($result as $user){
             if(!in_array($user['user_id'], $user_ids)){
@@ -222,6 +227,24 @@
             $tree_id_arr[] = $item['id'];
         }
         return $tree_id_arr;
+    }
+
+
+
+
+    public static function get_cat_tree_user_ids($lead_info){
+        $cat_id_in = implode(",",$lead_info['cat_id_arr']);
+        $sql = "SELECT distinct user_id FROM user_cat WHERE cat_id IN ($cat_id_in)";
+        
+        $db = Db::getInstance();		
+        $req = $db->prepare($sql);
+        $req->execute();
+        $result = $req->fetchAll();
+        $user_ids = array();
+        foreach($result as $user){
+            $user_ids[] = $user['user_id'];
+        }
+        return $user_ids;
     }
 
     public static function get_cat_user_ids($lead_info){
