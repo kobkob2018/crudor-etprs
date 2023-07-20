@@ -91,10 +91,12 @@
                 <?php if(!isset($info['input_remove']['city'])): ?> 
                     <div class="form-group">
                         <select name="biz[city_id]" id="biz_city_id" class="form-input validate" required data-msg_required="אנא בחר עיר">
-                            <option value = "">בחר עיר</option>
+                            <option value = "" class="select-note">בחר עיר</option>
+                            <option value = "" class="select-note-2" disabled>ניתן לקבל שירות בערים הבאות:</option>
                             <?php foreach($this->data['city_select']['options'] as $option): ?>
                                 <option value = "<?= $option['id'] ?>" class="city-option deep-<?= $option['deep'] ?> city_<?= $option['id'] ?>" data-parent="<?= $option['parent'] ?>"><?= $option['label'] ?></option>
                             <?php endforeach; ?>
+                            <option value = "" class="select-note red">במידה ולא מצאת את שם העיר ברשימה, אין לנו נותן שירות</option>
                         </select>
                     </div>      
                 <?php else: ?>

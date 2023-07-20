@@ -130,7 +130,7 @@ class BizForm{
         if(!this.citySelect){
             return;
         }
-        this.citySelect.querySelectorAll("option").forEach(option=>{
+        this.citySelect.querySelectorAll(".city-option").forEach(option=>{
             const optionVal = parseInt(option.value);
             
             if(!allowed_cities.includes(optionVal)){
@@ -140,7 +140,6 @@ class BizForm{
                 option.disabled = true;
             }
             else{
-                const parent_id = option.dataset.parent;
                 const parent_option = this.citySelect.querySelector(".hidden.city_"+option.dataset.parent);
                 if(parent_option){
                     parent_option.classList.remove("hidden");

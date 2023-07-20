@@ -444,6 +444,20 @@ a.nice-button{
     position: relative;
 }
 
+.biz-form .select-note{
+    color: gray;
+}
+
+.biz-form .select-note-2{
+    color: gray;
+    font-size: 0.8rem;
+}
+
+.biz-form .select-note.red{
+    color: red;
+    font-size: 0.8rem;
+}
+
 .biz-form .city-option.disabled{
     color: silver;
     font-size: 0.8rem;
