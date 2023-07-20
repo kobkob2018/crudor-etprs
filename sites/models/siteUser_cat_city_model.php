@@ -2,7 +2,7 @@
 
 //this one is used at the categories controller
 //in the cities controller the city_cat model is used
-  class SitesUser_cat_city extends TableModel{
+  class SiteUser_cat_city extends TableModel{
 
     protected static $main_table = 'user_cat_city';
 
