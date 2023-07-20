@@ -225,12 +225,11 @@
     }
 
     public static function get_cat_user_ids($lead_info){
-        $cat_id_in = implode(",",$lead_info['cat_id_arr']);
-        $sql = "SELECT distinct user_id FROM user_cat WHERE cat_id IN ($cat_id_in)";
+        $sql = "SELECT distinct user_id FROM user_cat WHERE cat_id = :cat_id";
         
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
-        $req->execute();
+        $req->execute(array('cat_id'=>$lead_info['cat_id']));
         $result = $req->fetchAll();
         $user_ids = array();
         foreach($result as $user){
