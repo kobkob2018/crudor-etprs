@@ -241,15 +241,13 @@
             return $optional_user_ids;
         }
         $user_id_in = implode(",",$optional_user_ids);
-        $cat_id_in =  implode(",",$lead_info['cat_id_arr']);
-        $city_id_in =  implode(",",$lead_info['city_id_arr']);
 
         $sql = "SELECT distinct user_id FROM user_city 
                 WHERE user_id IN($user_id_in)
-                AND city_id IN($city_id_in)";
+                AND city_id = :city_id";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
-        $req->execute();
+        $req->execute(array('city_id'=>$lead_info['city_id']));
         $result = $req->fetchAll();
         $user_ids = array();
         foreach($result as $user){
@@ -258,11 +256,11 @@
 
         $sql = "SELECT distinct user_id FROM user_cat_city 
                 WHERE user_id IN($user_id_in)
-                AND city_id IN($city_id_in) 
-                AND cat_id IN($cat_id_in)";
+                AND city_id = :city_id  
+                AND cat_id = :cat_id";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
-        $req->execute();
+        $req->execute(array('city_id'=>$lead_info['city_id'], 'cat_id'=>$lead_info['cat_id']));
         $result = $req->fetchAll();
         foreach($result as $user){
             if(!in_array($user['user_id'], $user_ids)){
