@@ -1,7 +1,7 @@
 <?php
 //http://love.com/biz_form/submit_request/?form_id=4&submit_request=1&biz[cat_id]=52&biz[full_name]=demo_post2&biz[phone]=098765432&biz[email]=no-mail&biz[city]=6&cat_tree[0]=47&cat_tree[1]=52
   class Biz_formController extends CrudController{
-    public $add_models = array("sitePages","biz_categories","siteBiz_forms","cities","user_cat_city");
+    public $add_models = array("sitePages","biz_categories","siteBiz_forms","cities","siteUser_cat_city");
 
     protected function handle_access($action){
         if(get_config('biz_forms_on') != '1'){
@@ -152,7 +152,7 @@
             //cascading default from top to bottom
             $add_email_to_form = $cat['add_email_to_form'];
         }
-        $allowed_cities = User_cat_city::get_cat_city_assign($return_array['cat_id']);
+        $allowed_cities = SiteUser_cat_city::get_cat_city_assign($return_array['cat_id']);
         
         if(empty($allowed_cities)){
             $city_list = Cities::get_flat_select_city_options();
