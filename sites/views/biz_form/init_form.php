@@ -93,7 +93,7 @@
                         <select name="biz[city_id]" id="biz_city_id" class="form-input validate" required data-msg_required="אנא בחר עיר">
                             <option value = "">בחר עיר</option>
                             <?php foreach($this->data['city_select']['options'] as $option): ?>
-                                <option value = "<?= $option['id'] ?>" class="city-option deep-<?= $option['deep'] ?>"><?= $option['label'] ?></option>
+                                <option value = "<?= $option['id'] ?>" class="city-option deep-<?= $option['deep'] ?> city_<?= $option['id'] ?>" data-parent="<?= $option['parent'] ?>"><?= $option['label'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>      
