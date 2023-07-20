@@ -154,7 +154,7 @@
         }
         $allowed_cities = User_cat_city::get_cat_city_assign($return_array['cat_id']);
         
-        if(!$allowed_cities){
+        if(empty($allowed_cities)){
             $city_list = Cities::get_flat_select_city_options();
         }
         else{
