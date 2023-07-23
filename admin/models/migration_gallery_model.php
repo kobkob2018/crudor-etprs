@@ -47,7 +47,7 @@
 
     public static function delete_older($site_id){
         $db = DB::getInstance();
-        $migration_images = self::simple_find_by_table_name(array('site_id'=>$site_id),'migration_gallery_image');
+        $migration_images = self::simple_get_list_by_table_name(array('site_id'=>$site_id),'migration_gallery_image');
         if(!$migration_images){
             $migration_images = array();
         }
@@ -76,8 +76,9 @@
             self::simple_delete_by_table_name($image['id'],'gallery_images');
         }
 
-        $migration_galleries = self::simple_find_by_table_name(array('site_id'=>$site_id),'migration_gallery');
-        if(!$migration_galleries){
+        $migration_galleries = self::simple_get_list_by_table_name(array('site_id'=>$site_id),'migration_gallery');
+
+		if(!$migration_galleries){
             $migration_galleries = array();
         }
         foreach($migration_galleries as $migration_gallery){
@@ -91,7 +92,7 @@
 
         }
  
-        $migration_gallery_cats = self::simple_find_by_table_name(array('site_id'=>$site_id),'migration_gallery_cat');
+        $migration_gallery_cats = self::simple_get_list_by_table_name(array('site_id'=>$site_id),'migration_gallery_cat');
         if(!$migration_gallery_cats){
             $migration_gallery_cats = array();
         }
@@ -101,7 +102,7 @@
         
             $sql = "DELETE FROM gallery_cat_assign WHERE cat_id = :cat_id";
             $req = $db->prepare($sql);
-            $req->execute(array('gallery_id'=>$migration_gallery_cat['cat_id']));
+            $req->execute(array('cat_id'=>$migration_gallery_cat['cat_id']));
         }
     }
 
@@ -208,25 +209,24 @@
             
             $images_url = "http://";
             
-
-            if($migration_site['has_ssl'] == '1'){
+	
+            if($migration_site['old_has_ssl'] == '1'){
                 $images_url = "https://";
                
             }
 
-            $images_url .= $migration_site['domain']."/gallery/";
-            $images_url = $migration_site['domain']."/gallery/";
+            $images_url .= $migration_site['old_domain']."/gallery/";
 
 
             if($image['img2'] != ""){
-                $image_url = $migration_site['domain']."/gallery/".$image['img2'];
+                $image_url = $images_url.$image['img2'];
                 $new_image_url = "assets_s/".$site_id."/gallery/".$image['img2'];
                 if(!file_exists($new_image_url)){                  
                     file_put_contents($new_image_url, file_get_contents($image_url));
                 } 
             }
             if($image['img'] != ""){
-                $small_image_url = $migration_site['domain']."/gallery/".$image['img'];
+                $small_image_url = $images_url.$image['img'];
                 $new_small_image_url = "assets_s/".$site_id."/gallery/".$image['img'];
                 if(!file_exists($new_small_image_url)){
                     file_put_contents($new_small_image_url, file_get_contents($small_image_url));           
