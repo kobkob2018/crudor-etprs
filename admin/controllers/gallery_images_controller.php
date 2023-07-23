@@ -304,6 +304,9 @@
     }
 
     protected function create_item($fixed_values){
+        $work_on_site = Sites::get_user_workon_site();
+        $site_id = $work_on_site['id'];
+        $fixed_values['site_id'] = $site_id;
         $fixed_values['gallery_id'] = $this->data['gallery_info']['id'];
         return Gallery_images::create($fixed_values);
     }

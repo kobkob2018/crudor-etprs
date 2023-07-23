@@ -27,6 +27,12 @@
             ),
             'validation'=>'required'
         ),
+        'priority'=>array(
+            'label'=>'מיקום',
+            'type'=>'text',
+            'default'=>'10',
+            'validation'=>'required, int'
+        ),
     );
 
 }

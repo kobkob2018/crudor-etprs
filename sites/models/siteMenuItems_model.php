@@ -10,6 +10,7 @@
         $root_items = false;
         $child_items = false;
         $payload = array('order_by'=>'priority');
+        $child_items_found = false;
         if($page_item){
             $filter_arr = array('site_id'=>$site_id,'menu_id'=>$menu_id,'parent'=>$page_item['id'],'active'=>'1');
             $root_items = self::simple_get_item_parents_tree($page_item['id']);
@@ -21,12 +22,19 @@
                     if($item['id'] == $page_item['id']){
                         unset($child_items[$item_key]);
                     }
+                    else{
+                        $child_items_found = true;
+                    }
                 }
             }
+            elseif($child_items){
+                $child_items_found = true;
+            }
         }
-        else{
+        if(!$child_items_found){
             $filter_arr = array('site_id'=>$site_id,'menu_id'=>$menu_id,'parent'=>'0', 'active'=>'1');
             $child_items = self::simple_get_list($filter_arr,"*",$payload);
+            $root_items = false;
         }
         if($root_items){
             $items_arr = array_merge($items_arr,$root_items);

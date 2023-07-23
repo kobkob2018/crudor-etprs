@@ -12,13 +12,13 @@
                         </a>
                     <?php endif; ?>
                     <?php if(isset($menu_item['children'])): ?>
-                        <a href="javascript://" class="top-menu-carret" onClick="show_sub_menu(this)" data-item_id = "menu_item_<?= $menu_item['id'] ?>">
+                        <a href="javascript://" class="top-menu-carret" onClick="show_sub_menu(this)" <?php if($menu_item['target']): ?> target="_BLANK" <?php endif; ?> data-item_id = "menu_item_<?= $menu_item['id'] ?>">
                             <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="sub-menu" id = "sub_menu_<?= $menu_item['id'] ?>">
                             <?php foreach($menu_item['children'] as $sub_item): ?>
                                 <li class="sub-item <?= $sub_item['css_class'] ?>" id = "sub_item_<?= $sub_item['id'] ?>">
-                                    <a href="<?= $sub_item['final_url'] ?>" <?php if($menu_item['target']): ?> target="_BLANK" <?php endif; ?> title="<?= $sub_item['label'] ?>" class="sub-spn sub-a a-link"><?= $sub_item['label'] ?></a>
+                                    <a href="<?= $sub_item['final_url'] ?>" <?php if($sub_item['target']): ?> target="_BLANK" <?php endif; ?> title="<?= $sub_item['label'] ?>" class="sub-spn sub-a a-link"><?= $sub_item['label'] ?></a>
                                 </li>
                             <?php endforeach; ?>
                         </ul>

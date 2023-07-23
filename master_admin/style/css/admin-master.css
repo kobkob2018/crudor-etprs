@@ -225,7 +225,7 @@ h4{
 }
 
 .flex-table .col-tiny {
-    max-width:50px;
+    max-width:60px;
 }
 
 .flex-table .col-small{
@@ -245,7 +245,7 @@ h4{
 }
 
 .flex-table .col-tiny .table-input{
-    width: 30px;
+    width: 39px;
 }
 
 .flex-table .col-small .table-input{
