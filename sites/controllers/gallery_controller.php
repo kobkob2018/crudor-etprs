@@ -44,7 +44,7 @@
         if(!$gallery_list){
             $gallery_list = array();
         }
-        foreach($gallery_list as $gallery_key=>$galery){
+        foreach($gallery_list as $gallery_key=>$gallery){
             $gallery_list[$gallery_key]['selected_str'] = "";
         }
         $selected_gallery = false;
