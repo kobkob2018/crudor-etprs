@@ -166,8 +166,9 @@
                     'gallery_id'=>$new_gallery_id,
                     'cat_id'=>$new_cat_id
                 );
+                self::simple_create_by_table_name($gallery_cat_assign,"gallery_cat_assign");
             }
-            self::simple_create_by_table_name($gallery_cat_assign,"gallery_cat_assign");
+            
         }
 
 
