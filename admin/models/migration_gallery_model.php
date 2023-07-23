@@ -21,7 +21,7 @@
             if($check_true){
                 continue;
             }
-            $sql = "SELECT label, parent FROM $table WHERE site_id = :site_id LIMIT 1";
+            $sql = "SELECT site_id FROM $table WHERE site_id = :site_id LIMIT 1";
             $req = $db->prepare($sql);
             $req->execute($filter);
             $result = $req->fetch();
