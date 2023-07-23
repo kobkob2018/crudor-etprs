@@ -6,7 +6,7 @@
             |
             <a href = "<?= inner_url('migration_cat/list/') ?>" class="item-edit-a <?= $view->a_c_class('migration_cat') ?>">התאמת קטגוריות</a>
             |
-            <a href = "<?= inner_url('migration_galery/prepare/') ?>" class="item-edit-a <?= $view->a_c_class('migration_galery') ?>">ייבוא גלריות</a>
+            <a href = "<?= inner_url('migration_gallery/prepare/') ?>" class="item-edit-a <?= $view->a_c_class('migration_gallery') ?>">ייבוא גלריות</a>
  
             
             
