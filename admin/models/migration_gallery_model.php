@@ -81,8 +81,8 @@
             $migration_galleries = array();
         }
         foreach($migration_galleries as $migration_gallery){
-            self::simple_delete_arr_by_table_name($migration_gallery['id'],'migration_gallery');
-            self::simple_delete_arr_by_table_name($migration_gallery['gallery_id'],'gallery');
+            self::simple_delete_by_table_name($migration_gallery['id'],'migration_gallery');
+            self::simple_delete_by_table_name($migration_gallery['gallery_id'],'gallery');
         
             
             $sql = "DELETE FROM gallery_cat_assign WHERE gallery_id = :gallery_id";
@@ -96,8 +96,8 @@
             $migration_gallery_cats = array();
         }
         foreach($migration_gallery_cats as $migration_gallery_cat){
-            self::simple_delete_arr_by_table_name($migration_gallery_cat['id'],'migration_gallery_cat');
-            self::simple_delete_arr_by_table_name($migration_gallery_cat['cat_id'],'gallery_cat');
+            self::simple_delete_by_table_name($migration_gallery_cat['id'],'migration_gallery_cat');
+            self::simple_delete_by_table_name($migration_gallery_cat['cat_id'],'gallery_cat');
         
             $sql = "DELETE FROM gallery_cat_assign WHERE cat_id = :cat_id";
             $req = $db->prepare($sql);
