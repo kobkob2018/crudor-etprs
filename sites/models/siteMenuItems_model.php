@@ -63,6 +63,11 @@
         if($child_items){
             foreach($child_items as $item_key=>$item){
                 $child_items[$item_key]['css_class'] = $item['css_class'].' a-child-item ';
+                if($page_item){
+                    if($page_item['id'] == $item['id']){
+                        $child_items[$item_key]['css_class'] = $item['css_class'].' a-current-item ';
+                    }
+                }
                 $child_items[$item_key]['final_url'] = $item_urls[$item['id']];
             }
         }
