@@ -1,13 +1,5 @@
 <h3>ייבוא עמודים ממערכת ישנה</h3>
 <?php $this->include_view("migration_site/header.php"); ?>
-<div class="focus-box">
-
-    <b>דומיין:</b> <?= $this->data['migration_site']['old_domain'] ?> <br/>
-    <b>מספר:</b> <?= $this->data['migration_site']['old_id'] ?> <br/>
-    <b>unk:</b> <?= $this->data['migration_site']['old_unk'] ?> <br/>
-    <b>כותרת:</b> <?= $this->data['migration_site']['old_title'] ?> <br/>
-
-</div>
 
 <div class="focus-box">
     <form class="filter-form" action = "<?= inner_url("migration_page/list/") ?>" method = "GET">
