@@ -106,9 +106,10 @@
         if($validate_result['success']){
             Gallery::update($gallery_id,$fixed_values);
             $assign_cats = $_REQUEST['assign'];
-            if(is_array($assign_cats)){
-                Gallery_cat_assign::assign_cats_to_gallery($gallery_id,$assign_cats);
+            if(!is_array($assign_cats)){
+                $assign_cats = array();
             }
+            Gallery_cat_assign::assign_cats_to_gallery($gallery_id,$assign_cats);
             SystemMessages::add_success_message("הגלרייה עודכנה");
             
         }
