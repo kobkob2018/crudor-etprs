@@ -1,12 +1,13 @@
-<div class="focus-box">
+<?php if(isset($this->data['migration_site'])): ?>
+    <div class="focus-box">
 
-    <b>דומיין:</b> <?= $this->data['migration_site']['old_domain'] ?> <br/>
-    <b>מספר:</b> <?= $this->data['migration_site']['old_id'] ?> <br/>
-    <b>unk:</b> <?= $this->data['migration_site']['old_unk'] ?> <br/>
-    <b>כותרת:</b> <?= $this->data['migration_site']['old_title'] ?> <br/>
+        <b>דומיין:</b> <?= $this->data['migration_site']['old_domain'] ?> <br/>
+        <b>מספר:</b> <?= $this->data['migration_site']['old_id'] ?> <br/>
+        <b>unk:</b> <?= $this->data['migration_site']['old_unk'] ?> <br/>
+        <b>כותרת:</b> <?= $this->data['migration_site']['old_title'] ?> <br/>
 
-</div>
-
+    </div>
+<?php endif; ?>
 <div class="controll-header">
     <div class="item-edit-menu">
             <a href = "<?= inner_url('migration_site/list/') ?>" class="item-edit-a <?= $view->a_c_class('migration_site') ?>">פרטי האתר לייבוא</a>
