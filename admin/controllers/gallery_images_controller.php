@@ -19,7 +19,6 @@
         );
         $item_list = Gallery::get_list(array('site_id'=>$this->data['work_on_site']['id']),"*", $payload);
         $gallery_cats = Gallery_cat::get_list(array('site_id'=>$this->data['work_on_site']['id']));
-        $gallery_cats[] = array('id'=>'0','label'=>'הצג כשאין קטגוריה');
         foreach($item_list as $item_key=>$item){
             $item['cat_assign_checkbox_list'] = $this->get_cat_assign_checkbox_list($item['id'],$gallery_cats);
             $item_list[$item_key] = $item;
@@ -36,6 +35,8 @@
         $cats_assigned = Gallery_cat_assign::get_gallery_assigned_cats($gallery_id);
         
         $return_arr = array();
+
+        $gallery_cats[] = array('id'=>'0','label'=>'הצג כשאין קטגוריה');
         foreach($gallery_cats as $cat){
             $cat = array(
                 'id'=>$cat['id'],
