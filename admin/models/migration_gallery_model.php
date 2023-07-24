@@ -162,6 +162,9 @@
                 'old_id'=>$gallery['id']
             );
             self::simple_create_by_table_name($migration_gallery,"migration_gallery");
+            if(!$new_cat_id){
+                $new_cat_id = '0';
+            }
             if($new_cat_id){
                 $gallery_cat_assign = array(
                     'gallery_id'=>$new_gallery_id,
