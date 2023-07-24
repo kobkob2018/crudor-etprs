@@ -33,12 +33,14 @@
         $migration_site = Migration_site::find($filter_arr);      
         Migration_gallery::do_migrate($this->data['work_on_site']['id'],$migration_site);
         SystemMessages::add_success_message("הייבוא בוצע בהצלחה.. מקווים.. זה רק מודול זמני. אחרי שנסיים עם האתרים צריך למחוק את כל הרכיבים של הייבוא מהמערכת, כולל טבלאות ייבוא ועוד");
+        return $this->redirect_to(inner_url("migration_gallery/prepare/"));
     }
 
 
     public function delete_older(){   
         Migration_gallery::delete_older($this->data['work_on_site']['id']);
         SystemMessages::add_success_message("הייבוא נמחק בהצלחה.. אוליי.. תשמע כל העסק הזה הוא מה זה קומבינה.. אחר כך צריך למחוק את זה.");
+        return $this->redirect_to(inner_url("migration_gallery/prepare/"));
     }
     
     
