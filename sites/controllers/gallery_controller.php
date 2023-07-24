@@ -41,6 +41,9 @@
         if($selected_cat){
             $gallery_list = siteGallery::get_cat_gallery_list($selected_cat);
         }
+        else{
+            $gallery_list = siteGallery::get_cat_gallery_list('0');
+        }
         if(!$gallery_list){
             $gallery_list = array();
         }
