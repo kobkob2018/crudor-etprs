@@ -121,7 +121,7 @@
             $new_gallery_cat = array(
                 'label'=>utgt($subject['name']),
                 'site_id'=>$site_id,
-                'active'=>$subject['active']
+                'active'=>($subject['active'] == '0')? '1': '0'
             );
             $new_cat_id = self::simple_create_by_table_name($new_gallery_cat,"gallery_cat");
             $migration_gallery_cat = array(
@@ -151,7 +151,7 @@
             $new_gallery = array(
                 'label'=>utgt($gallery['name']),
                 'site_id'=>$site_id,
-                'active'=>$gallery['active'],
+                'active'=>($gallery['active'] == '0')? '1' : '0',
                 'priority'=>$gallery['place']
             );
             $new_gallery_id = self::simple_create_by_table_name($new_gallery,"gallery");
