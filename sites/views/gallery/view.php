@@ -54,7 +54,8 @@
                         <img class="gallery-big-img" src = "<?= $this->file_url_of('gallery_images',$image['image']) ?>" alt = "<?= $image['label'] ?>" />
                     </div>
                     <br/>
-                    <b class="gallery-image-text-holder color-b"><?= $info['images'][0]['label'] ?></b>
+                    <b class="gallery-image-label-holder color-b"><?= $info['images'][0]['label'] ?></b>
+                    <div class="gallery-image-description-holder color-b"><?= $info['images'][0]['description'] ?></b>
                 </div>
                 <?php if(isset($info['images'][1])): ?>
                     <div class="gallery-thumbs-wrap">
@@ -67,7 +68,8 @@
                                 <div class="gallery-thumb">
                                     <a href="javascript://" class="thumb-a modal-gallery-a" title="<?= $image['label'] ?>" data-big_img = "<?= $this->file_url_of('gallery_images',$image['image']) ?>" data-gallery_id = "gallery_modal_1" data-img_index = "<?= $key ?>">
                                         <img src = "<?= $this->file_url_of('gallery_images',$image['small_image']) ?>" alt = "<?= $image['label'] ?>"/>
-                                        <div class="hidden thumb-text"><?= $image['label'] ?></div> 
+                                        <div class="hidden thumb-label"><?= $image['label'] ?></div> 
+                                        <div class="hidden thumb-description"><?= $image['description'] ?></div> 
                                     </a>    
                                 </div>
                                 <link rel="preload" as="image" href="<?= $this->file_url_of('gallery_images',$image['image']) ?>">
@@ -118,7 +120,8 @@
                         const bigImgWrap = document.querySelector(".big-img-wrap");
                         const bigImgBox = document.querySelector(".big-img-box");
                         const galleryThumbsWrap = document.querySelector(".gallery-thumbs");
-                        const imageTextHolder = bigImgWrap.querySelector(".gallery-image-text-holder");
+                        const imageLabelHolder = bigImgWrap.querySelector(".gallery-image-label-holder");
+                        const imageDescriptionHolder = bigImgWrap.querySelector(".gallery-image-description-holder");
                         let boxThumbCount = 0;
                         let thumbBoxI = 0;
                         let currentThumbBox = false;
@@ -173,9 +176,12 @@
                                         }
                                         bigImgBox.style.height = optimalHeight + "px";
                                     }
-                                    const textHolder = thumb.querySelector(".thumb-text");
-                                    imageTextHolder.innerHTML = textHolder.innerHTML;
+                                    const labelHolder = thumb.querySelector(".thumb-label");
+                                    imageLabelHolder.innerHTML = labelHolder.innerHTML;
+                                    const descriptionHolder = thumb.querySelector(".thumb-description");
+                                    imageDescriptionHolder.innerHTML = descriptionHolder.innerHTML;
                                     bigImg.src = thumb.dataset.big_img;
+                                    
                                 }
                             });
                         });
