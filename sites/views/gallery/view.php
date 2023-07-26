@@ -125,7 +125,6 @@
                         let boxThumbCount = 0;
                         let thumbBoxI = 0;
                         let currentThumbBox = false;
-                        let optimalHeight = false;
                         document.querySelectorAll(".gallery-thumb").forEach(thumb=>{
                             
                             if(boxThumbCount == 9){
@@ -136,10 +135,6 @@
                                 if(currentThumbBox){
                                     //the 'next' parm of previous box             
                                     currentThumbBox.dataset.next = thumbBoxI;
-                                    if(!optimalHeight){
-                                        optimalHeight = currentThumbBox.offsetHeight;
-                                        galleryThumbsWrap.style.height = optimalHeight + "px";
-                                    }
                                 }
                                 currentThumbBox = document.createElement('div');
                                 lastThumbI = thumbBoxI;
