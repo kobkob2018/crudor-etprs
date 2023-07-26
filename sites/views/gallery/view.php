@@ -50,51 +50,108 @@
             <div class="gallery-images-wrap">
                 <?php $image = $info['images'][0]; ?>
                 <div class="big-img-wrap">
-                    <img class="gallery-big-img" src = "<?= $this->file_url_of('gallery_images',$image['image']) ?>" alt = "<?= $image['label'] ?>" />
+                    <div class="big-img-box">
+                        <img class="gallery-big-img" src = "<?= $this->file_url_of('gallery_images',$image['image']) ?>" alt = "<?= $image['label'] ?>" />
+                    </div>
                     <br/>
                     <b class="gallery-image-text-holder color-b"><?= $info['images'][0]['label'] ?></b>
                 </div>
                 <?php if(isset($info['images'][1])): ?>
-                    <div class="gallery-thumbs">
+                    <div class="gallery-thumbs-wrap">
+                        <div class="gallery-thumbs">
 
-                    </div>
-                    <div class="gallery-thumbs-holder hidden">
+                        </div>
+                        <div class="gallery-thumbs-holder hidden">
 
-                        <?php foreach($info['images'] as $key=>$image): ?>
-                            <div class="gallery-thumb">
-                                <a href="javascript://" class="thumb-a modal-gallery-a" title="<?= $image['label'] ?>" data-big_img = "<?= $this->file_url_of('gallery_images',$image['image']) ?>" data-gallery_id = "gallery_modal_1" data-img_index = "<?= $key ?>">
-                                    <img src = "<?= $this->file_url_of('gallery_images',$image['small_image']) ?>" alt = "<?= $image['label'] ?>"/>
-                                    <div class="hidden thumb-text"><?= $image['label'] ?></div> 
-                                </a>    
+                            <?php foreach($info['images'] as $key=>$image): ?>
+                                <div class="gallery-thumb">
+                                    <a href="javascript://" class="thumb-a modal-gallery-a" title="<?= $image['label'] ?>" data-big_img = "<?= $this->file_url_of('gallery_images',$image['image']) ?>" data-gallery_id = "gallery_modal_1" data-img_index = "<?= $key ?>">
+                                        <img src = "<?= $this->file_url_of('gallery_images',$image['small_image']) ?>" alt = "<?= $image['label'] ?>"/>
+                                        <div class="hidden thumb-text"><?= $image['label'] ?></div> 
+                                    </a>    
+                                </div>
+                                <link rel="preload" as="image" href="<?= $this->file_url_of('gallery_images',$image['image']) ?>">
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="gallery-thumbs-controlls hidden">
+                            <div class="controll-prev-wrap gallery-controll-wrap">
+                                <a class="gallery-controll controll-prev" href="javascript://" onclick="gallery_prev_box()">
+                                    <i class="fa carusel-next fa-chevron-right"><</i>
+                                </a> 
                             </div>
-                            <link rel="preload" as="image" href="<?= $this->file_url_of('gallery_images',$image['image']) ?>">
-                        <?php endforeach; ?>
+                            <div class="controll-next-wrap gallery-controll-wrap">
+                                <a class="gallery-controll controll-next" href="javascript://" onclick="gallery_next_box()">
+                                    <i class="fa carusel-previous fa-chevron-left">></i>
+                                </a> 
+                            </div>
+
+                        </div>
                     </div>
                 <?php endif; ?>
             </div>
             <script type="text/javascript">
+                function galery_swich_box(current,nextI){
+                    const nextBox = document.getElementById("thumbBox_"+nextI);
+                    current.classList.add("hidden");
+                    current.classList.remove("current");
+                    nextBox.classList.remove("hidden");
+                    nextBox.classList.add("current");
+                }
+                function gallery_next_box(){
+                    const current = document.querySelector(".thumb-box.current");
+                    const next = current.dataset.next;
+                    galery_swich_box(current,next);
+                }
+                function gallery_prev_box(){
+                    const current = document.querySelector(".thumb-box.current");
+                    let prev = current.dataset.prev;
+                    if(prev == '-1'){
+                        prev = lastThumbI; 
+                    }
+                    galery_swich_box(current,prev);
+                }
+                let lastThumbBox = false;
                 document.addEventListener("DOMContentLoaded",()=>{                   
                     setTimeout(function(){
                         let currentThumb = false;
                         const bigImg = document.querySelector(".gallery-big-img");
                         const bigImgWrap = document.querySelector(".big-img-wrap");
+                        const bigImgBox = document.querySelector(".big-img-box");
                         const galleryThumbsWrap = document.querySelector(".gallery-thumbs");
                         const imageTextHolder = bigImgWrap.querySelector(".gallery-image-text-holder");
                         let boxThumbCount = 0;
                         let thumbBoxI = 0;
                         let currentThumbBox = false;
-
+                        let optimalHeight = false;
                         document.querySelectorAll(".gallery-thumb").forEach(thumb=>{
-                            boxThumbCount ++;
-                            if(boxThumbCount == 10){
+                            
+                            if(boxThumbCount == 9){
+                                document.querySelector(".gallery-thumbs-controlls").classList.remove("hidden");
                                 boxThumbCount = 0;
                             }
                             if(boxThumbCount == 0){
-                                thumbBoxI++;
+                                if(currentThumbBox){
+                                    //the 'next' parm of previous box             
+                                    currentThumbBox.dataset.next = thumbBoxI;
+                                    if(!optimalHeight){
+                                        optimalHeight = currentThumbBox.offsetHeight;
+                                        galleryThumbsWrap.style.height = optimalHeight + "px";
+                                    }
+                                }
                                 currentThumbBox = document.createElement('div');
+                                lastThumbI = thumbBoxI;
+                                if(thumbBoxI != 0){
+                                    currentThumbBox.classList.add("hidden");
+                                }
+                                else{
+                                    currentThumbBox.classList.add("current");
+                                }
+                                currentThumbBox.dataset.next = 0; // the current goes back to 0
+                                currentThumbBox.dataset.prev = thumbBoxI - 1; // the current goes back to 0
                                 currentThumbBox.id = "thumbBox_"+thumbBoxI;
                                 currentThumbBox.classList.add("thumb-box");
                                 galleryThumbsWrap.append(currentThumbBox);
+                                thumbBoxI++; 
                             }
                             currentThumbBox.append(thumb);
                             boxThumbCount++;
@@ -108,7 +165,13 @@
                                 if(bigImg){
                                     if(!bigImgWrap.classList.contains("h-set")){
                                         bigImgWrap.classList.add("h-set");
-                                        bigImgWrap.style.height = bigImgWrap.offsetHeight + "px";
+                                        if(!optimalHeight){
+                                            optimalHeight = bigImgBox.offsetHeight;
+                                        }
+                                        else{
+                                            optimalHeight-=11; 
+                                        }
+                                        bigImgBox.style.height = optimalHeight + "px";
                                     }
                                     const textHolder = thumb.querySelector(".thumb-text");
                                     imageTextHolder.innerHTML = textHolder.innerHTML;
