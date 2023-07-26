@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 
-.mycarusel .items .item{
+.mycarusel .item{
     position: absolute;
     width: 100%;
     text-align: center;
@@ -15,38 +15,38 @@
 }
 
 
-.mycarusel .items .item.carusel-on{
+.mycarusel .item.carusel-on{
     display: block;
     opacity: 1;   
 }
 
-.mycarusel .items .item.carusel-off{
+.mycarusel .item.carusel-off{
     display: none;
     opacity: 0;
     
 }
 
-.mycarusel .items .item.carusel-coming{
+.mycarusel .item.carusel-coming{
     opacity: 0;
     display: block;
     left:-30px;
 }
 
-.mycarusel .items .item.carusel-removing{
+.mycarusel .item.carusel-removing{
     opacity: 0;
     left:30px;
     
     
 }
 
-.mycarusel .items .item.carusel-coming-prev{
+.mycarusel .item.carusel-coming-prev{
     opacity: 0;
     display: block;
     left:30px;
 }
 
 
-.mycarusel .items .item.carusel-removing-prev{
+.mycarusel .item.carusel-removing-prev{
     opacity: 0;
     left:-30px;
 } 
@@ -111,22 +111,24 @@
     height: 100vh;
     width: 100%;
 }
-.mycarusel .items .item{
+.mycarusel .item{
     height: 100%;
 }
-.mycarusel .items .item .item-content{
+.mycarusel .item-content{
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-.mycarusel .items .item .item-content  .item-title{
+.mycarusel .item-title{
     color: white;
     font-weight: bold;
     font-size: 1.2em;
 }
-
-.mycarusel .items .item .item-content  .item-text{
+.mycarusel .item-img{
+    margin: auto;
+}
+.mycarusel .item-content  .item-text{
     color: black;
     background: white;
     margin: auto;
