@@ -54,7 +54,7 @@
 .fa-chevron-left::before {
   content: "\f053"; }
 
-  @font-face {
+  @font-face { 
     font-family: 'faFont';
     font-display: block;
     src: url("../fonts/fa/fa-solid-900.woff2") format("woff2"), url("../fonts/fa/fa-solid-900.ttf") format("truetype"); }
