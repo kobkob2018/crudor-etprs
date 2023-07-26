@@ -57,6 +57,9 @@
                 <?php if(isset($info['images'][1])): ?>
                     <div class="gallery-thumbs">
 
+                    </div>
+                    <div class="gallery-thumbs-holder hidden">
+
                         <?php foreach($info['images'] as $key=>$image): ?>
                             <div class="gallery-thumb">
                                 <a href="javascript://" class="thumb-a modal-gallery-a" title="<?= $image['label'] ?>" data-big_img = "<?= $this->file_url_of('gallery_images',$image['image']) ?>" data-gallery_id = "gallery_modal_1" data-img_index = "<?= $key ?>">
@@ -71,33 +74,53 @@
             </div>
             <script type="text/javascript">
                 document.addEventListener("DOMContentLoaded",()=>{                   
-                    let currentThumb = false;
                     setTimeout(function(){
+                        let currentThumb = false;
                         const bigImg = document.querySelector(".gallery-big-img");
                         const bigImgWrap = document.querySelector(".big-img-wrap");
+                        const galleryThumbsWrap = document.querySelector(".gallery-thumbs");
                         const imageTextHolder = bigImgWrap.querySelector(".gallery-image-text-holder");
-                            document.querySelectorAll(".gallery-thumb a").forEach(thumb=>{
-                                if(!currentThumb){
-                                    currentThumb = thumb;
-                                }
-                                thumb.addEventListener("mouseover",()=>{
-                                    currentThumb = thumb;
-                                    if(bigImg){
-                                        if(!bigImgWrap.classList.contains("h-set")){
-                                            bigImgWrap.classList.add("h-set");
-                                            bigImgWrap.style.height = bigImgWrap.offsetHeight + "px";
-                                        }
-                                        const textHolder = thumb.querySelector(".thumb-text");
-                                        imageTextHolder.innerHTML = textHolder.innerHTML;
-                                        bigImg.src = thumb.dataset.big_img;
+                        let boxThumbCount = 0;
+                        let thumbBoxI = 0;
+                        let currentThumbBox = false;
+
+                        document.querySelectorAll(".gallery-thumb").forEach(thumb=>{
+                            boxThumbCount ++;
+                            if(boxThumbCount == 10){
+                                boxThumbCount = 0;
+                            }
+                            if(boxThumbCount == 0){
+                                thumbBoxI++;
+                                currentThumbBox = document.createElement('div');
+                                currentThumbBox.id = "thumbBox_"+thumbBoxI;
+                                currentThumbBox.classList.add("thumb-box");
+                                galleryThumbsWrap.append(currentThumbBox);
+                            }
+                            currentThumbBox.append(thumb);
+                            boxThumbCount++;
+                        });
+                        document.querySelectorAll(".gallery-thumb a").forEach(thumb=>{
+                            if(!currentThumb){
+                                currentThumb = thumb;
+                            }
+                            thumb.addEventListener("mouseover",()=>{
+                                currentThumb = thumb;
+                                if(bigImg){
+                                    if(!bigImgWrap.classList.contains("h-set")){
+                                        bigImgWrap.classList.add("h-set");
+                                        bigImgWrap.style.height = bigImgWrap.offsetHeight + "px";
                                     }
-                                });
-                            });
-                            bigImgWrap.addEventListener("click",function(){
-                                currentThumb.click();
+                                    const textHolder = thumb.querySelector(".thumb-text");
+                                    imageTextHolder.innerHTML = textHolder.innerHTML;
+                                    bigImg.src = thumb.dataset.big_img;
+                                }
                             });
                         });
+                        bigImgWrap.addEventListener("click",function(){
+                            currentThumb.click();
+                        });
                     },500);
+                });
             </script>
 
             <div id="modals_placeholder"></div>
@@ -120,7 +143,7 @@
                                 <?php foreach($info['images'] as $key=>$image): ?>
                                 <div class="gallery-item item item_id_<?= $key ?>">
                                     <div class="item-content">
-                                        <div class="item-text">
+                                        <div class="item-title">
                                             <h2>
                                             <?= $image['label'] ?>
                                             </h2>
