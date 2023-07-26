@@ -107,27 +107,32 @@
     right: auto;
     left: 50px;
 }
-.items{
+.mycarusel .items{
     height: 100vh;
     width: 100%;
 }
-.items .item{
+.mycarusel .items .item{
     height: 100%;
 }
-.items .item .item-content{
+.mycarusel .items .item .item-content{
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-.items .item .item-content  .item-title{
+.mycarusel .items .item .item-content  .item-title{
     color: white;
     font-weight: bold;
     font-size: 1.2em;
 }
 
-.gallery-wrap{
-
+.mycarusel .items .item .item-content  .item-text{
+    color: black;
+    background: white;
+    margin: auto;
+    display: block;
+    padding: 10px;
+    text-align: right;
 }
 
 .gallery-wrap.inner-section{

@@ -55,7 +55,7 @@
                     </div>
                     <br/>
                     <b class="gallery-image-label-holder color-b"><?= $info['images'][0]['label'] ?></b>
-                    <div class="gallery-image-description-holder color-b"><?= $info['images'][0]['description'] ?></div>
+                    <div class="gallery-image-description-holder"><?= $info['images'][0]['description'] ?></div>
                 </div>
                 <?php if(isset($info['images'][1])): ?>
                     <div class="gallery-thumbs-wrap">
