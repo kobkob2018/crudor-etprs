@@ -203,7 +203,7 @@ i.fa{
     margin-bottom: 20px;
 }
 
-.module-sub-menu{margin-bottom: 10px;}
+.module-sub-menu{margin-bottom: 17px;}
 
 .top-search button {
     all: unset;
@@ -346,8 +346,8 @@ a.nice-button{
 
   .module-sub-menu .sub-item a{
     display: block;
-    padding: 5px 5px;
-    margin: 5px 5px;
+    padding: 0px 5px;
+    margin: 1px 5px;
     font-weight: bold;
   }
 
