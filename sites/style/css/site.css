@@ -853,15 +853,10 @@ a.news-ticker-a-content{
     font-size: 40px;
 }
 
-.gallery-images-wrap .gallery-thumbs{
-    position: relative;
-}
 
 .gallery-images-wrap .gallery-thumbs .thumb-box{
-    position: absolute;
     display: flex;
     flex-wrap: wrap;
-    top: 0px;
 }
 
 .gallery-images-wrap .gallery-thumbs .thumb-box.hidden{
