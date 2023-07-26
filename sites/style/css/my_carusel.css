@@ -134,6 +134,8 @@
     display: block;
     padding: 10px;
     text-align: right;
+    max-width: 80%;
+    border-radius: 5px;
 }
 
 .gallery-wrap.inner-section{
