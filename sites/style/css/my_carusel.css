@@ -128,6 +128,7 @@
 }
 .mycarusel .item-content  .item-text-wrap{
     margin: 20px auto auto;
+    max-width: 80%;
 }
 .mycarusel .item-content  .item-text{
     color: black;
@@ -135,7 +136,7 @@
     display: block;
     padding: 10px;
     text-align: right;
-    max-width: 80%;
+    
     border-radius: 5px;
 }
 
