@@ -196,11 +196,11 @@
 
                             <div class="mycarusel gallery-carusel">
                                 <div class="carusel-control next">
-                                <i class="fa carusel-next fa-chevron-right"><</i>
+                                <i class="fa carusel-next fa-chevron-right"></i>
                             </div>
                             <div class="carusel-control previous">
                                 
-                                <i class="fa carusel-previous fa-chevron-left">></i>
+                                <i class="fa carusel-previous fa-chevron-left"></i>
                             </div>
                             <div class="modal-gallery items">
                                 
