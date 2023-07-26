@@ -814,19 +814,22 @@ a.news-ticker-a-content{
     overflow: hidden;
 }
 
-.gallery-images-wrap .gallery-image-text-holder{
+.gallery-images-wrap .gallery-image-label-holder{
     text-align: center;
     margin-top: 10px;
     font-size: 18px;
 }
 
-.gallery-images-wrap .gallery-image-text{
+.gallery-images-wrap .gallery-image-label{
     display: block;
     margin-top: 10px;
     margin-bottom: 20px;
     font-size: 24px;
 }
 
+.gallery-images-wrap .gallery-image-description-holder{
+    text-align: justify;
+}
 .mobile-gallery-wrap .mobile-gallery-image{
     text-align: center;
 }

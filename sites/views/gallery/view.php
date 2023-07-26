@@ -237,7 +237,7 @@
                     <div class="mobile-gallery-image">
                         <img src="<?= $this->file_url_of('gallery_images',$image['image']) ?>" alt="<?= $image['label'] ?>" />
                         <br/>
-                        <b class="gallery-image-text color-b"><?= $image['label'] ?></b>
+                        <b class="gallery-image-label color-b"><?= $image['label'] ?></b>
                     </div>
                 <?php endforeach; ?>
             </div>
