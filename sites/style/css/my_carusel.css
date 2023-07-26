@@ -126,11 +126,12 @@
     font-size: 1.2em;
     margin-top: auto;
 }
-
+.mycarusel .item-content  .item-text-wrap{
+    margin: 20px auto auto;
+}
 .mycarusel .item-content  .item-text{
     color: black;
     background: white;
-    margin: 20px auto auto;
     display: block;
     padding: 10px;
     text-align: right;
