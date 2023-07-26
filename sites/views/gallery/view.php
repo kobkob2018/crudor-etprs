@@ -76,17 +76,17 @@
                             <?php endforeach; ?>
                         </div>
                         <div class="gallery-thumbs-controlls hidden">
-                            <div class="controll-prev-wrap gallery-controll-wrap">
-                                <a class="gallery-controll controll-prev" href="javascript://" onclick="gallery_prev_box()">
-                                    <i class="fa carusel-next fa-chevron-right"><</i>
-                                </a> 
-                            </div>
-                            <div class="controll-next-wrap gallery-controll-wrap">
-                                <a class="gallery-controll controll-next" href="javascript://" onclick="gallery_next_box()">
-                                    <i class="fa carusel-previous fa-chevron-left">></i>
-                                </a> 
-                            </div>
 
+                            <div class="controll-next-wrap gallery-controll-wrap">
+                                <a class="color-b gallery-controll controll-next" href="javascript://" onclick="gallery_next_box()">
+                                    <i class="fa carusel-previous fa-chevron-left"><</i>
+                                </a> 
+                            </div>
+                            <div class="controll-prev-wrap gallery-controll-wrap">
+                                <a class="color-b gallery-controll controll-prev" href="javascript://" onclick="gallery_prev_box()">
+                                    <i class="fa carusel-next fa-chevron-right">></i>
+                                </a> 
+                            </div>
                         </div>
                     </div>
                 <?php endif; ?>

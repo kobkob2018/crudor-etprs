@@ -48,6 +48,12 @@
 .fa-eye-slash::before {
     content: "\f070"; }
 
+.fa-chevron-right::before {
+  content: "\f054"; }
+
+.fa-chevron-left::before {
+  content: "\f053"; }
+
   @font-face {
     font-family: 'faFont';
     font-display: block;
