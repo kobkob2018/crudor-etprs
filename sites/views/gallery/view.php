@@ -216,11 +216,11 @@
                                         <div class="item-img">
                                             <img src="<?= $this->file_url_of('gallery_images',$image['image']) ?>" alt="<?= $image['label'] ?>" />
                                         </div>
-                                        <?php if($image['description'] != ""): ?>
-                                            <div class="item-text">
-                                                <?= nl2br($image['description']) ?>
-                                            </div>
-                                        <?php endif; ?>
+                                        
+                                        <div class="item-text">
+                                            <?= nl2br($image['description']) ?>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <?php endforeach; ?>
