@@ -46,6 +46,46 @@
       $this->include_view('product_subs/cat_assign_form.php',$info);
     }
 
+    public function assign_products(){
+      $this->add_model("product_sub_assign");
+      $this->add_model("products");
+      
+      if(!isset($_GET['row_id'])){
+          return $this->eject_redirect();
+      }
+      $this->data['item_info'] = $this->get_item_info($_GET['row_id']);
+      if(isset($_REQUEST['submit_assign'])){
+          
+          $assign_products = array();
+          
+          foreach($_REQUEST['assign'] as $product){
+              if($product != '-1'){
+                  $assign_products[] = $product;
+              }
+          }
+          Product_sub_assign::assign_products_to_sub($this->data['item_info']['id'],  $assign_products);      
+          SystemMessages::add_success_message("המוצרים שוויכו בהצלחה");
+          return $this->redirect_to(inner_url("product_subs/assign_products/?row_id=".$this->data['item_info']['id'])); 
+      }
+      $filter_arr = $this->get_base_filter();
+      $product_list = Products::get_list($filter_arr,"id, label");
+      $products_assigned = Product_sub_assign::get_assigned_products_to_sub($this->data['item_info']['id']);
+      $products_checked_list = array();
+      foreach($products_assigned as $product){
+          $products_checked_list[$product['product_id']] = '1';
+      }
+      $check_options = array();
+      foreach($product_list as $product){
+          $checked = "";
+          if(isset($products_checked_list[$product['id']])){
+              $checked = "checked";
+          }
+          $check_options[] = array('value'=>$product['id'],'title'=>$product['label'],'checked'=>$checked);
+      }
+      $info = array('options'=>$check_options);
+      $this->include_view('product_subs/product_assign_form.php',$info);
+    }
+
     public function list(){
         //if(session__isset())
         $filter_arr = $this->get_base_filter();
