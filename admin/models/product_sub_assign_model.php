@@ -43,7 +43,7 @@
 
         public static function get_assigned_products_to_sub($sub_id){
             $filter_arr = array('sub_id'=>$sub_id);
-            $assigned_list = self::get_list($filter_arr,'sub_id');
+            $assigned_list = self::get_list($filter_arr,'product_id');
             if(!$assigned_list){
                 return array();
             }
