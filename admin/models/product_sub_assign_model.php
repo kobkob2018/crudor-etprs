@@ -51,7 +51,7 @@
         }
 
         public static function assign_products_to_sub($sub_id, $product_id_arr){
-
+            
             $sql_arr = array(
                 'sub_id'=>$sub_id
             );
@@ -62,7 +62,7 @@
             $req->execute($sql_arr);
 
 
-            if(empty($sub_id_arr)){
+            if(empty($product_id_arr)){
                 return;
             }
             $product_insert_arr = array();
@@ -73,6 +73,7 @@
             $product_insert_str = implode(",",$product_insert_arr);
 
             $sql = "INSERT INTO product_sub_assign(sub_id , product_id) VALUES $product_insert_str "; 
+            
             $req = $db->prepare($sql);
             $req->execute($sql_arr);
             return;
