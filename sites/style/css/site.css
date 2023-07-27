@@ -1153,6 +1153,10 @@ a.news-ticker-a-content{
         display: block;
     }
 
+    #logo_wrap{
+        padding-top: 6px;
+    }
+
     #logo_wrap img{
         max-height: 50px;
     }
