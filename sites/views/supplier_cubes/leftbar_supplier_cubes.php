@@ -50,7 +50,7 @@
         <?php if(is_mobile() && $cube['whatsapp_phone'] != ""): ?>
             <div class="whatsapp-phone section">
                 <a href="whatsapp://send?text=<?= $cube['whatsapp_text']; ?>&phone=<?= $cube['whatsapp_phone']; ?>"> 
-                    <img src="<?= $this->file_master_url_of('static', 'style/whatsapp.png') ?>" alt='קבל הצעת מחיר בווטסאפ' /> קבל הצעת מחיר בווטסאפ
+                    <img src="<?= $this->file_master_url_of('static', 'media/uploads/whatsapp.png') ?>" alt='קבל הצעת מחיר בווטסאפ' /> קבל הצעת מחיר בווטסאפ
                 </a>
             </div>            
         <?php elseif($cube['phone']): ?>
