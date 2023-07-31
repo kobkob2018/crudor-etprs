@@ -124,6 +124,15 @@
         </form>
         <div class="submit-wrap pending-state form-group biz-form-bg">
             <input type="submit" class="submit-button form-input color-button" data-status="pending" value="שליחה" />
+                    
+            <?php if(isset($info['recapcha_data'])): ?>
+                <div class="recapcha-g-note">          
+                    <small>This site is protected by reCAPTCHA and the Google 
+                        <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+                    </small>
+                </div>
+            <?php endif; ?>
         </div>
 
         <?php if((!isset($info['input_remove']['email'])) && $this->data['biz_form']['add_email']): ?>

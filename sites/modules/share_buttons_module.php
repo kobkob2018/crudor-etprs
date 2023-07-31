@@ -5,7 +5,7 @@
             $this->add_data('share_buttons',array('whatsapp'=>
                 array('img'=>$whatsaap_share,'href'=>"whatsapp://send?text=".current_url())
             ));
-            $this->include_view('share_buttons/print.php');
+            $this->include_view('modules/share_buttons.php');
         }
 
 	}

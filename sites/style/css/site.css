@@ -891,6 +891,22 @@ a.news-ticker-a-content{
 
 .max-1300{margin: 20px;}
 
+.whatsapp-chat-wrap{
+    position: fixed;
+    bottom: 110px;
+    left: 3px;
+    z-index: 1;
+}
+
+.recapcha-g-note{
+    text-align: left;
+    padding: 10px 0px 0px;
+}
+
+.grecaptcha-badge { 
+    visibility: hidden;
+}
+
 @media only screen and (min-width: 890px) {
 
     .page-flex-top{

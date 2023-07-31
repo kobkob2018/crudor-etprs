@@ -81,6 +81,7 @@
                 $this->include_view('biz_form/googleADSense.php',$info);
             }
             else{
+                $this->add_data('biz_form_on','1');
                 $this->include_view('biz_form/init_form.php',$info);
             }
         }

@@ -40,9 +40,9 @@
       return $body_output;
     }
 
-    protected function decode_action_data_arr(){
+    protected function decode_action_data_arr($seperator = " "){
       $data = $this->action_data;
-      $data_arr = explode(" ",$data);
+      $data_arr = explode($seperator,$data);
       
       $return_arr = array();
       foreach($data_arr as $param){
