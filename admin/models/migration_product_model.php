@@ -245,7 +245,8 @@
                 'link_text'=>utgt($product['url_name']),
                 'site_id'=>$site_id,
                 'active'=>($product['active'] == '0')? '1' : '0',
-                'priority'=>$product['place']
+                'priority'=>$product['place'],
+                'image'=>$product['img'],
             );
 
 
