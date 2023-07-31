@@ -387,6 +387,7 @@ a.nice-button{
   }
   .list-box .box-image img{
     max-width: 100%;
+    max-height: 120px;
   }
 
   .list-box .box-text{
