@@ -259,7 +259,7 @@
                 $assigns = array();
             }
             foreach($assigns as $assign){
-                $old_sub = $assign['cat_id'];
+                $old_sub = $assign['sub_id'];
                 $migration_product_sub = self::simple_find_by_table_name(array('old_id'=>$old_sub),"migration_product_sub",'sub_id');
                 if($migration_product_sub){
                     $new_sub_id = $migration_product_sub['sub_id'];
@@ -294,7 +294,7 @@
     }
 
 
-    protected function do_migrate_image($images_url, $product_id, $img_name,$site_id, $migration_site, $old_image_id = '0'){
+    protected static function do_migrate_image($images_url, $product_id, $img_name,$site_id, $migration_site, $old_image_id = '0'){
         $new_image = array(
             'label'=>'',
             'site_id'=>$site_id,
