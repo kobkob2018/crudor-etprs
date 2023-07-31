@@ -259,7 +259,7 @@
                 $assigns = array();
             }
             foreach($assigns as $assign){
-                $old_sub = $assign['cat_id'];
+                $old_sub = $assign['catId'];
                 $migration_product_sub = self::simple_find_by_table_name(array('old_id'=>$old_sub),"migration_product_sub",'sub_id');
                 if($migration_product_sub){
                     $new_sub_id = $migration_product_sub['sub_id'];
