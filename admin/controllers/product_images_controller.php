@@ -127,6 +127,7 @@
 
     protected function create_item($fixed_values){
         $fixed_values['product_id'] = $this->data['product_info']['id'];
+        $fixed_values['site_id'] = $this->data['work_on_site']['id'];
         return Product_images::create($fixed_values);
     }
 
