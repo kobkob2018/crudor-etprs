@@ -193,11 +193,11 @@
             $new_sub = array(
                 'label'=>utgt($cat['name']),
                 'site_id'=>$site_id,
-                'active'=>($cat['active'] == '0')? '1' : '0'
+                'active'=>($cat['status'] == '0')? '1' : '0'
             );
             $new_sub_id = self::simple_create_by_table_name($new_sub,"product_sub");
             $migration_product_sub = array(
-                'product_id'=>$new_sub_id,
+                'sub_id'=>$new_sub_id,
                 'site_id'=>$site_id,
                 'unk'=>$migration_site['old_unk'],
                 'old_id'=>$cat['id']
