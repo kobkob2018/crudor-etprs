@@ -907,12 +907,6 @@ a.news-ticker-a-content{
     visibility: hidden;
 }
 
-#share_buttons_wrap{
-    position: fixed;
-    left: 10px;
-    top: 212px;
-}
-
 @media only screen and (min-width: 890px) {
 
     .page-flex-top{
