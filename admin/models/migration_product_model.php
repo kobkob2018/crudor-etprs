@@ -107,7 +107,7 @@
                 }
             }
             
-            self::simple_delete_by_table_name($migration_product['product_id'],'product');
+            self::simple_delete_by_table_name($migration_product['product_id'],'products');
         
             
             $sql = "DELETE FROM product_sub_assign WHERE product_id = :product_id";
