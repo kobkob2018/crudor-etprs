@@ -300,7 +300,6 @@
             'site_id'=>$site_id,
             'priority'=>'10',
             'product_id'=>$product_id,
-            'description'=>'',
             'image'=>$img_name,
             'small_image'=>"s_".$img_name,
         );
