@@ -1,10 +1,10 @@
-<h2>ייבוא גלריות מאתר המקור</h2>
+<h2>ייבוא מוצרים מאתר המקור</h2>
 <?php $this->include_view("migration_site/header.php"); ?>
 <?php if($info['migration_exist']): ?>
     <div class="focus-box red">
         כבר קיימים מוצרים מיובאים באתר זה. על מנת לייבא, יש למחוק את הייבוא הקודם.
         <a class="button-focus" href="<?= inner_url('migration_product/delete_older/') ?>">
-            לחץ כאן למחיקת ייבוא גלריות ישן
+            לחץ כאן למחיקת ייבוא מוצרים ישן
         </a>
     </div>
 <?php else: ?>

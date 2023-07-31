@@ -183,7 +183,7 @@
                         </div>
                     <?php endif; ?>
                     <div class="box-text">
-                        <?= nl2br($product['description']) ?>
+                        <?= $product['description']? nl2br($product['description']): "" ?>
                     </div>
                     <?php if($product['price']): ?>
                         <div class="box-price color-b">
