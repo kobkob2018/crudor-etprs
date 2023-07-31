@@ -250,7 +250,7 @@
 
 
             if($product['video_10service'] != ""){
-                $new_product['content'].="<div class='video-container'>".utgt(stripslashes($product['video_10service']))."</div>";
+                $new_product['content'].="<p></p><div class='video-container'>".utgt(stripslashes($product['video_10service']))."</div>";
             }
 
             $new_product_id = self::simple_create_by_table_name($new_product,"products");
