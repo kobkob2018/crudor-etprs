@@ -74,6 +74,13 @@
             'default'=>'0'
         ),
 
+        'price_special'=>array(
+            'label'=>'מחיר מיוחד',
+            'type'=>'text',
+            'validation'=>'float',
+            'default'=>'0'
+        ),
+        
         'image'=>array(
             'label'=>'תמונה קטנה לרשימת מוצרים',
             'type'=>'file',

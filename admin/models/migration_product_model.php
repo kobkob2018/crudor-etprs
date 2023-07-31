@@ -230,17 +230,29 @@
             $products = array();
         }
         foreach($products as $product){
-            $migration_product_cat = self::simple_find_by_table_name(array('old_id'=>$old_cat),"migration_product_cat",'cat_id');
-
+          
             $new_product = array(
                 'label'=>utgt($product['name']),
                 'title'=>utgt($product['name']),
                 'list_label'=>utgt($product['name']),
                 'meta_title'=>utgt($product['name']),
+                'content'=>utgt($product['content']),
+                'description'=>utgt($product['summary']),
+                'meta_description'=>utgt($product['summary']),
+                'price'=>$product['price'],
+                'price_special'=>$product['price_special'],
+                'link'=>utgt($product['url_link']),
+                'link_text'=>utgt($product['url_name']),
                 'site_id'=>$site_id,
                 'active'=>($product['active'] == '0')? '1' : '0',
                 'priority'=>$product['place']
             );
+
+
+            if($product['video_10service'] != ""){
+                $new_product['content'].="<p>".$product['video_10service']."</p>";
+            }
+
             $new_product_id = self::simple_create_by_table_name($new_product,"products");
             $migration_product = array(
                 'product_id'=>$new_product_id,
