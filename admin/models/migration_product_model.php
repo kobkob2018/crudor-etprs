@@ -176,7 +176,7 @@
 
 
         //migrate products subs
-        $sql = "SELECT * FROM user_product_cat WHERE unk = :unk AND deleted = '0'";
+        $sql = "SELECT * FROM user_products_cat WHERE unk = :unk AND deleted = '0'";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('unk'=>$migration_site['old_unk']));
         $product_cats = $req->fetchAll();
