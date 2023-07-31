@@ -235,6 +235,7 @@
             $new_product = array(
                 'label'=>utgt($product['name']),
                 'title'=>utgt($product['name']),
+                'list_label'=>utgt($product['name']),
                 'site_id'=>$site_id,
                 'active'=>($product['active'] == '0')? '1' : '0',
                 'priority'=>$product['place']
