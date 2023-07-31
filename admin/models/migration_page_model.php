@@ -1,9 +1,9 @@
 <?php
-  class Migration_page extends TableModel{
+  class Migration_product extends TableModel{
 
     private static $ilbiz_db = NULL;
 
-    protected static $main_table = 'migration_page';
+    protected static $main_table = 'migration_product';
 
     protected static function getIlbizDb() {
         if (!isset(self::$ilbiz_db)) {
@@ -13,412 +13,329 @@
         return self::$ilbiz_db;
     }
 
-    public static function get_old_site_page_list($migration_site, $filter){
-
-
-        $ilbiz_db = self::getIlbizDb();
-        $sql = "select COUNT(id) as row_count FROM content_pages page 
-		
-		WHERE page.unk = :unk 
-        AND page.deleted = '0' 
-		AND page.redierct_301 = '' 
-		AND page.type NOT IN('text','net','gb','contact')  
-        ";
-        $req = $ilbiz_db->prepare($sql);
-        $req->execute(array('unk'=>$migration_site['old_unk']));
-        $result = $req->fetch();
-
-        $row_count = $result['row_count'];
-
-        $page = intval($filter['page']);
-        $page = $page-1;
-        $row_limit = intval($filter['row_limit']);
-        $limit_count = $page*$row_limit;
-        $limit_str = " LIMIT $limit_count, $row_limit ";
-
-        $ilbiz_db = self::getIlbizDb();
-        $sql = "select page.*, cat_spec, subCat, primeryCat from content_pages page 
-		LEFT JOIN estimate_miniSite_defualt_block form ON form.type= page.id
-		WHERE page.unk = :unk 
-        AND page.deleted = '0' 
-		AND page.redierct_301 = '' 
-		AND page.type NOT IN('text','net','gb','contact')  
-         $limit_str 
-        ";
-        $req = $ilbiz_db->prepare($sql);
-        $req->execute(array('unk'=>$migration_site['old_unk']));
-        $result = $req->fetchAll();
-        $content_pages = array();
-        $formated_params = array(
-            'name', 'content', 'keywords', 'description'
-        );
-        $old_cat_str_arr = array();
-        $new_cat_str_arr = array();
-        if($result){
-            foreach($result as $content_page){
-                foreach($formated_params as $param){
-					if($content_page[$param] != ""){
-						$content_page[$param] = utgt($content_page[$param]);
-					}
-				}
-				$cat_id = '0';
-				if($content_page['primeryCat'] != "" && $content_page['primeryCat'] != '0'){
-					$cat_id = $content_page['primeryCat'];
-				}
-				if($content_page['subCat'] != "" && $content_page['subCat'] != '0'){
-					$cat_id = $content_page['subCat'];
-				}
-				if($content_page['cat_spec'] != "" && $content_page['cat_spec'] != '0'){
-					$cat_id = $content_page['cat_spec'];
-				}
-				
-				if(!isset($old_cat_str_arr[$cat_id])){
-					$old_cat_str_arr[$cat_id] = self::get_ilbiz_cat_str($cat_id);
-				}
-
-				if(!isset($new_cat_str_arr[$cat_id])){
-					$new_cat_str_arr[$cat_id] = self::get_ilbiz_migrate_cat_str($cat_id);
-				}
-
-				
-				$content_page['cat_id'] = $cat_id;
-                $old_cat_str = $old_cat_str_arr[$cat_id];
-				$content_page['old_cat_str'] = $old_cat_str;
-                $new_cat_str = $new_cat_str_arr[$cat_id];
-				$content_page['new_cat_str'] = $new_cat_str;
-                $content_pages[] = $content_page;
+    public static function check_if_migration_exist($filter){
+        $db = DB::getInstance();
+        $check_true = false;
+        $check_tables = array("migration_product","migration_product_cat","migration_product_sub","	migration_product_image");
+        foreach($check_tables as $table){
+            if($check_true){
+                continue;
+            }
+            $sql = "SELECT site_id FROM $table WHERE site_id = :site_id LIMIT 1";
+            $req = $db->prepare($sql);
+            $req->execute($filter);
+            $result = $req->fetch();
+            if($result){
+                $check_true = true;
             }
         }
-		
-        $migrated_pages = self::get_list(array('site_id'=>$migration_site['site_id']));
+        return $check_true;
+    }
 
-        $migrated_pages_indexed = Helper::eazy_index_arr_by('old_page_id',$migrated_pages);
+    protected static function create_product_dir($site_id){
+        if(!is_dir('assets_s/'.$site_id)){
+            $oldumask = umask(0) ;
+            $mkdir = @mkdir( 'assets_s/'.$site_id, 0755 ) ;
+            umask( $oldumask ) ;
+        }
+        if(!is_dir('assets_s/'.$site_id.'/products')){
+            $oldumask = umask(0) ;
+            $mkdir = @mkdir( 'assets_s/'.$site_id.'/products', 0755 ) ;
+            umask( $oldumask ) ;
+        }
+        if(!is_dir('assets_s/'.$site_id.'/product')){
+            $oldumask = umask(0) ;
+            $mkdir = @mkdir( 'assets_s/'.$site_id.'/product', 0755 ) ;
+            umask( $oldumask ) ;
+        }
+        if(!is_dir('assets_s/'.$site_id.'/product/images')){
+            $oldumask = umask(0) ;
+            $mkdir = @mkdir( 'assets_s/'.$site_id.'/product/images', 0755 ) ;
+            umask( $oldumask ) ;
+        }
+    }
 
-        foreach($content_pages as $key=>$content_page){
-            $migrated_page = array(
-                'migrated'=>false,
-                'id'=>'',
-                'page_id'=>'',
-                'version'=>'',
-                'cat_str'=>'', 
-                'info'=>false,
-            );
-            if(isset($migrated_pages_indexed[$content_page['id']])){
-				
-                $migrated_page = $migrated_pages_indexed[$content_page['id']];
-                $migrated_page_info = self::get_migrated_page_info($migrated_page['page_id']);
-                $migrated_page['info'] = $migrated_page_info; 
-				$migrated_page['cat_str'] = 'טופס ברירת המחדל של האתר'; 
-				
-                if($migrated_page_info['biz_form']){
-                    $migrated_page['cat_str'] = self::get_ilbiz_migrate_cat_str(null,$migrated_page_info['biz_form']['cat_id']);
+    public static function delete_older($site_id){
+        $db = DB::getInstance();
+        $migration_images = self::simple_get_list_by_table_name(array('site_id'=>$site_id),'migration_product_image');
+        if(!$migration_images){
+            $migration_images = array();
+        }
+        foreach($migration_images as $migration_image){
+            $image_id = $migration_image['image_id'];
+            $image = self::simple_find_by_table_name(array('id'=>$image_id),'product_images');
+            
+            self::simple_delete_by_table_name($migration_image['id'],'migration_product_image');
+            
+            if(!$image){
+                continue;
+            }
+            if($image['image'] != ""){
+                $image_url = "assets_s/".$site_id."/product/images/".$image['image'];
+                if(file_exists($image_url)){
+                    unlink($image_url);
                 }
             }
-            $content_pages[$key]['migrated_page'] = $migrated_page;
+            if($image['small_image'] != ""){
+                $small_image_url = "assets_s/".$site_id."/product/images/".$image['small_image'];
+                if(file_exists($small_image_url)){
+                    unlink($small_image_url);
+                }
+            }
+            
+            self::simple_delete_by_table_name($image['id'],'product_images');
         }
 
-        return array(
-            'row_count'=>$row_count,
-            'content_pages'=>$content_pages,
+        $migration_products = self::simple_get_list_by_table_name(array('site_id'=>$site_id),'migration_product');
+
+		if(!$migration_products){
+            $migration_products = array();
+        }
+        foreach($migration_products as $migration_product){
+
+            $product_id = $migration_image['image_id'];
+            $product = self::simple_find_by_table_name(array('id'=>$product_id),'products');
+
+            self::simple_delete_by_table_name($migration_product['id'],'migration_product');
+
+            if($product){
+                if($product['image'] != ""){
+                    $image_url = "assets_s/".$site_id."/products/".$product['image'];
+                    if(file_exists($image_url)){
+                        unlink($image_url);
+                    }
+                }
+            }
+            
+            self::simple_delete_by_table_name($migration_product['product_id'],'products');
+        
+            
+            $sql = "DELETE FROM product_sub_assign WHERE product_id = :product_id";
+            $req = $db->prepare($sql);
+            $req->execute(array('product_id'=>$migration_product['product_id']));
+
+        }
+ 
+        $migration_product_subs = self::simple_get_list_by_table_name(array('site_id'=>$site_id),'migration_product_sub');
+        if(!$migration_product_subs){
+            $migration_product_subs = array();
+        }
+        foreach($migration_product_subs as $migration_product_sub){
+            self::simple_delete_by_table_name($migration_product_sub['id'],'migration_product_sub');
+            self::simple_delete_by_table_name($migration_product_sub['sub_id'],'product_sub');
+        
+            $sql = "DELETE FROM product_sub_assign WHERE sub_id = :sub_id";
+            $req = $db->prepare($sql);
+            $req->execute(array('sub_id'=>$migration_product_sub['sub_id']));
+
+            $sql = "DELETE FROM product_sub_cat_assign WHERE sub_id = :sub_id";
+            $req = $db->prepare($sql);
+            $req->execute(array('sub_id'=>$migration_product_sub['sub_id']));
+        }
+
+        $migration_product_cats = self::simple_get_list_by_table_name(array('site_id'=>$site_id),'migration_product_cat');
+        if(!$migration_product_cats){
+            $migration_product_cats = array();
+        }
+        foreach($migration_product_cats as $migration_product_cat){
+            self::simple_delete_by_table_name($migration_product_cat['id'],'migration_product_cat');
+            self::simple_delete_by_table_name($migration_product_cat['cat_id'],'product_cat');
+        
+            $sql = "DELETE FROM product_sub_cat_assign WHERE cat_id = :cat_id";
+            $req = $db->prepare($sql);
+            $req->execute(array('cat_id'=>$migration_product_cat['cat_id']));
+        }
+    }
+
+    public static function do_migrate($site_id,$migration_site){
+        self::create_product_dir($site_id);
+        //migration product subs
+        $ilbiz_db = self::getIlbizDb();
+        $sql = "SELECT * FROM user_products_subject WHERE unk = :unk AND deleted = '0'";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('unk'=>$migration_site['old_unk']));
+        $subjects = $req->fetchAll();
+        if(!$subjects){
+            $subjects = array();
+        }
+        foreach($subjects as $subject){
+            $new_product_cat = array(
+                'label'=>utgt($subject['name']),
+                'site_id'=>$site_id,
+                'active'=>($subject['active'] == '0')? '1': '0'
+            );
+            $new_cat_id = self::simple_create_by_table_name($new_product_cat,"product_cat");
+            $migration_product_cat = array(
+                'cat_id'=>$new_cat_id,
+                'site_id'=>$site_id,
+                'unk'=>$migration_site['old_unk'],
+                'old_id'=>$subject['id']
+            );
+            self::simple_create_by_table_name($migration_product_cat,"migration_product_cat");
+        }
+
+
+        //migrate products subs
+        $sql = "SELECT * FROM user_products_cat WHERE unk = :unk AND deleted = '0'";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('unk'=>$migration_site['old_unk']));
+        $product_cats = $req->fetchAll();
+        if(!$product_cats){
+            $product_cats = array();
+        }
+        foreach($product_cats as $cat){
+            $old_cat = $cat['subject_id'];
+            $migration_product_cat = self::simple_find_by_table_name(array('old_id'=>$old_cat),"migration_product_cat",'cat_id');
+            $new_cat_id = false;
+            if($migration_product_cat){
+                $new_cat_id = $migration_product_cat['cat_id'];
+            }
+            $new_sub = array(
+                'label'=>utgt($cat['name']),
+                'site_id'=>$site_id,
+                'active'=>($cat['status'] == '0')? '1' : '0'
+            );
+            $new_sub_id = self::simple_create_by_table_name($new_sub,"product_sub");
+            $migration_product_sub = array(
+                'sub_id'=>$new_sub_id,
+                'site_id'=>$site_id,
+                'unk'=>$migration_site['old_unk'],
+                'old_id'=>$cat['id']
+            );
+            self::simple_create_by_table_name($migration_product_sub,"migration_product_sub");
+            if(!$new_cat_id){
+                $new_cat_id = '0';
+            }
+            
+            $product_sub_cat_assign = array(
+                'sub_id'=>$new_sub_id,
+                'cat_id'=>$new_cat_id
+            );
+            self::simple_create_by_table_name($product_sub_cat_assign,"product_sub_cat_assign");
+        }
+
+        $images_url = "http://";
+        if($migration_site['old_has_ssl'] == '1'){
+            $images_url = "https://";
+        }
+
+        $images_url .= $migration_site['old_domain']."/products/";
+
+        //migrate products
+        $sql = "SELECT * FROM user_products WHERE unk = :unk AND deleted = '0'";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('unk'=>$migration_site['old_unk']));
+        $products = $req->fetchAll();
+        if(!$products){
+            $products = array();
+        }
+        foreach($products as $product){
+          
+            $new_product = array(
+                'label'=>utgt($product['name']),
+                'title'=>utgt($product['name']),
+                'list_label'=>utgt($product['name']),
+                'meta_title'=>utgt($product['name']),
+                'content'=>utgt($product['content']),
+                'description'=>utgt($product['summary']),
+                'meta_description'=>utgt($product['summary']),
+                'price'=>$product['price'],
+                'price_special'=>$product['price_special'],
+                'link'=>utgt($product['url_link']),
+                'link_text'=>utgt($product['url_name']),
+                'site_id'=>$site_id,
+                'active'=>($product['active'] == '0')? '1' : '0',
+                'priority'=>$product['place'],
+				'image'=>$product['img'],
+            );
+
+
+            if($product['video_10service'] != ""){
+                $new_product['content'].="<p>".utgt(stripslashes($product['video_10service']))."</p>";
+            }
+
+            $new_product_id = self::simple_create_by_table_name($new_product,"products");
+            $migration_product = array(
+                'product_id'=>$new_product_id,
+                'site_id'=>$site_id,
+                'unk'=>$migration_site['old_unk'],
+                'old_id'=>$product['id']
+            );
+            self::simple_create_by_table_name($migration_product,"migration_product");
+            
+            //migrate products
+            $sql = "SELECT * FROM user_model_cat_belong WHERE model = 'products' AND itemId = :product_id";
+            $req = $ilbiz_db->prepare($sql);
+            $req->execute(array('product_id'=>$product['id']));
+            $assigns = $req->fetchAll();
+            if(!$assigns){
+                $assigns = array();
+            }
+            foreach($assigns as $assign){
+                $old_sub = $assign['catId'];
+                $migration_product_sub = self::simple_find_by_table_name(array('old_id'=>$old_sub),"migration_product_sub",'sub_id');
+                if($migration_product_sub){
+                    $new_sub_id = $migration_product_sub['sub_id'];
+                    $product_sub_assign = array(
+                        'product_id'=>$new_product_id,
+                        'sub_id'=>$new_sub_id
+                    );
+                    self::simple_create_by_table_name($product_sub_assign,"product_sub_assign");
+                }
+            }
+
+            if($product['img'] != ""){
+                $image_url = $images_url.$product['img'];
+                $new_image_url = "assets_s/".$site_id."/products/".$product['img'];
+                if(!file_exists($new_image_url)){                  
+                    file_put_contents($new_image_url, file_get_contents($image_url));
+                } 
+            }
+
+            if($product['img'] != ""){
+                self::do_migrate_image($images_url, $new_product_id , $product['img'], $site_id, $migration_site);
+            }
+
+            if($product['img2'] != ""){
+                self::do_migrate_image($images_url, $new_product_id , $product['img2'], $site_id, $migration_site);
+            }
+
+            if($product['img3'] != ""){
+                self::do_migrate_image($images_url, $new_product_id , $product['img3'], $site_id, $migration_site);
+            }
+        }
+    }
+
+
+    protected static function do_migrate_image($images_url, $product_id, $img_name,$site_id, $migration_site, $old_image_id = '0'){
+        $new_image = array(
+            'label'=>'',
+            'site_id'=>$site_id,
+            'priority'=>'10',
+            'product_id'=>$product_id,
+            'image'=>$img_name,
+            'small_image'=>"s_".$img_name,
         );
-    }
-
-    protected static function get_migrated_page_info($page_id){
-        $content_page = self::simple_find_by_table_name(array('id'=>$page_id),'content_pages');
-        $biz_form = self::simple_find_by_table_name(array('page_id'=>$page_id),'biz_forms');
-
-        return array(
-            'content_page'=>$content_page,
-            'biz_form'=>$biz_form
+        $new_image_id = self::simple_create_by_table_name($new_image,"product_images");
+        $migration_image = array(
+            'image_id'=>$new_image_id,
+            'site_id'=>$site_id,
+            'unk'=>$migration_site['old_unk'],
+            'old_id'=>$old_image_id
         );
-    }
+        self::simple_create_by_table_name($migration_image,"migration_product_image");
 
-	protected static function get_ilbiz_cat_str($cat_id, $str = ""){
-		if($cat_id == '0'){
-            if($str == ""){
-                return "קטגוריה ראשית";
-            }
-			return $str;
-		}
-		$ilbiz_db = self::getIlbizDb();
-        $sql = "SELECT cat_name, father FROM biz_categories WHERE id = :cat_id";
-        $req = $ilbiz_db->prepare($sql);
-        $req->execute(array('cat_id'=>$cat_id));
-        $result = $req->fetch();
-		if(!$result){
-			return $str;
-		}
-		$cat_name = utgt($result['cat_name']);
-		if($str == ""){
-			$str = $cat_name;
-		}
-		else{
-			$str = $cat_name. ", ".$str;
-		}
-		return self::get_ilbiz_cat_str($result['father'], $str);
-	}
 
-    protected static function get_ilbiz_migrate_cat_str($ilbiz_cat_id, $cat_id = "-1",  $str = ""){
-		
-        if($cat_id == "-1"){
-            $cat_id = self::get_migrate_cat_id($ilbiz_cat_id);
-            if($cat_id == "-1"){
-                return "פרסומת!!!";
-            }
-        }
-		
-		if($cat_id == '0'){
-            if($str == ""){
-                return "קטגוריה ראשית";
-            }
-			return $str;
-		}
-		$db = DB::getInstance();
-        $sql = "SELECT label, parent FROM biz_categories WHERE id = :cat_id";
-        $req = $db->prepare($sql);
-        $req->execute(array('cat_id'=>$cat_id));
-        $result = $req->fetch();
-		if(!$result){
-			return $str;
-		}
-		if($str == ""){
-			$str = $result['label'];
-		}
-		else{
-			$str = $result['label']. ", ".$str;
-		}
-		return self::get_ilbiz_migrate_cat_str($ilbiz_cat_id, $result['parent'], $str);
-	}
+        $image_url = $images_url.$img_name;
+        $new_image_url = "assets_s/".$site_id."/product/images/".$img_name;
+        if(!file_exists($new_image_url)){                  
+            file_put_contents($new_image_url, file_get_contents($image_url));
+        } 
 
-    protected static function get_migrate_cat_id($ilbiz_cat_id) {
-        $db = DB::getInstance();
-        $sql = "SELECT cat_id FROM migration_cat WHERE old_cat_id = :ilbiz_cat_id";
-        $req = $db->prepare($sql);
-        $req->execute(array('ilbiz_cat_id'=>$ilbiz_cat_id));
-        $result = $req->fetch();
-		if(!$result){
-			return "-1";
-		}
-        return $result['cat_id'];
-    }
-	
-	public static function import_page($page_id,$migration_site){
-		$ilbiz_db = self::getIlbizDb();
-		$sql = "select * from content_pages WHERE id = :page_id";
-        $req = $ilbiz_db->prepare($sql);
-        $req->execute(array('page_id'=>$page_id));	
-		$ilbiz_page_info = $req->fetch();
-		
-		$sql = "select * from estimate_miniSite_defualt_block WHERE type = :page_id";
-        $req = $ilbiz_db->prepare($sql);
-        $req->execute(array('page_id'=>$page_id));	
-		$ilbiz_form_info = $req->fetch();
-		
-		$page_title = utgt($ilbiz_page_info['name']);
-		$page_url = str_replace(" ","-",$page_title);
-		$page_url = str_replace("?","",$page_url);
-		
-		$videoPic = "";
-		
-		if($ilbiz_form_info['videoPic'] != ""){
-			$videoPic = $ilbiz_form_info['videoPic'];
-			$url = "http://";
-			if($migration_site['old_has_ssl']){
-				$url = "https://";
-			}
-			$url .= $migration_site['old_domain'].'/new_images/'.$ilbiz_form_info['videoPic'];
-			$img = 'assets_s/'.$migration_site['site_id'].'/pages/banners/'.$ilbiz_form_info['videoPic'];
-			
-			$dir_path = 'assets_s/'.$migration_site['site_id']."/";
-			if( !is_dir($dir_path)){
-				$oldumask = umask(0) ;
-				$mkdir = @mkdir( $dir_path, 0755 ) ;
-				umask( $oldumask ) ;
-			}
-			$dir_path = $dir_path."pages/";
-			if( !is_dir($dir_path)){
-				$oldumask = umask(0) ;
-				$mkdir = @mkdir( $dir_path, 0755 ) ;
-				umask( $oldumask ) ;
-			}
-			$dir_path = $dir_path."banners/";
-			if( !is_dir($dir_path)){
-				$oldumask = umask(0) ;
-				$mkdir = @mkdir( $dir_path, 0755 ) ;
-				umask( $oldumask ) ;
-			}
-			file_put_contents($img, file_get_contents($url));
-		}
-		
-		$new_page_info = array(
-			"site_id"=>$migration_site['site_id'],
-			"title"=>$page_title,
-			"priority"=>$ilbiz_page_info['place'],
-			"visible"=>$ilbiz_page_info['hide_page'] == '1'? '0' : '1', //hafuch - hidden vs visible
-			"description"=>$ilbiz_page_info['summary'],
-			"content"=>$ilbiz_page_info['summary'],
-			"meta_title"=>$page_title,
-			"right_banner"=>$videoPic,
-			"meta_description"=>$ilbiz_page_info['description'],
-			"meta_keywords"=>$ilbiz_page_info['keywords'],
-			"link"=>$page_url,
-		);
-		
-		if($new_page_info['content']!= ""){
-			$new_page_info['content'] = utgt(stripslashes($new_page_info['content']));
-		}
-		if($new_page_info['description']!= ""){
-			$new_page_info['description'] = utgt($new_page_info['description']);
-		}
-		if($new_page_info['meta_description']!= ""){
-			$new_page_info['meta_description'] = utgt($new_page_info['meta_description']);
-		}
-		if($new_page_info['meta_keywords']!= ""){
-			$new_page_info['meta_keywords'] = utgt($new_page_info['meta_keywords']);
-		}
-		$new_page_id = self::simple_create_by_table_name($new_page_info, 'content_pages');
-		
-		
-		$cat_id = '0';
-		if($ilbiz_form_info['primeryCat'] != "" && $ilbiz_form_info['primeryCat'] != '0'){
-			$cat_id = $ilbiz_form_info['primeryCat'];
-		}
-		if($ilbiz_form_info['subCat'] != "" && $ilbiz_form_info['subCat'] != '0'){
-			$cat_id = $ilbiz_form_info['subCat'];
-		}
-		if($ilbiz_form_info['cat_spec'] != "" && $ilbiz_form_info['cat_spec'] != '0'){
-			$cat_id = $ilbiz_form_info['cat_spec'];
-		}
-		
-		$new_cat_id = self::get_migrate_cat_id($cat_id);
-		if($new_cat_id == "-1"){
-            $new_cat_id = "254";
-        }
-		$new_cat_str = self::get_ilbiz_migrate_cat_str(null, $new_cat_id);
-		
-		
-		if($ilbiz_form_info['input_remove'] == ""){
-			$ilbiz_form_info['input_remove'] = "";
-		}
-		$new_form_info = array(
-			'site_id'=>$migration_site['site_id'],
-			'page_id'=>$new_page_id,
-			'page_id'=>$new_page_id,
-			'title'=>$ilbiz_form_info['top_form_headline'],
-			'cat_id'=>$new_cat_id,
-			'active'=>'1',
-			'thanks_pixel'=>$ilbiz_form_info['thanksPixel'],
-			'thanks_redirect'=>$ilbiz_form_info['thanksRedirect'],
-			'input_remove'=>$ilbiz_form_info['input_remove'],
-			'add_email'=>$ilbiz_form_info['addEmail'],
-			'limit_by_cities'=>$ilbiz_form_info['limit_cat_by_cities'],
-			'bill_type'=>$ilbiz_form_info['bill_free'],
-		);
-		
-		if($new_form_info['title']!= ""){
-			$new_form_info['title'] = utgt($new_form_info['title']);
-		}
-		
-		$new_form_id = self::simple_create_by_table_name($new_form_info, 'biz_forms');
-		
-		if($ilbiz_form_info['content'] != ""){
-			$form_block = array(
-				'site_id'=>$migration_site['site_id'],
-				'page_id'=>$new_page_id,
-				'label'=>'imported-form',
-				'content'=>utgt(stripslashes($ilbiz_form_info['content'])),
-				'css_class'=>'mgrt mgrt-frm',
-				'priority'=>'10',
-			);
-			
-			self::simple_create_by_table_name($form_block, 'content_blocks');
-		}
-		
-		$page_block = array(
-			'site_id'=>$migration_site['site_id'],
-			'page_id'=>$new_page_id,
-			'label'=>'imported-main',
-			'content'=>$ilbiz_page_info['content'],
-			'css_class'=>'mgrt mgrt-main',
-			'priority'=>'10',
-		);
-		if($page_block['content'] != ""){
-			$page_block['content'] = utgt(stripslashes($page_block['content']));
-			$page_block['content'] = str_replace("white-cube","c-block",$page_block['content']);
-		}
-		self::simple_create_by_table_name($page_block, 'content_blocks');
-		
-		$migrate_version = "1.2";
-		
-		$migrate_info = array(
-			"site_id"=>$migration_site['site_id'],
-			"migrated"=>"1",
-			"old_page_id"=>$page_id,
-			"page_id"=>$new_page_id,
-			"version"=>$migrate_version,
-			"has_form"=>'1'
-		);
-		self::simple_create_by_table_name($migrate_info, 'migration_page');
-		return array(
-			'page_id'=>$new_page_id,
-			'version'=>$migrate_version,
-			'cat_str'=>$new_cat_str
-		);
-	}
-
-	public static function delete_migrated_page($page_id,$migration_site){
-		
-		$db = Db::getInstance();
-		$execute_arr = array('page_id'=>$page_id);
-		
-		$sql = "SELECT * FROM migration_page WHERE page_id = :page_id";
-        $req = $db->prepare($sql);
-        $req->execute($execute_arr);
-		
-		$result = $req->fetch();
-		
-		$return_array = $result;
-		
-		$sql = "SELECT right_banner FROM content_pages WHERE id = :page_id";
-        $req = $db->prepare($sql);
-        $req->execute($execute_arr);
-		
-		$result = $req->fetch();
-		if($result){
-			if($result['right_banner'] != ""){
-				$img = '/assets_s/'.$migration_site['site_id'].'/pages/banners/'.$result['right_banner'];
-				if(file_exists($img)){  
-					unlink($img);
-				}
-			}
-		}
-		
-		$sql = "DELETE FROM content_pages WHERE id = :page_id";
-        $req = $db->prepare($sql);
-        $req->execute($execute_arr);
-		
-		$sql = "DELETE FROM content_blocks WHERE page_id = :page_id";
-        $req = $db->prepare($sql);
-        $req->execute($execute_arr);
-		
-		$sql = "DELETE FROM biz_forms WHERE page_id = :page_id";
-        $req = $db->prepare($sql);
-        $req->execute($execute_arr);
-		
-		$sql = "DELETE FROM page_style WHERE page_id = :page_id";
-        $req = $db->prepare($sql);
-        $req->execute($execute_arr);
-		
-		$sql = "DELETE FROM migration_page WHERE page_id = :page_id";
-        $req = $db->prepare($sql);
-        $req->execute($execute_arr);
-		
-		return $return_array;
-	}	
-
-    public static function get_page_blocks($page_id){
-        $filter_arr = array('page_id'=>$page_id);
-        return self::simple_get_list_by_table_name($filter_arr,'content_blocks');
+        $small_image_url = "assets_s/".$site_id."/product/images/"."s_".$img_name;
+        if(!file_exists($small_image_url)){                  
+            file_put_contents($small_image_url, file_get_contents($image_url));
+        } 
     }
 }
 ?>
