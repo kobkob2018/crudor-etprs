@@ -238,7 +238,7 @@
                 'active'=>($product['active'] == '0')? '1' : '0',
                 'priority'=>$product['place']
             );
-            $new_product_id = self::simple_create_by_table_name($new_product,"product");
+            $new_product_id = self::simple_create_by_table_name($new_product,"products");
             $migration_product = array(
                 'product_id'=>$new_product_id,
                 'site_id'=>$site_id,
