@@ -70,6 +70,26 @@ i.fa{
     margin-top: 12px;
 }
 
+.back-to-top-button-wrap{
+    position: fixed;
+    bottom: 100px;
+    right: 10px;
+    z-index: 5;
+}
+
+.back-to-top-button-wrap:hover a, .back-to-top-button-wrap.clicked a{
+    padding: 15px;
+}
+
+.back-to-top-button-wrap a{
+    padding: 10px;
+    border-radius: 50%;
+    border: 2px solid;
+    background: white;
+    box-shadow: 2px 2px 3px #9f9b9b;
+    transition: padding 0.3s;
+}
+
 #logo_wrap.wide-fix-top-right img{
     max-width: 160px;
 }

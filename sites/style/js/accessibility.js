@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 
 function initAccessibility(){
+    init_back_to_top_button();
     acc_local_cookie = read_acc_cookie();
     if(acc_local_cookie && acc_local_cookie != null){
         acc_cookie = acc_local_cookie;
@@ -207,4 +208,31 @@ function afterAccAnchorClick(withFixTop){
     }
     
     document.querySelector("#accessibility_wrap").scrollTop = '0';
+}
+
+function init_back_to_top_button(){
+    const back_to_top_button = document.querySelector(".back-to-top-button-wrap");
+    document.addEventListener("scroll",function(){
+        toggle_back_to_top_button(back_to_top_button);
+    });
+}
+
+function toggle_back_to_top_button(back_to_top_button){
+    if(window.scrollY < 250){
+        back_to_top_button.classList.add("hidden");
+    }
+    else{
+        back_to_top_button.classList.remove("hidden");
+    }
+}
+
+function scroll_back_to_top(){
+    const back_to_top_button = document.querySelector(".back-to-top-button-wrap");
+    back_to_top_button.classList.add("clicked");
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    setTimeout(function(){
+        back_to_top_button.classList.add("hidden");
+        back_to_top_button.classList.remove("clicked");
+    }, 1000);
+
 }

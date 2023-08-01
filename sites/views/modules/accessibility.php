@@ -76,3 +76,9 @@
         
     </div>
   </div>
+
+  <div class="back-to-top-button-wrap hidden">
+    <a class="back-to-top-button" href="javascript://" onclick="scroll_back_to_top()" > 
+        <i class="fa fa-person-arrow-up-from-line"></i>
+    </a>
+  </div>

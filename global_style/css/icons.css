@@ -54,6 +54,9 @@
 .fa-chevron-left::before {
   content: "\f053"; }
 
+.fa-arrows-up-to-line::before {
+  content: "\e4c2"; }
+
   @font-face { 
     font-family: 'faFont';
     font-display: block;
