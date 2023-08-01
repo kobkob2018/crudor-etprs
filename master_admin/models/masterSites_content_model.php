@@ -23,7 +23,7 @@
     public static function find_in_pages($search){
       $execute_arr = array('search'=>"%".$search."%");
       $db = Db::getInstance();
-      $sql = "SELECT * FROM 
+      $sql = "SELECT pages.*, style.page_layout FROM 
                   content_pages pages 
                   LEFT JOIN page_style style ON pages.id = style.page_id 
                   WHERE ( 
@@ -34,8 +34,6 @@
                           OR title LIKE :search 
                           OR description LIKE :search
                   );";
-
-      
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
       $page_list = $req->fetchAll();
