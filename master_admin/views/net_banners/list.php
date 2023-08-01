@@ -8,7 +8,11 @@
 
 <div class="items-table flex-table">
     <div class="table-th row">
-        <div class="col">עדכון באנר</div>
+        <div class="col">
+            עדכון באנר
+            <hr/> 
+            קליקים | צפיות | המרות
+        </div>
         <div class="col">פעיל</div>
         <div class="col">מחיקה</div>
     </div>
@@ -16,6 +20,8 @@
         <div class="table-tr row">
             <div class="col">
                 <a href = "<?= inner_url('net_banners/edit/') ?>?dir_id=<?= $this->data['dir_info']['id'] ?>&row_id=<?= $banner['id'] ?>" title="ערוך באנר"><?= $banner['label'] ?></a>
+                <hr/>
+                <?= $banner['clicks'] ?> | <?= $banner['views'] ?> | <?= $banner['conversions'] ?>
             </div>
             <div class="col">
                 <?= $banner['active_str'] ?>
