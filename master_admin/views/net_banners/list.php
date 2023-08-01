@@ -11,7 +11,17 @@
         <div class="col">
             עדכון באנר
             <hr/> 
-            קליקים | צפיות | המרות
+            <div class="col-table-30">
+                <div class="col-30">
+                    צפיות
+                </div>
+                <div class="col-30">
+                    קליקים
+                </div>
+                <div class="col-30">
+                    המרות
+                </div>
+            </div>
         </div>
         <div class="col">פעיל</div>
         <div class="col">מחיקה</div>
@@ -21,7 +31,17 @@
             <div class="col">
                 <a href = "<?= inner_url('net_banners/edit/') ?>?dir_id=<?= $this->data['dir_info']['id'] ?>&row_id=<?= $banner['id'] ?>" title="ערוך באנר"><?= $banner['label'] ?></a>
                 <hr/>
-                <?= $banner['clicks'] ?> | <?= $banner['views'] ?> | <?= $banner['convertions'] ?>
+                <div class="col-table-30">
+                    <div class="col-30">
+                        <?= $banner['views'] ?>
+                    </div>
+                    <div class="col-30">
+                        <?= $banner['clicks'] ?>
+                    </div>
+                    <div class="col-30">
+                        <?= $banner['convertions'] ?>
+                    </div>
+                </div>
             </div>
             <div class="col">
                 <?= $banner['active_str'] ?>
