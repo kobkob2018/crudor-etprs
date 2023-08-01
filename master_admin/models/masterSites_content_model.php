@@ -49,7 +49,7 @@
             'is_secure'=>'0',
             'url'=>'',
             'domain'=>'',
-            'title'=>'אתר לא קיים!'
+            'title'=>'אתר לא קיים!('.$page['site_id'].')'
           );
         }
         $http_s = "http://";
