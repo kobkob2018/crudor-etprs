@@ -21,7 +21,7 @@
             <div class="col">
                 <a href = "<?= inner_url('net_banners/edit/') ?>?dir_id=<?= $this->data['dir_info']['id'] ?>&row_id=<?= $banner['id'] ?>" title="ערוך באנר"><?= $banner['label'] ?></a>
                 <hr/>
-                <?= $banner['clicks'] ?> | <?= $banner['views'] ?> | <?= $banner['conversions'] ?>
+                <?= $banner['clicks'] ?> | <?= $banner['views'] ?> | <?= $banner['convertions'] ?>
             </div>
             <div class="col">
                 <?= $banner['active_str'] ?>
