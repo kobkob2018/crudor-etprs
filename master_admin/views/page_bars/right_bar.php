@@ -13,9 +13,6 @@
         <?php endif; ?>
         <?php if($view->user_is('login')): ?>
             
-            
-            
-            <li class="bar-item <?= $view->a_class("user/details/") ?>"><a href="<?= inner_url("user/details/") ?>" class="a-link">עדכון פרטים</a></li>
             <li class="bar-item"><a href="<?= inner_url("userLogin/logout/") ?>" class="a-link">יציאה</a></li>
             
             <li class="bar-item <?= $view->a_class("tasks/list/") ?>">

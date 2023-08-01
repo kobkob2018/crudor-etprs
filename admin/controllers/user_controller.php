@@ -10,7 +10,7 @@
 		$error_msg = array();
 		$required_params = array(
 			'full_name'=>'שם מלא',
-			'name'=>'שם העסק',
+			'biz_name'=>'שם העסק',
 			'phone'=>'מספר טלפון',
 			'username'=>'שם משתמש',
 		);
@@ -37,24 +37,34 @@
 			$error_msg[] = $error_missing;
 		}		
 		if(!empty($error_msg)){
-			$this->form_message = implode("<br/><br/>*",$error_msg);
-			return;
+			foreach($error_msg as $msg){
+				SystemMessages::add_err_message($msg);
+			}
+			return $this->redirect_to(inner_url("user/details/"));
 		}	
 		else{
 			$user_params = array(
 				'full_name',
-				'name',
+				'biz_name',
 				'username',
 				'phone',
 			);
 
-			$data_user = $_REQUEST['usr'];			
-			Users::update_details($user_params,$data_user);
-			if($_REQUEST['usr']['password'] != ""){
-				Users::update_details(array("password"),$data_user);
+			$fixed_values = array();
+			foreach($user_params as $param_name){
+				$fixed_values[$param_name] = $_REQUEST['usr'][$param_name];
 			}
-			$this->user = $this->userModel->resetUser();
-			$this->success_messages[] = "הפרטים עודכנו בהצלחה";
+			Users::update($this->user['id'],$fixed_values);		
+			
+			if($_REQUEST['usr']['password'] != ""){
+				$fixed_values = array(
+					'password'=>md5($_REQUEST['usr']['password'])
+				);
+				Users::update($this->user['id'],$fixed_values);
+			}
+			
+			SystemMessages::add_success_message("הפרטים עודכנו בהצלחה");
+			return $this->redirect_to(inner_url("user/details/"));
 		}
 		
 	
