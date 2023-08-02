@@ -106,7 +106,7 @@
             $yaad_pass = get_config('yaad_invoice_pass_old');
             $yaad_masof = get_config('yaad_invoice_masof_old');
             $yaad_url = get_config('yaad_invoice_url_old'); 
-            $trans_id = '4823';               
+            $trans_id = '111668384';               
         }
 
         $postData = "d=s&action=PrintHesh&TransId=$trans_id&type=HTML&Masof=$yaad_masof&User=$yaad_user&Pass=$yaad_pass&HeshORCopy=True";
