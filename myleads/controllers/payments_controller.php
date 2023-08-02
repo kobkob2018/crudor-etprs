@@ -96,33 +96,34 @@
 
         $trans_id = $cc_log['trans_id'];
 
-            $yaad_user = get_config('yaad_invoice_user');
-            $yaad_pass = get_config('yaad_invoice_pass');
-            $yaad_masof = get_config('yaad_invoice_masof');
-            $yaad_url = get_config('yaad_invoice_url');
+        $yaad_user = get_config('yaad_invoice_user');
+        $yaad_pass = get_config('yaad_invoice_pass');
+        $yaad_masof = get_config('yaad_invoice_masof');
+        $yaad_url = get_config('yaad_invoice_url');
 
-            if(isset($_REQUEST['masof_version']) && $_REQUEST['masof_version'] == 'old'){
-                $yaad_user = get_config('yaad_invoice_user_old');
-                $yaad_pass = get_config('yaad_invoice_pass_old');
-                $yaad_masof = get_config('yaad_invoice_masof_old');
-                $yaad_url = get_config('yaad_invoice_url_old');                
-            }
+        if(isset($_REQUEST['masof_version']) && $_REQUEST['masof_version'] == 'old'){
+            $yaad_user = get_config('yaad_invoice_user_old');
+            $yaad_pass = get_config('yaad_invoice_pass_old');
+            $yaad_masof = get_config('yaad_invoice_masof_old');
+            $yaad_url = get_config('yaad_invoice_url_old'); 
+            $trans_id = '4823';               
+        }
 
-            $postData = "d=s&action=PrintHesh&TransId=$trans_id&type=HTML&Masof=$yaad_masof&User=$yaad_user&Pass=$yaad_pass&HeshORCopy=True";
+        $postData = "d=s&action=PrintHesh&TransId=$trans_id&type=HTML&Masof=$yaad_masof&User=$yaad_user&Pass=$yaad_pass&HeshORCopy=True";
 
-            $ch = curl_init();  
+        $ch = curl_init();  
          
-            curl_setopt($ch,CURLOPT_URL,$yaad_url);
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-            curl_setopt($ch,CURLOPT_HEADER, false); 
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);    
-         
-            $output=curl_exec($ch);
-            
-            $output = str_replace("<img","<img style='display:none;' ",$output);
-            $output = iconv ('windows-1255', 'utf8', $output);
-            curl_close($ch);	
-            return $this->include_view('payments/yaad_invoice.php',$output);
+        curl_setopt($ch,CURLOPT_URL,$yaad_url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch,CURLOPT_HEADER, false); 
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);    
+        
+        $output=curl_exec($ch);
+        
+        $output = str_replace("<img","<img style='display:none;' ",$output);
+        $output = iconv ('windows-1255', 'utf8', $output);
+        curl_close($ch);	
+        return $this->include_view('payments/yaad_invoice.php',$output);
     }
 
     public function send_to_yaad(){
