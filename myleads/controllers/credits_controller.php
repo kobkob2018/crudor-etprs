@@ -101,7 +101,7 @@
             else{
                 SystemMessages::add_err_message("הפעולה נכשלה, אחד הפרטים אינם נכונים. אנא נסה שוב.");
                 SystemMessages::add_err_message("code: ".$result['CCode']);
-                return $this->redirect_to('payments/list/');
+                return $this->redirect_to(inner_url('payments/list/'));
             }
         }
         else{
