@@ -51,7 +51,7 @@
                             <td data-title='תאור העסקה'><?= $pay_log['description'] ?></td>
                             <td data-title='תאריך'><?= $pay_log['pay_date_heb'] ?></td>
                             <td data-title='סכום'><?= $pay_log['sum_total'] ?></td>
-                            <td><a href='payments/get_invoice/?row_id=<?= $pay_log['id'] ?>' class='right_menu'>הצג חשבונית</a></td>		
+                            <td><a href='payments/get_invoice/?masof_version=old&row_id=<?= $pay_log['id'] ?>' class='right_menu'>הצג חשבונית</a></td>		
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
