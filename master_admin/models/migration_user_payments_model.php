@@ -21,7 +21,7 @@
             if($check_true){
                 continue;
             }
-            $sql = "SELECT site_id FROM $table WHERE user_id = :user_id LIMIT 1";
+            $sql = "SELECT user_id FROM $table WHERE user_id = :user_id LIMIT 1";
             $req = $db->prepare($sql);
             $req->execute($filter);
             $result = $req->fetch();
