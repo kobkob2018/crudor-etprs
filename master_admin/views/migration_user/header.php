@@ -12,6 +12,6 @@
     <div class="item-edit-menu">
             <a href = "<?= inner_url('migration_user/list/?row_id='.$_REQUEST['user_id']) ?>" class="item-edit-a <?= $view->a_c_class('migration_user') ?>">פרטי המשתמש לייבוא</a>
             |
-            <a href = "<?= inner_url('migration_user_payments/list/?user_id='.$_REQUEST['user_id']) ?>" class="item-edit-a <?= $view->a_c_class('migration_user_payments') ?>">רשימת תשלומים לייבוא</a>
+            <a href = "<?= inner_url('migration_user_payments/prepare/?user_id='.$_REQUEST['user_id']) ?>" class="item-edit-a <?= $view->a_c_class('migration_user_payments') ?>">רשימת תשלומים לייבוא</a>
     </div>
 </div>
