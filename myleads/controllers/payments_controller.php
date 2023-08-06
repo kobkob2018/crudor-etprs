@@ -21,7 +21,7 @@
         $this->data['pay_log_list'] = $pay_log_list;
 
 
-        $old_user_payments = Myleads_old_user_payments::get_list($filter_arr,"*, DATE_FORMAT(payDate,'%d-%m-%Y') as pay_date_heb");
+        $old_user_payments = Myleads_old_user_payments::get_list($filter_arr,"*, DATE_FORMAT(pay_date,'%d-%m-%Y') as pay_date_heb");
         
         if($old_user_payments && !empty($old_user_payments)){
             $this->data['old_user_payments'] = $old_user_payments;

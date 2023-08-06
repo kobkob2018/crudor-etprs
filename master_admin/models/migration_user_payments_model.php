@@ -57,13 +57,13 @@
           
             $new_user_payment = array(
                 'user_id'=>$user_id,
-                'sumTotal'=>$user_payment['sumTotal'],
-                'payDate'=>$user_payment['payDate'],
+                'sum_total'=>$user_payment['sumTotal'],
+                'pay_date'=>$user_payment['payDate'],
                 'description'=>$user_payment['description'],
-                'payGood'=>$user_payment['payGood'],
+                'pay_good'=>$user_payment['payGood'],
                 'trans_id'=>$user_payment['trans_id'],
                 'CCode'=>$user_payment['CCode'],
-                'Amount_paid'=>$user_payment['Amount_paid'],
+                'amount_paid'=>$user_payment['Amount_paid'],
                 'ACode'=>$user_payment['ACode'],
                 'full_name'=>$user_payment['full_name'],
                 'biz_name'=>$user_payment['biz_name']
