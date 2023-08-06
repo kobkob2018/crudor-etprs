@@ -1,10 +1,10 @@
 <?php if(isset($this->data['migration_user'])): ?>
     <div class="focus-box">
 
-        <b>unk:</b> <?= $this->data['item_info']['old_unk'] ?> <br/>
-        <b>מספר:</b> <?= $this->data['item_info']['old_id'] ?> <br/>
-        <b>שם:</b> <?= $this->data['item_info']['old_name'] ?> <br/>
-        <b>שם מלא:</b> <?= $this->data['item_info']['old_full_name'] ?> <br/>
+        <b>unk:</b> <?= $this->data['migration_user']['old_unk'] ?> <br/>
+        <b>מספר:</b> <?= $this->data['migration_user']['old_id'] ?> <br/>
+        <b>שם:</b> <?= $this->data['migration_user']['old_name'] ?> <br/>
+        <b>שם מלא:</b> <?= $this->data['migration_user']['old_full_name'] ?> <br/>
 
     </div>
 <?php endif; ?>
