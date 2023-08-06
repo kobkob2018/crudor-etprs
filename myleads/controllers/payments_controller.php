@@ -1,7 +1,7 @@
 <?php
 
   class PaymentsController extends CrudController{
-    public $add_models = array('myleads_lounch_fee','user_cc_token','cities','myleads_pay_by_cc_log');
+    public $add_models = array('myleads_lounch_fee','user_cc_token','cities','myleads_pay_by_cc_log','myleads_old_user_payments');
     
 
     protected function handle_access($action){
@@ -19,6 +19,14 @@
         $pay_log_list = Myleads_pay_by_cc_log::get_list($filter_arr,"*, DATE_FORMAT(pay_date,'%d-%m-%Y') as pay_date_heb");
     
         $this->data['pay_log_list'] = $pay_log_list;
+
+
+        $old_user_payments = Myleads_old_user_payments::get_list($filter_arr,"*, DATE_FORMAT(pay_date,'%d-%m-%Y') as pay_date_heb");
+        
+        if($old_user_payments && !empty($old_user_payments)){
+            $this->data['old_user_payments'] = $old_user_payments;
+        }
+        
         return $this->include_view('payments/list.php');
     }
 
@@ -88,8 +96,12 @@
             return $this->eject_redirect();
         }
 
-
-        $cc_log = Myleads_pay_by_cc_log::get_by_id($_REQUEST['row_id']);
+        if(isset($_REQUEST['masof_version']) && $_REQUEST['masof_version'] == 'old'){
+            $cc_log = Myleads_old_user_payments::get_by_id($_REQUEST['row_id']);
+        }
+        else{   
+            $cc_log = Myleads_pay_by_cc_log::get_by_id($_REQUEST['row_id']);
+        }
         if((!$cc_log) || $cc_log['user_id'] != $this->user['id'] || $cc_log['trans_id'] == ''){
             return $this->eject_redirect();
         }
