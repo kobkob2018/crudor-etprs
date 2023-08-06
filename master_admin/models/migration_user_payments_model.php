@@ -33,13 +33,13 @@
     }
 
     public static function delete_older($user_id){
-        $migration_user_payments = self::simple_get_list_by_table_name(array('user_id'=>$user_id),'migration_user_payment');
+        $migration_user_payments = self::simple_get_list_by_table_name(array('user_id'=>$user_id),'migration_user_payments');
 
 		if(!$migration_user_payments){
             $migration_user_payments = array();
         }
         foreach($migration_user_payments as $migration_user_payment){
-            self::simple_delete_by_table_name($migration_user_payment['id'],'migration_user_payment');
+            self::simple_delete_by_table_name($migration_user_payment['id'],'migration_user_payments');
             self::simple_delete_by_table_name($migration_user_payment['payment_id'],'old_user_payments');
         }
     }
@@ -82,7 +82,7 @@
                 'user_id'=>$user_id,
                 'old_id'=>$user_payment['id']
             );
-            self::simple_create_by_table_name($migration_user_payment,"migration_user_payment");
+            self::simple_create_by_table_name($migration_user_payment,"migration_user_payments");
            
         }
     }
