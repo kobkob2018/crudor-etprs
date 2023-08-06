@@ -98,6 +98,9 @@
 
         if(isset($_REQUEST['masof_version']) && $_REQUEST['masof_version'] == 'old'){
             $cc_log = Myleads_old_user_payments::get_by_id($_REQUEST['row_id']);
+        
+            print_r_help($cc_log);
+            exit();
         }
         else{   
             $cc_log = Myleads_pay_by_cc_log::get_by_id($_REQUEST['row_id']);
