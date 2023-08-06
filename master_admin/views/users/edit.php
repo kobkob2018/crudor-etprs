@@ -3,3 +3,5 @@
     <h4>עריכת פרטי משתמש</h4>
 	<?php $this->include_view('form_builder/form.php'); ?>
 </div>
+
+<a href="<?= inner_url("migration_user/list/") ?>?row_id=<?= $this->data['item_info']['id'] ?>">לחץ כאן לניהול ייבוא פרטי לקוח ממערכת ישנה</a>

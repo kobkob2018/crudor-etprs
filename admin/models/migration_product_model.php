@@ -93,7 +93,7 @@
         }
         foreach($migration_products as $migration_product){
 
-            $product_id = $migration_image['image_id'];
+            $product_id = $migration_product['product_id'];
             $product = self::simple_find_by_table_name(array('id'=>$product_id),'products');
 
             self::simple_delete_by_table_name($migration_product['id'],'migration_product');
