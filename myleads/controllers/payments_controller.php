@@ -99,31 +99,27 @@
         if(isset($_REQUEST['masof_version']) && $_REQUEST['masof_version'] == 'old'){
             $cc_log = Myleads_old_user_payments::get_by_id($_REQUEST['row_id']);
         
-            print_r_help($cc_log);
-            exit();
+            $yaad_user = get_config('yaad_invoice_user_old');
+            $yaad_pass = get_config('yaad_invoice_pass_old');
+            $yaad_masof = get_config('yaad_invoice_masof_old');
+            $yaad_url = get_config('yaad_invoice_url_old');  
         }
+
         else{   
             $cc_log = Myleads_pay_by_cc_log::get_by_id($_REQUEST['row_id']);
+           
+            $yaad_user = get_config('yaad_invoice_user');
+            $yaad_pass = get_config('yaad_invoice_pass');
+            $yaad_masof = get_config('yaad_invoice_masof');
+            $yaad_url = get_config('yaad_invoice_url');
         }
+
         if((!$cc_log) || $cc_log['user_id'] != $this->user['id'] || $cc_log['trans_id'] == ''){
             return $this->eject_redirect();
         }
 
         $trans_id = $cc_log['trans_id'];
-
-        $yaad_user = get_config('yaad_invoice_user');
-        $yaad_pass = get_config('yaad_invoice_pass');
-        $yaad_masof = get_config('yaad_invoice_masof');
-        $yaad_url = get_config('yaad_invoice_url');
-
-        if(isset($_REQUEST['masof_version']) && $_REQUEST['masof_version'] == 'old'){
-            $yaad_user = get_config('yaad_invoice_user_old');
-            $yaad_pass = get_config('yaad_invoice_pass_old');
-            $yaad_masof = get_config('yaad_invoice_masof_old');
-            $yaad_url = get_config('yaad_invoice_url_old'); 
-            $trans_id = '111668384';               
-        }
-
+        
         $postData = "d=s&action=PrintHesh&TransId=$trans_id&type=HTML&Masof=$yaad_masof&User=$yaad_user&Pass=$yaad_pass&HeshORCopy=True";
 
         $ch = curl_init();  
