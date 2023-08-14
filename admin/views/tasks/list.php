@@ -1,6 +1,6 @@
 <h2>רשימת משימות</h2>
 <?php if($this->view->user_is('master_admin')): ?>
-        <h4>צפה במשימות למשתמש <<<<</h4>
+        <h4>צפה במשימות למשתמש</h4>
         <form action = "" method = "GET">
             <div class="form-group">
 

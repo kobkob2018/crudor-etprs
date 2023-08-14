@@ -3,5 +3,5 @@
 
     protected static $main_table = 'test';
 
-  } 
+  }
 ?>
