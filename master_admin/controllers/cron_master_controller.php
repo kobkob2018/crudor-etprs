@@ -52,7 +52,7 @@ class Cron_masterController extends CrudController{
   protected function map_cron_actions(){
     $this->set_layout("blank");
     foreach($this->scedualed_module_tasks['each_minute'] as $task_label=>$task){
-      $this->call_module($task['module'],$task['action']);
+      $this->invoke_task($task_label,$task);
     }
 
     $now_timestamp = time();
@@ -80,36 +80,47 @@ class Cron_masterController extends CrudController{
 
     if($now_time_str == $now_round_hour_str){
       foreach($this->scedualed_module_tasks['hourly'] as $task_label=>$task){
-        $this->call_module($task['module'],$task['action']);
+        $this->invoke_task($task_label,$task);
       }
     }
 
     if($now_time_str == $now_round_day_morning_str){
       foreach($this->scedualed_module_tasks['daily_mornings'] as $task_label=>$task){
-        $this->call_module($task['module'],$task['action']);
+        $this->invoke_task($task_label,$task);
       }
 
       foreach($this->scedualed_module_tasks['weekly_night_time'][$today_is] as $task_label=>$task){
-        $this->call_module($task['module'],$task['action']);
+        $this->invoke_task($task_label,$task);
       }
     }
 
     if($now_time_str == $now_round_day_midnight_str){
       foreach($this->scedualed_module_tasks['daily_midnight'] as $task_label=>$task){
-        $this->call_module($task['module'],$task['action']);
+        $this->invoke_task($task_label,$task);
       }
       
       foreach($this->scedualed_module_tasks['weekly_day_time'][$today_is] as $task_label=>$task){
-        $this->call_module($task['module'],$task['action']);
+        $this->invoke_task($task_label,$task);
       }
     }
 
     if($now_time_str == $now_round_monthly_midnight_str){
       foreach($this->scedualed_module_tasks['monthly'] as $task_label=>$task){
-        $this->call_module($task['module'],$task['action']);
+        $this->invoke_task($task_label,$task);
       }
     }
 
+  }
+
+  protected function invoke_task($task_label,$task){
+    print_help($task_label,'Invoking task');
+    try {
+      $this->call_module($task['module'],$task['action']);
+    } 
+    catch (Exception $e) {
+        echo 'The task failed: ',  $e->getMessage(), "\n";
+    }
+    
   }
 
 }
