@@ -26,6 +26,9 @@
         if($old_user_payments && !empty($old_user_payments)){
             $this->data['old_user_payments'] = $old_user_payments;
         }
+        else{
+            $this->data['old_user_payments'] = false;
+        }
         
         return $this->include_view('payments/list.php');
     }
