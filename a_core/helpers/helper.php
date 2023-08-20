@@ -128,6 +128,13 @@
       file_put_contents($log_filename, $log_text, FILE_APPEND);
     }
 
+    public static function clear_log($log_file){
+      self::add_log($log_file,"clearing now");
+
+      $log_filename = 'assets_s/logs/'.$log_file;
+
+      file_put_contents($log_filename, "");
+    }    
 
     public static function array_to_csv_download2($data, $filename = "export.csv", $delimiter=";") {
       // open raw memory as file so no temp files needed, you might run out of memory though

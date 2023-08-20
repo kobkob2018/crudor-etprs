@@ -79,6 +79,7 @@ class Cron_masterController extends CrudController{
     print_help($now_round_monthly_midnight_str,'now_round_monthly_midnight_str');
 
     if($now_time_str == $now_round_hour_str){
+      Helper::clear_log("last_hour_logs.txt");
       foreach($this->scedualed_module_tasks['hourly'] as $task){
         $this->invoke_task($task);
       }
@@ -114,11 +115,14 @@ class Cron_masterController extends CrudController{
 
   protected function invoke_task($task){
     print_help($task['label'],'Invoking task');
+    Helper::add_log("last_hour_logs.txt","\n ".$task['label'].": ".date("m/d/Y H:i", time()));
     try {
       $this->call_module($task['module'],$task['action']);
+      Helper::add_log("last_hour_logs.txt","\n  success \n");
     } 
     catch (Exception $e) {
-        echo 'The task failed: ',  $e->getMessage(), "\n";
+      Helper::add_log("last_hour_logs.txt","\n  failed: ".$e->getMessage()." \n");
+      echo 'The task failed: ',  $e->getMessage(), "\n";
     }
     
   }
