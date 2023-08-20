@@ -7,5 +7,6 @@ logs/
 a_core/secret.php
 zz_beckups/
 assets_s/
+info/
 tester.php
 testing_phpMailer.php
