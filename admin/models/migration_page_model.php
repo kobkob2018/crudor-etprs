@@ -337,7 +337,8 @@
 				'css_class'=>'mgrt mgrt-frm',
 				'priority'=>'10',
 			);
-			
+			$form_block['content'] = str_replace("<h3","<h2",$form_block['content']);
+			$form_block['content'] = str_replace("</h3","</h2",$form_block['content']);
 			self::simple_create_by_table_name($form_block, 'content_blocks');
 		}
 		
@@ -352,6 +353,8 @@
 		if($page_block['content'] != ""){
 			$page_block['content'] = utgt(stripslashes($page_block['content']));
 			$page_block['content'] = str_replace("white-cube","c-block",$page_block['content']);
+			$page_block['content'] = str_replace("<h3","<h2",$page_block['content']);
+			$page_block['content'] = str_replace("</h3","</h2",$page_block['content']);
 		}
 		self::simple_create_by_table_name($page_block, 'content_blocks');
 		
