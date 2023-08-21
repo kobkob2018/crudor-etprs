@@ -82,7 +82,10 @@
 		$migration_site = Migration_site::find($filter_arr);
 		$page_id = $_REQUEST['page_id'];
 		$delete_info = Migration_page::delete_migrated_page($page_id,$migration_site);
-		$return_array = array(
+		if(!$delete_info){
+      $delete_info = array('old_page_id'=>'0');
+    }
+    $return_array = array(
 			"old_page_id"=>$delete_info['old_page_id'],
 			"page_id"=>$page_id
 		);
