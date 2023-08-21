@@ -214,6 +214,13 @@
         $req->execute(array('page_id'=>$page_id));	
 		$ilbiz_form_info = $req->fetch();
 		
+		if(!$ilbiz_form_info){
+			$sql = "select * from estimate_miniSite_defualt_block WHERE type = :page_id";
+			$req = $ilbiz_db->prepare($sql);
+			$req->execute(array('page_id'=>'30372'));	
+			$ilbiz_form_info = $req->fetch();			
+		}
+
 		$page_title = utgt($ilbiz_page_info['name']);
 		$page_url = str_replace(" ","-",$page_title);
 		$page_url = str_replace("?","",$page_url);
@@ -321,7 +328,7 @@
 		
 		$new_form_id = self::simple_create_by_table_name($new_form_info, 'biz_forms');
 		
-		if($ilbiz_form_info['content'] != ""){
+		if($ilbiz_form_info['content'] != "" && $ilbiz_form_info['content'] != ".."){
 			$form_block = array(
 				'site_id'=>$migration_site['site_id'],
 				'page_id'=>$new_page_id,
