@@ -19,5 +19,8 @@
             <a href = "<?= inner_url('migration_gallery/prepare/') ?>" class="item-edit-a <?= $view->a_c_class('migration_gallery') ?>">ייבוא גלריות</a>
             |
             <a href = "<?= inner_url('migration_product/prepare/') ?>" class="item-edit-a <?= $view->a_c_class('migration_product') ?>">ייבוא מוצרים</a>      
+            |
+            <a href = "<?= inner_url('migration_rightMenu/prepare/') ?>" class="item-edit-a <?= $view->a_c_class('migration_rightMenu') ?>">ייבוא תפריט ימני</a>      
+
     </div>
 </div>
