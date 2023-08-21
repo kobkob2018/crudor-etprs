@@ -80,11 +80,11 @@
                 $content_page = self::simple_find_by_table_name(array('site_id'=>$site_id,'link'=>$page_link),'content_pages','id');
 
                 if($content_page){
-                    if(isset($content_page[0])){
-                        $new_rightMenu_item['url'] = '';
-                        $new_rightMenu_item['link_type'] = '1';
-                        $new_rightMenu_item['page_id'] = $content_page[0]['id'];
-                    }
+                    
+                    $new_rightMenu_item['url'] = '';
+                    $new_rightMenu_item['link_type'] = '1';
+                    $new_rightMenu_item['page_id'] = $content_page['id'];
+                    
                 }
 
             }
