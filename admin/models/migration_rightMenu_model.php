@@ -74,7 +74,7 @@
             $check_url = str_replace("https://".$migration_site['old_domain']."/", "", $check_url);
 
             $check_url_arr = explode("/",$check_url);
-
+            
             if(isset($check_url_arr[0]) && $check_url_arr[0] != ''){
                 $page_link = $check_url_arr[0];
                 $content_page = self::simple_find_by_table_name(array('site_id'=>$site_id,'link'=>$page_link),'content_pages','id');
@@ -82,7 +82,7 @@
                 if($content_page){
                     if(isset($content_page[0])){
                         $new_rightMenu_item['url'] = '';
-                        $new_rightMenu_item['link_type'] = '2';
+                        $new_rightMenu_item['link_type'] = '1';
                         $new_rightMenu_item['page_id'] = $content_page[0]['id'];
                     }
                 }
