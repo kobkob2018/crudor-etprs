@@ -137,7 +137,7 @@
 
                         setTimeout(function(){
                             get_current_calls_info();
-                        },5000);
+                        },10000);
                     }
                     xhttp.open("GET", filter_data, true);
                     xhttp.send();                      
