@@ -169,22 +169,26 @@ function initAccNavItems(){
     let index = 0;
     const navUl = document.querySelector(".acc-nav");
     document.querySelectorAll("h2").forEach(h2=>{
-        if(h2.id == ""){
-            index++;
-            h2.id = "acc_item_"+index;
-        }
-        const anchor = "#"+h2.id;
-        const liItem = document.createElement('li');
-        liItem.classList.add("acc-nav-item");
-        const aItem = document.createElement('a');
-        aItem.innerHTML = h2.innerText;
-        aItem.href = anchor;
-        aItem.title = h2.innerText;
-        aItem.addEventListener("click",function(){
-            
-        });
-        liItem.append(aItem);  
-        navUl.append(liItem);       
+        const h2Text = h2.innerText;
+        const h2CheckText = h2Text.trim();
+        if(h2CheckText != ""){
+            if(h2.id == ""){
+                index++;
+                h2.id = "acc_item_"+index;
+            }
+            const anchor = "#"+h2.id;
+            const liItem = document.createElement('li');
+            liItem.classList.add("acc-nav-item");
+            const aItem = document.createElement('a');
+            aItem.innerHTML = h2.innerText;
+            aItem.href = anchor;
+            aItem.title = h2.innerText;
+            aItem.addEventListener("click",function(){
+                
+            });
+            liItem.append(aItem);  
+            navUl.append(liItem);    
+        }   
     });
     navUl.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
