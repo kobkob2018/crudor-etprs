@@ -33,7 +33,7 @@
 			'full_name'=>trim($lead_data['full_name']),
 			'phone'=>($lead_data['phone']),
 			'email'=>($lead_data['email']),
-			'note'=>trim(substr($lead_data['note'],0,60))."...",
+			'note'=>trim(mb_substr($lead_data['note'],0,60))."...",
 			'note_full'=>trim($lead_data['note']),
 			'status'=>trim($lead_data['status']),
 			'status_str'=>$status[$lead_data['status']],
