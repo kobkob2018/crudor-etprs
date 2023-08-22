@@ -112,7 +112,7 @@
       }
 	$row_date = $date_from_sort;
 
-    $sql = "SELECT user.id as user_id, full_name, advertisingPrice ,advertisingStartDate,lead_price,domainEndDate,hostPriceMon,domainPrice,end_date 
+    $sql = "SELECT user.id as user_id, full_name,biz_name,  advertisingPrice ,advertisingStartDate,lead_price,domainEndDate,hostPriceMon,domainPrice,end_date 
     FROM users user 
     LEFT JOIN user_bookkeeping book ON book.user_id = user.id
     LEFT JOIN user_lead_settings uls ON uls.user_id = user.id
@@ -350,6 +350,7 @@
 				$user_income_row = array();
 				$user_income_row['full_name'] = "<a target='_blank' href='".inner_url('users/edit/?row_id='.$user['user_id'])."'>".$user['full_name']."</a>";
 				$user_income_row['user_id'] = $user['user_id'];
+				$user_income_row['biz_name'] = $user['biz_name'];
                 $user_income_row['deal_closed_count'] = 0;
 				if(isset($lead_list[$row_date][$user['user_id']])){
 					
@@ -789,7 +790,13 @@
 
 				
 				<tr>
-					<td><?php echo $user_income_arr['full_name']; ?></td>
+					<td>
+						<?php echo $user_income_arr['biz_name']; ?>
+						<br/>
+						<small>
+							<?php echo $user_income_arr['full_name']; ?>
+						</small>
+					</td>
 					<td><?php echo number_format ($user_income_arr['hosting'],2); ?></td>
 					<td><?php echo number_format ($user_income_arr['domain'],2); ?></td>
 					<td><?php echo number_format ($user_income_arr['advertyzing_global'],2); ?></td>
