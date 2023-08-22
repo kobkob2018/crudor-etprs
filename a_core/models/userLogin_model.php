@@ -176,7 +176,7 @@
 			'token'=>input_protect($token),
 			'user_ip'=>$_SERVER['REMOTE_ADDR']	
 		);
-		print_help($_SERVER['REMOTE_ADDR'],"your IP");
+		
 		$db = Db::getInstance();
 		$sql = "SELECT * FROM user_reset_password WHERE id = :row_id AND token = :token AND (status = '1' OR user_ip = :user_ip)";
 		$req = $db->prepare($sql);
