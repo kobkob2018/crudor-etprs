@@ -37,8 +37,8 @@
         //some fix to the lead details...
         $call['src'] = $call['callerid'];
         $call['dst'] = $call['did'];
-		$call['duration'] = '0';  
-		$call['filename'] = '';  
+        $call['duration'] = '0';  
+        $call['filename'] = '';  
         $new_calls_arr[$call['CallId']] = $call;
       }
 

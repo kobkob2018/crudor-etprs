@@ -74,6 +74,11 @@
             'validation'=>'required',
         ),
 
+        'alert_sms_to'=>array(
+            'label'=>'שליחת התראה על שיחה למספר',
+            'type'=>'text',
+        ),
+
     );
 }
 ?>

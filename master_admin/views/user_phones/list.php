@@ -15,6 +15,7 @@
         <div class="col">חיוב בליד</div>
         <div class="col">SMS בשיחה שלא נענתה</div>
         <div class="col">SMS לאחר שיחה</div>
+        <div class="col">התראת SMS ללקוח</div>
         <div class="col">מחיקה</div>
     </div>
     <?php foreach($this->data['user_phones'] as $user_phone): ?>
@@ -45,6 +46,10 @@
                 <div class="tiny-text-show">
                     <?= $user_phone['aftercall_sms'] ?>
                 </div>
+            </div>
+
+            <div class="col">
+                <?= $user_phone['alert_sms_to'] ?>
             </div>
             <div class="col">
                 <a href = "<?= inner_url('user_phones/delete/') ?>?&row_id=<?= $user_phone['id'] ?>&user_id=<?= $this->data['user_info']['id'] ?>" title="מחק">מחק</a>
