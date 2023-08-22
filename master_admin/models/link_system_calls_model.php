@@ -107,13 +107,14 @@
          
           self::handle_phone_api_send($user_phone,$lead_data,$call_data);
           self::handle_return_sms($call,$user_phone);
+          self::handle_call_alert_sms($call,$user_phone);
         }
 
       }
 
-		self::handle_missing_user_phones($missing_dst);
+      self::handle_missing_user_phones($missing_dst);
 
-		self::fix_todays_campaign_leads();
+      self::fix_todays_campaign_leads();
 
     }
 
@@ -227,6 +228,27 @@
 			$req = $db->prepare($sql);
 			$req->execute($execute_arr);
         }
+      }
+    }
+
+    protected static function handle_call_alert_sms($call,$user_phone){
+      if($user_phone['alert_sms_to'] == ''){
+        return;
+      }
+      $call_src = $call['src'];
+      $alert_sms_to = $user_phone['alert_sms_to'];
+      
+      if($call['answer'] == "ANSWERED"){
+        $sms_message = "שיחה שנעתה, זה המספר של הליד הטלפוני שקבלת כרגע מאתר שירות עשר: $call_src";
+      }
+      else{
+        $sms_message = "שיחה שלא נענתה משירות עשר, זה המספר של הליד הטלפוני שמחכה לשיחתך: $call_src";
+      }
+      try {
+        Helper::send_sms($alert_sms_to,$sms_message);
+      }
+      catch (Exception $e) {
+        Helper::add_log("last_hour_logs.txt","\n sms - alert failed: did: $alert_sms_to \n");
       }
     }
 
