@@ -56,10 +56,6 @@
     
         </div>
             <script type="text/javascript">
-                
-                setInterval(function(){
-                //    get_current_calls_info();
-                },5000);
 
                 function start_current_calls_info(){
                         const current_calls_switch = document.querySelector("#current_calls_ajax_helper_is_on");
@@ -92,7 +88,7 @@
                 }
                 
                 function get_current_calls_info(){
-                    console.log("wirking");
+                    console.log("working");
                     //console.log(jQuery("#current_calls_ajax_helper_is_on").val());
                     const current_calls_switch = document.querySelector("#current_calls_ajax_helper_is_on");
                     if(current_calls_switch.value == "1"){
@@ -138,6 +134,10 @@
                         if(new_alerts>0){
                             show_calls_monitor();
                         }
+
+                        setTimeout(function(){
+                            get_current_calls_info();
+                        },5000);
                     }
                     xhttp.open("GET", filter_data, true);
                     xhttp.send();                      
