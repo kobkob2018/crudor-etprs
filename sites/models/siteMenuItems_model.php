@@ -16,14 +16,12 @@
             $root_items = self::simple_get_item_parents_tree($page_item['id']);
             $child_items = self::simple_get_list($filter_arr,"*",$payload);
             if(!$child_items && $page_item['parent'] != '0'){
+				$child_items_found = true;
                 $filter_arr['parent'] = $page_item['parent'];
                 $child_items = self::simple_get_list($filter_arr,"*",$payload);
                 foreach($child_items as $item_key=>$item){
                     if($item['id'] == $page_item['id']){
                         unset($child_items[$item_key]);
-                    }
-                    else{
-                        $child_items_found = true;
                     }
                 }
             }
