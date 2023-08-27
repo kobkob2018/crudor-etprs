@@ -226,15 +226,19 @@
 		$page_url = str_replace("?","",$page_url);
 		
 		$videoPic = "";
-		
+		$videoFileName = "";
 		if($ilbiz_form_info['videoPic'] != ""){
 			$videoPic = $ilbiz_form_info['videoPic'];
+			$videoFileName = $videoPic;
+			$videoFileName_arr = explode(".",$videoFileName);
+			$videoFileName_ext = $videoFileName_arr[count($videoFileName_arr) -1 ];
+			$banner_file_name = "mgrt_".$page_id.".".$videoFileName_ext;
 			$url = "http://";
 			if($migration_site['old_has_ssl']){
 				$url = "https://";
 			}
 			$url .= $migration_site['old_domain'].'/new_images/'.$ilbiz_form_info['videoPic'];
-			$img = 'assets_s/'.$migration_site['site_id'].'/pages/banners/'.$ilbiz_form_info['videoPic'];
+			$img = 'assets_s/'.$migration_site['site_id'].'/pages/banners/'.$banner_file_name;
 			
 			$dir_path = 'assets_s/'.$migration_site['site_id']."/";
 			if( !is_dir($dir_path)){
@@ -265,7 +269,7 @@
 			"description"=>$ilbiz_page_info['summary'],
 			"content"=>$ilbiz_page_info['summary'],
 			"meta_title"=>$page_title,
-			"right_banner"=>$videoPic,
+			"right_banner"=>$banner_file_name,
 			"meta_description"=>$ilbiz_page_info['description'],
 			"meta_keywords"=>$ilbiz_page_info['keywords'],
 			"link"=>$page_url,
