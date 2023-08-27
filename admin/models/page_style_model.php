@@ -30,7 +30,7 @@
         ),
 
         'styling_tags'=>array(
-            'label'=>'עיצוב חפשי',
+            'label'=>'תגיות עיצוב חופשי וסקריפטים לתגית HEAD',
             'type'=>'textbox',
             'css_class'=>'big-text left-text',
         ),
