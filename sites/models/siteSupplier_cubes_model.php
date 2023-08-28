@@ -37,7 +37,7 @@
                 AND  (uls.end_date > now() OR uls.end_date = 0000-00-00) 
                 AND ulv.show_in_sites = '1' 
                 AND uls.user_id IN(
-                        SELECT distinct user_id FROM user_cat WHERE cat_id = $cat_id)";
+                        SELECT distinct user_id FROM user_cat WHERE $cat_filter_sql)";
         	
         $req = $db->prepare($sql);
         $req->execute();
