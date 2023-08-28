@@ -15,7 +15,7 @@
             if($biz_form_data['cat_id'] == ""){
                 return;
             }
-            
+
             $supplier_cubes = SiteSupplier_cubes::get_cat_supplier_cubes($biz_form_data['cat_id']);
             if($supplier_cubes){
 
@@ -33,7 +33,7 @@
             }
             $info = array(
                 'form'=>$biz_form_data,
-                'cat_tree'=>$cat_tree,
+                'cat_id'=>$biz_form_data['cat_id'],
                 'supplier_cubes'=>$supplier_cubes
             );
 
