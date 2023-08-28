@@ -8,8 +8,12 @@
         'cube_amin'=>'s_cubes'
     );
 
+    public static function get_cat_supplier_cubes($cat_id){
+        $cat_filter_sql = "cat_id = $cat_id";
+        return self::get_cat_filtered_supplier_cubes($cat_filter_sql);
+    }
+
     public static function get_cat_tree_supplier_cubes($cat_tree){
-        $db = Db::getInstance();
         $cat_in_sql_arr = array();
         foreach($cat_tree as $cat){
             $cat_in_sql_arr[] = $cat['id'];
@@ -19,6 +23,12 @@
             return false;
         }
         $cat_in_sql = implode(",",$cat_in_sql_arr);
+        $cat_filter_sql = "cat_id IN ($cat_in_sql)";
+        return self::get_cat_filtered_supplier_cubes($cat_filter_sql);
+    }
+
+    protected function get_cat_filtered_supplier_cubes($cat_filter_sql){
+        $db = Db::getInstance();
 
         $sql = "SELECT uls.user_id FROM user_lead_settings uls 
                 LEFT JOIN user_lead_visability ulv ON uls.user_id = ulv.user_id 
@@ -27,7 +37,7 @@
                 AND  (uls.end_date > now() OR uls.end_date = 0000-00-00) 
                 AND ulv.show_in_sites = '1' 
                 AND uls.user_id IN(
-                        SELECT distinct user_id FROM user_cat WHERE cat_id IN ($cat_in_sql))";
+                        SELECT distinct user_id FROM user_cat WHERE cat_id = $cat_id)";
         	
         $req = $db->prepare($sql);
         $req->execute();
@@ -47,8 +57,6 @@
         $cubes = $req->fetchAll(); 
         return $cubes;
     }
-
-
 
   }
 ?>

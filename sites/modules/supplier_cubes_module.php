@@ -15,8 +15,8 @@
             if($biz_form_data['cat_id'] == ""){
                 return;
             }
-            $cat_tree = Biz_categories::get_item_parents_tree($biz_form_data['cat_id'],'id, parent');
-            $supplier_cubes = SiteSupplier_cubes::get_cat_tree_supplier_cubes($cat_tree);
+            
+            $supplier_cubes = SiteSupplier_cubes::get_cat_supplier_cubes($biz_form_data['cat_id']);
             if($supplier_cubes){
 
                 foreach($supplier_cubes as $cube_key=>$cube){

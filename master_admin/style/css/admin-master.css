@@ -397,6 +397,15 @@ h4{
     box-shadow: 5px 5px 5px #c9c9c9;
     
 }
+
+.darken #content_wrap{
+    background: #c5c5c5;
+}
+
+.darken .content-block .block-content{
+    background: #7b7b7b;
+}
+
 .content-block .block-content img{
     max-width:100%;
     height:auto;
