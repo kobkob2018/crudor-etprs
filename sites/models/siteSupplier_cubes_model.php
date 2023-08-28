@@ -27,7 +27,7 @@
         return self::get_cat_filtered_supplier_cubes($cat_filter_sql);
     }
 
-    protected function get_cat_filtered_supplier_cubes($cat_filter_sql){
+    protected static function get_cat_filtered_supplier_cubes($cat_filter_sql){
         $db = Db::getInstance();
 
         $sql = "SELECT uls.user_id FROM user_lead_settings uls 
