@@ -118,7 +118,7 @@
             $selected_cat = $cat_tree[count($cat_tree)-1];
             $selected_box_parent = $selected_cat['id'];
             $active_parent = $selected_cat['parent'];
-            $cat_select_options = Biz_categories::get_children_list_of($selected_cat['parent'],'id, label');
+            $cat_select_options = Biz_categories::get_children_list_of($selected_cat['parent'],'id, label',array(),array('order_by'=>'label'));
             
         }
         foreach($cat_select_options as $key=>$cat){
