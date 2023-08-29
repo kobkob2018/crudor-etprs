@@ -111,7 +111,7 @@
         }
         $selected_box_parent = '-1';
         $active_parent = $selected_cat_id;
-        $cat_select_options = Biz_categories::get_children_list_of($selected_cat_id,'id, label');
+        $cat_select_options = Biz_categories::get_children_list_of($selected_cat_id,'id, label',array(),array('order_by'=>'label'));
         
         if(!$cat_select_options && $cat_tree && !empty($cat_tree)){
             //array_pop($cat_tree);

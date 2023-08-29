@@ -26,9 +26,9 @@
             $cat_info = Biz_categories::get_by_id($cat_id,'id,label,parent');
         }
         $cat_info['has_children'] = true;
-        $cat_cildren = Biz_categories::get_children_list_of($cat_id,'id,label,parent');
+        $cat_cildren = Biz_categories::get_children_list_of($cat_id,'id,label,parent',array(),array('order_by'=>'label'));
         if(!$cat_cildren){
-            $cat_cildren = Biz_categories::get_children_list_of($cat_info['parent'],'id,label,parent');
+            $cat_cildren = Biz_categories::get_children_list_of($cat_info['parent'],'id,label,parent',array(),array('order_by'=>'label'));
             $cat_info['has_children'] = false;
         }
         foreach($cat_cildren as $child_key => $child){
