@@ -52,7 +52,8 @@
         'alias'=>'cat',
         'table'=>'user_cat',
         'assign_1'=>'cat_id',
-        'assign_2'=>'user_id'
+        'assign_2'=>'user_id',
+        'payload'=>array('order_by'=>'label'),
     );
 
 }

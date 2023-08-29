@@ -39,7 +39,8 @@
         'alias'=>'cat',
         'table'=>'net_message_cat',
         'assign_1'=>'cat_id',
-        'assign_2'=>'message_id'
+        'assign_2'=>'message_id',
+        'payload'=>array('order_by'=>'label'),
     );
 
     public static function get_cat_users($cat_list){

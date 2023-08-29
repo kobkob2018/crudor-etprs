@@ -55,7 +55,8 @@
         'alias'=>'cat',
         'table'=>'cat_city',
         'assign_1'=>'cat_id',
-        'assign_2'=>'city_id'
+        'assign_2'=>'city_id',
+        'payload'=>array('order_by'=>'label'),
     );
 
 }

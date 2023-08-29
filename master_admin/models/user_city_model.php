@@ -52,7 +52,8 @@
         'alias'=>'city',
         'table'=>'user_city',
         'assign_1'=>'city_id',
-        'assign_2'=>'user_id'
+        'assign_2'=>'user_id',
+        'payload'=>array('order_by'=>'label'),
     );
 
 }

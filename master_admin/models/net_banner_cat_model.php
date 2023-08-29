@@ -51,7 +51,8 @@
         'alias'=>'cat',
         'table'=>'net_banner_cat',
         'assign_1'=>'cat_id',
-        'assign_2'=>'banner_id'
+        'assign_2'=>'banner_id',
+        'payload'=>array('order_by'=>'label'),
     );
 
 

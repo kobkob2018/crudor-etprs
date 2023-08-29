@@ -375,7 +375,11 @@
         );
 
         $payload = array('add_custom_param'=>$add_is_checked_value);
-
+        if(isset($assign_info['payload'])){
+            foreach($assign_info['payload'] as $key=>$val){
+                $payload[$key] = $val;
+            }
+        }
 
         $get_offsprings_method_name = "get_assign_item_offsprings_tree_for_".$assign_info['alias'];
         $assign_tree_item = array(
