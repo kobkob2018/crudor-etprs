@@ -10,7 +10,7 @@
 		</div>		
 		<?php if($this->user): ?>
 			<div id="header_links" class="header-right-menu">
-				<a id="header_lead_list_link" class="header-link header-item" href='<?= inner_url("leads/list/") ?>'><span class="bg"></span><span class="header-link-title">לידים</span></a>
+				<a id="header_lead_list_link" class="header-link header-item" href='<?= inner_url("leads/list/") ?>'><span class="bg"></span><span class="header-link-title">הלידים שלי</span></a>
 			</div>
 			<div id="left_menu" class="header-left-menu">
 				<div id="user_menu" class="header-item">
