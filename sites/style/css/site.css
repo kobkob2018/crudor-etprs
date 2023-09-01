@@ -936,7 +936,7 @@ a.news-ticker-a-content{
 }
 
 .grecaptcha-badge { 
-    visibility: hidden;
+   # visibility: hidden;
 }
 
 @media only screen and (min-width: 890px) {
