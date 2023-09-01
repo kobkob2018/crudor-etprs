@@ -107,12 +107,17 @@
         'ga'=>array(
           'sub','cat'
         ),
+        'landing'=>array(
+          'ld'
+        ),
       );
 
+      $auto_to_home_main_params = array('landing');
+      
       if(!isset($options_arr[$main_param])){
         return false;
       }
-      
+       
       $found_redirection = false;
       foreach($options_arr[$main_param] as $id_param){
         if(!isset($_GET[$id_param]) || $_GET[$id_param] == ""){
@@ -134,6 +139,10 @@
       if($found_redirection){
         header("Location: $found_redirection", true, 301);
         return true;
+      }
+      elseif(in_array($main_param,$auto_to_home_main_params)){
+        $home_url = outer_url();
+        header("Location: $home_url", true, 301);
       }
       return false;
     }
