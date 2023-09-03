@@ -11,7 +11,7 @@
                 <img src="<?= inner_url("banner_count/views/") ?>?banner_id=<?= $cube['banner']['id'] ?>" style="display:none" />
                 <a href = "javascript://" class="net-banner banner-clicker" data-link="<?= add_url_params($cube['banner']['goto_href'],array('banner_id'=>$cube['banner_id'])) ?>" data-count_url="<?= inner_url("banner_count/clicks/") ?>?banner_id=<?= $cube['banner']['id'] ?>">
                     <?php if($cube['banner']['video']): ?>       
-                        <video class='cube-banner-vid' width="100%" autoplay loop muted="" <?php if($cube['banner']['image'] != ""): ?> poster="<?= $this->file_master_url_of('net_banners', $cube['banner']['image']) ?>" <?php endif; ?>>
+                        <video class='cube-banner-vid' width="100%" autoplay loop muted="" playsinline <?php if($cube['banner']['image'] != ""): ?> poster="<?= $this->file_master_url_of('net_banners', $cube['banner']['image']) ?>" <?php endif; ?>>
                             <source src="<?= $this->file_master_url_of('net_banners', $cube['banner']['video']) ?>" alt="<?= $cube['banner']['label'] ?>" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
