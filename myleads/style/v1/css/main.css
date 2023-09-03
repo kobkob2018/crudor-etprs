@@ -156,10 +156,10 @@ label.error::before{content:"*";}
     /* background-color: #f9f9f9; */
 }
 
-.table-striped>tbody>tr:nth-child(odd).opened_1>td {
+.table-striped>tbody>tr:nth-child(odd).view_state_1>td {
     background-color: #b9ffbb;
 }
-.table-striped>tbody>tr:nth-child(even).opened_1>td{
+.table-striped>tbody>tr:nth-child(even).view_state_1>td{
      background-color: #cdfbff; 
 }
 .table-striped>tbody>tr:nth-child(odd).refund_request_sent_1>td {

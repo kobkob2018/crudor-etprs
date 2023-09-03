@@ -219,7 +219,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr class="responsive-small opened_{{lead.estimate_form_data['opened']}} refund_request_sent_{{lead.estimate_form_data['refund_request_sent']}}" ng-repeat="lead in leadsList" data-lead_id="{{lead.estimate_form_data['row_id']}}" ng-click="show_lead($event);">
+										<tr class="responsive-small view_state_{{lead.estimate_form_data['view_state']}} refund_request_sent_{{lead.estimate_form_data['refund_request_sent']}}" ng-repeat="lead in leadsList" data-lead_id="{{lead.estimate_form_data['row_id']}}" ng-click="show_lead($event);">
 											<td data-title="#"  class="responsive-hide row_id_col">{{lead.estimate_form_data['row_id']}}</td>
 											<td data-title="סטטוס" class="responsive-hide">{{lead.estimate_form_data['status_str']}}</td>
 											<td data-title="" class="responsive-hide">{{lead.estimate_form_data['tag_str']}}</td>
