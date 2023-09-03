@@ -72,6 +72,12 @@
         protected function clean_mobile_conditions($text){
             $text = $this->clean_conditions($text,"{{%-mobile-%}}","{{%-endmobile-%}}",is_mobile());
             $text = $this->clean_conditions($text,"{{%-desktop-%}}","{{%-enddesktop-%}}",!is_mobile());
+
+            $biz_form_on = false;
+            if(isset($this->controller->data['biz_form_on'])){
+              $biz_form_on = true;
+            }
+            $text = $this->clean_conditions($text,"{{%-if_form_on-%}}","{{%-end_if_form_on-%}}",$biz_form_on);
             return $text;
         }
     
