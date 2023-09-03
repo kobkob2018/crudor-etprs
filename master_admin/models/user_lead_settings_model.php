@@ -35,6 +35,13 @@
             'validation'=>'float'
         ),        
 
+        'buy_minimum'=>array(
+            'label'=>'הגבלת כמות לידים לרכישה',
+            'type'=>'text',
+            'default'=>'1',
+            'validation'=>'int'
+        ),  
+
         'free_send'=>array(
             'label'=>'שליחה חופשית',
             'type'=>'select',

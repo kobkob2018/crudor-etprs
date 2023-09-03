@@ -9,7 +9,7 @@
 					<div class='buy_leads_desc form-group'>
 						
 						אנא מלאו את מספר הלידים שברצונכם לרכוש: <br/>
-						<?php if($this->data['user_lead_settings']['buy_minimum'] == "" || $this->data['user_lead_settings']['buy_minimum'] == "0"): ?>
+						<?php if($this->data['user_lead_settings']['buy_minimum'] == "" || $this->data['user_lead_settings']['buy_minimum'] == "0" || $this->data['user_lead_settings']['buy_minimum'] == "1"): ?>
 							<input type='text' id='num_credit_input' name='num_credit' class='input_style text-input qty required digits' data-msg="אנא בחר מספר לידים"><br>
 						<?php else: ?>
 							<select  id='num_credit_input' name='num_credit' class='input_style text-input qty required digits' data-msg="אנא בחר מספר לידים">

@@ -21,6 +21,7 @@
             'end_date'=>'',
             'lead_price'=>'0',
             'lead_price_no_tax'=>'0',
+            'buy_minimum'=>'1',
             'open_mode'=>'0',
             'auto_send'=>'0',
             'free_send'=>'0',
@@ -76,7 +77,6 @@
             $user_data['has_special_closed_lead_alert']	= 	'1';
         }
 
-        $user_data['buy_minimum']	= 	'0';
         $user_data['have_net_banners']	= false;
 
         self::$users_data[$user_id] = $user_data;
