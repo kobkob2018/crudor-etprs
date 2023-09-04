@@ -82,6 +82,12 @@
             'validation'=>'required, date'
         ),
 
+        'dealClosedPrice'=>array(
+            'label'=>'אחוזי תשלום על עסקאות סגורות',
+            'type'=>'date',
+            'validation'=>'required, float'
+        ),
+
     );
 }
 ?>
