@@ -833,18 +833,32 @@
 									<th>הצעת מחיר</th>
 									<th <?php echo $call_sector_style; ?>>סטטוס שיחה</th>
 									<th <?php echo $call_sector_style; ?>>זמן שיחה/הקלטה</th>
+									<th <?php echo $call_sector_style; ?>>מספר שיחות ללקוח ממקור זה</th>
 									<th <?php echo $call_sector_style; ?>>הפך לליד</th>
 									
 								</tr>
 								<?php if(isset($user_income_arr['lead_list'])): foreach($user_income_arr['lead_list'] as $lead): ?>
 									<?php 
 										if($lead['resource'] == 'phone'){
-											$check_ef_sql = "SELECT id FROM biz_requests WHERE phone = ".$lead['phone']." LIMIT 1";
-
-                                            $req = $db->prepare($check_ef_sql);
-                                            $req->execute();
-                                            $check_ef_data = $req->fetch();
-                                            
+											$times_called = '0';
+											if($lead['phone'] == '0Anonymous'){
+												$check_ef_data = false;
+											}
+											else{
+												$check_ef_sql = "SELECT id FROM biz_requests WHERE phone = '".$lead['phone']."' LIMIT 1";
+												$req = $db->prepare($check_ef_sql);
+												$req->execute();
+												$check_ef_data = $req->fetch();
+												
+												
+												$times_called_sql = "SELECT count(id) as 'times_called' FROM user_phone_calls WHERE call_from = '".$lead['phone']."' AND user_id = ".$user_id."";
+												$req = $db->prepare($times_called_sql);
+												$req->execute();
+												$times_called_data = $req->fetch();
+												if($times_called_data){
+													$times_called = $times_called_data['times_called'];
+												}
+                                            }
                                             
 											$lead['has_ef'] = false;
 											$lead['has_ef_str'] = "לא";
@@ -913,6 +927,7 @@
 												<?php endif; ?>
 	
 											</td>
+											<td style='background:<?php echo $lead['has_ef_bg']; ?>'><?php echo $times_called ?></td>
 											<td style='background:<?php echo $lead['has_ef_bg']; ?>'><?php echo $lead['has_ef_str']; ?></td>
 
 		
