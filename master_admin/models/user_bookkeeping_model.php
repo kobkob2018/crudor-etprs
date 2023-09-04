@@ -84,7 +84,7 @@
 
         'dealClosedPrice'=>array(
             'label'=>'אחוזי תשלום על עסקאות סגורות',
-            'type'=>'float',
+            'type'=>'text',
             'default'=>'0',
             'validation'=>'required, float'
         ),
