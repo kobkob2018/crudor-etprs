@@ -36,7 +36,11 @@
             </div>
             <?php if($cube['phone']): ?>
                 <div class="phone-number section">
-                    טלפון: <?= $cube['phone'] ?>
+                    <?php if(is_mobile()): ?>
+                        טלפון: <a href="tel:<?= $cube['phone'] ?>" title="התקשר"><?= $cube['phone'] ?></a>
+                    <?php else: ?>
+                        טלפון: <?= $cube['phone'] ?>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
             <?php if(is_mobile() && $cube['whatsapp_phone'] != ""): ?>
@@ -44,8 +48,8 @@
                     <a href="whatsapp://send?text=<?= $cube['whatsapp_text']; ?>&phone=<?= $cube['whatsapp_phone']; ?>"> 
                         <img src="<?= $this->file_master_url_of('static', 'media/uploads/whatsapp.png') ?>" alt='קבל הצעת מחיר בווטסאפ' /> קבל הצעת מחיר בווטסאפ
                     </a>
-                </div>  
-            <?php endif; ?>          
+                </div>    
+            <?php endif; ?>        
 
             <div class="phone-number section">
                 <a href=<?= $cube['link'] ?> title="<?= $cube['label'] ?>">
