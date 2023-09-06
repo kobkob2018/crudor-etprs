@@ -131,29 +131,6 @@
       return $req;
     }
 
-    protected static function simple_get_filter_sql($filter_arr){
-      $fields_sql_arr = array('1');
-      $execute_arr = array();
-      foreach($filter_arr as $key=>$value){
-        if(is_null($value)){
-          $fields_sql_arr[] = " $key IS NULL ";
-        }
-        else{
-
-            $fields_sql_arr[] = "$key = :$key";
-            $execute_arr[$key] = $value;
-        }
-      }
-      
-      $fields_sql = implode(" AND ",$fields_sql_arr);
-
-      return array(
-        'fields_sql'=>$fields_sql,
-        'execute_arr'=>$execute_arr
-      );
-    }
-
-
     public static function simple_delete_arr_by_table_name($item_arr, $table_name){
       $item_ids_arr = array();
       foreach($item_arr as $item){

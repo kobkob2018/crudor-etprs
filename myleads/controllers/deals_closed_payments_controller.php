@@ -5,7 +5,8 @@
 
     public function report(){
       $user_deals_closed_payments = Myleads_deals_closed_payments::get_user_payments_data($this->user['id']);
-      echo "הדף בבנייה";
+	  $this->include_view('deals_closed/report.php',$user_deals_closed_payments);
+
     }
 
   }
