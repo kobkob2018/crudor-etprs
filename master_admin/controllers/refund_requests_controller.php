@@ -293,7 +293,7 @@
                         echo "<b style='color:red;'>ליד טלפוני</b>";
                     }
                     else{
-                        echo "<a target='_new' href='".inner_url("biz_requests/view/?row_id=").$data['lead_id']."' class='maintext'>צפה בליד</a>";
+                        echo "<a target='_new' href='".inner_url("biz_requests/view/?row_id=").$data['biz_request_id']."' class='maintext'>צפה בליד</a>";
                     }
                     echo "</td>";
                     echo "<td width=20></td>";					
