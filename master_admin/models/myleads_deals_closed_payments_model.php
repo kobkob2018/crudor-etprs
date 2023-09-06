@@ -1,5 +1,5 @@
 <?php
-  class Myleads_deals_closed_payments extends TableModel{
+  class myleads_deals_closed_payments extends TableModel{
 
     protected static $main_table = 'user_custom_paylist';
 
