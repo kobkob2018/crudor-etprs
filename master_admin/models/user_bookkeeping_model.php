@@ -15,7 +15,7 @@
         'domainEndDate'=>array(
             'label'=>'תאריך תפוגת דומיין',
             'type'=>'date',
-            'default'=>'01-01-2050',
+            'default'=>'2050-01-01',
             'validation'=>'required, date'
         ),
 
@@ -80,7 +80,7 @@
         'advertisingStartDate'=>array(
             'label'=>'תאריך תחילת פרסום',
             'type'=>'date',
-            'default'=>'01-01-1970',
+            'default'=>'1970-01-01',
             'validation'=>'required, date'
         ),
 
