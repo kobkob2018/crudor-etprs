@@ -16,6 +16,7 @@
 	<br/>
 	<br/>
 	להלן לינק לאיפוס סיסמה:
+	<br/>
 	<a href="<?= outer_url('userLogin/resetPassword/'); ?>?row_id=<?= $this->data['forgot_password_token']['row_id'] ?>&token=<?= $this->data['forgot_password_token']['token'] ?>">לחץ כאן לאיפוס סיסמה</a> 
 
 </div>
