@@ -27,14 +27,20 @@
 
     public static function get_user_payments_data($user_id){
 
-        exit("good job");
-        $deals_closed_sum = self::simple_get_list_by_table_name(
+        
+
+        $deals_closed_sum = 0;
+
+        $deals_closed_sum_data = self::simple_get_list_by_table_name(
             array('user_id'=>$user_id),
             'user_leads',
             "sum(offer_amount)"
         );
 
-
+        if($deals_closed_sum_data){
+            var_dump($deals_closed_sum_data);
+        }
+        exit("good job");
 
         $db = Db::getInstance();
 
