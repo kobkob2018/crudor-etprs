@@ -145,7 +145,7 @@
 
         
 
-        $limit_rows = 3;
+        $limit_rows = 50;
         $page_id =  ( !empty($_GET['page_id']) ) ? $_GET['page_id'] : '1';
         
         $request_list = Refund_requests::get_filtered_requests_count($user_name_filter,$s_date_filter,$e_date_filter,$page_id,$limit_rows);
