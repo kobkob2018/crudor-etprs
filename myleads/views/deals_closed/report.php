@@ -2,6 +2,23 @@
     תשלומים על עסקאות סגורות
 </h3>
 
+<div class="total-summary">
+    <div class="total-summary-item">
+        <b>סה"כ הכנסות</b> : <?= $info['deals_closed_sum'] ?>
+    </div>
+    <div class="total-summary-item">
+        <b>אחוזי תשלום</b> : <?= $info['deals_closed_price'] ?>
+    </div>
+    <div class="total-summary-item">
+        <b>סה"כ לתשלום</b> : <?= $info['bill'] ?>
+    </div>
+    <div class="total-summary-item">
+        <b>סה"כ שולם</b> : <?= $info['pay_total'] ?>
+    </div>
+    <div class="total-summary-item">
+        <b>נותר לתשלום</b> : <?= $info['still_bill'] ?>
+    </div>
+</div>
 
 <div id='listTable_wrap'>
     <div id='responsive-tables'>
