@@ -196,7 +196,7 @@
 					<div id="listTable_wrap" class="scroll">
 						<div id="listTable_header_wrap">
 							<div>
-								<a href="<?= inner_url('deals_closed/report/') ?>" title="צפה בתשלומים על הכנסות">
+								<a href="<?= inner_url('deals_closed_payments/report/') ?>" title="צפה בתשלומים על הכנסות">
 									<b>סה"כ הכנסות</b> <?php echo $pages_data['profits']; ?>
 								</a>
 							</div>

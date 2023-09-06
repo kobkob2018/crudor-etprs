@@ -1,7 +1,7 @@
 <?php
 	class MyleadsModule extends Module{
         
-        public $add_models = array("users","leads_user");
+        public $add_models = array("sites","users","leads_user");
         //good place to colect global data of the workon site, the user, etc...
         public function init_layout(){
             $user = Users::get_loged_in_user();

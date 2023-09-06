@@ -20,6 +20,14 @@
     </div>
 </div>
 
+
+<div class="focus-box">
+    <h3>הוספת רישום</h3>
+    <div id="block_form_wrap" class="form-gen page-form">
+        <?php $this->include_view('form_builder/form.php'); ?>
+    </div>
+</div>
+
 <div id='listTable_wrap'>
     <div id='responsive-tables'>
         <table border='1' style='border-collapse: collapse;' width='100%' cellpadding='15' borderc>
