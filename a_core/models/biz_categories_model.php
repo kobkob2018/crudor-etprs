@@ -94,6 +94,17 @@
             'css_class'=>'small-text'
         ),
 
+        'use_parent_gas'=>array(
+            'label'=>'השתמש בקמפיין של קטגוריית אב',
+            'type'=>'select',
+            'default'=>'1',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא'),
+                array('value'=>'1', 'title'=>'כן')
+            ),
+            'validation'=>'required'
+        ),
+
         'extra_fields'=>array(
             'label'=>'הוספת שדות',
             'type'=>'textbox',

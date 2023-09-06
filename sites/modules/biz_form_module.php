@@ -68,11 +68,14 @@
 
             $cat_id = $info['biz_form']['cat_id'];
 
-            $cat_tree = Biz_categories::get_item_parents_tree($cat_id,'id, googleADSense');
+            $cat_tree = Biz_categories::get_item_parents_tree($cat_id,'id, googleADSense, use_parent_gas');
             $googleADSense = false;
             foreach($cat_tree as $cat){
                 if($cat['googleADSense'] != ""){
                     $googleADSense = $cat['googleADSense'];
+                }
+                if($cat['use_parent_gas'] == '0' && $cat['googleADSense'] == ""){
+                    $googleADSense = false;
                 }
             }
 
