@@ -14,7 +14,6 @@
             'type'=>'select',
             'options_method'=>array('model'=>'siteUsers','method'=>'get_select_user_options'),
             'validation'=>'required',
-            'custom_validation'=>'site_user_validate_by',
         ),
         'status'=>array(
             'label'=>'סטטוס',
@@ -30,20 +29,15 @@
             'label'=>'תפקיד',
             'type'=>'select',
             'default'=>'admin',
-            'options_method'=>array('model'=>'SiteUsers','method'=>'get_admin_roll_options'),
+            'options_method'=>array(
+                array('value'=>'writer', 'title'=>'כותב'),
+                array('value'=>'admin', 'title'=>'מנהל'),
+                array('value'=>'master_admin', 'title'=>'מנהל כל'),
+            ),
             'validation'=>'required'
         ),       
 
-    );
-
-
-    public static function get_admin_roll_options(){
-        return array(
-            array('value'=>'writer', 'title'=>'כותב'),
-            array('value'=>'admin', 'title'=>'מנהל'),
-            array('value'=>'master_admin', 'title'=>'מנהל כל'),
-        );
-      }  
+    ); 
 
 }
 ?>

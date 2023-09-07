@@ -19,12 +19,9 @@
         //if(session__isset())
         
         $filter_arr = $this->get_base_filter();
-        $payload = array(
-            'order_by'=>'label'
-        );
-        $site_users_list = Site_users::get_list($filter_arr,"*", $payload);      
+        $site_users_list = Site_users::get_list($filter_arr,"*");      
         $this->data['site_users_list'] = $site_users_list;
-        $this->include_view('site_users/list.php');
+        $this->include_view('site_users_new/list.php');
     }
 
     protected function get_base_filter(){
@@ -55,67 +52,67 @@
     }
 
     public function include_edit_view(){
-        $this->data['product_info'] = $this->data['item_info'];
-        $this->include_view('products/edit.php');
+        $this->data['site_user_info'] = $this->data['item_info'];
+        $this->include_view('site_users_new/edit.php');
     }
 
     public function include_add_view(){
-        $this->include_view('products/add.php');
+        $this->include_view('site_users_new/add.php');
     }   
 
     protected function update_success_message(){
-        SystemMessages::add_success_message("המוצר עודכן בהצלחה");
+        SystemMessages::add_success_message("המנהל עודכן בהצלחה");
 
     }
 
     protected function create_success_message(){
-        SystemMessages::add_success_message("המוצר נוצר בהצלחה");
+        SystemMessages::add_success_message("המנהל נוצר בהצלחה");
 
     }
 
     protected function delete_success_message(){
-        SystemMessages::add_success_message("המוצר נמחק");
+        SystemMessages::add_success_message("המנהל נמחק");
     }
 
     protected function row_error_message(){
-      SystemMessages::add_err_message("לא נבחר מוצר");
+      SystemMessages::add_err_message("לא נבחר מנהל");
     }   
 
     protected function delete_item($row_id){
-      return Products::delete($row_id);
+      return Site_users::delete($row_id);
     }
 
     protected function get_item_info($row_id){
-      return Products::get_by_id($row_id);
+      return Site_users::get_by_id($row_id);
     }
 
     public function eject_url(){
-      return inner_url('products/list/');
+      return inner_url('site_users_new/list/');
     }
 
     public function url_back_to_item($item_info){
-      return inner_url("products/edit/?row_id=".$item_info['id']);
+      return inner_url("site_users_new/edit/?row_id=".$item_info['id']);
     }
 
     protected function after_delete_redirect(){
-        return $this->redirect_to(inner_url("/products/list/"));
+        return $this->redirect_to(inner_url("/site_users_new/list/"));
     }
 
     public function delete_url($item_info){
-        return inner_url("products/delete/?row_id=".$item_info['id']);
+        return inner_url("site_users_new/delete/?row_id=".$item_info['id']);
     }
 
     protected function get_fields_collection(){
-        return Products::setup_field_collection();
+        return Site_users::setup_field_collection();
     }
 
     protected function update_item($item_id,$update_values){
-      return Products::update($item_id,$update_values);
+      return Site_users::update($item_id,$update_values);
     }
 
     protected function create_item($fixed_values){
         $fixed_values['site_id'] = $this->data['work_on_site']['id'];
-        return Products::create($fixed_values);
+        return Site_users::create($fixed_values);
     }
 
 
@@ -174,7 +171,7 @@
             
 		}
 
-    public function updateSend(){
+    public function updateSend_old(){
       if(!isset($_REQUEST['row_id'])){
           return;
       }
@@ -193,14 +190,14 @@
       }
     }
 
-    public function add(){
+    public function add_old(){
       $form_handler = $this->init_form_handler();
       $form_handler->update_fields_collection(SiteUsers::setup_field_collection());
       $this->send_action_proceed();
       $this->include_view('site_users_new/add.php');           
 		}       
 
-    public function delete(){
+    public function delete_old(){
       if(!isset($_REQUEST['row_id'])){
           SystemMessages::add_err_message("לא נבחרה שורה");
           return $this->redirect_to(inner_url("siteUsers/list/"));
@@ -212,7 +209,7 @@
       return $this->redirect_to(inner_url("siteUsers/list/"));         
 		}  
 
-    public function createSend(){
+    public function createSend_old(){
       $form_handler = $this->init_form_handler();
       $validate_result = $form_handler->validate();
       if($validate_result['success']){
@@ -227,19 +224,5 @@
           }
       }
     }
-
-    public function site_user_validate_by($value){
-      $return_array =  array(
-          'success'=>true
-      );
-      if($value == 'notgood@gmail.com'){
-          $return_array['success'] = false;
-          $return_array['message'] = "האימייל שבחרת לא מותר";
-      }
-      return $return_array;
-    }
-
-
-
   }
 ?>
