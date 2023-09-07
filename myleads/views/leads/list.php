@@ -126,7 +126,7 @@
 							<div class="filter-submit-wrap"><button id="leads_filter_send" ng-click="update_filter();" type="button" >סינון</button></div>
 						</div>	
 						<div class="beck-link form-group">
-							<a href="/<?php echo $this->base_url_dir; ?>/leads/resetfilter/">איפוס הגדרות סינון</a>
+							<a href="<?= inner_url('leads/resetfilter/') ?>">איפוס הגדרות סינון</a>
 						</div>					
 					</div>
 				</form>

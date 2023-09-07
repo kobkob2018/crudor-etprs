@@ -42,7 +42,7 @@
     }
 
     public function eject_url(){
-      return inner_url('tasks/all/');
+      return inner_url('tasks/list/');
     }
 
     public function url_back_to_item($item_info){

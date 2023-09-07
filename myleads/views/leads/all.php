@@ -2,7 +2,7 @@
 <hr/>
 <div class="filter-form-wrap">
 	<div class="beck-link">
-		<a href="/<?php echo $this->base_url_dir; ?>/leads/resetfilter/">איפוס הגדרות סינון</a>
+		<a href="<?= inner_url('leads/resetfilter/') ?>">איפוס הגדרות סינון</a>
 	</div>
 	<h4>סינון לידים</h4>
 	
@@ -144,7 +144,7 @@
         				<td data-title="סטטוס"><?php echo $data['status_str']; ?></td>
         				<td data-title="אימייל"><?php echo $data['email']; ?></td>
 						<td data-title="אימייל"><?php echo $data['note']; ?></td>
-						<td data-title="צפייה בליד" class="numeric"><a href='/<?php echo $this->base_url_dir; ?>/leads/show/?id=<?php echo $lead->id; ?>'>לחץ לצפייה</a></td>
+						<td data-title="צפייה בליד" class="numeric"><a href='<?= inner_url('leads/show/') ?>?id=<?php echo $lead->id; ?>'>לחץ לצפייה</a></td>
         			</tr>	
 					
 				<?php } ?>

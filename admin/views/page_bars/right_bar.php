@@ -31,8 +31,8 @@
                 <?php endif; ?>
                 
                 <?php if($view->site_user_is('author')): ?>
-                    <li class="bar-item <?= $view->a_class("tasks/all/") ?>">
-                        <a href="<?= inner_url('tasks/all/') ?>" title="המשימות שלי" class="a-link">המשימות שלי</a>
+                    <li class="bar-item <?= $view->a_class("tasks/list/") ?>">
+                        <a href="<?= inner_url('tasks/list/') ?>" title="המשימות שלי" class="a-link">המשימות שלי</a>
                 </li>
             <?php endif; ?>
             

@@ -24,7 +24,7 @@
         $deals_closed_sum = 0;
 
         $deals_closed_sum_data = self::simple_find_by_table_name(
-            array('user_id'=>$user_id),
+            array('user_id'=>$user_id,'status'=>'2'),
             'user_leads',
             "sum(offer_amount) as sum_total "
         );
