@@ -6,7 +6,7 @@
     <?php foreach($this->data['site_user_list'] as $site_user): ?>
         <div class="site-user">
             <?php if($site_user['id'] != $this->user['id']): ?>
-                <a href="<?= inner_url('siteUsers/view/') ?>?row_id=<?= $site_user['id'] ?>"><?= $site_user['user_name'] ?></a>
+                <a href="<?= inner_url('siteUsers/edit/') ?>?row_id=<?= $site_user['id'] ?>"><?= $site_user['user_name'] ?></a>
             <?php else: ?>
                 <b><?= $site_user['user_name'] ?></b>
             <?php endif; ?>
