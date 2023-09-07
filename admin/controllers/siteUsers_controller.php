@@ -22,7 +22,7 @@
       $this->include_view('site_users/list.php');
 		}
 
-    public function view(){
+    public function edit(){
         if(!isset($_GET['row_id'])){
             return $this->redirect_to(inner_url('siteUsers/list/'));
         }
@@ -44,7 +44,7 @@
         $this->send_action_proceed();
 
 
-        $this->include_view('site_users/view.php');
+        $this->include_view('site_users/edit.php');
             
 		}
 
