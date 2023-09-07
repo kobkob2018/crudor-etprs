@@ -366,7 +366,7 @@
 						$user_income_row['closed_deal_leads'] = $closed_deal_leads[$row_date][$user['user_id']];
 						$user_income_row['deal_closed_count'] = count($user_income_row['closed_deal_leads']);
 						$daily_income_arr['deal_closed_count']+=$user_income_row['deal_closed_count'];
-						$user_list[$key]['leads_count_total']+=$user_income_row['leads_count_total'];
+						// $user_list[$key]['leads_count_total']+=$user_income_row['leads_count_total'];
 					}
 					else{
 						$user_income_row['deal_closed_count'] = 0;
