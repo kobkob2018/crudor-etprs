@@ -59,7 +59,11 @@
         'user_sites'=>array(
             'table'=>'user_sites',
             'id_key'=>'site_id'
-        )
+        ),
+        'site_user_can'=>array(
+            'table'=>'site_user_can',
+            'id_key'=>'site_id'
+        ),
     );
 
     public static $fields_collection = array(

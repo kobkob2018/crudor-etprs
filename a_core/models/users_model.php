@@ -20,6 +20,10 @@
           'table'=>'user_sites',
           'id_key'=>'user_id'
       ),
+      'site_user_can'=>array(
+        'table'=>'site_user_can',
+        'id_key'=>'user_id'
+      )
     ); 
 
     public static function get_loged_in_user() {
