@@ -111,17 +111,49 @@
     }
 
     protected function update_item($item_id,$update_values){
-      return Site_users::update($item_id,$update_values);
+        $user_can_options = array();
+        if(isset($update_values['user_can'])){
+            $user_can_options = $update_values['user_can'];
+            unset($update_values['user_can']);
+        }
+        Site_users::update_user_can($item_id,$update_values['user_id'],$this->data['work_on_site']['id'],$user_can_options);
+        return Site_users::update($item_id,$update_values);
     }
 
     protected function create_item($fixed_values){
+        $user_can_options = array();
+        if(isset($update_values['user_can'])){
+            $user_can_options = $update_values['user_can'];
+            unset($update_values['user_can']);
+        }
         $fixed_values['site_id'] = $this->data['work_on_site']['id'];
-        return Site_users::create($fixed_values);
+        $item_id = Site_users::create($fixed_values);
+
+        Site_users::update_user_can($item_id,$fixed_values['user_id'],$this->data['work_on_site']['id'],$user_can_options);
+        
+        return $item_id;
     }
 
+    public function build_user_can_options(){
+        $site_user_id = $this->get_form_input('user_id');
+        $user_can_permissions = Site_users::get_user_can($this->data['work_on_site']['id'],$site_user_id);
+        $user_can_options = Site_users::$user_can_options;
+        foreach($user_can_options as $key=>$option){
+            $checked = "";
+            if(isset($user_can_permissions[$option['value']])){
+                $checked = " checked ";
+            }
+            $user_can_options[$key]['checked'] = $checked;
 
+        }
+ 
 
-
+        $info_payload = array(
+            'field_key'=>'user_can',
+            'options'=>$user_can_options
+        );
+        $this->include_view('form_builder/checklist.php',$info_payload);
+    } 
 
 
 

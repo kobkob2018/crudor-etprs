@@ -547,6 +547,7 @@ h4{
 .assign-checkbox-parent-wrap .input-checkbox{
     width: 20px;
     height: 20px;
+    min-width: auto;
 }
 
 .assign-checkbox-parent-wrap .children-wrap{

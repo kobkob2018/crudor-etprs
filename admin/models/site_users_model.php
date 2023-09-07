@@ -30,14 +30,59 @@
             'type'=>'select',
             'default'=>'admin',
             'options'=>array(
-                array('value'=>'writer', 'title'=>'כותב'),
+                array('value'=>'author', 'title'=>'כותב'),
                 array('value'=>'admin', 'title'=>'מנהל'),
                 array('value'=>'master_admin', 'title'=>'מנהל כל'),
             ),
             'validation'=>'required'
         ),       
 
+        'user_can'=>array(
+            'label'=>'הרשאות כותב',
+            'type'=>'build_method',
+            'build_method'=>'build_user_can_options',
+            'default'=>'0'
+        ), 
+
     ); 
+
+    public static $user_can_options = array(
+        array('value'=>'pages', 'title'=>'עמודים'),
+        array('value'=>'products', 'title'=>'מוצרים'),
+        array('value'=>'galeries', 'title'=>'גלריות'),
+        array('value'=>'quotes', 'title'=>'הצעות מחיר'),
+    );
+
+    public static function get_user_can($site_id,$user_id){
+        $user_can = self::simple_get_list_by_table_name(array('site_id'=>$site_id,'user_id'=>$user_id),'site_user_can');
+        $user_can_permissions = array();
+        if(!$user_can){
+            $user_can = array();
+        }
+        foreach($user_can as $permission){
+            $user_can_permissions[$permission['permission_to']] = '1';
+        }
+        return $user_can_permissions;
+    }
+
+    public static function update_user_can($site_user_id,$user_id,$site_id,$user_can_options){
+        $sql = "DELETE FROM site_user_can WHERE user_id = :user_id AND site_id = :site_id";
+        $db = Db::getInstance();		
+        $req = $db->prepare($sql);
+        $req->execute(array('user_id'=>$user_id,'site_id'=>$site_id));
+        foreach($user_can_options as $key=>$option){
+            $execute_arr = array(
+                'site_user_id'=>$site_user_id,
+                'user_id'=>$user_id,
+                'site_id'=>$site_id,
+                'permission_to'=>$key
+            );
+            $sql = "INSERT INTO site_user_can (site_user_id, user_id, site_id, permission_to) VALUES(:site_user_id, :user_id, :site_id, :permission_to)";		
+            $req = $db->prepare($sql);
+            $req->execute($execute_arr);
+        }
+        return;
+    }
 
 }
 ?>
