@@ -3,7 +3,7 @@
   class Site_usersController extends CrudController{
 
 
-    public $add_models = array("site_users");
+    public $add_models = array("users","site_users");
 
     protected function handle_access($action){
         //this module is for master_admin only!!!
@@ -19,9 +19,10 @@
         //if(session__isset())
         
         $filter_arr = $this->get_base_filter();
+        $fields_collection = Site_users::setup_field_collection();
         $site_users_list = Site_users::get_list($filter_arr,"*");      
         $this->data['site_users_list'] = $site_users_list;
-        $this->include_view('site_users_new/list.php');
+        $this->include_view('site_users/list.php',array('fields_colection'=>$fields_collection));
     }
 
     protected function get_base_filter(){
@@ -52,12 +53,15 @@
     }
 
     public function include_edit_view(){
+        $user_id = $this->data['item_info']['user_id'];
+        $user = Users::get_by_id($user_id,"full_name");
+        $this->data['item_info']['full_name'] = $user['full_name'];
         $this->data['site_user_info'] = $this->data['item_info'];
-        $this->include_view('site_users_new/edit.php');
+        $this->include_view('site_users/edit.php');
     }
 
     public function include_add_view(){
-        $this->include_view('site_users_new/add.php');
+        $this->include_view('site_users/add.php');
     }   
 
     protected function update_success_message(){
@@ -87,19 +91,19 @@
     }
 
     public function eject_url(){
-      return inner_url('site_users_new/list/');
+      return inner_url('site_users/list/');
     }
 
     public function url_back_to_item($item_info){
-      return inner_url("site_users_new/edit/?row_id=".$item_info['id']);
+      return inner_url("site_users/edit/?row_id=".$item_info['id']);
     }
 
     protected function after_delete_redirect(){
-        return $this->redirect_to(inner_url("/site_users_new/list/"));
+        return $this->redirect_to(inner_url("/site_users/list/"));
     }
 
     public function delete_url($item_info){
-        return inner_url("site_users_new/delete/?row_id=".$item_info['id']);
+        return inner_url("site_users/delete/?row_id=".$item_info['id']);
     }
 
     protected function get_fields_collection(){

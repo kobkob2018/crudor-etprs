@@ -12,7 +12,7 @@
         'user_id'=>array(
             'label'=>'שיוך למשתמש',
             'type'=>'select',
-            'options_method'=>array('model'=>'siteUsers','method'=>'get_select_user_options'),
+            'options_method'=>array('model'=>'site_users','method'=>'get_select_user_options'),
             'validation'=>'required',
         ),
         'status'=>array(
@@ -29,7 +29,7 @@
             'label'=>'תפקיד',
             'type'=>'select',
             'default'=>'admin',
-            'options_method'=>array(
+            'options'=>array(
                 array('value'=>'writer', 'title'=>'כותב'),
                 array('value'=>'admin', 'title'=>'מנהל'),
                 array('value'=>'master_admin', 'title'=>'מנהל כל'),

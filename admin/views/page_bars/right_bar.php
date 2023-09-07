@@ -39,8 +39,8 @@
 
             
             <?php if($view->site_user_is('master_admin')): ?>
-                <li class="bar-item <?= $view->a_class("siteUsers/list/") ?>">
-                    <a href="<?= inner_url('siteUsers/list/') ?>" title="מנהלי אתר" class="a-link">מנהלי אתר</a>
+                <li class="bar-item <?= $view->a_class("site_users/list/") ?>">
+                    <a href="<?= inner_url('site_users/list/') ?>" title="מנהלי אתר" class="a-link">מנהלי אתר</a>
                 </li>        
         <?php endif; ?>
 

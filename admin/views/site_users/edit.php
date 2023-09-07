@@ -1,6 +1,6 @@
-<h3>עריכת תפקיד משתמש: <?= $this->data['site_user_info']['user_name'] ?></h3>
+<h3>עריכת תפקיד משתמש: <?= $this->data['site_user_info']['full_name'] ?></h3>
 <div class="eject-box">
-	<a href="<?= inner_url("siteUsers/list/") ?>">חזרה לרשימה</a>
+	<a href="<?= inner_url("site_users/list/") ?>">חזרה לרשימה</a>
 </div>
 <hr/>
 <div id="site_user_form_wrap" class="focus-box form-gen page-form">
