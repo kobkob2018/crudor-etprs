@@ -113,8 +113,8 @@
 
         $site_id = Sites::create($fixed_values);
         session__set('workon_site',$site_id);
-        $this->add_model("siteUsers");
-        SiteUsers::create(array(
+        $this->add_model("site_users");
+        Site_users::create(array(
           'user_id'=>$this->user['id'],
           'site_id'=>$site_id,
           'roll'=>'master_admin'
