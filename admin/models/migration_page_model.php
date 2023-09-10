@@ -227,6 +227,7 @@
 		
 		$videoPic = "";
 		$videoFileName = "";
+		$banner_file_name = "";
 		if($ilbiz_form_info['videoPic'] != ""){
 			$videoPic = $ilbiz_form_info['videoPic'];
 			$videoFileName = $videoPic;
