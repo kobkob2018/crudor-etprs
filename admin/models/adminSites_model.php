@@ -91,6 +91,17 @@
             'validation'=>'required'
         ),
 
+        'disable_robots'=>array(
+            'label'=>'הסתר ממנועי החיפוש של גוגל',
+            'type'=>'select',
+            'default'=>'1',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא'),
+                array('value'=>'1', 'title'=>'כן')
+            ),
+            'validation'=>'required'
+        ),
+
         'meta_title'=>array(
             'label'=>'כותרת מטא',
             'type'=>'text'
@@ -133,17 +144,6 @@
             'label'=>'מילות מפתח',
             'type'=>'textbox',
             'css_class'=>'small-text left-text'
-        ),
-
-        'disable_robots'=>array(
-            'label'=>'הסתר ממנועי החיפוש של גוגל',
-            'type'=>'select',
-            'default'=>'1',
-            'options'=>array(
-                array('value'=>'0', 'title'=>'לא'),
-                array('value'=>'1', 'title'=>'כן')
-            ),
-            'validation'=>'required'
         ),
 
         'use_recapcha'=>array(
