@@ -2,6 +2,11 @@
 <?php if(Helper::user_is('master_admin',$this->user)): ?>
     <?php if($info['site_list_type'] == 'master_admin'): ?>
         <h3>רשימת כל האתרים במערכת</h3>
+        
+        <a href="<?= inner_url("userSites/list/") ?>" title="חזרה לרימה רגילה">
+            חזור לרשימת האתרים שלי
+        </a>
+        
     <?php else: ?>
         <h3>
             <a href="<?= inner_url("userSites/list/?master_list=1") ?>" title="כל האתרים במערכת">
