@@ -79,17 +79,19 @@
         $site_id = $_REQUEST['site_id'];
         //check if user allready assigned to this site
         $site_user = Site_users::find(array('user_id'=>$this->user['id'],'site_id'=>$site_id));
+        $new_site_user = array(
+            'user_id'=>$this->user['id'],
+            'site_id'=>$site_id,
+            'roll'=>'master_admin',
+            'status'=>'1',
+        );
         if($site_user){
-            SystemMessages::add_err_message("כבר קיים שיוך שלך לאתר זה.");
-            return $this->redirect_to(inner_url("userSites/list/"));
+            $row_id = $site_user['id'];
+            Site_users::update($row_id,$new_site_user);
         }
-        Site_users::create(
-            array(
-                'user_id'=>$this->user['id'],
-                'site_id'=>$site_id,
-                'roll'=>'master_admin',
-                'status'=>'1',
-            ));
+        else{
+            Site_users::create($new_site_user);
+        }
         SystemMessages::add_success_message("נוספת בהצלחה כמנהל ראשי לאתר זה");
         return $this->redirect_to(inner_url("userSites/list/"));
     }
