@@ -230,7 +230,7 @@
             $products = array();
         }
         foreach($products as $product){
-          
+          print_r_help($product);
             $new_product = array(
                 'label'=>utgt($product['name']),
                 'title'=>utgt($product['name']),
