@@ -8,7 +8,7 @@
           return true;
         }
       }
-      return $this->call_module('admin','handle_access_user_is','master_admin');
+      return $this->call_module('admin','handle_access_site_user_is','master_admin');
     }
 
     public function edit(){

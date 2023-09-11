@@ -65,7 +65,7 @@
             return true;
         }
 
-        public function handle_access_user_is(){
+        public function handle_access_site_user_is(){
 
             if(!$this->handle_access_workon_site_only()){
                 return false;
@@ -77,6 +77,20 @@
             $work_on_site = Sites::get_user_workon_site();
 
             $user_is = Helper::user_is($needed_roll,$user,$work_on_site);
+            if($user_is){
+                return true;
+            }
+
+            SystemMessages::add_err_message('אינך רשאי לצפות בתוכן זה');
+            $this->redirect_to(inner_url(''));
+            return;
+        }
+
+        public function handle_access_user_is(){
+            $needed_roll = $this->action_data;
+            $user = $this->user;
+
+            $user_is = Helper::user_is($needed_roll,$user);
             if($user_is){
                 return true;
             }

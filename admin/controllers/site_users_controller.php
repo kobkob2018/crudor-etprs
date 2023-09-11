@@ -6,8 +6,16 @@
     public $add_models = array("users","site_users");
 
     protected function handle_access($action){
-        //this module is for master_admin only!!!
-        return $this->call_module('admin','handle_access_user_is','master_admin');
+        switch ($action){
+            case 'master_admin_add_me':
+                return $this->call_module('admin','handle_access_user_is','master_admin');
+                break;
+            default:
+                //this module is for master_admin only!!!
+                return $this->call_module('admin','handle_access_site_user_is','master_admin');
+                break;               
+        }
+
     }
 
 
