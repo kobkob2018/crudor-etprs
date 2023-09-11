@@ -25,7 +25,7 @@
             <a href="<?= inner_url("userSites/checkin/") ?>?workon=<?= $site['id'] ?>" title="<?= $site['title']; ?>"><?= $site['title']; ?></a>
              | 
              <a href="http://<?= $site['domain']; ?>" title="<?= $site['title']; ?>" target="_BLANK">צפה באתר</a>
-             <?php if($info['site_list_type'] == 'master_admin' && ((!isset($info['user_sites_by_id'][$site['id']])) || $info['user_sites_by_id'][$site['id']]['status'] == '0')): ?>
+             <?php if($info['site_list_type'] == 'master_admin' && (!isset($info['user_sites_by_id'][$site['id']]))): ?>
                 |        
                 <a href="<?= inner_url("site_users/master_admin_add_me/") ?>?site_id=<?= $site['id'] ?>" title="הוסף אותי כמנהל ראשי">הוסף אותי כמנהל ראשי לאתר זה</a>                
             <?php endif; ?>
