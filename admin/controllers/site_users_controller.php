@@ -83,7 +83,12 @@
             SystemMessages::add_err_message("כבר קיים שיוך שלך לאתר זה.");
             return $this->redirect_to(inner_url("userSites/list/"));
         }
-        Site_users::create(array('user_id'=>$this->user['id'],'site_id'=>$site_id));
+        Site_users::create(
+            array(
+                'user_id'=>$this->user['id'],
+                'site_id'=>$site_id,
+                'roll'=>'master_admin'
+            ));
         SystemMessages::add_success_message("נוספת בהצלחה כמנהל ראשי לאתר זה");
         return $this->redirect_to(inner_url("userSites/list/"));
     }
