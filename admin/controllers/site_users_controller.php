@@ -60,6 +60,26 @@
         $this->include_view('site_users/edit.php');
     }
 
+
+    public function master_admin_add_me(){
+        
+        //just for safety.. this one is already handled at the access handler
+        if(!Helper::user_is('master_admin',$this->user)){
+            return;
+        }
+
+        $site_id = $_REQUEST['site_id'];
+        //check if user allready assigned to this site
+        $site_user = Site_users::find(array('user_id'=>$this->user['id'],'site_id'=>$site_id));
+        if($site_user){
+            SystemMessages::add_err_message("כבר קיים שיוך שלך לאתר זה.");
+            return $this->eject_redirect();
+        }
+        Site_users::create(array('user_id'=>$this->user['id'],'site_id'=>$site_id));
+        SystemMessages::add_success_message("נוספת בהצלחה כמנהל ראשי לאתר זה");
+        return $this->eject_redirect();
+    }
+
     public function include_add_view(){
         $this->include_view('site_users/add.php');
     }   

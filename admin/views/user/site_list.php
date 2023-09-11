@@ -25,6 +25,10 @@
             <a href="<?= inner_url("userSites/checkin/") ?>?workon=<?= $site['id'] ?>" title="<?= $site['title']; ?>"><?= $site['title']; ?></a>
              | 
              <a href="http://<?= $site['domain']; ?>" title="<?= $site['title']; ?>" target="_BLANK">צפה באתר</a>
+             <?php if($info['site_list_type'] == 'master_admin'): ?>
+                |        
+                <a href="<?= inner_url("userSites/master_admin_add_me/") ?>?site_id=<?= $site['id'] ?>" title="הוסף אותי כמנהל ראשי">הוסף אותי כמנהל ראשי לאתר זה</a>                
+            <?php endif; ?>
         </li>
     <?php endforeach; ?>
 </ul>
