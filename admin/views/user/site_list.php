@@ -1,8 +1,17 @@
 <h2>האתרים שלי</h2>
 <?php if(Helper::user_is('master_admin',$this->user)): ?>
-<div class="add-button-block-wrap">
-    <a class="focus-box button-focus" href="/admin/site/add/">יצירת אתר חדש</a>
-</div>
+    <?php if($info['site_list_type'] == 'master_admin'): ?>
+        <h3>רשימת כל האתרים במערכת</h3>
+    <?php else: ?>
+        <h3>
+            <a href="<?= inner_url("userSites/list/?master_list=1") ?>" title="כל האתרים במערכת">
+                צפה בכל האתרים הקיימים במערכת
+            </a>
+        </h3>
+    <?php endif; ?>
+    <div class="add-button-block-wrap">
+        <a class="focus-box button-focus" href="/admin/site/add/">יצירת אתר חדש</a>
+    </div>
 <?php endif; ?>
 <h4>בחר אתר לעריכה</h4>
 <ul> 
