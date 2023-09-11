@@ -73,11 +73,11 @@
         $site_user = Site_users::find(array('user_id'=>$this->user['id'],'site_id'=>$site_id));
         if($site_user){
             SystemMessages::add_err_message("כבר קיים שיוך שלך לאתר זה.");
-            return $this->eject_redirect();
+            return $this->redirect_to(inner_url("userSites/list/"));
         }
         Site_users::create(array('user_id'=>$this->user['id'],'site_id'=>$site_id));
         SystemMessages::add_success_message("נוספת בהצלחה כמנהל ראשי לאתר זה");
-        return $this->eject_redirect();
+        return $this->redirect_to(inner_url("userSites/list/"));
     }
 
     public function include_add_view(){
