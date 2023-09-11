@@ -2,6 +2,10 @@
   class Site_stylingController extends CrudController{
     public $add_models = array("sites","site_styling");
 
+    protected function handle_access($action){   
+      return $this->call_module('admin','handle_access_site_user_is','master_admin');
+    }
+    
     public function list(){
         //if(session__isset())
         $filter_arr = $this->get_base_filter();

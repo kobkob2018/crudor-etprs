@@ -46,7 +46,7 @@
 
     </ul>
 
-    <?php if($view->site_user_is('admin')): ?>
+    <?php if($view->site_user_is('master_admin')): ?>
         <h4>עיצוב האתר</h4>
         <ul class="item-group">
             <li class="bar-item <?= $view->a_class("site/edit/") ?>">
