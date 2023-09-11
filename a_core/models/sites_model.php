@@ -54,7 +54,7 @@
             return false;
         }
         $execute_arr = array('user_id'=>$user['id']);
-        $sql = "SELECT st.* FROM sites st LEFT JOIN user_sites us ON us.site_id = st.id WHERE us.user_id = :user_id";
+        $sql = "SELECT st.* FROM sites st LEFT JOIN user_sites us ON us.site_id = st.id WHERE us.user_id = :user_id  AND status != 0";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
         $req->execute($execute_arr);
@@ -79,7 +79,7 @@
                 FROM sites st 
                 LEFT JOIN user_sites us 
                 ON us.site_id = st.id 
-                WHERE (us.user_id = :user_id AND us.site_id = :site_id)
+                WHERE (us.user_id = :user_id AND us.site_id = :site_id AND us.status != 0)
                 OR (us.user_id = :user_id AND us.site_id = :all)";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
@@ -101,7 +101,7 @@
 
         $execute_arr = array('user_id'=>$user['id'],'site_id'=>$site_id,'all'=>'*');
         $sql = "SELECT * FROM user_sites 
-            WHERE (user_id = :user_id AND site_id = :site_id)
+            WHERE (user_id = :user_id AND site_id = :site_id  AND status != 0)
             OR (user_id = :user_id AND site_id = :all)";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);

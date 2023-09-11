@@ -87,7 +87,8 @@
             array(
                 'user_id'=>$this->user['id'],
                 'site_id'=>$site_id,
-                'roll'=>'master_admin'
+                'roll'=>'master_admin',
+                'status'=>'1',
             ));
         SystemMessages::add_success_message("נוספת בהצלחה כמנהל ראשי לאתר זה");
         return $this->redirect_to(inner_url("userSites/list/"));
