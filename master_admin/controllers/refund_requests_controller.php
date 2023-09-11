@@ -256,7 +256,7 @@
                     echo "<td>".$status_list[$data['status']]."</td>";			
                     echo "<td width=15></td>";
 
-                    echo "<td><span style='color:red; font-weight:bold;'>".$refund_reasons[$data['reason']]."</span></td>";
+                    echo "<td><span style='color:red; font-weight:bold;'>".isset($refund_reasons[$data['reason']])? $refund_reasons[$data['reason']]: "סיבה לא קיימת(כנראה מחוקה)"."</span></td>";
                     
                     echo "<td width=15></td>";
                     $tag_str = "--";
