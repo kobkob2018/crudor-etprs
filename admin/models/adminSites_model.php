@@ -135,6 +135,17 @@
             'css_class'=>'small-text left-text'
         ),
 
+        'disable_robots'=>array(
+            'label'=>'הסתר ממנועי החיפוש של גוגל',
+            'type'=>'select',
+            'default'=>'1',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא'),
+                array('value'=>'1', 'title'=>'כן')
+            ),
+            'validation'=>'required'
+        ),
+
         'use_recapcha'=>array(
             'label'=>'הוספת קאבצה בטפסים(בתנאי שיש מפתחות לאתר)',
             'type'=>'select',
