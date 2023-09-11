@@ -21,24 +21,24 @@
             
             
             
-            <?php endif; ?>
+        <?php endif; ?>
             
             
-            <?php if($view->user_is('login')): ?>
-                <li class="bar-item <?= $view->a_class("userSites/list/") ?>">
-                    <a href="<?= inner_url('userSites/list/') ?>" title="האתרים שלי" class="a-link">האתרים שלי</a>
-                </li>
-                <?php endif; ?>
-                
-                <?php if($view->site_user_is('author')): ?>
-                    <li class="bar-item <?= $view->a_class("tasks/list/") ?>">
-                        <a href="<?= inner_url('tasks/list/') ?>" title="המשימות שלי" class="a-link">המשימות שלי</a>
-                </li>
+        <?php if($view->user_is('login')): ?>
+            <li class="bar-item <?= $view->a_class("userSites/list/") ?>">
+                <a href="<?= inner_url('userSites/list/') ?>" title="האתרים שלי" class="a-link">האתרים שלי</a>
+            </li>
             <?php endif; ?>
+            
+            <?php if($view->site_user_is('author')): ?>
+                <li class="bar-item <?= $view->a_class("tasks/list/") ?>">
+                    <a href="<?= inner_url('tasks/list/') ?>" title="המשימות שלי" class="a-link">המשימות שלי</a>
+            </li>
+        <?php endif; ?>
             
 
             
-            <?php if($view->site_user_is('master_admin')): ?>
+        <?php if($view->site_user_is('master_admin')): ?>
                 <li class="bar-item <?= $view->a_class("site_users/list/") ?>">
                     <a href="<?= inner_url('site_users/list/') ?>" title="מנהלי אתר" class="a-link">מנהלי אתר</a>
                 </li>        
@@ -59,6 +59,8 @@
                 <a href="<?= inner_url('site_colors/edit/') ?>" title="צבעים" class="a-link">צבעים</a>
             </li>         
         </ul>
+    <?php endif; ?>
+    <?php if($view->site_user_is('admin')): ?>
         <ul class="item-group">
 
             <li class="bar-item <?= $view->a_class("news/list/") ?> <?= $view->a_c_class("news") ?>">
