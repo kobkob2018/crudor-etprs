@@ -94,7 +94,9 @@
     </div>       
     
 </div>
-
+<div class="focus-box">
+    הגיע מדף: <a href="<?= $biz_request['referrer'] ?>" title="הגיע מדף זה"><?= $biz_request['referrer'] ?></a>
+</div>
 <script type="text/javascript">
     document.querySelectorAll(".auto-change-status").forEach(selectEl=>{
         

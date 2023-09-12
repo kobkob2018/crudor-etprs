@@ -185,9 +185,9 @@
 
     public static function filter_city_users($optional_user_ids, $lead_info){
         
-        if($lead_info['city_id'] == '' || $lead_info['city_id'] == '0'){
-            return $optional_user_ids;
-        }
+        //if($lead_info['city_id'] == '' || $lead_info['city_id'] == '0'){
+        //    return $optional_user_ids;
+        //}
         if(empty($optional_user_ids)){
             return $optional_user_ids;
         }
