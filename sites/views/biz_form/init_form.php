@@ -55,7 +55,7 @@
                         required 
                         data-msg_required="נא להוסיף שם מלא" 
                         data-msg_invalid="נא להוסיף שם מלא תקין"
-                        pattern="^(([A-Za-z_\-\u0590-\u05FF ])\2?(?!\2))+$" 
+                        pattern="^(([A-Za-z_\-'\u0590-\u05FF ])\2?(?!\2))+$" 
                         minlength="2"
                         />
                     </div>
