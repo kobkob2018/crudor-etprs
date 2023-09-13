@@ -117,7 +117,8 @@
         Site_users::create(array(
           'user_id'=>$this->user['id'],
           'site_id'=>$site_id,
-          'roll'=>'master_admin'
+          'roll'=>'master_admin',
+          'status'=>'1'
         ));
         
         $duplicate_site = Sites::get_by_domain(Global_settings::get()['duplicate_domain']);
