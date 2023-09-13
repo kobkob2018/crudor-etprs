@@ -236,10 +236,11 @@ i.fa{
   }
 
 .top-search input{
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     font-size:14px;
     width: 100px;
     padding:3px;
+    border-radius:3px ;
 }
 
 .right-bar .top-search form{
@@ -248,8 +249,7 @@ i.fa{
 }
 
 .right-bar .top-search input{
-    border: 2px solid;
-    border-radius: 5px;
+    flex-grow: 1;
 }
 
 .alt-page-fixed-top .top-search input{
