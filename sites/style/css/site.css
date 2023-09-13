@@ -241,15 +241,15 @@ i.fa{
     width: 100px;
     padding:3px;
     border-radius:3px ;
+    flex-grow: 1;
+}
+
+.top-search form{
+    display: flex;
 }
 
 .right-bar .top-search form{
-    display: flex;
     padding-bottom: 10px;
-}
-
-.right-bar .top-search input{
-    flex-grow: 1;
 }
 
 .alt-page-fixed-top .top-search input{
