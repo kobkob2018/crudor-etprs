@@ -940,7 +940,15 @@ a.news-ticker-a-content{
 }
 
 @media only screen and (min-width: 890px) {
-
+    .acc-fix-door.patchy{
+        position: fixed;
+        z-index: 5;
+        padding: 5px 4px 5px 12px;
+        left: 0px;
+        top: 70px;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+    }
     .page-flex-top{
         flex-wrap: wrap;
     }
@@ -1161,6 +1169,7 @@ a.news-ticker-a-content{
         border-top-right-radius: 50%;
         border-bottom-right-radius: 50%;
     }
+
     .acc-fix-door .fa.fa-wheelchair{
         font-size: 22px;
         width: 19px;
