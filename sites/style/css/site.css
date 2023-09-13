@@ -962,7 +962,7 @@ a.news-ticker-a-content{
     }
     .top-menu .bar-item .main-spn{
         display:block;
-        border-right: 1px solid white;
+        border-right: 1px solid currentColor;
         font-size: 18px;
         padding: 3px 8px;
     }
