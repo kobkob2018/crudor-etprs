@@ -242,6 +242,16 @@ i.fa{
     padding:3px;
 }
 
+.right-bar .top-search form{
+    display: flex;
+    padding-bottom: 10px;
+}
+
+.right-bar .top-search input{
+    border: 2px solid;
+    border-radius: 5px;
+}
+
 .alt-page-fixed-top .top-search input{
     font-size:12px;
 }
@@ -968,6 +978,7 @@ a.news-ticker-a-content{
         display: flex;
         align-items: center;
     }
+
     .top-menu .bar-item .main-spn{
         display:block;
         border-right: 1px solid;
@@ -976,7 +987,7 @@ a.news-ticker-a-content{
         border-color:inherit;
     }
 
-    .top-menu .bar-item:first .main-spn{
+    .top-menu .bar-item:first-child .main-spn{
         border-right: none;
     }
 
