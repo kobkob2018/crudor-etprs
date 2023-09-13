@@ -11,9 +11,15 @@ a{
     color: <?= $info['colors']['top-fix-color'] ?>;
 }
 
+.top-fix li.bar-item{
+    border-color: <?= $info['colors']['top-fix-color'] ?>;
+}
+
 .top-fix a{
     color: <?= $info['colors']['top-fix-color'] ?>;
 }
+
+
 
 .top-fix a:hover{
     color: <?= $info['colors']['top-fix-link-hover'] ?>;
