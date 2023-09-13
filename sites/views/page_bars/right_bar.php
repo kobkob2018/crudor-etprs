@@ -1,4 +1,5 @@
 <div class="right-bar">
+    <div class="grab-content right-top-grabber" data-grab="go-right-top"></div>
     <?php if(isset($this->data['is_home_page']) && $this->data['is_home_page']): ?>
         <?php $this->call_module('scrolling_news','print'); ?>
     <?php endif; ?>
