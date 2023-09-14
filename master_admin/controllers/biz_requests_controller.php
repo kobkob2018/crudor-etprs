@@ -203,7 +203,7 @@
         $active_user_id_arr = MasterLeads_complex::filter_inactive_users($user_id_arr);
 
         $biz_request = MasterBiz_requests::get_request($_REQUEST['row_id']);
-
+        
         $duplicate_user_leads = MasterLeads_complex::get_duplicated_user_leads($active_user_id_arr, $biz_request);
 
         foreach($user_id_arr as $user_id){
@@ -275,7 +275,9 @@
             $db_lead_info['resource'] = 'form';
 
             $user_lead_id = MasterUser_leads::add_user_lead($db_lead_info,$user_id);
-
+            if($user_lead_id){
+                MasterBiz_requests::add_1_reciver($_REQUEST['row_id']);
+            }
             $auth_link = get_config('master_url')."/myleads/leads/auth/?token=".$token."&lead=".$user_lead_id."&user=".$user_id;
 
             $requst_site = Sites::get_by_id($biz_request['site_id']);

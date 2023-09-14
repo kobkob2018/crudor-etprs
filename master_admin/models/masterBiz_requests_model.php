@@ -91,6 +91,13 @@
         return $banner_name;
     }
 
+    public static function add_1_reciver($request_id){
+        $db = Db::getInstance();
+        $sql = "UPDATE biz_requests SET recivers = recivers+1 WHERE id = :request_id"; 		
+        $req = $db->prepare($sql);
+        $req->execute(array('request_id'=>$request_id));
+    }
+
     public static function get_referrer_options($filter){
         $db = Db::getInstance();
         $where_arr = self::get_where_arr($filter);
