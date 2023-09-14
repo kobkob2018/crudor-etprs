@@ -190,6 +190,12 @@
         }
         $user_id_arr = array();
         foreach($_REQUEST['send_to_users'] as $user_id=>$checked){
+            //make sure the send button was not clicked twice or more..
+            $session_check = "request_".$_REQUEST['row_id']."_sent_to_".$user_id;
+            if(session__isset($session_check)){
+                continue;
+            }
+            session__set($session_check,"1");
             $user_id_arr[] = $user_id;
         }
         
