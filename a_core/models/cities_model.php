@@ -85,7 +85,8 @@
                 $city_child['deep'] = $deep;
                 $auto_children_allowed = false;
                 if($allow_children || in_array($city_child['id'],$allowed_cities)){
-                    $auto_children_allowed = true;
+                    //if we wamt to include all cities that are children af an assigned area for user, remove the comment sign
+                   // $auto_children_allowed = true;
                     $return_arr[] = $city_child;
                 }
                 
