@@ -276,7 +276,7 @@
 
     function fetch_current_category_pairs(){
 
-return init_fetch_old_category_data();
+        return init_fetch_old_category_data();
         const pairs_cat_current_el = document.querySelector(".awaiting-pairs");
         if(!pairs_cat_current_el){
             return init_fetch_old_category_data();
@@ -289,7 +289,7 @@ return init_fetch_old_category_data();
             fetch_current_pairs_for_element(pairs_cat_current_el,cat_id);
         },500);   
 
-        return fetch_current_category_pairs();
+        //return fetch_current_category_pairs();
     }
 
     function init_fetch_old_category_data(){
