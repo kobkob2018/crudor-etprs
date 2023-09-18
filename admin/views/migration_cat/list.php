@@ -38,7 +38,9 @@
                         <?= $cat['active'] ?>
                     </div>
                     <div class="col pairs-col awaiting-pairs" data-cat_id="<?= $cat['id'] ?>">
-
+                        <a class="pair-cat-fatch" href="javascript://" onclick="fetch_current_category_pairs(this)">
+                            הצג קטגוריות משוייכות
+                        </a>                        
                     </div>
                     <div class="col col-tiny">
 
@@ -270,13 +272,30 @@
     }
 
     function init_fetch_current_category_pairs(){
+        //return init_fetch_old_category_data();
         show_loading("fatching sub category pairs...");
         return fetch_current_category_pairs();
     }
 
+    function show_current_category_pairs(a_el){
+
+        const pairs_cat_current_el = a_el.parentNode;
+
+        pairs_cat_current_el.classList.remove("awaiting-pairs");
+        pairs_cat_current_el.innerHTML = "";
+        const cat_id = pairs_cat_current_el.dataset.cat_id;
+        show_loading("fatching pairs for cat: "+ cat_id);
+
+        
+        fetch_current_pairs_for_element_custom(pairs_cat_current_el,cat_id);
+         
+
+    }
+
+
     function fetch_current_category_pairs(){
         
-        //return init_fetch_old_category_data();
+        
         const pairs_cat_current_el = document.querySelector(".awaiting-pairs");
         if(!pairs_cat_current_el){
             return init_fetch_old_category_data();
@@ -365,6 +384,24 @@
         
     }
 
+    function fetch_current_pairs_for_element_custom(el,cat_id){
+        let after_el = el;
+        const url = "<?= inner_url("migration_cat/fetch_pairs_current/?cat_id=") ?>"+cat_id;
+        fetch(url).then((res) => res.json()).then(info => {
+
+            const divhelper = document.createElement("div");
+            divhelper.innerHTML = info.html;
+            const pairs_holder = el;
+            
+            divhelper.querySelectorAll(".append-sub").forEach(pair_el=>{
+                pairs_holder.append(pair_el);
+                pair_el.classList.remove("append-sub");
+            });
+            divhelper.remove();
+            hide_loading();
+        }); 
+    }
+
     function fetch_current_pairs_for_element(el,cat_id){
         let after_el = el;
         const url = "<?= inner_url("migration_cat/fetch_pairs_current/?cat_id=") ?>"+cat_id;
@@ -380,9 +417,7 @@
             });
             divhelper.remove();
             return fetch_current_category_pairs();
-        });
-        
-        
+        }); 
     }
 
     document.addEventListener("DOMContentLoaded",()=>{
