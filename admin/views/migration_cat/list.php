@@ -183,7 +183,7 @@
     }
 
     function pair_remove(a_el){
-        show_loading();
+        show_loading("wait...");
         const url = "<?= inner_url("migration_cat/pair_remove/?old_cat_id=") ?>"+a_el.dataset.old_cat_id;
         fetch(url).then((res) => res.json()).then(info => {
             a_el.closest(".pair-label").remove();
@@ -197,7 +197,7 @@
 
     function pair_cat_go(pair_a_el){
 
-        show_loading();
+        show_loading("wait...");
         const a_el = document.querySelector(".current-cat-el-prepare").querySelector(".pair-cat-prepare");
         
         document.querySelectorAll(".cat-pair-for-old-"+pair_a_el.dataset.cat_id).forEach(el=>{el.remove()});
@@ -229,11 +229,75 @@
         }
     }
 
-    function show_loading(){
+	function show_loading(str){
+		document.querySelector(".loading-tag-wrap").innerHTML = str;
         document.querySelector(".loading-tag-wrap").classList.remove("hidden");
     }
     
+    function add_loading(str){
+        const loading = document.querySelector(".loading-tag-wrap");
+        loading.innerHTML += "<br/>"+str;
+        loading.scrollTop = loading.scrollHeight;
+    }
+
     function hide_loading(){
+		document.querySelector(".loading-tag-wrap").innerHTML = "WAIT...";
         document.querySelector(".loading-tag-wrap").classList.add("hidden");
     }
+
+    function init_fetch_current_category_data(){
+        show_loading("fatching sub categories...");
+        return fetch_current_category_data();
+    }
+
+    function fetch_current_category_data(){
+        const root_cat_current_el = document.querySelector(".awaiting-children-current");
+        if(!root_cat_current_el){
+            return init_fetch_current_category_pairs();
+        }
+        root_cat_current_el.classList.remove("awaiting-children-current");
+        const cat_id = root_cat_current_el.dataset.cat_id;
+        add_loading("fatching sub cats for cat: "+ cat_id);
+
+        return fetch_current_category_data();
+    }
+
+    function init_fetch_current_category_pairs(){
+        show_loading("fatching sub category pairs...");
+        return fetch_current_category_pairs();
+    }
+
+    function fetch_current_category_pairs(){
+        const pairs_cat_current_el = document.querySelector(".awaiting-pairs");
+        if(!pairs_cat_current_el){
+            return init_fetch_old_category_data();
+        }
+        pairs_cat_current_el.classList.remove("awaiting-pairs");
+        const cat_id = pairs_cat_current_el.dataset.cat_id;
+        add_loading("fatching sub cats for cat: "+ cat_id);
+        
+        return fetch_current_category_pairs();
+    }
+
+    function init_fetch_old_category_data(){
+        show_loading("fatching OLD sub categories...");
+        return fetch_old_category_data();
+    }
+
+    function fetch_old_category_data(){
+        const root_cat_old_el = document.querySelector(".awaiting-children-old");
+        if(!root_cat_old_el){
+            alert("done!");
+            hide_loading();
+        }
+        root_cat_old_el.classList.remove("awaiting-children-old");
+        const cat_id = root_cat_old_el.dataset.cat_id;
+        add_loading("fatching sub cats for old cat: "+ cat_id);
+        
+        return fetch_current_category_data();
+    }
+
+    document.addEventListener("DOMContentLoaded",()=>{
+        init_fetch_current_category_data();
+    });
 </script>
