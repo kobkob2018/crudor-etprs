@@ -264,7 +264,7 @@
 
         setTimeout(function(){
             fetch_current_sub_cats_for_element(root_cat_current_el,cat_id);
-        },500);
+        },100);
         
         
     }
@@ -284,14 +284,11 @@
         pairs_cat_current_el.classList.remove("awaiting-pairs");
         const cat_id = pairs_cat_current_el.dataset.cat_id;
         add_loading("fatching pairs for cat: "+ cat_id);
-        //if(!confirm("get pairs for " + cat_id + "?")){
-       //     return;
-       // }
+
         setTimeout(function(){
             fetch_current_pairs_for_element(pairs_cat_current_el,cat_id);
-        },500);   
+        },100);   
 
-        //return fetch_current_category_pairs();
     }
 
     function init_fetch_old_category_data(){
@@ -311,7 +308,7 @@
         add_loading("fatching sub cats for old cat: "+ cat_id);
         setTimeout(function(){
             fetch_old_sub_cats_for_element(root_cat_old_el,cat_id);
-        },500);        
+        },100);        
     }
 
 
