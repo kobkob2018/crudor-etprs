@@ -50,7 +50,9 @@
 
 
     public static function get_new_cat_tree($cat_id = '0', $cat_tree = array() , $deep = 0){
-
+        if($deep == 0 && $cat_id != '0'){
+            $deep++;
+        }
         $deep++;
         $db = Db::getInstance();
         $sql = "SELECT label, id, parent, active, visible FROM biz_categories WHERE parent = :cat_id ORDER BY label";
