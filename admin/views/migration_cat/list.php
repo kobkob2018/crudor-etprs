@@ -275,7 +275,7 @@
         }
         pairs_cat_current_el.classList.remove("awaiting-pairs");
         const cat_id = pairs_cat_current_el.dataset.cat_id;
-        add_loading("fatching sub cats for cat: "+ cat_id);
+        add_loading("fatching pairs for cat: "+ cat_id);
         
         return fetch_current_category_pairs();
     }
