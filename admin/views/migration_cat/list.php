@@ -272,9 +272,9 @@
     }
 
     function init_fetch_current_category_pairs(){
-        //return init_fetch_old_category_data();
-        show_loading("fatching sub category pairs...");
-        return fetch_current_category_pairs();
+        return init_fetch_old_category_data();
+       // show_loading("fatching sub category pairs...");
+       // return fetch_current_category_pairs();
     }
 
     function show_current_category_pairs(a_el){
