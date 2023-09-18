@@ -290,6 +290,7 @@
         if(!root_cat_old_el){
             alert("done!");
             hide_loading();
+            return;
         }
         root_cat_old_el.classList.remove("awaiting-children-old");
         const cat_id = root_cat_old_el.dataset.cat_id;
