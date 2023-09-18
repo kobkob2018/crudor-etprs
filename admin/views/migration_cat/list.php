@@ -141,14 +141,16 @@
         display: block;
         
     }
-    .loading-tag-wrap{
+	.loading-tag-wrap{
         top:0px;
         left: 0px;
         text-align: center;
         position: fixed;
-        font-size: 150px;
+        font-size: 20px;
+		background: #eeaaffa1;
         padding-top: 50px;
-        height: 100%;
+        max-height: 200px;
+        overflow: auto;
         width: 100%;
     }
     .hide-ads .has-ad-01{
@@ -316,8 +318,9 @@
                 after_el = sub_el;
                 parent_el.insertAfter(sub_el, after_el);
             });
+            divhelper.remove();
         });
-        divhelper.remove();
+        
         return fetch_current_category_data();
     }
 
