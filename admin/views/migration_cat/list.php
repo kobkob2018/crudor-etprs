@@ -333,9 +333,10 @@
                 sub_el.classList.remove("append-sub");
             });
             divhelper.remove();
+            return fetch_current_category_data();
         });
         
-        return fetch_current_category_data();
+        
     }
 
     function fetch_old_sub_cats_for_element(el,cat_id){
@@ -358,9 +359,10 @@
                 sub_el.classList.remove("append-sub");
             });
             divhelper.remove();
+            return fetch_old_category_data();
         });
         
-        return fetch_old_category_data();
+        
     }
 
     function fetch_current_pairs_for_element(el,cat_id){
@@ -377,9 +379,10 @@
                 pair_el.classList.remove("append-sub");
             });
             divhelper.remove();
+            return fetch_current_category_pairs();
         });
         
-        return fetch_current_category_pairs();
+        
     }
 
     document.addEventListener("DOMContentLoaded",()=>{
