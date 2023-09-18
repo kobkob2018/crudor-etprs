@@ -235,6 +235,7 @@
     }
     
     function add_loading(str){
+        console.log(str);
         const loading = document.querySelector(".loading-tag-wrap");
         loading.innerHTML += "<br/>"+str;
         loading.scrollTop = loading.scrollHeight;
