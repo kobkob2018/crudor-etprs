@@ -306,7 +306,7 @@
     }
 
 
-
+let bla = 0;
     function fetch_sub_cats_for_element(el,cat_id){
         let after_el = el;
         const parent_el = el.closest(".items-table");
@@ -314,9 +314,12 @@
         fetch(url).then((res) => res.json()).then(info => {
             const divhelper = document.createElement("div");
             divhelper.innerHTML = info.html;
-            parent_el.append(divhelper);
-            return;
             divhelper.querySelectorAll(".append-sub").forEach(sub_el=>{
+                alert(bla);
+                bla++;
+                if(bla>5){
+                    return;
+                }
                 console.log(divhelper.innerHTML);
                 after_el = sub_el;
                 parent_el.insertAfter(sub_el, after_el);
