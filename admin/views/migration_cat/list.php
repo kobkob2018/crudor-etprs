@@ -275,6 +275,8 @@
     }
 
     function fetch_current_category_pairs(){
+return init_fetch_old_category_data();
+
         const pairs_cat_current_el = document.querySelector(".awaiting-pairs");
         if(!pairs_cat_current_el){
             return init_fetch_old_category_data();
@@ -283,6 +285,10 @@
         const cat_id = pairs_cat_current_el.dataset.cat_id;
         add_loading("fatching pairs for cat: "+ cat_id);
         
+        setTimeout(function(){
+            fetch_current_pairs_for_element(pairs_cat_current_el,cat_id);
+        },500);   
+
         return fetch_current_category_pairs();
     }
 
@@ -317,7 +323,7 @@
             divhelper.innerHTML = info.html;
             divhelper.querySelectorAll(".append-sub").forEach(sub_el=>{
 
-                console.log(divhelper.innerHTML);
+                
                 if(after_el.nextSibling){
                     after_el.parentNode.insertBefore(sub_el, after_el.nextSibling);
                 }
@@ -342,7 +348,7 @@
             divhelper.innerHTML = info.html;
             divhelper.querySelectorAll(".append-sub").forEach(sub_el=>{
 
-                console.log(divhelper.innerHTML);
+                
                 if(after_el.nextSibling){
                     after_el.parentNode.insertBefore(sub_el, after_el.nextSibling);
                 }
@@ -356,6 +362,24 @@
         });
         
         return fetch_old_category_data();
+    }
+
+    function fetch_current_pairs_for_element(el,cat_id){
+        let after_el = el;
+        const url = "<?= inner_url("migration_cat/fetch_pairs_current/?cat_id=") ?>"+cat_id;
+        fetch(url).then((res) => res.json()).then(info => {
+
+            const divhelper = document.createElement("div");
+            divhelper.innerHTML = info.html;
+            const pairs_holder = el.querySelector(".pairs-col");
+            divhelper.querySelectorAll(".append-sub").forEach(pair_el=>{
+                pairs_holder.append(pair_el);
+                pair_el.classList.remove("append-sub");
+            });
+            divhelper.remove();
+        });
+        
+        return fetch_current_category_pairs();
     }
 
     document.addEventListener("DOMContentLoaded",()=>{
