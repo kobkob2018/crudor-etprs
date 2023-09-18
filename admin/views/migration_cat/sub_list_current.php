@@ -1,5 +1,5 @@
 <?php foreach($this->data['current_sub_cat_list'] as $cat): ?>
-    <div class="new-cat table-tr row active-0<?= $cat['active'] ?> is-visible-0<?= $cat['visible'] ?> deep-0<?=  $cat['deep'] ?>">
+    <div class="append-sub new-cat table-tr row active-0<?= $cat['active'] ?> is-visible-0<?= $cat['visible'] ?> deep-0<?=  $cat['deep'] ?>">
         <div class="col col-tiny">
             <?= $cat['id'] ?>
             <?php if($cat['visible'] == '0'): ?>

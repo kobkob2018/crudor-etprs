@@ -317,6 +317,7 @@
             divhelper.querySelectorAll(".append-sub").forEach(sub_el=>{
                 after_el = sub_el;
                 parent_el.insertAfter(sub_el, after_el);
+                sub_el.classList.remove("append-sub");
             });
             divhelper.remove();
         });
