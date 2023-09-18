@@ -311,9 +311,9 @@
         let after_el = el;
         const parent_el = el.closest(".items-table");
         const url = "<?= inner_url("migration_cat/fetch_sub_cats_current/?cat_id=") ?>"+cat_id;
-        fetch(url).then((res) => res.json()).then(info => {
+        fetch(url).then((res) =>  {
             const divhelper = document.createElement("div");
-            divhelper.innerHTML = info.html;
+            divhelper.innerHTML = res;
             divhelper.querySelectorAll(".append-sub").forEach(sub_el=>{
                 console.log(divhelper.innerHTML);
                 after_el = sub_el;
