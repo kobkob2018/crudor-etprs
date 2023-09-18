@@ -375,7 +375,7 @@
             const pairs_holder = el.querySelector(".pairs-col");
             el.innerHTML = "Hi How are you!";
             divhelper.querySelectorAll(".append-sub").forEach(pair_el=>{
-                pairs_holder.append(pair_el);
+               // pairs_holder.append(pair_el);
                 pair_el.classList.remove("append-sub");
             });
             divhelper.remove();
