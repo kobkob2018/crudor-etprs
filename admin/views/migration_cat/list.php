@@ -312,16 +312,19 @@
         const parent_el = el.closest(".items-table");
         const url = "<?= inner_url("migration_cat/fetch_sub_cats_current/?cat_id=") ?>"+cat_id;
         fetch(url).then((res) => res.json()).then(info => {
-            console.log("first");
-            console.log(parent_el);
+
             const divhelper = document.createElement("div");
             divhelper.innerHTML = info.html;
             divhelper.querySelectorAll(".append-sub").forEach(sub_el=>{
-                console.log("second");
-                console.log(parent_el);
+
                 console.log(divhelper.innerHTML);
+                if(after_el.nextSibling){
+                    after_el.parentNode.insertBefore(sub_el, after_el.nextSibling);
+                }
+                else{
+                    after_el.parentNode.append(sub_el);
+                }
                 after_el = sub_el;
-                parent_el.append(sub_el);
                 sub_el.classList.remove("append-sub");
             });
             divhelper.remove();
