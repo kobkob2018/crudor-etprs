@@ -38,7 +38,7 @@
                         <?= $cat['active'] ?>
                     </div>
                     <div class="col pairs-col awaiting-pairs" data-cat_id="<?= $cat['id'] ?>">
-                        <a class="pair-cat-fatch" href="javascript://" onclick="fetch_current_category_pairs(this)">
+                        <a class="pair-cat-fatch" href="javascript://" onclick="fetch_current_category_pairs_custom(this)">
                             הצג קטגוריות משוייכות
                         </a>                        
                     </div>
@@ -277,7 +277,7 @@
        // return fetch_current_category_pairs();
     }
 
-    function show_current_category_pairs(a_el){
+    function fetch_current_category_pairs_custom(a_el){
 
         const pairs_cat_current_el = a_el.parentNode;
 
