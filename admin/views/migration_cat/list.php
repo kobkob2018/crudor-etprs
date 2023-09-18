@@ -263,8 +263,8 @@
         add_loading("fatching sub cats for cat: "+ cat_id);
 
         setTimeout(function(){
-            fetch_sub_cats_for_element(root_cat_current_el,cat_id);
-        },500)
+            fetch_current_sub_cats_for_element(root_cat_current_el,cat_id);
+        },500);
         
         
     }
@@ -301,15 +301,15 @@
         root_cat_old_el.classList.remove("awaiting-children-old");
         const cat_id = root_cat_old_el.dataset.cat_id;
         add_loading("fatching sub cats for old cat: "+ cat_id);
-        
-        return fetch_current_category_data();
+        setTimeout(function(){
+            fetch_old_sub_cats_for_element(root_cat_old_el,cat_id);
+        },500);        
     }
 
 
 
-    function fetch_sub_cats_for_element(el,cat_id){
+    function fetch_current_sub_cats_for_element(el,cat_id){
         let after_el = el;
-        const parent_el = el.closest(".items-table");
         const url = "<?= inner_url("migration_cat/fetch_sub_cats_current/?cat_id=") ?>"+cat_id;
         fetch(url).then((res) => res.json()).then(info => {
 
@@ -333,7 +333,30 @@
         return fetch_current_category_data();
     }
 
+    function fetch_old_sub_cats_for_element(el,cat_id){
+        let after_el = el;
+        const url = "<?= inner_url("migration_cat/fetch_sub_cats_old/?cat_id=") ?>"+cat_id;
+        fetch(url).then((res) => res.json()).then(info => {
 
+            const divhelper = document.createElement("div");
+            divhelper.innerHTML = info.html;
+            divhelper.querySelectorAll(".append-sub").forEach(sub_el=>{
+
+                console.log(divhelper.innerHTML);
+                if(after_el.nextSibling){
+                    after_el.parentNode.insertBefore(sub_el, after_el.nextSibling);
+                }
+                else{
+                    after_el.parentNode.append(sub_el);
+                }
+                after_el = sub_el;
+                sub_el.classList.remove("append-sub");
+            });
+            divhelper.remove();
+        });
+        
+        return fetch_old_category_data();
+    }
 
     document.addEventListener("DOMContentLoaded",()=>{
         init_fetch_current_category_data();

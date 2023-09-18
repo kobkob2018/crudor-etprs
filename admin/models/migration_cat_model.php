@@ -14,7 +14,9 @@
     }
 
     public static function get_old_cat_tree($cat_id = '0', $cat_tree = array() , $deep = 0){
-        
+        if($deep == 0 && $cat_id != '0'){
+            $deep++;
+        }
         $deep++;
         $ilbiz_db = self::getIlbizDb();
         $sql = "SELECT cat_name, id, father, googleADSense, status, hidden FROM biz_categories WHERE status != '9' AND father = :cat_id ORDER BY cat_name ";
@@ -41,7 +43,9 @@
 				
                 $cat['deep'] = $deep;
                 $cat_tree[] = $cat;
-             //   $cat_tree = self::get_old_cat_tree($cat['id'],$cat_tree,$deep);
+                if($cat_id!='0'){
+                   $cat_tree = self::get_old_cat_tree($cat['id'],$cat_tree,$deep);
+                }
             }  
         }
 		
