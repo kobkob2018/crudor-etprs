@@ -18,12 +18,8 @@
         $cat_id = $_GET['cat_id'];
         $current_cat_list = Migration_cat::get_new_cat_tree($cat_id);
         $this->data['current_sub_cat_list'] = $current_cat_list;
-        $html = $this->include_ob_view("migration_cat/sub_list_current.php");
-        $return_array = array(
-            'html'=>$html
-        );
-        print(json_encode($return_array));
-        exit();
+        return $this->include_view("migration_cat/sub_list_current.php");
+        
     }
 
     public function pair_remove(){
