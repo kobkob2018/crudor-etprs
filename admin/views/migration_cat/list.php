@@ -266,7 +266,7 @@
 
         setTimeout(function(){
             fetch_current_sub_cats_for_element(root_cat_current_el,cat_id);
-        },500);
+        },100);
         
         
     }
@@ -306,7 +306,7 @@
 
         setTimeout(function(){
             fetch_current_pairs_for_element(pairs_cat_current_el,cat_id);
-        },500);   
+        },100);   
 
     }
 
@@ -327,7 +327,7 @@
         add_loading("fatching sub cats for old cat: "+ cat_id);
         setTimeout(function(){
             fetch_old_sub_cats_for_element(root_cat_old_el,cat_id);
-        },500);        
+        },100);        
     }
 
 
