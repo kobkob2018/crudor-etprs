@@ -284,9 +284,9 @@
         pairs_cat_current_el.classList.remove("awaiting-pairs");
         const cat_id = pairs_cat_current_el.dataset.cat_id;
         add_loading("fatching pairs for cat: "+ cat_id);
-        if(!confirm("get pairs for " + cat_id + "?")){
+        //if(!confirm("get pairs for " + cat_id + "?")){
        //     return;
-        }
+       // }
         setTimeout(function(){
             fetch_current_pairs_for_element(pairs_cat_current_el,cat_id);
         },500);   
