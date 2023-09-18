@@ -314,6 +314,8 @@
         fetch(url).then((res) =>  {
             const divhelper = document.createElement("div");
             divhelper.innerHTML = res;
+            alert(res);
+            console.log(res);
             divhelper.querySelectorAll(".append-sub").forEach(sub_el=>{
                 console.log(divhelper.innerHTML);
                 after_el = sub_el;
