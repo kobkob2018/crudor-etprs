@@ -73,7 +73,7 @@
             */
                 $cat_tree[] = $cat;
                 
-                $cat_tree = self::get_new_cat_tree($cat['id'],$cat_tree,$deep);
+            //    $cat_tree = self::get_new_cat_tree($cat['id'],$cat_tree,$deep);
             }  
         }
 		
