@@ -275,7 +275,7 @@
     }
 
     function fetch_current_category_pairs(){
-return init_fetch_old_category_data();
+
 
         const pairs_cat_current_el = document.querySelector(".awaiting-pairs");
         if(!pairs_cat_current_el){

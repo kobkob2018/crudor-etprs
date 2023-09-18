@@ -38,6 +38,18 @@
         exit();
     }
 
+    public function fetch_pairs_current(){
+        $cat_id = $_GET['cat_id'];
+        $cat_pairs = Migration_cat::get_new_cat_pairs($cat_id);
+        $this->data['cat_pairs'] = $cat_pairs;
+        $html = $this->include_ob_view("migration_cat/cat_pairs_current.php");
+        $return_array = array(
+            'html'=>$html
+        );
+        print(json_encode($return_array));
+        exit();
+    }
+
     public function pair_remove(){
         $this->set_layout("blank");
         $old_cat_id = $_REQUEST['old_cat_id'];

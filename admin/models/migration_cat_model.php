@@ -69,16 +69,7 @@
 				
                 $cat['deep'] = $deep;
                 $cat['pair_label'] = "";
-                if($cat_id!='0'){
 
-                
-                    $cat_pairs = self::get_current_cat_pairs($cat['id']);
-
-                    foreach($cat_pairs as $key=>$cat_pair){
-                        $cat_pairs[$key]['label'] = self::get_old_cat_label($cat_pair['old_cat_id']);
-                    }
-                    $cat['pairs'] = $cat_pairs;
-                }
                 $cat_tree[] = $cat;
                 if($cat_id!='0'){
                     $cat_tree = self::get_new_cat_tree($cat['id'],$cat_tree,$deep);
@@ -87,6 +78,16 @@
         }
 		
         return $cat_tree;
+    }
+
+    public static function get_new_cat_pairs($cat_id){
+
+        $cat_pairs = self::get_current_cat_pairs($cat_id);
+
+        foreach($cat_pairs as $key=>$cat_pair){
+            $cat_pairs[$key]['label'] = self::get_old_cat_label($cat_pair['old_cat_id']);
+        }
+        return $cat_pairs;
     }
 
     public static function get_current_cat_pairs($cat_id){
