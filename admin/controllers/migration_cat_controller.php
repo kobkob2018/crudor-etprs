@@ -14,6 +14,18 @@
         
     }
 
+    public function fetch_sub_cats_current(){
+        $cat_id = $_GET['cat_id'];
+        $current_cat_list = Migration_cat::get_new_cat_tree($cat_id);
+        $this->data['current_sub_cat_list'] = $current_cat_list;
+        $html = $this->include_ob_view("migration_cat/sub_list.php");
+        $return_array = array(
+            'html'=>$html
+        );
+        print(json_encode($return_array));
+        exit();
+    }
+
     public function pair_remove(){
         $this->set_layout("blank");
         $old_cat_id = $_REQUEST['old_cat_id'];

@@ -260,7 +260,11 @@
         const cat_id = root_cat_current_el.dataset.cat_id;
         add_loading("fatching sub cats for cat: "+ cat_id);
 
-        return fetch_current_category_data();
+        setTimeout(function(){
+            fetch_sub_cats_for_element(root_cat_current_el,cat_id);
+        },500)
+        
+        
     }
 
     function init_fetch_current_category_pairs(){
@@ -298,6 +302,26 @@
         
         return fetch_current_category_data();
     }
+
+
+
+    function fetch_sub_cats_for_element(el,cat_id){
+        let after_el = el;
+        const parent_el = el.closest(".items-table");
+        const url = "<?= inner_url("migration_cat/fetch_sub_cats_current/?cat_id=") ?>"+cat_id;
+        fetch(url).then((res) => res.json()).then(info => {
+            const divhelper = document.createElement("div");
+            divhelper.innerHTML = info.html;
+            divhelper.querySelectorAll(".append-sub").forEach(sub_el=>{
+                after_el = sub_el;
+                parent_el.insertAfter(sub_el, after_el);
+            });
+        });
+        divhelper.remove();
+        return fetch_current_category_data();
+    }
+
+
 
     document.addEventListener("DOMContentLoaded",()=>{
         init_fetch_current_category_data();
