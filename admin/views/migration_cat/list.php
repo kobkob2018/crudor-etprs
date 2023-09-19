@@ -403,6 +403,8 @@
     }
 
     function fetch_current_pairs_for_element(el,cat_id){
+        alert("calld!!!");
+        return;
         let after_el = el;
         const url = "<?= inner_url("migration_cat/fetch_pairs_current/?cat_id=") ?>"+cat_id;
         fetch(url).then((res) => res.json()).then(info => {
