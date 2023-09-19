@@ -284,7 +284,7 @@
         pairs_cat_current_el.classList.remove("awaiting-pairs");
         pairs_cat_current_el.innerHTML = "";
         const cat_id = pairs_cat_current_el.dataset.cat_id;
-        show_loading("fatching pairs for cat: "+ cat_id);
+        show_loading("fatching custom pairs for cat: "+ cat_id);
 
         
         fetch_current_pairs_for_element_custom(pairs_cat_current_el,cat_id);
@@ -302,7 +302,7 @@
         }
         pairs_cat_current_el.classList.remove("awaiting-pairs");
         const cat_id = pairs_cat_current_el.dataset.cat_id;
-        add_loading("fatching pairs for cat: "+ cat_id);
+        add_loading("fatching continues pairs for cat: "+ cat_id);
 
         setTimeout(function(){
             fetch_current_pairs_for_element(pairs_cat_current_el,cat_id);
