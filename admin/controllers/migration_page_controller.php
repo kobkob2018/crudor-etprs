@@ -174,13 +174,23 @@
           $limit_attampts = 10;
         }
       }
-      file_put_contents($file_path, file_get_contents($img_url));
-      $return_array['new_img_src'] = "/".$file_path;
-      Migration_page::simple_create_by_table_name(array(
-        'new_src'=>"/".$file_path,
-        'old_src'=>$img_url,
-        'site_id'=>$migration_site['site_id']
-      ),'migration_image');
+
+      try{
+        file_put_contents($file_path, file_get_contents($img_url));
+        $return_array['new_img_src'] = "/".$file_path;
+        Migration_page::simple_create_by_table_name(array(
+          'new_src'=>"/".$file_path,
+          'old_src'=>$img_url,
+          'site_id'=>$migration_site['site_id']
+        ),'migration_image');
+      
+      } 
+      catch (Exception $e) {
+        $return_array['new_img_src'] = "";
+      }
+
+      
+
     }
     
     print(json_encode($return_array));
