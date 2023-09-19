@@ -316,6 +316,8 @@
     }
 
     function fetch_old_category_data(){
+        alert("passing over old cats");
+        return;
         const root_cat_old_el = document.querySelector(".awaiting-children-old");
         if(!root_cat_old_el){
             alert("done!");
