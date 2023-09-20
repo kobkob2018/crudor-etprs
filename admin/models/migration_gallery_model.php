@@ -257,8 +257,10 @@
             $subjects = array();
         }
         foreach($subjects as $subject){
+            $subject_name = str_replace('\"','"',$subject['name']);
+            $subject_name = str_replace("\'","'",$subject['name']);
             $new_gallery_cat = array(
-                'label'=>utgt($subject['name']),
+                'label'=>utgt($subject_name),
                 'site_id'=>$site_id,
                 'active'=>($subject['active'] == '0')? '1': '0'
             );
@@ -287,8 +289,10 @@
             if($migration_gallery_cat){
                 $new_cat_id = $migration_gallery_cat['cat_id'];
             }
+            $gallery_name = str_replace('\"','"',$gallery['name']);
+            $gallery_name = str_replace("\'","'",$gallery['name']);
             $new_gallery = array(
-                'label'=>utgt($gallery['name']),
+                'label'=>utgt($gallery_name),
                 'site_id'=>$site_id,
                 'active'=>($gallery['active'] == '0')? '1' : '0',
                 'priority'=>$gallery['place']
@@ -316,6 +320,7 @@
 
 
     public static function do_migrate_images($site_id,$migration_site){
+        //UPDATE gallery_cat set label = replace(label, '\\"', '\"') WHERE 1;
         self::create_gallery_dir($site_id);
 
         $return_array = array('status'=>'done');
