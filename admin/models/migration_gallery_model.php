@@ -318,6 +318,7 @@
     public static function do_migrate_images($site_id,$migration_site){
         self::create_gallery_dir($site_id);
 
+        $return_array = array('status'=>'done');
         $db = Db::getInstance();
         $ilbiz_db = self::getIlbizDb();
 
@@ -341,9 +342,10 @@
         }
 
         if(empty($images)){
-            SystemMessages::add_success_message("כל התמונות יובאו בהצלחה!");
-            return;
+            return $return_array;
         }
+        $return_array['count'] = count($images);
+        $return_array['status'] = 'found_images';
         foreach($images as $image){
             //old gallery_cat is a gallery, and old subject is a cat here. no subs here, no "gallery" table there (again - the cat is the gallery etc..)
             $old_gallery = $image['cat'];

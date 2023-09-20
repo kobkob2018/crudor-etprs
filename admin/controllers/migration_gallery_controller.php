@@ -36,6 +36,27 @@
         return $this->redirect_to(inner_url("migration_gallery/prepare/"));
     }
 
+    public function do_migrate_cats(){
+      $filter_arr = $this->get_base_filter();
+      $migration_site = Migration_site::find($filter_arr);      
+      Migration_gallery::do_migrate_cats($this->data['work_on_site']['id'],$migration_site);
+      SystemMessages::add_success_message("ייבוא של תיקיות וגלריות בוצע בהצלחה. יש לייבא את התמונות בנפרד");
+      return $this->redirect_to(inner_url("migration_gallery/prepare/"));
+    }
+
+    public function do_migrate_images(){
+      $filter_arr = $this->get_base_filter();
+      $migration_site = Migration_site::find($filter_arr);      
+      $migrate_result = Migration_gallery::do_migrate_images($this->data['work_on_site']['id'],$migration_site);
+      if($migrate_result['status'] == 'done'){
+        SystemMessages::add_success_message("כל התמונות יובאו בהצלחה");
+      }
+      if($migrate_result['status'] == 'found_images'){
+        $image_count = $migrate_result['count'];
+        SystemMessages::add_success_message("$image_count תמונות יובאו בהצלחה");
+      }
+      return $this->redirect_to(inner_url("migration_gallery/prepare/"));
+    }
 
     public function delete_older(){   
         Migration_gallery::delete_older($this->data['work_on_site']['id']);
