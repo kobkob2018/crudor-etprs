@@ -323,7 +323,7 @@
         $ilbiz_db = self::getIlbizDb();
 
         $latest_migrate_image_id = '0';
-        $sql = "SELECT old_id FROM migration_gallery_image WHERE site_id = :site_id ORDER BY old_id desc LIMIT 10";
+        $sql = "SELECT old_id FROM migration_gallery_image WHERE site_id = :site_id ORDER BY old_id desc LIMIT 1";
         $req = $db->prepare($sql);
         $req->execute(array('site_id'=>$site_id));
         $latest_migrate_image = $req->fetch();
@@ -333,7 +333,7 @@
 
 
         //migrate gallery_images
-        $sql = "SELECT * FROM user_gallery_images WHERE unk = :unk AND deleted = '0' AND id > :latest_id LIMIT 100";
+        $sql = "SELECT * FROM user_gallery_images WHERE unk = :unk AND deleted = '0' AND id > :latest_id LIMIT 10";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('unk'=>$migration_site['old_unk'],'latest_id'=>$latest_migrate_image_id));
         $images = $req->fetchAll();
