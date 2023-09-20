@@ -402,6 +402,10 @@
                 'unk'=>$migration_site['old_unk'],
                 'old_id'=>$image['id']
             );
+            if(!isset($return_array['first'])){
+                $return_array['first'] = $image['id'];
+            }
+            $return_array['last'] = $image['id'];
             self::simple_create_by_table_name($migration_image,"migration_gallery_image");
 
         }

@@ -53,7 +53,11 @@
       }
       if($migrate_result['status'] == 'found_images'){
         $image_count = $migrate_result['count'];
+        $first = $migrate_result['first'];
+        $last = $migrate_result['last'];
         SystemMessages::add_success_message("$image_count תמונות יובאו בהצלחה");
+        SystemMessages::add_success_message("תמונה ראשונה: $first");
+        SystemMessages::add_success_message("תמונה אחרונה: $last");
       }
       return $this->redirect_to(inner_url("migration_gallery/prepare/"));
     }
