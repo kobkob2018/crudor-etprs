@@ -106,12 +106,10 @@
         }
     }
 
-    public static function do_migrate_new($site_id,$migration_site){
+    public static function do_migrate($site_id,$migration_site){
         self::create_gallery_dir($site_id);
         //migration gallery cats
         $ilbiz_db = self::getIlbizDb();
-
-        $cat_arr = array();
         $sql = "SELECT * FROM user_images_cat_subject WHERE unk = :unk AND deleted = '0'";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('unk'=>$migration_site['old_unk']));
@@ -133,11 +131,8 @@
                 'old_id'=>$subject['id']
             );
             self::simple_create_by_table_name($migration_gallery_cat,"migration_gallery_cat");
-            $cat_arr[$subject['id']] = $new_cat_id;
         }
         //migrate galleries
-
-        $gallery_arr = array();
         $sql = "SELECT * FROM user_gallery_cat WHERE unk = :unk AND deleted = '0'";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('unk'=>$migration_site['old_unk']));
@@ -148,16 +143,10 @@
         foreach($galleries as $gallery){
             //old gallery_cat is a gallery, and old subject is a cat here. no subs here, no "gallery" table there (again - the cat is the gallery etc..)
             $old_cat = $gallery['subject_id'];
-            /*
             $migration_gallery_cat = self::simple_find_by_table_name(array('old_id'=>$old_cat),"migration_gallery_cat",'cat_id');
             $new_cat_id = false;
             if($migration_gallery_cat){
                 $new_cat_id = $migration_gallery_cat['cat_id'];
-            }
-            */
-            $new_cat_id = '0';
-            if(isset($cat_arr[$old_cat])){
-                $new_cat_id = $cat_arr[$old_cat];
             }
             $new_gallery = array(
                 'label'=>utgt($gallery['name']),
@@ -166,21 +155,17 @@
                 'priority'=>$gallery['place']
             );
             $new_gallery_id = self::simple_create_by_table_name($new_gallery,"gallery");
-            
             $migration_gallery = array(
                 'gallery_id'=>$new_gallery_id,
                 'site_id'=>$site_id,
                 'unk'=>$migration_site['old_unk'],
                 'old_id'=>$gallery['id']
             );
-            $gallery_arr[$gallery['id']] = $new_gallery_id;
-
             self::simple_create_by_table_name($migration_gallery,"migration_gallery");
-            /*
             if(!$new_cat_id){
                 $new_cat_id = '0';
             }
-            */
+            
             $gallery_cat_assign = array(
                 'gallery_id'=>$new_gallery_id,
                 'cat_id'=>$new_cat_id
@@ -261,9 +246,7 @@
         }
     }
 
-
-    public static function do_migrate($site_id,$migration_site){
-        self::create_gallery_dir($site_id);
+    public static function do_migrate_cats($site_id,$migration_site){
         //migration gallery cats
         $ilbiz_db = self::getIlbizDb();
         $sql = "SELECT * FROM user_images_cat_subject WHERE unk = :unk AND deleted = '0'";
@@ -328,19 +311,39 @@
             );
             self::simple_create_by_table_name($gallery_cat_assign,"gallery_cat_assign");
         }
+    }
 
 
-return;
+
+    public static function do_migrate_images($site_id,$migration_site){
+        self::create_gallery_dir($site_id);
+
+        $db = Db::getInstance();
+        $ilbiz_db = self::getIlbizDb();
+
+        $latest_migrate_image_id = '0';
+        $sql = "SELECT old_id FROM migration_gallery_image WHERE site_id = :site_id ORDER BY old_id desc LIMIT 1";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('site_id'=>$site_id));
+        $latest_migrate_image = $req->fetch();
+        if($latest_migrate_image){
+            $latest_migrate_image_id = $latest_migrate_image['old_id'];
+        }
+
 
         //migrate gallery_images
-        $sql = "SELECT * FROM user_gallery_images WHERE unk = :unk AND deleted = '0'";
+        $sql = "SELECT * FROM user_gallery_images WHERE unk = :unk AND deleted = '0' AND id > :latest_id LIMIT 30";
         $req = $ilbiz_db->prepare($sql);
-        $req->execute(array('unk'=>$migration_site['old_unk']));
+        $req->execute(array('unk'=>$migration_site['old_unk'],'latest_id'=>$latest_migrate_image_id));
         $images = $req->fetchAll();
         if(!$images){
             $images = array();
         }
 
+        if(empty($images)){
+            SystemMessages::add_success_message("כל התמונות יובאו בהצלחה!");
+            return;
+        }
         foreach($images as $image){
             //old gallery_cat is a gallery, and old subject is a cat here. no subs here, no "gallery" table there (again - the cat is the gallery etc..)
             $old_gallery = $image['cat'];
