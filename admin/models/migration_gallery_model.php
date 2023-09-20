@@ -333,7 +333,7 @@
 
 
         //migrate gallery_images
-        $sql = "SELECT * FROM user_gallery_images WHERE unk = :unk AND deleted = '0' AND id > :latest_id LIMIT 200";
+        $sql = "SELECT * FROM user_gallery_images WHERE unk = :unk AND deleted = '0' AND id > :latest_id LIMIT 100";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('unk'=>$migration_site['old_unk'],'latest_id'=>$latest_migrate_image_id));
         $images = $req->fetchAll();
