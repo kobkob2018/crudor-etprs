@@ -121,7 +121,7 @@
             <input type="hidden" name="db_row_id" value="<?= $cat['id'] ?>" />
 
             <div class="col longer-col">
-                <input type="text" class = 'table-input' name = 'row[label]' value = "<?= $cat['label'] ?>" />
+                <input type="text" class = 'table-input' name = 'row[label]' value = "<?= str_replace('"',"&quot;",$cat['label']) ?>" />
             </div>
             <div class = "col">
                 <select name='row[active]' class='form-select'>
