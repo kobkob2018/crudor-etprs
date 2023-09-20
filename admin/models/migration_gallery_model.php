@@ -106,6 +106,162 @@
         }
     }
 
+    public static function do_migrate_new($site_id,$migration_site){
+        self::create_gallery_dir($site_id);
+        //migration gallery cats
+        $ilbiz_db = self::getIlbizDb();
+
+        $cat_arr = array();
+        $sql = "SELECT * FROM user_images_cat_subject WHERE unk = :unk AND deleted = '0'";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('unk'=>$migration_site['old_unk']));
+        $subjects = $req->fetchAll();
+        if(!$subjects){
+            $subjects = array();
+        }
+        foreach($subjects as $subject){
+            $new_gallery_cat = array(
+                'label'=>utgt($subject['name']),
+                'site_id'=>$site_id,
+                'active'=>($subject['active'] == '0')? '1': '0'
+            );
+            $new_cat_id = self::simple_create_by_table_name($new_gallery_cat,"gallery_cat");
+            $migration_gallery_cat = array(
+                'cat_id'=>$new_cat_id,
+                'site_id'=>$site_id,
+                'unk'=>$migration_site['old_unk'],
+                'old_id'=>$subject['id']
+            );
+            self::simple_create_by_table_name($migration_gallery_cat,"migration_gallery_cat");
+            $cat_arr[$subject['id']] = $new_cat_id;
+        }
+        //migrate galleries
+
+        $gallery_arr = array();
+        $sql = "SELECT * FROM user_gallery_cat WHERE unk = :unk AND deleted = '0'";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('unk'=>$migration_site['old_unk']));
+        $galleries = $req->fetchAll();
+        if(!$galleries){
+            $galleries = array();
+        }
+        foreach($galleries as $gallery){
+            //old gallery_cat is a gallery, and old subject is a cat here. no subs here, no "gallery" table there (again - the cat is the gallery etc..)
+            $old_cat = $gallery['subject_id'];
+            /*
+            $migration_gallery_cat = self::simple_find_by_table_name(array('old_id'=>$old_cat),"migration_gallery_cat",'cat_id');
+            $new_cat_id = false;
+            if($migration_gallery_cat){
+                $new_cat_id = $migration_gallery_cat['cat_id'];
+            }
+            */
+            $new_cat_id = '0';
+            if(isset($cat_arr[$old_cat])){
+                $new_cat_id = $cat_arr[$old_cat];
+            }
+            $new_gallery = array(
+                'label'=>utgt($gallery['name']),
+                'site_id'=>$site_id,
+                'active'=>($gallery['active'] == '0')? '1' : '0',
+                'priority'=>$gallery['place']
+            );
+            $new_gallery_id = self::simple_create_by_table_name($new_gallery,"gallery");
+            
+            $migration_gallery = array(
+                'gallery_id'=>$new_gallery_id,
+                'site_id'=>$site_id,
+                'unk'=>$migration_site['old_unk'],
+                'old_id'=>$gallery['id']
+            );
+            $gallery_arr[$gallery['id']] = $new_gallery_id;
+
+            self::simple_create_by_table_name($migration_gallery,"migration_gallery");
+            /*
+            if(!$new_cat_id){
+                $new_cat_id = '0';
+            }
+            */
+            $gallery_cat_assign = array(
+                'gallery_id'=>$new_gallery_id,
+                'cat_id'=>$new_cat_id
+            );
+            self::simple_create_by_table_name($gallery_cat_assign,"gallery_cat_assign");
+        }
+
+
+
+
+        //migrate gallery_images
+        $sql = "SELECT * FROM user_gallery_images WHERE unk = :unk AND deleted = '0'";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('unk'=>$migration_site['old_unk']));
+        $images = $req->fetchAll();
+        if(!$images){
+            $images = array();
+        }
+
+        foreach($images as $image){
+            //old gallery_cat is a gallery, and old subject is a cat here. no subs here, no "gallery" table there (again - the cat is the gallery etc..)
+            $old_gallery = $image['cat'];
+            $migration_gallery = self::simple_find_by_table_name(array('old_id'=>$old_gallery),"migration_gallery",'gallery_id');
+            $new_gallery_id = false;
+            if($migration_gallery){
+                $new_gallery_id = $migration_gallery['gallery_id'];
+            }
+            else{
+                SystemMessages::add_err_message("קיימת תמונה ללא גלריה (#".$image['id']."), לכן לא הועתקה");
+                continue;
+            }
+
+            $new_image = array(
+                'label'=>utgt($image['headline']),
+                'site_id'=>$site_id,
+                'priority'=>$image['place'],
+                'gallery_id'=>$new_gallery_id,
+                'description'=>utgt($image['content']),
+                'image'=>$image['img2'],
+                'small_image'=>$image['img'],
+            );
+            
+            $images_url = "http://";
+            
+	
+            if($migration_site['old_has_ssl'] == '1'){
+                $images_url = "https://";
+               
+            }
+
+            $images_url .= $migration_site['old_domain']."/gallery/";
+
+
+            if($image['img2'] != ""){
+                $image_url = $images_url.$image['img2'];
+                $new_image_url = "assets_s/".$site_id."/gallery/".$image['img2'];
+                if(!file_exists($new_image_url)){                  
+                    file_put_contents($new_image_url, file_get_contents($image_url));
+                } 
+            }
+            if($image['img'] != ""){
+                $small_image_url = $images_url.$image['img'];
+                $new_small_image_url = "assets_s/".$site_id."/gallery/".$image['img'];
+                if(!file_exists($new_small_image_url)){
+                    file_put_contents($new_small_image_url, file_get_contents($small_image_url));           
+                }
+            }
+
+            $new_image_id = self::simple_create_by_table_name($new_image,"gallery_images");
+            $migration_image = array(
+                'image_id'=>$new_image_id,
+                'site_id'=>$site_id,
+                'unk'=>$migration_site['old_unk'],
+                'old_id'=>$image['id']
+            );
+            self::simple_create_by_table_name($migration_image,"migration_gallery_image");
+
+        }
+    }
+
+
     public static function do_migrate($site_id,$migration_site){
         self::create_gallery_dir($site_id);
         //migration gallery cats
@@ -245,6 +401,5 @@
 
         }
     }
-
 }
 ?>
