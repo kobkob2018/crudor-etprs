@@ -22,7 +22,7 @@
 
     <hr/>
     <h4>שלב ראשון: ייבוא תיקיות וגלריות בלי תמונות</h4>
-    <?php if($info['migration_exist']): ?>
+    <?php if(!$info['migration_exist']): ?>
     <a class="button-focus" href="<?= inner_url('migration_gallery/do_migrate_cats/') ?>">
         לחץ כאן להתחלת ייבוא תיקיות וגלריות
     </a>
