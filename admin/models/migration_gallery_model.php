@@ -330,7 +330,7 @@
         }
 
 
-
+return;
 
         //migrate gallery_images
         $sql = "SELECT * FROM user_gallery_images WHERE unk = :unk AND deleted = '0'";
