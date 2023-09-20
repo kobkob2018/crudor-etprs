@@ -405,6 +405,7 @@
             self::simple_create_by_table_name($migration_image,"migration_gallery_image");
 
         }
+        return $return_array;
     }
 }
 ?>
