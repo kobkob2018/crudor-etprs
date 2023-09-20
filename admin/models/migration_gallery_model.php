@@ -324,7 +324,7 @@
 
         $latest_migrate_image_id = '0';
         $sql = "SELECT old_id FROM migration_gallery_image WHERE site_id = :site_id ORDER BY old_id desc LIMIT 1";
-        $req = $ilbiz_db->prepare($sql);
+        $req = $db->prepare($sql);
         $req->execute(array('site_id'=>$site_id));
         $latest_migrate_image = $req->fetch();
         if($latest_migrate_image){
