@@ -323,7 +323,7 @@
         $ilbiz_db = self::getIlbizDb();
 
         $latest_migrate_image_id = '0';
-        $sql = "SELECT old_id FROM migration_gallery_image WHERE site_id = :site_id ORDER BY old_id desc LIMIT 1";
+        $sql = "SELECT old_id FROM migration_gallery_image WHERE site_id = :site_id ORDER BY old_id desc LIMIT 10";
         $req = $db->prepare($sql);
         $req->execute(array('site_id'=>$site_id));
         $latest_migrate_image = $req->fetch();
@@ -359,14 +359,19 @@
                 continue;
             }
 
+            $image_filenames = array();
+            $image_filenames['img'] = self::create_migrated_filename($image['img'],$image['id']);
+
+            $image_filenames['img2'] = self::create_migrated_filename($image['img2'],$image['id']);
+
             $new_image = array(
                 'label'=>utgt($image['headline']),
                 'site_id'=>$site_id,
                 'priority'=>$image['place'],
                 'gallery_id'=>$new_gallery_id,
                 'description'=>utgt($image['content']),
-                'image'=>$image['img2'],
-                'small_image'=>$image['img'],
+                'image'=>$image_filenames['img2'],
+                'small_image'=>$image_filenames['img'],
             );
             
             $images_url = "http://";
@@ -382,14 +387,14 @@
 
             if($image['img2'] != ""){
                 $image_url = $images_url.$image['img2'];
-                $new_image_url = "assets_s/".$site_id."/gallery/".$image['img2'];
+                $new_image_url = "assets_s/".$site_id."/gallery/".$image_filenames['img2'];
                 if(!file_exists($new_image_url)){                  
                     file_put_contents($new_image_url, file_get_contents($image_url));
                 } 
             }
             if($image['img'] != ""){
                 $small_image_url = $images_url.$image['img'];
-                $new_small_image_url = "assets_s/".$site_id."/gallery/".$image['img'];
+                $new_small_image_url = "assets_s/".$site_id."/gallery/".$image_filenames['img'];
                 if(!file_exists($new_small_image_url)){
                     file_put_contents($new_small_image_url, file_get_contents($small_image_url));           
                 }
@@ -410,6 +415,11 @@
 
         }
         return $return_array;
+    }
+
+    protected static function create_migrated_filename($original_filename,$migrated_row_id){
+        $ext = pathinfo($original_filename, PATHINFO_EXTENSION);
+        return "mgrt_$migrated_row_id.$ext";
     }
 }
 ?>
