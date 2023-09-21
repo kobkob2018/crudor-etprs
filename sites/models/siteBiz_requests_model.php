@@ -51,5 +51,26 @@
         return $result;
     }
 
+
+    public static function get_cat_last_requests($cat_id){
+        if(!$cat_id){
+            $cat_id = '0';
+        }
+        $cat_offsprings = self::simple_get_item_offsprings_by_table_name($cat_id,'biz_categories','id,parent');
+        $cat_id_arr = array($cat_id);
+        foreach($cat_offsprings as $cat){
+            $cat_id_arr[] = $cat['id'];
+        }
+        $cat_id_in = implode(",",$cat_id_arr);
+        $sql = "SELECT * FROM biz_requests WHERE cat_id IN ($cat_id_in) AND date_in > (NOW() - INTERVAL 30 DAY) LIMIT 10";
+        $db = Db::getInstance();		
+        $req = $db->prepare($sql);
+        $req->execute();
+        $result = $req->fetchAll();
+        if(!$result){
+            return array();
+        }
+        return $result;
+    }
 }
 ?>

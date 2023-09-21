@@ -9,7 +9,9 @@
                 return;
             }
             
-            $last_requests = SiteBiz_requests::get_form_last_requests($biz_form_data['id']);
+            //$last_requests = SiteBiz_requests::get_form_last_requests($biz_form_data['id']);
+
+            $last_requests = SiteBiz_requests::get_cat_last_requests($biz_form_data['cat_id']);
             $cat_names = array();
             if($last_requests){
                 foreach($last_requests  as $key=>$biz_request){
