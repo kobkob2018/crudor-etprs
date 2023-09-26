@@ -239,7 +239,7 @@
                 'content'=>utgt($product['content']),
                 'description'=>utgt($product['summary']),
                 'meta_description'=>utgt($product['summary']),
-                'price'=>$product['price'],
+                'price'=>utgt($product['price']),
                 'price_special'=>$product['price_special'],
                 'link'=>utgt($product['url_link']),
                 'link_text'=>utgt($product['url_name']),
