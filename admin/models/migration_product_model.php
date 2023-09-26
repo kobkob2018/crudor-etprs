@@ -248,7 +248,9 @@
                 'priority'=>$product['place'],
                 'image'=>$product['img'],
             );
-
+            if($new_product['priority'] > 1000){
+                $new_product['priority'] = '1000';
+            }
 
             if($product['video_10service'] != ""){
                 $new_product['content'].="<p></p><div class='video-container'>".utgt(stripslashes($product['video_10service']))."</div>";
