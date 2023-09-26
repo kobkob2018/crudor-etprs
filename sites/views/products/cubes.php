@@ -18,6 +18,7 @@
                         </div>
                     <?php endif; ?>
                     <div class="box-text">
+                        <?php $description = strlen($product['description']) > 50 ? substr($product['description'],0,200)."..." : $product['description']; ?>
                         <?= nl2br($product['description']) ?>
                     </div>
                     <?php if($product['price']): ?>
