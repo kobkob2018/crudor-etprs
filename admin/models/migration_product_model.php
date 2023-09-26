@@ -315,6 +315,202 @@
     }
 
 
+    public static function do_migrate_cats($site_id,$migration_site){
+        self::create_product_dir($site_id);
+        //migration product subs
+        $ilbiz_db = self::getIlbizDb();
+        $sql = "SELECT * FROM user_products_subject WHERE unk = :unk AND deleted = '0'";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('unk'=>$migration_site['old_unk']));
+        $subjects = $req->fetchAll();
+        if(!$subjects){
+            $subjects = array();
+        }
+        foreach($subjects as $subject){
+            $new_product_cat = array(
+                'label'=>utgt($subject['name']),
+                'site_id'=>$site_id,
+                'active'=>($subject['active'] == '0')? '1': '0'
+            );
+            $new_cat_id = self::simple_create_by_table_name($new_product_cat,"product_cat");
+            $migration_product_cat = array(
+                'cat_id'=>$new_cat_id,
+                'site_id'=>$site_id,
+                'unk'=>$migration_site['old_unk'],
+                'old_id'=>$subject['id']
+            );
+            self::simple_create_by_table_name($migration_product_cat,"migration_product_cat");
+        }
+
+
+        //migrate products subs
+        $sql = "SELECT * FROM user_products_cat WHERE unk = :unk AND deleted = '0'";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('unk'=>$migration_site['old_unk']));
+        $product_cats = $req->fetchAll();
+        if(!$product_cats){
+            $product_cats = array();
+        }
+        foreach($product_cats as $cat){
+            $old_cat = $cat['subject_id'];
+            $migration_product_cat = self::simple_find_by_table_name(array('old_id'=>$old_cat),"migration_product_cat",'cat_id');
+            $new_cat_id = false;
+            if($migration_product_cat){
+                $new_cat_id = $migration_product_cat['cat_id'];
+            }
+            $new_sub = array(
+                'label'=>utgt($cat['name']),
+                'site_id'=>$site_id,
+                'active'=>($cat['status'] == '0')? '1' : '0'
+            );
+            $new_sub_id = self::simple_create_by_table_name($new_sub,"product_sub");
+            $migration_product_sub = array(
+                'sub_id'=>$new_sub_id,
+                'site_id'=>$site_id,
+                'unk'=>$migration_site['old_unk'],
+                'old_id'=>$cat['id']
+            );
+            self::simple_create_by_table_name($migration_product_sub,"migration_product_sub");
+            if(!$new_cat_id){
+                $new_cat_id = '0';
+            }
+            
+            $product_sub_cat_assign = array(
+                'sub_id'=>$new_sub_id,
+                'cat_id'=>$new_cat_id
+            );
+            self::simple_create_by_table_name($product_sub_cat_assign,"product_sub_cat_assign");
+        }
+    }
+
+    public static function do_migrate_products($site_id,$migration_site){
+        self::create_product_dir($site_id);
+        $db = Db::getInstance();
+        $ilbiz_db = self::getIlbizDb();
+
+        $return_array = array('status'=>'done');
+
+        $images_url = "http://";
+        if($migration_site['old_has_ssl'] == '1'){
+            $images_url = "https://";
+        }
+
+        $images_url .= $migration_site['old_domain']."/products/";
+
+        $latest_migrate_product_id = '0';
+        $sql = "SELECT old_id FROM migration_product WHERE site_id = :site_id ORDER BY old_id desc LIMIT 1";
+        $req = $db->prepare($sql);
+        $req->execute(array('site_id'=>$site_id));
+        $latest_migrate_product = $req->fetch();
+        if($latest_migrate_product){
+            $latest_migrate_product_id = $latest_migrate_product['old_id'];
+        }
+
+        //migrate products
+        $sql = "SELECT * FROM user_products WHERE unk = :unk AND deleted = '0'  AND id > :latest_id LIMIT 50";
+        $req = $ilbiz_db->prepare($sql);
+        $req->execute(array('unk'=>$migration_site['old_unk'],'latest_id'=>$latest_migrate_product_id));
+        $products = $req->fetchAll();
+        if(!$products){
+            $products = array();
+        }
+        if(empty($products)){
+            return $return_array;
+        }
+
+        $return_array['count'] = count($products);
+        $return_array['status'] = 'found_products';
+        foreach($products as $product){
+          
+            $new_product = array(
+                'label'=>utgt($product['name']),
+                'title'=>utgt($product['name']),
+                'list_label'=>utgt($product['name']),
+                'meta_title'=>utgt($product['name']),
+                'content'=>utgt($product['content']),
+                'description'=>utgt($product['summary']),
+                'meta_description'=>utgt($product['summary']),
+                'price'=>utgt($product['price']),
+                'price_special'=>$product['price_special'],
+                'link'=>utgt($product['url_link']),
+                'link_text'=>utgt($product['url_name']),
+                'site_id'=>$site_id,
+                'active'=>($product['active'] == '0')? '1' : '0',
+                'priority'=>$product['place'],
+                'image'=>$product['img'],
+            );
+            if($new_product['priority'] > 1000){
+                $new_product['priority'] = '1000';
+            }
+
+            if($product['video_10service'] != ""){
+                $new_product['content'].="<p></p><div class='video-container'>".utgt(stripslashes($product['video_10service']))."</div>";
+            }
+            try{
+                $new_product_id = self::simple_create_by_table_name($new_product,"products");
+            }
+            catch (Exception $e) {
+                echo 'Caught exception: '.  $e->getMessage();
+                print_r_help($new_product);
+                exit("problem here");
+            }
+            $migration_product = array(
+                'product_id'=>$new_product_id,
+                'site_id'=>$site_id,
+                'unk'=>$migration_site['old_unk'],
+                'old_id'=>$product['id']
+            );
+            if(!isset($return_array['first'])){
+                $return_array['first'] = $product['id'];
+            }
+            $return_array['last'] = $product['id'];
+            self::simple_create_by_table_name($migration_product,"migration_product");
+            
+            //migrate products
+            $sql = "SELECT * FROM user_model_cat_belong WHERE model = 'products' AND itemId = :product_id";
+            $req = $ilbiz_db->prepare($sql);
+            $req->execute(array('product_id'=>$product['id']));
+            $assigns = $req->fetchAll();
+            if(!$assigns){
+                $assigns = array();
+            }
+            foreach($assigns as $assign){
+                $old_sub = $assign['catId'];
+                $migration_product_sub = self::simple_find_by_table_name(array('old_id'=>$old_sub),"migration_product_sub",'sub_id');
+                if($migration_product_sub){
+                    $new_sub_id = $migration_product_sub['sub_id'];
+                    $product_sub_assign = array(
+                        'product_id'=>$new_product_id,
+                        'sub_id'=>$new_sub_id
+                    );
+                    self::simple_create_by_table_name($product_sub_assign,"product_sub_assign");
+                }
+            }
+
+            if($product['img'] != ""){
+                $image_url = $images_url.$product['img'];
+                $new_image_url = "assets_s/".$site_id."/products/".$product['img'];
+                if(!file_exists($new_image_url)){                  
+                    file_put_contents($new_image_url, file_get_contents($image_url));
+                } 
+            }
+
+            if($product['img'] != ""){
+                self::do_migrate_image($images_url, $new_product_id , $product['img'], $site_id, $migration_site);
+            }
+
+            if($product['img2'] != ""){
+                self::do_migrate_image($images_url, $new_product_id , $product['img2'], $site_id, $migration_site);
+            }
+
+            if($product['img3'] != ""){
+                self::do_migrate_image($images_url, $new_product_id , $product['img3'], $site_id, $migration_site);
+            }
+        }
+        return $return_array;
+    }
+
+
     protected static function do_migrate_image($images_url, $product_id, $img_name,$site_id, $migration_site, $old_image_id = '0'){
         $new_image = array(
             'label'=>'',
