@@ -88,8 +88,25 @@
                 }
 
             }
-
-            $new_rightMenu_id = self::simple_create_by_table_name($new_rightMenu_item,"menu_items");
+            try{
+                $new_rightMenu_id = self::simple_create_by_table_name($new_rightMenu_item,"menu_items");
+            }
+            catch (Exception $e) {
+                SystemMessages::add_err_message('Caught exception: ',  $e->getMessage(), "\n");
+                $err_details = "<br/>details: <br/>";
+                foreach($new_rightMenu_item as $key=>$val){
+                    $err_details .= "<br/>$key:   $val<br/>";
+                }
+                SystemMessages::add_err_message($err_details);
+                $new_rightMenu_item['url'] = "#";
+                try{
+                    $new_rightMenu_id = self::simple_create_by_table_name($new_rightMenu_item,"menu_items");
+                }
+                catch (Exception $e) {
+                    SystemMessages::add_err_message('TRIED TO MAKE WITHOUT URL BUT NOT WORK TOO');
+                    continue;   
+                }
+            }
             $migration_rightMenu = array(
                 'item_id'=>$new_rightMenu_id,
                 'site_id'=>$site_id,
