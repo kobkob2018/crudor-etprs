@@ -257,6 +257,7 @@
                 $new_product_id = self::simple_create_by_table_name($new_product,"products");
             }
             catch (Exception $e) {
+                echo 'Caught exception: '.  $e->getMessage();
                 print_r_help($new_product);
                 exit("problem here");
             }
