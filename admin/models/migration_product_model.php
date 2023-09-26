@@ -253,8 +253,13 @@
             if($product['video_10service'] != ""){
                 $new_product['content'].="<p></p><div class='video-container'>".utgt(stripslashes($product['video_10service']))."</div>";
             }
-
-            $new_product_id = self::simple_create_by_table_name($new_product,"products");
+            try{
+                $new_product_id = self::simple_create_by_table_name($new_product,"products");
+            }
+            catch (Exception $e) {
+                print_r_help($new_product);
+                exit("problem here");
+            }
             $migration_product = array(
                 'product_id'=>$new_product_id,
                 'site_id'=>$site_id,
