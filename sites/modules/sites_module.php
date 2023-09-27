@@ -31,6 +31,14 @@
         public function handle_access_default(){
           $current_site = Sites::get_current_site();
           if(!$current_site){
+            $this->controller->add_model('siteDomain_redirections');
+            $domain_redirection = SiteDomain_redirections::find(array('domain'=>$_SERVER["HTTP_HOST"]));
+
+            if($domain_redirection){
+              $found_redirection = $domain_redirection['url'];
+              header("Location: $found_redirection", true, 301);
+              return;
+            }
             header('HTTP/1.0 403 Forbidden');
             $this->include_view('access/denied403.php');
             exit();

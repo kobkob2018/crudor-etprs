@@ -97,6 +97,10 @@
             <li class="bar-item <?= $view->a_c_class("leads_user_get/report/") ?>">
                 <a href="<?= inner_url('leads_user_get/report/') ?>" title="מספור קבלת לידים ללקוח" class="a-link">מספור קבלת לידים ללקוח</a>
             </li>
+            <h4>- - -</h4>
+            <li class="bar-item <?= $view->a_class("domain_redirections/list/") ?>">
+                <a href="<?= inner_url('domain_redirections/list/') ?>" title="הפניות כלליות לדומיינים" class="a-link">הפניות כלליות לדומיינים</a>
+            </li>
         <?php endif; ?>
 
     </ul>
