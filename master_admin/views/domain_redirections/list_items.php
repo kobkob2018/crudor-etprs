@@ -23,7 +23,7 @@
                 <input type="text" class = 'table-input' name = 'row[domain]' value = "<?= $this->get_form_input('domain') ?>" />
             </div>
 
-            <div class="col">
+            <div class="col big-text">
                 <input type="text" class = 'table-input' name = 'row[url]' value = "<?= $this->get_form_input('url') ?>" />
             </div>
 
@@ -67,7 +67,7 @@
                 </div>
 
                 
-                <div class="col">
+                <div class="col big-text">
                     <input type="text" class = 'table-input' name = 'row[url]' value = "<?= $this->get_form_input('url',$item['form_identifier']) ?>" />
                 </div>
 
