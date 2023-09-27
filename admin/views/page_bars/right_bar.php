@@ -135,4 +135,15 @@
 
         </ul>
     <?php endif; ?>
+
+    <?php if($view->site_user_is('master_admin')): ?>
+        <h4>העלאת קבצים</h4>
+        <ul class="item-group">
+
+            <li class="bar-item <?= $view->a_class("files/library/") ?>">
+                <a href="<?= inner_url('files/library/') ?>" title="העלאות קבצים" class="a-link">ספריית העלאות</a>
+            </li>
+
+        </ul>
+    <?php endif; ?>
 </div>
