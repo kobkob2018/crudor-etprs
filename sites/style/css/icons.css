@@ -32,6 +32,8 @@
 .fa-search::before {
     content: "\f002"; }
 
+.fa-magnifying-glass-plus::before {
+      content: "\f00e"; }
 
 .fa-phone::before {
       content: "\f095"; }
