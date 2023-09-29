@@ -404,7 +404,7 @@ a.nice-button{
   .left-bar .list-box{margin: 10px 0px;}
 
   .list-box .box-title{
-    padding: 10px 5px 0px;
+    padding: 10px 5px 10px;
     font-size: 15px;
     text-align: center;
     font-weight: bold;
