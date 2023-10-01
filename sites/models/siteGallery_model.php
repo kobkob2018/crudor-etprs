@@ -13,9 +13,9 @@
         return $result;
     }
 
-    public static function get_cat_gallery_list($cat_id){
-        $execute_arr = array('cat_id'=>$cat_id);
-        $sql = "SELECT gal.* FROM gallery_cat_assign assign LEFT JOIN gallery gal ON gal.id = assign.gallery_id WHERE assign.cat_id = :cat_id AND gal.active = '1'";  
+    public static function get_cat_gallery_list($cat_id,$site_id){
+        $execute_arr = array('cat_id'=>$cat_id,'site_id'=>$site_id);
+        $sql = "SELECT gal.* FROM gallery_cat_assign assign LEFT JOIN gallery gal ON gal.id = assign.gallery_id WHERE assign.cat_id = :cat_id AND gal.active = '1' AND gal.site_id = :site_id";  
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
         $req->execute($execute_arr);

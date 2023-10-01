@@ -39,10 +39,10 @@
         $gallery_info = false;
 
         if($selected_cat){
-            $gallery_list = siteGallery::get_cat_gallery_list($selected_cat);
+            $gallery_list = siteGallery::get_cat_gallery_list($selected_cat,$site_id);
         }
         else{
-            $gallery_list = siteGallery::get_cat_gallery_list('0');
+            $gallery_list = siteGallery::get_cat_gallery_list('0',$site_id);
         }
         if(!$gallery_list){
             $gallery_list = array();
