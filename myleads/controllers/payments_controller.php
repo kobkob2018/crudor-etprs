@@ -16,7 +16,8 @@
             'user_id'=>$this->user['id'],
             'pay_good'=>'2'
         );
-        $pay_log_list = Myleads_pay_by_cc_log::get_list($filter_arr,"*, DATE_FORMAT(pay_date,'%d-%m-%Y') as pay_date_heb");
+        $payload = array('order_by'=>'id desc');
+        $pay_log_list = Myleads_pay_by_cc_log::get_list($filter_arr,"*, DATE_FORMAT(pay_date,'%d-%m-%Y') as pay_date_heb",$payload);
     
         $this->data['pay_log_list'] = $pay_log_list;
 
