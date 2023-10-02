@@ -121,8 +121,9 @@
                 <INPUT TYPE="hidden" NAME="FixTash" value="True" >
                 <input type="hidden" name="heshDesc" value="'.$details.'">
                 <INPUT TYPE="hidden" NAME="MoreData" value="True" >
-                <INPUT TYPE="hidden" NAME="street" value="'.$this->user['address'].'" >
-                <INPUT TYPE="hidden" NAME="city" value="'.$this->user['city_name'].'" >
+                <INPUT TYPE="hidden" NAME="street" value="'.$this->user['address'].' " >
+                <INPUT TYPE="hidden" NAME="city" value="'.$this->user['city_name'].' " >
+				<INPUT TYPE="hidden" NAME="zip" value=" " >
                 <INPUT TYPE="hidden" NAME="phone" value="'.$this->user['phone'].'" >
                 <INPUT TYPE="hidden" NAME="email" value="'.$this->user['email'].'" >
                 
