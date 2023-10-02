@@ -80,13 +80,13 @@
 		<?php $this->print_action_output(); ?>
 	</div>
 	<div id="footer" class="footer">
-		<a href="https://ilbiz.co.il" class="copyrightBottom" title="איי אל ביז - קידום עסקים באינטרנט">
+		<a href="https://il-biz.co.il" class="copyrightBottom" title="איי אל ביז - קידום עסקים באינטרנט">
 			<img src = "<?= styles_url('style/image/logo-il-biz.png') ?>" alt="איי אל ביז" />
 			
 
 		</a> 
 		&nbsp;&nbsp;&nbsp;
-		<a href="https://ilbiz.co.il" class="copyrightBottom" title="איי אל ביז - קידום עסקים באינטרנט">
+		<a href="https://il-biz.co.il" class="copyrightBottom" title="איי אל ביז - קידום עסקים באינטרנט">
 			קידום עסקים באינטרנט
 		</a> 
 	</div>
