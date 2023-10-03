@@ -77,7 +77,7 @@
                 }
             }
 
-            $new_user_token_id = self::simple_create_by_table_name($new_user_token,"old_user_cctokens");
+            $new_user_token_id = self::simple_create_by_table_name($new_user_token,"user_cc_token");
             $migration_user_token = array(
                 'token_id'=>$new_user_token_id,
                 'user_id'=>$user_id,
