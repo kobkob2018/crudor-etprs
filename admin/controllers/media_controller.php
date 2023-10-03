@@ -70,6 +70,12 @@
         $ext = strtolower(pathinfo($file_name,PATHINFO_EXTENSION));
 
         $file_pre_name = str_replace(".".$ext, '', $file_name);
+        try{
+            $file_pre_name = str_replace(".".strtoupper($ext), '', $file_name);
+        }
+        catch (Exception $e) {
+
+        }
 
         $final_file_name = $this->find_free_file_name($file_pre_name,$ext,$media_dir_path);
 
