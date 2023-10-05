@@ -50,7 +50,7 @@
         'right_banner'=>'pages/banners'
     );
 
-    public static function get_home_page_list($tag = false){
+    public static function get_home_page_list($tag = false, $paging = false){
 
         $current_site = Sites::get_current_site();
         $execute_arr = array('site_id'=>$current_site['id']);
@@ -60,12 +60,35 @@
             $tag_sql = " AND tags LIKE :tag ";
             $execute_arr['tag'] = "%".$tag."%";
         }
-        
-        $sql = "SELECT * FROM content_pages WHERE site_id = :site_id AND active = '1' AND visible = '1' $tag_sql ORDER BY priority desc LIMIT 10";	
+
+        $sql = "SELECT count(id) as item_count FROM content_pages WHERE site_id = :site_id AND active = '1' AND visible = '1' $tag_sql";	
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
+        $count_result = $req->fetch();
+        $item_count = $count_result['item_count'];
+
+        $limit = '10';
+        $paging_page = '0';
+        $paging_pages = '1';
+        $paging_current = '1';
+        if($paging){
+            $limit = $paging['limit'];
+            $paging_page = $paging['page']*$limit;
+            $paging_pages = ceil($item_count/$limit);
+            $paging_current = $paging['page'];
+        }
+
+        $sql = "SELECT * FROM content_pages WHERE site_id = :site_id AND active = '1' AND visible = '1' $tag_sql ORDER BY priority desc LIMIT $paging_page, $limit";	
         $req = $db->prepare($sql);
         $req->execute($execute_arr);
         $page_list = $req->fetchAll();
-        return $page_list;
+        return array(
+            'list'=>$page_list,
+            'count'=>$item_count,
+            'pages'=>$paging_pages,
+            'current'=>$paging_current
+        );
+        //return $page_list;
     }
 
     public static function search_by_str($search){

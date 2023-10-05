@@ -143,6 +143,17 @@ function current_url($add_params = array()){
     return $current_url;
 }
 
+function current_clean_url($add_params = array()){
+    $base_url = get_config('base_url');
+    $current_url = $base_url . $_SERVER["REQUEST_URI"];
+    $current_url_arr = explode("?",$current_url);
+    $current_url = $current_url_arr[0];
+    if(!empty($add_params)){
+        $current_url = add_url_params($current_url, $add_params);
+    }
+    return $current_url;
+}
+
 function add_url_params($url_before, $add_params){
     $url_after_arr = explode("?",$url_before);
     $add_params_str_arr = array();
