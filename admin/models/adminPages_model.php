@@ -84,7 +84,10 @@
             'upload_to'=>'pages/banners',
             'name_file'=>'r_banner_{{row_id}}.{{ext}}'
         ),      
-
+        'tags'=>array(
+            'label'=>'תגיות',
+            'type'=>'text'
+        ),  
     );
 
 
