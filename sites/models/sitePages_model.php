@@ -58,7 +58,7 @@
         $tag_sql = "";
         if($tag){
             $tag_sql = " AND tags LIKE :tag ";
-            $execute_arr['tags'] = $tag;
+            $execute_arr['tag'] = "%".$tag."%";
         }
         
         $sql = "SELECT * FROM content_pages WHERE site_id = :site_id AND active = '1' AND visible = '1' $tag_sql ORDER BY priority desc LIMIT 10";	
