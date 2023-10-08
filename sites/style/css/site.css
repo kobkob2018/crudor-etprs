@@ -623,7 +623,10 @@ a.nice-button{
 }
 
 .kova.page-block p{
-    margin: 0px;
+    margin-top: 0px;
+}
+.kova.page-block h4{
+    margin: 10px;
 }
 
 .kova.page-block img{
