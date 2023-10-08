@@ -122,7 +122,7 @@
       $work_on_site = Sites::get_user_workon_site();
       $site_id = $work_on_site['id'];
       $fixed_values['site_id'] = $site_id;
-
+      $fixed_values['link'] = str_replace(" ","-",$fixed_values['link']);
       return AdminPages::create($fixed_values);
     }
 
