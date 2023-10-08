@@ -615,6 +615,22 @@ a.nice-button{
 
 }
 
+.kova.page-block{
+    border: 1px solid gray;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 3px 3px 5px #dcd2d2;
+}
+
+.kova.page-block p{
+    margin: 0px;
+}
+
+.kova.page-block img{
+    width: 100%;
+}
+
+
 .kova h3,.kova-b h3{
     padding: 5px 10px;
     border-top-right-radius: 18px;
