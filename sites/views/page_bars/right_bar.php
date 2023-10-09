@@ -14,4 +14,5 @@
     <?php if(isset($this->data['is_home_page']) && !$this->data['is_home_page']): ?>
         <?php $this->call_module('scrolling_last_requests','print'); ?>
     <?php endif; ?>
+    <div class="grab-content right-bot-grabber" data-grab="go-right-bot"></div>
 </div>
