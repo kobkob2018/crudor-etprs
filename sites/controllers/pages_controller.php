@@ -115,7 +115,7 @@
       $auto_to_home_main_params = array('landing');
       
       if(!isset($options_arr[$main_param])){
-        return false;
+        return $this->check_migration_redirect();
       }
        
       $found_redirection = false;
@@ -135,6 +135,9 @@
         if($redirection){
           $found_redirection = $redirection['url'];
         }
+        else{
+          
+        }
       }
       if($found_redirection){
         header("Location: $found_redirection", true, 301);
@@ -143,9 +146,121 @@
       elseif(in_array($main_param,$auto_to_home_main_params)){
         $home_url = outer_url();
         header("Location: $home_url", true, 301);
+        return true;
       }
+
+      return $this->check_migration_redirect();
+    }
+
+    protected function check_migration_redirect(){
+      $main_param = $_GET['m'];
+
+      $options_arr = array(
+        's.pr'=>'products',
+        'products'=>'products',
+        'pr'=>'products',
+        'ga'=>'galleries',
+        'text'=>'content_pages'
+      );
+
+      if(!isset($options_arr[$main_param])){
+        return $this->check_migration_redirect();
+      }
+
+      $migration_arr = array(
+        'products'=>array(
+          'url'=>'products/view/',
+          'url_method'=>'add_migration_url_params',
+          'params'=>array(
+            'sub'=>array(
+              'migration_table'=>'migration_product_cat',
+              'item_id_param'=>'cat_id',
+              'item_url_param'=>'cat'
+            ),
+            'cat'=>array(
+              'migration_table'=>'migration_product_sub',
+              'item_id_param'=>'sub_id',
+              'item_url_param'=>'sub'
+            ),
+            'ud'=>array(
+              'migration_table'=>'migration_product',
+              'item_id_param'=>'product_id',
+              'item_url_param'=>'p'
+            )
+          ),
+        ),
+        'galleries'=>array(
+          'url'=>'gallery/view/',
+          'url_method'=>'add_migration_url_params',
+          'params'=>array(
+            'sub'=>array(
+              'migration_table'=>'migration_gallery_cat',
+              'item_id_param'=>'cat_id',
+              'item_url_param'=>'cat'
+            ),
+            'cat'=>array(
+              'migration_table'=>'migration_gallery',
+              'item_id_param'=>'gallery_id',
+              'item_url_param'=>'g'
+            ),
+          ),
+        ),
+        'content_pages'=>array(
+          'url_method'=>'find_content_page_url',
+          'params'=>array(
+            't'=>array(
+              'migration_table'=>'migration_page',
+              'item_id_param'=>'page_id',
+              'item_url_param'=>'p'
+            ),
+          ),
+        ),
+      );
+
+      $migration_unit = $migration_arr[$options_arr[$main_param]];
+      $url_params_arr = array();
+      foreach($migration_unit['params'] as $unit_param_key=>$unit_param){
+        $migration_item = false;
+        if(isset($_GET[$unit_param_key])){
+          $migration_item = TableModel::simple_find_by_table_name(array('old_id'=>$_GET[$unit_param_key]),$unit_param['migration_table'],$unit_param['item_id_param']);
+        }
+        if($migration_item){
+          $url_params_arr[$unit_param['item_url_param']] = $migration_item[$unit_param['item_id_param']];
+        }
+      }
+
+      if(empty($url_params_arr)){
+        return false;
+      }
+
+      $redirect_url = $this->$migration_unit['redirect_method']($migration_unit,$url_params_arr);
+      if($redirect_url){
+        header("Location: $redirect_url", true, 301);
+        return true;
+      }
+
       return false;
     }
+
+    protected function find_content_page_url($migration_unit,$url_params_arr){
+      $page_id = $url_params_arr[$migration_unit['item_url_param']];
+      $content_page = TableModel::simple_find_by_table_name(array('id'=>$page_id),'content_pages','link');
+      if(!$content_page){
+        return false;
+      }
+      return inner_url($content_page['link']);
+    }
+
+    protected function add_migration_url_params($migration_unit,$url_params_arr){
+      $url_params_str_arr = array();
+      foreach($url_params_arr as $key=>$val){
+        $url_params_str_arr[] = "$key=$val";
+      }
+      $url_params_str = implode("&",$url_params_str_arr);
+      $url = inner_url($migration_unit['url'])."?".$url_params_str;
+      return $url;
+    }
+
 
   }
 
