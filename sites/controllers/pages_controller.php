@@ -238,8 +238,8 @@
       if(empty($url_params_arr)){
         return false;
       }
-
-      $redirect_url = $this->$migration_unit['redirect_method']($migration_unit,$url_params_arr);
+      $redirect_method = $this->$migration_unit['redirect_method'];
+      $redirect_url = $this->$redirect_method($migration_unit,$url_params_arr);
       if($redirect_url){
         header("Location: $redirect_url", true, 301);
         return true;
