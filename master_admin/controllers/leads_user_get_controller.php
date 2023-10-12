@@ -1,6 +1,6 @@
 <?php
   class leads_user_getController extends CrudController{
-    public $add_models = array("biz_categories","net_directories");
+    public $add_models = array("biz_categories","net_directories","masterBiz_requests","cities");
 
     function report()
     {
@@ -375,6 +375,7 @@
     }
 
     public function user_csv(){
+        
         $db = Db::getInstance();
         if(isset($_REQUEST['phones_only'])){
             return $this->user_csv_phones_only();
@@ -461,7 +462,39 @@
                 $phone_leads_arr[] = $data_check_u1;
             }
         }
+        $cat_labels = array();
+        $city_labels = array();
         foreach($form_leads_arr as $form_lead){
+            $request_id = $form_lead['request_id'];
+            $biz_request = MasterBiz_requests::get_by_id($form_lead['request_id']);
+            $form_lead['cat_str'] = "לא מוגדר";
+            $form_lead['city_str'] = "לא מוגדר";
+            if($biz_request){
+                $cat_id = $biz_request['cat_id'];
+                if($cat_id != '0'){
+                    if(!isset($cat_labels[$cat_id])){
+                        $cat_tree = Biz_categories::get_item_parents_tree($cat_id,"parent, id, label");
+                        $label_arr = array();
+                        foreach($cat_tree as $cat){
+                            $label_arr[] = $cat['label'];
+                        }
+                        $cat_labels[$cat_id] = implode(", ",$label_arr);
+                    }
+                    $cat_label = $cat_labels[$cat_id];
+                    $form_lead['cat_str'] = $cat_label;
+                }
+                $city_id = $biz_request['city_id'];
+                if(!isset($city_labels[$city_id])){
+                    $city = Cities::get_by_id($city_id,'label');
+                    if($city){
+                        $city_labels[$city_id] = $city['label'];
+                    }
+                }
+                if(isset($city_labels[$city_id])){
+                    $form_lead['city_str'] =$city_labels[$city_id];
+                }
+                    
+            }
             $total_form_leads++;
             $is_doubled = false;
             $doubled_found = false;
@@ -698,10 +731,10 @@
         
         $row_leads_arr[] = array('רשימת טופסי צור קשר:');
         if(!isset($_GET['withouthtml'])){	
-            $lead_h_list = array('תאריך', 'שם מלא', 'דוא"ל', 'טלפון','פתוח','סטטוס','תיוג' , 'מקור הליד','קיבל זיכוי', 'תוכן','בקשה לזיכוי');
+            $lead_h_list = array('תאריך', 'שם מלא','קטגוריה','עיר', 'דוא"ל', 'טלפון','פתוח','סטטוס','תיוג' , 'מקור הליד','קיבל זיכוי', 'תוכן','בקשה לזיכוי');
         }
         else{
-            $lead_h_list = array('תאריך', 'שם מלא', 'דוא"ל', 'טלפון','פתוח','סטטוס','תיוג' , 'מקור הליד','קיבל זיכוי', 'תוכן' );
+            $lead_h_list = array('תאריך', 'שם מלא','קטגוריה','עיר', 'דוא"ל', 'טלפון','פתוח','סטטוס','תיוג' , 'מקור הליד','קיבל זיכוי', 'תוכן' );
         }
         if($advanced_report){
             $lead_h_list[] = "סוג לקוח";
@@ -710,7 +743,7 @@
         $row_leads_arr[] = $lead_h_list;
     
         foreach($form_leads_paybypswd_arr as $lead){
-            $lead_row = array( stripslashes($lead['date_in']) , stripslashes($lead['full_name']) , stripslashes($lead['email']) , stripslashes($lead['phone']), $lead['opened_str'] ,$status_options[$lead['status']] ,$tagin_arr[$lead['tag']]['tag_name']  , $lead['resource_str'],$lead['refunded_str'] , stripslashes($lead['note']));
+            $lead_row = array( stripslashes($lead['date_in']) , stripslashes($lead['full_name']),$lead['cat_str'],$lead['city_str'] , stripslashes($lead['email']) , stripslashes($lead['phone']), $lead['opened_str'] ,$status_options[$lead['status']] ,$tagin_arr[$lead['tag']]['tag_name']  , $lead['resource_str'],$lead['refunded_str'] , stripslashes($lead['note']));
             if(!isset($_GET['withouthtml'])){
                 $lead_row[] = "<a target='_BLANK' href='".inner_url('refund_requests/add_request/')."?lead_id=".$lead['id']."'>שלח בקשה לזיכוי</a>";
             }
