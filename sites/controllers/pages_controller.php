@@ -175,17 +175,20 @@
             'sub'=>array(
               'migration_table'=>'migration_product_cat',
               'item_id_param'=>'cat_id',
-              'item_url_param'=>'cat'
+              'item_url_param'=>'cat',
+              'old_id_col'=>'old_id'
             ),
             'cat'=>array(
               'migration_table'=>'migration_product_sub',
               'item_id_param'=>'sub_id',
-              'item_url_param'=>'sub'
+              'item_url_param'=>'sub',
+              'old_id_col'=>'old_id'
             ),
             'ud'=>array(
               'migration_table'=>'migration_product',
               'item_id_param'=>'product_id',
-              'item_url_param'=>'p'
+              'item_url_param'=>'p',
+              'old_id_col'=>'old_id'
             )
           ),
         ),
@@ -196,12 +199,14 @@
             'sub'=>array(
               'migration_table'=>'migration_gallery_cat',
               'item_id_param'=>'cat_id',
-              'item_url_param'=>'cat'
+              'item_url_param'=>'cat',
+              'old_id_col'=>'old_id'
             ),
             'cat'=>array(
               'migration_table'=>'migration_gallery',
               'item_id_param'=>'gallery_id',
-              'item_url_param'=>'g'
+              'item_url_param'=>'g',
+              'old_id_col'=>'old_id'
             ),
           ),
         ),
@@ -211,7 +216,8 @@
             't'=>array(
               'migration_table'=>'migration_page',
               'item_id_param'=>'page_id',
-              'item_url_param'=>'p'
+              'item_url_param'=>'p',
+              'old_id_col'=>'old_page_id'
             ),
           ),
         ),
@@ -222,7 +228,7 @@
       foreach($migration_unit['params'] as $unit_param_key=>$unit_param){
         $migration_item = false;
         if(isset($_GET[$unit_param_key])){
-          $migration_item = TableModel::simple_find_by_table_name(array('old_id'=>$_GET[$unit_param_key]),$unit_param['migration_table'],$unit_param['item_id_param']);
+          $migration_item = TableModel::simple_find_by_table_name(array($unit_param['old_id_col']=>$_GET[$unit_param_key]),$unit_param['migration_table'],$unit_param['item_id_param']);
         }
         if($migration_item){
           $url_params_arr[$unit_param['item_url_param']] = $migration_item[$unit_param['item_id_param']];
