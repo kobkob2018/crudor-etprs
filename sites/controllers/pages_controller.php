@@ -249,7 +249,7 @@
     }
 
     protected function find_content_page_url($migration_unit,$url_params_arr){
-      $page_id = $url_params_arr[$migration_unit['item_url_param']];
+      $page_id = $url_params_arr['p'];
       $content_page = TableModel::simple_find_by_table_name(array('id'=>$page_id),'content_pages','link');
       if(!$content_page){
         return false;
