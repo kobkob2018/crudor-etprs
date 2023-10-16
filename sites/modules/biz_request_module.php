@@ -11,6 +11,29 @@
             ,"leads_complex");
 
         protected $lead_info;
+
+        protected function add_spam_request($return_array, $reason, $form_info){
+            
+            $return_array['html'] = $this->controller->include_ob_view('biz_form/request_success_mokup.php');               
+            $lead_info = array();
+            if(isset($_REQUEST['biz'])){
+                $lead_info = $_REQUEST['biz'];
+                $lead_info['ip'] = $_SERVER['REMOTE_ADDR'];
+            }
+
+            $json_form = json_encode($form_info);
+            $json_lead = json_encode($lead_info);
+            $spam_row = array(
+                'reason'=>$reason,
+                'site_id'=>$this->controller->data['site']['id'],
+                'form_info'=>$json_form,
+                'lead_info'=>$json_lead,
+
+            );
+            TableModel::simple_create_by_table_name($spam_row,'biz_requests_spam');
+            return $return_array;
+        }
+
         public function enter_lead(){
             $action_data = $this->action_data;
             $form_info = $this->controller->data['form_info'];
@@ -18,12 +41,12 @@
            
             if(!$this->validate_multiple_requests()){
 				$return_array['c-token'] = "904";
-                $return_array['html'] = $this->controller->include_ob_view('biz_form/request_success_mokup.php');               
-                return $return_array;
+                return $this->add_spam_request($return_array, "multiple requests",$form_info);
             }
 
             if(!$form_info){
-                return;
+                $return_array['c-token'] = "907";
+                return $this->add_spam_request($return_array, "empty request",array());
             }
 
             $return_array = $this->validate_request($return_array);
@@ -32,14 +55,17 @@
 
             if(!$return_array['success']){
 				$return_array['c-token'] = "905";
-                return $return_array;
+                $reason = "invalid request unknown";
+                if(isset($return_array['reason'])){
+                    $reason = $return_array['reason'];
+                }
+                return $this->add_spam_request($return_array, $reason, $form_info);
             }
 
             $recapcha_valid = $this->validate_recapcha();
             if(!$recapcha_valid){
 				$return_array['c-token'] = "906";
-                $return_array['html'] = $this->controller->include_ob_view('biz_form/request_success_mokup.php');               
-                return $return_array;
+                return $this->add_spam_request($return_array, "recapcha invalid",$form_info);
             }
 
             $have_meny_phone_duplications = $this->validate_phone_duplications($return_array);
@@ -51,8 +77,7 @@
             
             //create duplication mockup for spammers, with a success true result
             if($have_meny_phone_duplications){
-                $return_array['html'] = $this->controller->include_ob_view('biz_form/request_success_mokup.php');
-                return $return_array;
+                return $this->add_spam_request($return_array, "multiple phones",$form_info);
             }
 
            
@@ -189,6 +214,7 @@
             
             if(!filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)){
                 $return_array['success'] = false;
+                $return_array['reason'] = "invalid IP address";
                 $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
                 return $return_array;
             }
@@ -198,6 +224,7 @@
                 $blocked_ips = get_config('blocked_ips');
                 if(str_contains($blocked_ips, $_SERVER['REMOTE_ADDR'])){
                     $return_array['success'] = false;
+                    $return_array['reason'] = "IP blocked";
                     $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
                     return $return_array;
                 }
@@ -205,6 +232,7 @@
             
             if(!isset($_REQUEST['biz']) || ! is_array($_REQUEST['biz'])){
                 $return_array['success'] = false;
+                $return_array['reason'] = "empty request";
                 $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
                 return $return_array;
             }
@@ -213,6 +241,7 @@
                 $blocked_phones = get_config('blocked_phones');
                 if(str_contains($blocked_phones, $_REQUEST['biz']['phone'])){
                     $return_array['success'] = false;
+                    $return_array['reason'] = "phone blocked";
                     $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
                     return $return_array;
                 }
@@ -238,6 +267,7 @@
                 
                 if(!isset($_REQUEST['biz'][$field_key])){
                     $return_array['success'] = false;
+                    $return_array['reason'] = "missing field: ".$field_key;
                     $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
                     return $return_array;
                 }
@@ -249,6 +279,7 @@
 
             if(!$validate_result['success']){
                 $return_array['success'] = false;
+                $return_array['reason'] = "invalid fields";
                 $return_array['error'] = array('msg'=>$validate_result['err_messages']);
                 return $return_array;
             }

@@ -14,10 +14,26 @@
             $this->session_filter = session__get("biz_requests_filter");
         }
     }
- 
+
+    protected function init_spam_filter_session(){
+        $this->session_filter = array();
+        if(isset($_REQUEST['filter'])){
+            $this->session_filter = $_REQUEST['filter'];
+            session__set("biz_requests_spam_filter", $this->session_filter);
+        }
+        elseif(session__isset("biz_requests_spam_filter")){
+            $this->session_filter = session__get("biz_requests_spam_filter");
+        }
+    }
+    
     protected function reset_filter(){
         session__unset('biz_requests_filter');
         return $this->redirect_to(inner_url('biz_requests/list/'));
+    }
+
+    protected function reset_spam_filter(){
+        session__unset('biz_requests_spam_filter');
+        return $this->redirect_to(inner_url('biz_requests/spam_list/'));
     }
 
     public function status_update(){
@@ -158,6 +174,72 @@
         );
         $this->include_view('biz_requests/list.php',$info);
     }
+
+
+    public function spam_list(){
+        $this->add_model("masterBiz_requests_spam");
+        if(isset($_REQUEST['reset_spam_filter'])){
+            return $this->reset_spam_filter();
+        }
+        $this->init_spam_filter_session();
+        $filter_input = array(
+            'page'=>$this->get_request_filter_param('page','1'),
+            'page_limit'=>'100',
+            'date_s'=>$this->get_request_filter_param('date_s', $this->get_default_date_s()),
+            'date_e'=>$this->get_request_filter_param('date_e'),
+            'ip'=>$this->get_request_filter_param('ip'),
+            'free'=>$this->get_request_filter_param('free'),
+        );
+
+
+
+        $filter = array(
+            'page'=>$filter_input['page'],
+            'page_limit'=>$filter_input['page_limit'],
+            'date_s'=>$this->get_en_date($filter_input['date_s']),
+            'date_e'=>$this->get_en_date($filter_input['date_e']),
+            'ip'=>$filter_input['ip'],
+            'free'=>$filter_input['free']
+        );
+
+        $biz_requests_arr = MasterBiz_requests_spam::get_request_list($filter);
+        $row_count = $biz_requests_arr['row_count'];
+        $next_page = true;
+        $page_limit = intval($filter['page_limit']);
+        $page_i = 1;
+        $page_options = array();
+        $page = intval($filter['page']);
+        while($next_page){
+            $page_option = array(
+                'index'=>$page_i,
+                'selected_str'=>'',
+            );
+
+            if($page_i == $page){
+                $page_option['selected_str'] = ' selected ';
+            }
+            $page_options[] = $page_option;
+            $limit_count = $page_i*$page_limit;
+            if($limit_count < $row_count){
+                $page_i++;
+            }
+            else{
+                $next_page = false;
+            }
+        }
+
+        //print_r_help($page_options);
+
+        $biz_requests = $biz_requests_arr['biz_requests'];
+
+        $info = array(
+            'filter'=>$filter,
+            'filter_input'=>$filter_input,
+            'page_options'=>$page_options,
+            'biz_requests'=>$biz_requests
+        );
+        $this->include_view('biz_requests/spam_list.php',$info);
+    }    
 
     public function view(){
         

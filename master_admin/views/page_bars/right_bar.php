@@ -73,6 +73,9 @@
             <li class="bar-item <?= $view->a_class('biz_requests/list/') ?>">
                 <a href="<?= inner_url('biz_requests/list/?reset_filter=1') ?>" title="בקשות להצעת מחיר" class="a-link">בקשות להצעת מחיר</a>
             </li> 
+            <li class="bar-item <?= $view->a_class('biz_requests/spam_list/') ?>">
+                <a href="<?= inner_url('biz_requests/spam_list/?reset_spam_filter=1') ?>" title="ספאם" class="a-link">ספאם</a>
+            </li> 
             <li class="bar-item <?= $view->a_class("users_leads/list/") ?>">
                 <a href="<?= inner_url('users_leads/list/') ?>" title="לידים ללקוחות שנבחרו" class="a-link">לידים ללקוחות שנבחרו</a>
             </li> 
