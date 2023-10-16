@@ -16,6 +16,9 @@
                 $cat_phone_arr['phone'] = $cat['cat_phone'];
             }
         }
+        if($cat_phone_arr['phone'] == ""){
+            $cat_phone_arr['display_class'] = 'hidden';
+        }
         $cat_display_hours_fallbeck = true;
         $cat_i_check = count($cat_tree);
         while($cat_display_hours_fallbeck){
