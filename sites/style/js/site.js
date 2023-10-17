@@ -36,6 +36,7 @@ function close_all_top_submenus(){
 
 function toggleDrawer(drawerId){
     let drawer = document.getElementById(drawerId + "_wrap");
+    let drawer_overlay = document.getElementById(drawerId + "_overlay");
     if(!drawer.classList.contains('opened')){
         if(!drawer.classList.contains('right-menu-added')){
             drawer.classList.add('right-menu-added');
@@ -47,6 +48,9 @@ function toggleDrawer(drawerId){
         //drawer.style.width = "250px";
         drawer.style.right = "0px";
        // drawer.style.display = "block";
+       if(drawer_overlay){
+        drawer_overlay.classList.add("hidden");
+       }
     }
     else{
         drawer.classList.remove('opened');
@@ -54,6 +58,9 @@ function toggleDrawer(drawerId){
        // drawer.style.width = "0";
         drawer.style.right = "-400px";
        // drawer.style.display = "none";
+       if(drawer_overlay){
+        drawer_overlay.classList.remove("hidden");
+       }
     }
 }
 
