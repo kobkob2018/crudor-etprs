@@ -49,7 +49,7 @@ function toggleDrawer(drawerId){
         drawer.style.right = "0px";
        // drawer.style.display = "block";
        if(drawer_overlay){
-        drawer_overlay.classList.add("hidden");
+        drawer_overlay.classList.remove("hidden");
        }
     }
     else{
@@ -59,7 +59,7 @@ function toggleDrawer(drawerId){
         drawer.style.right = "-400px";
        // drawer.style.display = "none";
        if(drawer_overlay){
-        drawer_overlay.classList.remove("hidden");
+        drawer_overlay.classList.add("hidden");
        }
     }
 }
