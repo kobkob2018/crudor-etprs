@@ -25,13 +25,6 @@ a{
     color: <?= $info['colors']['top-fix-link-hover'] ?>;
 }
 
-
-
-.header-mid, .kova-b h3{
-    background: <?= $info['colors']['header-mid-bg'] ?>;
-    color: <?= $info['colors']['header-mid-color'] ?>;
-}
-
 .header-mid a{
     color: <?= $info['colors']['header-mid-color'] ?>;
 }
@@ -53,7 +46,10 @@ a{
     color: <?= $info['colors']['big-title-color'] ?>;   
 }
 
-
+.header-mid, .kova-b h3{
+    background: <?= $info['colors']['header-mid-bg'] ?>;
+    color: <?= $info['colors']['header-mid-color'] ?>;
+} 
 
 .big-title a{
     color: <?= $info['colors']['big-title-color'] ?>;   
