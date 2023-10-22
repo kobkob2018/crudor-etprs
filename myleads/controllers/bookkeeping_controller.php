@@ -88,7 +88,7 @@
                 'SendHesh'=>'True',
                 'UTF8'=>'True',                
             );
-
+            
             $postData = '';
             //create name value pairs seperated by &
             foreach($params as $k => $v) 
@@ -115,12 +115,9 @@
                 }
             }
             if($result['CCode'] == '0'){
-                $yaad_return_url = outer_url('yaad_return/ok/')."?Id=".$result['Id']."&CCode=".$result['CCode']."&Amount=".$result['Amount']."&ACode=".$result['ACode']."&Order=".$pay_by_cc_log_id."&Payments=1&UserId=".$user_token_data['customer_ID_number']."&Hesh=".$result['Hesh']."";
-                print_r_help($result);
-                
-                print_help($yaad_return_url);
 
-                exit();
+                $yaad_return_url = outer_url('yaad_return/ok/')."?Id=".$result['Id']."&CCode=".$result['CCode']."&Amount=".$result['Amount']."&ACode=".$result['ACode']."&Order=".$pay_by_cc_log_id."&Payments=".$params['Tash']."&UserId=".$user_token_data['customer_ID_number']."&Hesh=".$result['Hesh']."";
+
                 return $this->redirect_to($yaad_return_url);
             }
             else{
