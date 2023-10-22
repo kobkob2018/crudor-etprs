@@ -1,7 +1,7 @@
 <?php
 
   class BookkeepingController extends CrudController{
-    public $add_models = array('user_cc_token','myleadsUser_bookkeeping');
+    public $add_models = array('user_cc_token','myleadsUser_bookkeeping','myleads_pay_by_cc_log');
 
     protected function get_info(){
         $info = MyleadsUser_bookkeeping::find(array('user_id'=>$this->user['id']));
@@ -37,25 +37,24 @@
         return $this->include_view('bookkeeping/hosting_payment.php',$info); 
     }
 
-    public function send_to_yaad(){
-        $buy_c = (int)$_REQUEST['num_credit'];
+    public function send_to_yaad_hosting(){
 
-		$this->data['user_lead_settings'] = Leads_user::get_leads_user_data($this->user);	
-        if(!($buy_c > 0) ){
-            SystemMessages::add_err_message("אירעה שגיאה. אנא נסה שוב");
-            return $this->redirect_to(inner_url());   
+        $info = $this->get_info();
+        if(!$info['allow_host_payment']){
+            SystemMessages::add_err_message("אין אפשרות לחדש את תוקף האחסון. אנא פנה לשירות לקוחות למידע נוסף");
+            return $this->redirect_to(inner_url("bookkeeping/view/"));
         }
 
-        $new_p = $buy_c * $this->data['user_lead_settings']['lead_price'];
+        $new_p = $info['hostPriceYear'];
 
-        $details = "קניית"." ".$buy_c." "."לידים";
+        $details = "חידוש תוקף אכסון";
 
         $pay_by_cc_log_data = array(
             'sum_total'=>$new_p,
             'details'=>$details,
             'user_id'=>$this->user['id'],
-            'handle_module'=>'credits',
-            'handle_method'=>'submit_pay',
+            'handle_module'=>'bookkeeping',
+            'handle_method'=>'submit_hosting_pay',
             'lounch_id'=>'0'
         );
 
@@ -64,14 +63,12 @@
         $yaad_api_url = get_config('yaad_api_url');
         if($_REQUEST['use_token']!='0'){
 
-            $user_token_arr = User_cc_token::get_list(array('user_id'=>$this->user['id'],'L4digit'=>$_REQUEST['use_token']));
+            $user_token_data = User_cc_token::find(array('user_id'=>$this->user['id'],'L4digit'=>$_REQUEST['use_token']));
 
-            if((!$user_token_arr) || (!isset($user_token_arr[0]))){
+            if((!$user_token_data)){
                 SystemMessages::add_err_message("אירעה שגיאה בחיוב");
-                return $this->eject_redirect();
+                return $this->redirect_to(inner_url("bookkeeping/view/"));
             }
-
-            $user_token_data = $user_token_arr[0];
 					
             $params = array(
                 'Masof'=>get_config('yaad_api_masof'),
@@ -89,11 +86,7 @@
                 'ClientLName'=>$_REQUEST['biz_name'],
                 'Tash'=>$_REQUEST['Tash'],
                 'SendHesh'=>'True',
-                'UTF8'=>'True',
-                //'ClientName'=>$userName_arr[0],
-                //'ClientLName'=>$userName_arr[0],
-                // 'allowFalse'=>'True',
-                
+                'UTF8'=>'True',                
             );
 
             $postData = '';
@@ -128,7 +121,7 @@
             else{
                 SystemMessages::add_err_message("הפעולה נכשלה, אחד הפרטים אינם נכונים. אנא נסה שוב.");
                 SystemMessages::add_err_message("code: ".$result['CCode']);
-                return $this->redirect_to(inner_url('payments/list/'));
+                return $this->redirect_to(inner_url('bookkeeping/view/'));
             }
         }
         else{
@@ -144,7 +137,7 @@
                 <INPUT TYPE="hidden" NAME="Order" value="'.$pay_by_cc_log_id.'" >
                 <INPUT TYPE="hidden" NAME="Info" value ="'.$details.'" >
                 <input type="hidden" name="SendHesh" value="true">
-                <INPUT TYPE="hidden" NAME="Tash" value="1" >
+                <INPUT TYPE="hidden" NAME="Tash" value="12" >
                 <INPUT TYPE="hidden" NAME="FixTash" value="True" >
                 <input type="hidden" name="heshDesc" value="'.$details.'">
                 <INPUT TYPE="hidden" NAME="MoreData" value="True" >
