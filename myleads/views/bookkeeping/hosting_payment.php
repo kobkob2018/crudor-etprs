@@ -78,7 +78,7 @@
                                             <div class="payments-select-wrap form-group" >
                                                 בחר מספר תשלומים: <br/>
 
-                                                <select id='payments_input' name='num_credit' class='input_style' data-msg="אנא בחר מספר תשלומים">
+                                                <select id='payments_input' name='Tash' class='input_style' data-msg="אנא בחר מספר תשלומים">
                                                     <?php for($i=1;$i<13;$i++): ?>
                                                         <option value="<?= $i ?>"><?= $i ?></option>
                                                     <?php endfor; ?>
@@ -136,7 +136,7 @@
 
        
            
-    <?php if($info['allow_host_payment']): ?>
+    <?php if($info['allow_domain_payment']): ?>
         <div class="hosting-details focus-box book-box sub-focus">
 
                 
