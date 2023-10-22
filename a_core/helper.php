@@ -194,6 +194,11 @@ function wigt($val){
 }
 
 
+function days_to($dt){
+    $mkt_diff   = strtotime($dt) - time();
+    return floor( $mkt_diff/60/60/24 ) + 1; # 0 = today, -1 = yesterday, 1 = tomorrow
+}
+
 function system_path($file_path){
     global $init_request;
     

@@ -338,6 +338,12 @@
         }
 
         protected function add_city_info_to_lead_info(){
+            if($this->lead_info['city_id'] == '0' || $this->lead_info['city_id'] == ''){
+                $main_city = Cities::find(array('parent'=>'0'));
+                if($main_city && isset($main_city['id'])){
+                    $this->lead_info['city_id'] = $main_city['id'];
+                }
+            }
             $city_offsrings = Cities::simple_get_item_offsprings($this->lead_info['city_id'],"id");
             $this->lead_info['city_offsrings'] = $city_offsrings;
             $city_tree = Cities::simple_get_item_parents_tree($this->lead_info['city_id'],"*");

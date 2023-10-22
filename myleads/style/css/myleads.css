@@ -72,6 +72,21 @@ h4{
     box-shadow: 3px 4px 7px #c1bebe;
 }
 
+.focus-box{
+    padding: 10px;
+    background: #f5efef;
+    border: 1px solid gray;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #ababab;
+    max-width: 1050px;
+    margin: 20px auto;
+    display: block;
+} 
+
+.focus-box.sub-focus {
+    background: #fefdf07d;
+}
+
 .messages li{
     list-style: inside;
 }

@@ -4,16 +4,15 @@
     protected static $main_table = 'user_bookkeeping';
 
     public static $fields_collection = array(
-
         'hostPriceMon'=>array(
             'label'=>'מחיר אכסון',
             'type'=>'text',
             'default'=>'0',
             'validation'=>'float'
-        ),  
+        ), 
 
-        'domainEndDate'=>array(
-            'label'=>'תאריך תפוגת דומיין',
+        'hostEndDate'=>array(
+            'label'=>'תאריך תפוגת אחסון',
             'type'=>'date',
             'default'=>'2050-01-01',
             'validation'=>'required, date'
@@ -24,14 +23,16 @@
             'type'=>'text',
             'default'=>'0',
             'validation'=>'float'
-        ), 
+        ),   
 
-        'hostPriceMon'=>array(
-            'label'=>'מחיר אכסון',
-            'type'=>'text',
-            'default'=>'0',
-            'validation'=>'float'
-        ),  
+        'domainEndDate'=>array(
+            'label'=>'תאריך תפוגת דומיין',
+            'type'=>'date',
+            'default'=>'2050-01-01',
+            'validation'=>'required, date'
+        ),
+
+ 
 
         'advertisingPrice'=>array(
             'label'=>'מחיר פרסום',
