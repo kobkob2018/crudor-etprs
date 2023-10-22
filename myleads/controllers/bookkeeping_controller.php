@@ -138,7 +138,7 @@
                 <INPUT TYPE="hidden" NAME="Info" value ="'.$details.'" >
                 <input type="hidden" name="SendHesh" value="true">
                 <INPUT TYPE="hidden" NAME="Tash" value="12" >
-                <INPUT TYPE="hidden" NAME="FixTash" value="True" >
+                <INPUT TYPE="hidden" NAME="FixTash" value="False" >
                 <input type="hidden" name="heshDesc" value="'.$details.'">
                 <INPUT TYPE="hidden" NAME="MoreData" value="True" >
                 <INPUT TYPE="hidden" NAME="street" value="'.$this->user['address'].' " >

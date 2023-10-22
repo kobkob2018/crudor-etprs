@@ -14,7 +14,7 @@
         <div class="table-th row">
             <div class="col">מחיר כולל מע"מ</div>
             <div class="col">פרטים</div>
-
+            <div class="col">תשלומים</div>
             <div class="col">תאריך אחרון לתשלום</div>
             <div class="col">סטטוס תשלום</div>
             <div class="col">ביטול</div>
@@ -27,6 +27,9 @@
 
                 <div class="col">
                     <?= nl2br($fee_lounch['details']) ?>
+                </div>
+                <div class="col">
+                    <?=$fee_lounch['tash'] ?>
                 </div>
                 <div class="col">
                     <?= hebdt($fee_lounch['until_date'],'d-m-Y') ?>
