@@ -24,6 +24,9 @@
                 if(isset($_REQUEST['Tash'])){
                     $lounch_fee_data['tash'] = $_REQUEST['Tash'];
                 }
+
+                print_r_help($_REQUEST);
+                exit();
                 $lounch_fee_id = Myleads_lounch_fee::create($lounch_fee_data);
                 $log_update = array(
                     'lounch_id' =>  $lounch_fee_id
