@@ -52,7 +52,7 @@
                 </h4>
                 <ol>
                     <li>
-                        באמצעות כרטיס אשראי, עד 12 תשלומים ללא רבית והצמדה, לחץ כאן לטופס סליקה * 
+                        באמצעות כרטיס אשראי, עד 12 תשלומים ללא רבית והצמדה * 
                         <div class="booking-pay-form">
                             <h4>לתשלום בכרטיס אשראי</h4>
                             <form action='bookkeeping/send_to_yaad_hosting/' method='post' name='sendto_Bookkeeping' id='sendto_yaad_hosting_form'>	
@@ -162,7 +162,7 @@
                 </h4>
                 <ol>
                     <li>
-                        באמצעות כרטיס אשראי, עד 12 תשלומים ללא רבית והצמדה, לחץ כאן לטופס סליקה * 
+                        באמצעות כרטיס אשראי, עד 12 תשלומים ללא רבית והצמדה * 
                         <div class="booking-pay-form">
                             <h4>לתשלום בכרטיס אשראי</h4>
                             <form action='bookkeeping/send_to_yaad_domain/' method='post' name='sendto_Bookkeeping' id='sendto_yaad_domain_form'>	

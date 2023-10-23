@@ -13,7 +13,12 @@ class Cron_masterController extends CrudController{
       ),
     ),
     'hourly'=>array(),
-    'daily_mornings'=>array(),
+    'daily_mornings'=>array(
+      array('label'=>'send_bookeeping_alerts', 
+        'module'=>'cron_bookkeeping',
+        'action'=>'daily_alerts'
+      ),
+    ),
     'daily_midnight'=>array(),
     'weekly_night_time'=>array(
       'Sun'=>array(),

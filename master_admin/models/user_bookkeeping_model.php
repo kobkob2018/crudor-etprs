@@ -93,5 +93,54 @@
         ),
 
     );
+
+    public static function get_users_to_alert_hosting($days_before){ //DATE_SUB(NOW() + INTERVAL 1 DAY)
+//SELECT * FROM user_bookkeeping WHERE hostPriceMon > 0 AND hostEndDate = DATE_SUB(NOW(), INTERVAL 1 DAY);
+        //SELECT * FROM user_bookkeeping WHERE hostPriceMon > 0 AND hostEndDate = DATE_SUB(NOW() + INTERVAL 1 DAY)
+        $db = Db::getInstance();
+        $sql = "SELECT * FROM user_bookkeeping WHERE hostPriceMon > 0 AND hostEndDate = DATE(NOW() + INTERVAL :days_before DAY)";
+        $req = $db->prepare($sql);
+        $sql_arr = array('days_before'=>$days_before);
+        $req->execute($sql_arr);
+        $book_list = $req->fetchAll();
+        foreach($book_list as $book_id=>$book){
+            $book['user'] = Users::get_by_id($book['user_id']);
+            $book['hostPriceYear'] = $book['hostPriceMon']*12*1.17;
+            $book_list[$book_id] = $book;
+        }
+        return $book_list;
+    }
+
+    public static function get_users_to_alert_domain($days_before){
+        $db = Db::getInstance();
+        $sql = "SELECT * FROM user_bookkeeping WHERE domainPrice > 0 AND domainEndDate = DATE(NOW() + INTERVAL :days_before DAY)";
+        $req = $db->prepare($sql);
+        $sql_arr = array('days_before'=>$days_before);
+        $req->execute($sql_arr);
+        $book_list = $req->fetchAll();
+        foreach($book_list as $book_id=>$book){
+            $book['user'] = Users::get_by_id($book['user_id']);
+            $book['domainPriceTotal'] = $book['domainPrice']*1.17;
+            
+            $book_list[$book_id] = $book;
+        }
+        return $book_list;
+    }
+
+    public static function get_users_to_alert_domain_admin($days_before){
+        $db = Db::getInstance();
+        $sql = "SELECT * FROM user_bookkeeping WHERE domainPrice = 0 AND domainEndDate = DATE(NOW() + INTERVAL :days_before DAY)";
+        $req = $db->prepare($sql);
+        $sql_arr = array('days_before'=>$days_before);
+        $req->execute($sql_arr);
+        $book_list = $req->fetchAll();
+        foreach($book_list as $book_id=>$book){
+            $book['user'] = Users::get_by_id($book['user_id']);
+            $book['domainPriceTotal'] = $book['domainPrice']*1.17;
+            $book_list[$book_id] = $book;
+        }
+        return $book_list;
+    }
+
 }
 ?>
