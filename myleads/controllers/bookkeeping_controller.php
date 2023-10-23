@@ -10,44 +10,45 @@
         $info['domain_days'] = days_to($info['domainEndDate']);
         $info['have_hosting'] = ($info['hostPriceMon'] > 0);
         $info['have_domain'] = ($info['domainPrice'] > 0);
-
+        $info['domainPriceTotal'] = $info['domainPrice']*1.17;
         $info['allow_host_payment'] = $info['have_hosting'] && ($info['hosting_days'] < 61);
-
         $info['allow_domain_payment'] = $info['have_domain'] && ($info['domain_days'] < 61);
-
         $info['user_cc_tokens'] =  User_cc_token::get_list(array('user_id'=>$this->user['id']));
         return $info;
     }
 
     public function view(){
         $info = $this->get_info();
-        
-        
-        return $this->include_view('bookkeeping/hosting_payment.php',$info); 
-    }
-
-    public function hosting_payment(){
-        $info = $this->get_info();
-        $info['hostPriceYear'] = $info['hostPriceMon']*12;
-        print_r_help($info);
-        if($info['hostPriceMon'] == '0'){
+        if(!($info['have_hosting'] || $info['have_domain'])){
             SystemMessages::add_err_message("אינך צריך לשלם על אחסון אתר");
             return $this->redirect_to(inner_url(""));
-        }
-        return $this->include_view('bookkeeping/hosting_payment.php',$info); 
+        }    
+        return $this->include_view('bookkeeping/view.php',$info); 
     }
 
     public function send_to_yaad_hosting(){
-
         $info = $this->get_info();
         if(!$info['allow_host_payment']){
             SystemMessages::add_err_message("אין אפשרות לחדש את תוקף האחסון. אנא פנה לשירות לקוחות למידע נוסף");
             return $this->redirect_to(inner_url("bookkeeping/view/"));
         }
-
         $new_p = $info['hostPriceYear'];
+        $details = "חידוש תוקף אכסון לשנה";
+        return $this->send_to_yaad($new_p,$details,'12');
+    }
 
-        $details = "חידוש תוקף אכסון";
+    public function send_to_yaad_domain(){
+        $info = $this->get_info();
+        if(!$info['allow_host_payment']){
+            SystemMessages::add_err_message("אין אפשרות לחדש את תוקף הדומיין. אנא פנה לשירות לקוחות למידע נוסף");
+            return $this->redirect_to(inner_url("bookkeeping/view/"));
+        }
+        $new_p = $info['domainPriceTotal'];
+        $details = "חידוש תוקף דומיין לשנה";
+        return $this->send_to_yaad($new_p,$details);
+    }
+
+    public function send_to_yaad($new_p,$details,$allow_payments = '1'){
 
         $pay_by_cc_log_data = array(
             'sum_total'=>$new_p,
@@ -139,7 +140,7 @@
                 <INPUT TYPE="hidden" NAME="Order" value="'.$pay_by_cc_log_id.'" >
                 <INPUT TYPE="hidden" NAME="Info" value ="'.$details.'" >
                 <input type="hidden" name="SendHesh" value="true">
-                <INPUT TYPE="hidden" NAME="Tash" value="12" >
+                <INPUT TYPE="hidden" NAME="Tash" value="'.$allow_payments.'" >
                 <INPUT TYPE="hidden" NAME="FixTash" value="False" >
                 <input type="hidden" name="heshDesc" value="'.$details.'">
                 <INPUT TYPE="hidden" NAME="MoreData" value="True" >
