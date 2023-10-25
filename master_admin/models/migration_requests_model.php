@@ -57,7 +57,7 @@
         }
 
         //migrate requests
-        $sql = "SELECT * FROM estimate_form WHERE id > :latest_id LIMIT 2000";
+        $sql = "SELECT * FROM estimate_form WHERE id > :latest_id LIMIT 8000";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('latest_id'=>$latest_migrate_request_id));
         $requests = $req->fetchAll();
