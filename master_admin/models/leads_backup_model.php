@@ -88,7 +88,7 @@
         }
 
         $bk_db = self::getLeadsDb();
-        $where_arr = self::get_where_arr($filter);
+        $where_arr = self::get_where_arr($filter,'sites_leads_stat');
         $where_str = $where_arr['where_str'];
         $where_params = $where_arr['where_params'];
         
