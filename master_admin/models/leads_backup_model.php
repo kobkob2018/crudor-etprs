@@ -163,7 +163,7 @@
                 $where_str .= " AND (req.phone LIKE :free OR req.email LIKE :free OR req.name LIKE :free) ";
             }
             else{
-                $where_str .= " AND (req.phone LIKE :free) ";
+                $where_str .= " AND (req.call_from LIKE :free) ";
             }
             $where_params['free'] = "%".$filter['free']."%";
         }

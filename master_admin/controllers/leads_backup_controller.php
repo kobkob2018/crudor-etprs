@@ -76,7 +76,7 @@
             'filter_input'=>$filter_input,
             'page_options'=>$page_options,
             'biz_requests'=>$biz_requests,
-            'calls_list'=>$calls_list['calls']
+            'calls'=>$calls_list['calls']
         );
         $this->include_view('leads_backup/list.php',$info);
     }
