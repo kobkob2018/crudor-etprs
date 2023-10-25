@@ -1,10 +1,9 @@
-<h2>ייבוא גלריות מאתר המקור</h2>
-<?php $this->include_view("migration_site/header.php"); ?>
+<h2>ייבוא לידים</h2>
 <?php if($info['migration_exist']): ?>
     <div class="focus-box red">
-        כבר קיימות גלריות מיובאות באתר זה. על מנת לייבא, יש למחוק את הייבוא הקודם.
+        כבר קיימות גלריות מיובאות באתר זה.ניתן למחוק את הייבוא הקודם.
         <a class="button-focus" href="<?= inner_url('migration_requests/delete_older/') ?>">
-            לחץ כאן למחיקת ייבוא גלריות ישן
+            לחץ כאן למחיקת ייבוא לידים ישן
         </a>
     </div>
 <?php endif; ?>
