@@ -143,6 +143,47 @@
     <?php endforeach; ?>
 </div>
 
+
+<h3>
+    תוצאות מרשימות אנשי קשר
+</h3>
+
+<div class="request-list flex-table">
+    <div class="request-list-th table-th row">
+        <div class="col">
+            תאריך
+        </div>
+        <div class="col">
+            שם מלא
+        </div>
+        <div class="col">
+            טלפון
+        </div>
+        <div class="col">
+            אימייל
+        </div>
+    </div>
+    <?php foreach($info['biz_requests'] as $biz_request): ?>
+        <div class="request-list-tr table-tr row">
+        <div class="col">
+            <?= hebdt($biz_request['insert_date'],"d-m-Y") ?><br/>
+            <?= hebdt($biz_request['insert_date'],"H:i") ?><br/>
+        </div>
+       
+        <div class="col">
+            <?= $biz_request['name'] ?>
+        </div>
+        <div class="col">
+            <?= $biz_request['phone'] ?>
+        </div>
+        <div class="col">
+            <?= $biz_request['email'] ?>
+        </div>
+    </div>       
+    <?php endforeach; ?>
+</div>
+
+
 <script type="text/javascript">
     document.querySelectorAll(".filter-a-clicker").forEach(clicker=>{
         const c_wrap = clicker.closest(".filter-wrap");

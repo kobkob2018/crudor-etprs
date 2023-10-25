@@ -42,6 +42,7 @@
        
         $biz_requests_arr = Leads_backup::get_request_list($filter);
         $calls_list = Leads_backup::get_calls_list($filter);
+        $contacts_list = Leads_backup::get_contacts_list($filter);
         $row_count = $biz_requests_arr['row_count'];
         $next_page = true;
         $page_limit = intval($filter['page_limit']);
@@ -76,7 +77,8 @@
             'filter_input'=>$filter_input,
             'page_options'=>$page_options,
             'biz_requests'=>$biz_requests,
-            'calls'=>$calls_list['calls']
+            'calls'=>$calls_list['calls'],
+            'contacts'=>$calls_list['contacts']
         );
         $this->include_view('leads_backup/list.php',$info);
     }

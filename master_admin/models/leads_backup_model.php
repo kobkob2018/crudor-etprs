@@ -75,6 +75,51 @@
         return $return_arr;
     }
 
+    public static function get_contacts_list($filter){
+        $return_arr = array(
+            'row_count'=>'0',
+            'contacts'=>array()
+        );
+        if(!isset($filter)){
+            return $return_arr;
+        }
+        if(!isset($filter['free']) || $filter['free'] == ''){
+            return $return_arr;
+        }
+
+        $bk_db = self::getLeadsDb();
+        $where_arr = self::get_where_arr($filter,'contacts');
+        $where_str = $where_arr['where_str'];
+        $where_params = $where_arr['where_params'];
+        
+        //count all
+        $sql = "SELECT COUNT(req.id) as row_count FROM contacts req WHERE $where_str"; 		
+        $req = $bk_db->prepare($sql);
+        $req->execute($where_params);
+        $row_count_result =  $req->fetch();
+        $row_count = '0';
+        if($row_count_result){
+            $row_count = $row_count_result['row_count'];
+        }
+        $row_count = intval($row_count);
+        //get rows in page
+        $sql = "SELECT * FROM contacts req WHERE $where_str ORDER BY id desc "; 		
+        $sql.= " ".$where_arr['limit_str'];
+        $req = $bk_db->prepare($sql);
+        $req->execute($where_params);
+        $biz_requests =  $req->fetchAll();
+
+        foreach($biz_requests as $key=>$biz_request){
+            $biz_requests[$key] = $biz_request;
+        }
+        $return_arr = array(
+            'row_count'=>$row_count,
+            'contacts'=>$biz_requests
+        );
+        return $return_arr;
+    }
+
+
     public static function get_calls_list($filter){
         $return_arr = array(
             'row_count'=>'0',
@@ -161,6 +206,9 @@
         if($filter['free'] != ''){
             if($table == 'estimate_form'){
                 $where_str .= " AND (req.phone LIKE :free OR req.email LIKE :free OR req.name LIKE :free) ";
+            }
+            elseif($table == 'contacts'){
+                $where_str .= " AND (req.phone LIKE :free OR req.email LIKE :free OR req.full_name LIKE :free) ";
             }
             else{
                 $where_str .= " AND (req.call_from LIKE :free) ";
