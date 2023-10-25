@@ -57,7 +57,7 @@
                 if($biz_request[$cat_param] != '' && $biz_request[$cat_param] != '0'){
                     $cat = $biz_request[$cat_param];
                     if(!isset($cat_labels[$cat])){
-                        $cat_labels[$cat] = self::get_cat_label($cat)
+                        $cat_labels[$cat] = self::get_cat_label($cat);
                     }
                     $cat_label_arr[] = $cat_labels[$cat];
                 }
