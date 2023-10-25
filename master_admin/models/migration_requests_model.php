@@ -117,7 +117,12 @@
             'uniq_track',
         );
 
+        
+
         foreach($requests as $request){
+            if($request['insert_date'] == '0000-00-00 00:00:00'){
+                $request['insert_date'] = '1970-01-01 00:00:00';
+            }
             foreach($utf_arr as $key){
                 if($request[$key] != ''){
                     try{
