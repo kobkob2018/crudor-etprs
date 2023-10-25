@@ -132,12 +132,12 @@
                 $new_request[$key] = $request[$key];
             }
 
-            try{
+           // try{
                 $new_request_id = self::alt_create_by_table_name($new_request,"estimate_form");
-            }
-            catch (Exception $e) {
+           // }
+           // catch (Exception $e) {
 
-            }
+           // }
 
             if(!isset($return_array['first'])){
                 $return_array['first'] = $request['id'];
