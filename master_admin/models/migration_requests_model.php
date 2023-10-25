@@ -38,7 +38,7 @@
         if(!isset($_REQUEST['sure'])){
             exit("please add the 'sure' param to continue!");
         }
-        $sql = "DELETE FROM estimate_form WHERE 1";
+        $sql = "DELETE FROM sites_leads_stat WHERE 1";
         $bk_db = self::getLeadsDb();
         $req = $bk_db->prepare($sql);
         $req->execute();
@@ -51,7 +51,7 @@
         $return_array = array('status'=>'done');
 
         $latest_migrate_request_id = '0';
-        $sql = "SELECT id FROM estimate_form ORDER BY id desc LIMIT 1";
+        $sql = "SELECT id FROM sites_leads_stat ORDER BY id desc LIMIT 1";
         $req = $bk->prepare($sql);
         $req->execute();
         $latest_migrate_request = $req->fetch();
@@ -60,7 +60,7 @@
         }
 
         //migrate requests
-        $sql = "SELECT * FROM estimate_form WHERE id > :latest_id LIMIT 8000";
+        $sql = "SELECT * FROM sites_leads_stat WHERE id > :latest_id LIMIT 8000";
         $req = $ilbiz_db->prepare($sql);
         $req->execute(array('latest_id'=>$latest_migrate_request_id));
         $requests = $req->fetchAll();
@@ -76,56 +76,48 @@
 
         $params_arr = array(
             'id',
-            'cat_f',
-            'cat_s' ,
-            'cat_spec',
-            'name',
-            'city',
-            'email',
-            'phone',
-            'note',
-            'send_to',
-            'status',
-            'insert_date',
-            'referer',
-            'show_in_mysave',
-            'statistic_id',
-            'passengers',
-            'to_city',
-            '10service_group_product_id',
-            'open_by_credit',
-            'ip',
-            'agent',
-            'campaign_type',
-            'is_mobile',
-            'banner_id',
-            'form_resource',
-            'fb_lead_id',
-            'uniq_track',
+            'unk',
+            'call_from',
+            'call_to',
+            'did',
+            'answer',
+            'sms_send',
+            'date',
+            'call_date',
+            'billsec',
+            'uniqueid',
+            'link_sys_id',
+            'recordingfile',
+            'tracking_mach',
+            'times_called',
+            'track_time_range',
+            'extra',
+            'link_sys_identity',
 
         );
 
         $utf_arr = array(
-            'city',
-            'email' ,
-            'name',
-            'phone',
-            'note',
-            'send_to',
-            'referer',
-            'passengers',
-            'to_city',
-            'ip',
-            'agent',
-            'form_resource',
-            'uniq_track',
+
+            'unk',
+            'call_from',
+            'call_to',
+            'did',
+            'answer',
+            'call_date',
+            
+            'uniqueid',
+            
+            'recordingfile',
+
+            'extra',
+            'link_sys_identity',
         );
 
         
 
         foreach($requests as $request){
-            if($request['insert_date'] == '0000-00-00 00:00:00'){
-                $request['insert_date'] = '1970-01-01 00:00:00';
+            if($request['date'] == '0000-00-00 00:00:00'){
+                $request['date'] = '1970-01-01 00:00:00';
             }
             foreach($utf_arr as $key){
                 if($request[$key] != ''){
@@ -142,7 +134,7 @@
             }
 
            // try{
-                $new_request_id = self::alt_create_by_table_name($new_request,"estimate_form");
+                $new_request_id = self::alt_create_by_table_name($new_request,"sites_leads_stat");
            // }
            // catch (Exception $e) {
 
