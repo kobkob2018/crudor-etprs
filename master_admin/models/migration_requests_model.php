@@ -105,6 +105,7 @@
         $utf_arr = array(
             'city',
             'email' ,
+            'name',
             'phone',
             'note',
             'send_to',
