@@ -60,12 +60,12 @@
     <?php foreach($info['biz_requests'] as $biz_request): ?>
         <div class="request-list-tr table-tr row">
         <div class="col">
-            <?= hebdt($biz_request['date_in'],"d-m-Y") ?><br/>
-            <?= hebdt($biz_request['date_in'],"H:i") ?><br/>
+            <?= hebdt($biz_request['insert_date'],"d-m-Y") ?><br/>
+            <?= hebdt($biz_request['insert_date'],"H:i") ?><br/>
         </div>
        
         <div class="col">
-            <?= $biz_request['full_name'] ?>
+            <?= $biz_request['name'] ?>
         </div>
         <div class="col">
             <?= $biz_request['phone'] ?>
@@ -75,8 +75,6 @@
         </div>
         <div class="col">
             <?= $biz_request['note'] ?>
-            <br/>
-            <?= $biz_request['extra_info'] ?>
         </div>
         <div class="col">
             <?= $biz_request['ip'] ?>
@@ -123,7 +121,7 @@
         <div class="request-list-tr table-tr row">
         <div class="col">
             <?= hebdt($biz_request['call_date'],"d-m-Y") ?><br/>
-            <?= hebdt($biz_request['date_in'],"H:i") ?><br/>
+            <?= hebdt($biz_request['call_date'],"H:i") ?><br/>
         </div>
        
         <div class="col">
