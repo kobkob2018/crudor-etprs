@@ -78,7 +78,7 @@
             'page_options'=>$page_options,
             'biz_requests'=>$biz_requests,
             'calls'=>$calls_list['calls'],
-            'contacts'=>$calls_list['contacts']
+            'contacts'=>$contacts_list['contacts']
         );
         $this->include_view('leads_backup/list.php',$info);
     }

@@ -73,6 +73,11 @@
             <li class="bar-item <?= $view->a_class('biz_requests/list/') ?>">
                 <a href="<?= inner_url('biz_requests/list/?reset_filter=1') ?>" title="בקשות להצעת מחיר" class="a-link">בקשות להצעת מחיר</a>
             </li> 
+
+            <li class="bar-item <?= $view->a_class('leads_backup/list/') ?>">
+                <a href="<?= inner_url('leads_backup/list/?reset_filter=1') ?>" title="לידים ישנים - גיבוי" class="a-link">לידים ישנים - חיפוש בגיבויים</a>
+            </li> 
+
             <li class="bar-item <?= $view->a_class('biz_requests/spam_list/') ?>">
                 <a href="<?= inner_url('biz_requests/spam_list/?reset_spam_filter=1') ?>" title="ספאם" class="a-link">ספאם</a>
             </li> 
