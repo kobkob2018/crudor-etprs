@@ -35,6 +35,9 @@
     }
 
     public static function delete_older(){
+        if(!isset($_REQUEST['sure'])){
+            exit("please add the 'sure' param to continue!");
+        }
         $sql = "DELETE FROM estimate_form WHERE 1";
         $bk_db = self::getLeadsDb();
         $req = $bk_db->prepare($sql);
