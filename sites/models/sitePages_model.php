@@ -21,7 +21,15 @@
         else{
             self::$current_page = self::get_by_link($_REQUEST['page']);
         }
+        self::update_page_views(self::$current_page['id']);
         return self::$current_page; 
+    }
+
+    protected function update_page_views($page_id){
+        $db = Db::getInstance();
+        $sql = "UPDATE content_pages SET views = views + 1 WHERE id = :page_id";	
+        $req = $db->prepare($sql);
+        $req->execute(array('page_id'=>$page_id));
     }
 
     public static function get_by_id($page_id, $select_params = "*"){
