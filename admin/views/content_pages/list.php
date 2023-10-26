@@ -15,6 +15,7 @@
     <div class="table-th row">
         <div class="col">עדכון דף</div>
         <div class="col">צפייה</div>
+        <div class="col">מספר צפיות</div>
         <div class="col">מחיקה</div>
         <div class="col">בחירה</div>
     </div>
@@ -29,6 +30,9 @@
             </div>
             <div class="col">
                 <a href = "<?= $this->data['work_on_site']['url'] ?>/<?= $content_page['link'] ?>/" target="_BLANK" title="צפה באתר">צפה באתר</a>
+            </div>
+            <div class="col">
+                <?= $content_page['views'] ?>
             </div>
             <div class="col">
                 <a href = "<?= inner_url('pages/delete/') ?>?row_id=<?= $content_page['id'] ?>" title="מחק">מחק</a>
