@@ -31,6 +31,7 @@
 
             );
             TableModel::simple_create_by_table_name($spam_row,'biz_requests_spam');
+            Leads_complex::update_page_convertions($form_info['page_id'],'spam_convertions');
             return $return_array;
         }
 
@@ -130,6 +131,7 @@
             }
 
             $request_id = SiteBiz_requests::create($fixed_db_values);
+            Leads_complex::update_page_convertions($form_info['page_id']);
             $this->lead_info['reuqest_id'] = $request_id;
             if(isset($fixed_db_values['banner_id']) && $fixed_db_values['banner_id'] != ''){
                 $this->controller->add_model('siteNet_banners');

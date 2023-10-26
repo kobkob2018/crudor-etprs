@@ -376,5 +376,15 @@
         
         return $return_array;
     }
+
+    public static function update_page_convertions($page_id, $column = 'convertions'){
+        if($page_id == '' || $page_id == '-1' || $page_id == '0'){
+            return;
+        }
+        $sql = "UPDATE content_pages SET $column = $column + 1 WHERE id = :page_id";
+        $db = Db::getInstance();		
+        $req = $db->prepare($sql);
+        $req->execute(array('page_id'=>$page_id));
+    }
 }
 ?>

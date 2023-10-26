@@ -16,6 +16,8 @@
         <div class="col">עדכון דף</div>
         <div class="col">צפייה</div>
         <div class="col">מספר צפיות</div>
+        <div class="col">המרות</div>
+        <div class="col">ספאם</div>
         <div class="col">מחיקה</div>
     </div>
     <?php foreach($this->data['content_pages'] as $content_page): ?>
@@ -32,6 +34,12 @@
             </div>
             <div class="col">
                 <?= $content_page['views'] ?>
+            </div>
+            <div class="col">
+                <?= $content_page['convertions'] ?>
+            </div>
+            <div class="col">
+                <?= $content_page['spam_convertions'] ?>
             </div>
             <div class="col">
                 <a href = "<?= inner_url('pages/delete/') ?>?row_id=<?= $content_page['id'] ?>" title="מחק">מחק</a>
