@@ -39,7 +39,7 @@ class Link_phone_switchboardController extends CrudController{
         if($sms_to == ''){
             return;
         }
-        $sms_msg = "התראה על שיחה נכנסת: ".$call_data['call_from'];
+        $sms_msg = "שיחה שנעתה, זה המספר של הליד הטלפוני שקבלת כרגע מאתר שירות 10: ".$call_data['call_from'];
         Helper::send_sms($sms_to,$sms_msg);
     }
 }
