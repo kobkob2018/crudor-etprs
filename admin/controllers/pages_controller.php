@@ -25,7 +25,7 @@
 		public function list(){
       
       $filter_arr = array('site_id'=>$this->data['work_on_site']['id']);
-      $content_pages = AdminPages::get_list($filter_arr, 'id, title, link, visible');
+      $content_pages = AdminPages::get_list($filter_arr, 'id, title, link, visible, views');
       
       $this->data['content_pages'] = $content_pages;
 
