@@ -17,7 +17,6 @@
         <div class="col">צפייה</div>
         <div class="col">מספר צפיות</div>
         <div class="col">מחיקה</div>
-        <div class="col">בחירה</div>
     </div>
     <?php foreach($this->data['content_pages'] as $content_page): ?>
         <div class="table-tr row is-visible-0<?= $content_page['visible'] ?>">
@@ -37,7 +36,6 @@
             <div class="col">
                 <a href = "<?= inner_url('pages/delete/') ?>?row_id=<?= $content_page['id'] ?>" title="מחק">מחק</a>
             </div>
-            <div class="col">בחירה</div>
         </div>
     <?php endforeach; ?>
 </div>
