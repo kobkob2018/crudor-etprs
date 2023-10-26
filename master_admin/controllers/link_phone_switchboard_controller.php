@@ -22,10 +22,25 @@ class Link_phone_switchboardController extends CrudController{
             'did' => $_REQUEST['did'],
             'link_sys_identity' => $_REQUEST['uniqueid'],
         );
-        User_current_phone_calls::insert_call($call_data);
+
+        //only answered calls here. noanswer in the calls crinjob
+        
+        $call_data = User_current_phone_calls::insert_call($call_data);
+        $this->handle_sms_alert($call_data);
         User_current_phone_calls::cleanup_20_minutes();
         exit("ok");
     }
 
+    protected function handle_sms_alert($call_data){
+        if(!$call_data['user_phone']){
+            return;
+        }
+        $sms_to = $call_data['user_phone']['alert_sms_to'];
+        if($sms_to == ''){
+            return;
+        }
+        $sms_msg = "התראה על שיחה נכנסת: ".$call_data['call_from'];
+        Helper::send_sms($sms_to,$sms_msg);
+    }
 }
 ?>

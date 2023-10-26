@@ -239,10 +239,11 @@
       $alert_sms_to = $user_phone['alert_sms_to'];
       
       if($call['answer'] == "ANSWERED"){
-        $sms_message = "שיחה שנעתה, זה המספר של הליד הטלפוני שקבלת כרגע מאתר שירות עשר: $call_src";
+        //this one goes from calls switchboard(monitor), so it is sent douring call time
+        // $sms_message = "שיחה שנעתה, זה המספר של הליד הטלפוני שקבלת כרגע מאתר שירות 10: $call_src";
       }
       else{
-        $sms_message = "שיחה שלא נענתה משירות עשר, זה המספר של הליד הטלפוני שמחכה לשיחתך: $call_src";
+        $sms_message = "שיחה שלא נענתה מאתר שירות 10, זה המספר של הליד הטלפוני שמחכה לשיחתך: $call_src";
       }
       try {
         Helper::send_sms($alert_sms_to,$sms_message);

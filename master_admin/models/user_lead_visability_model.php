@@ -129,33 +129,6 @@
             'label'=>'סיסמא להקלטות',
             'type'=>'text',
         ),
-
-        'alert_answer_calls_sms'=>array(
-            'label'=>'שלח התראות SMS על שיחות שנענו',
-            'type'=>'select',
-            'default'=>'0',
-            'options'=>array(
-                array('value'=>'0', 'title'=>'לא'),
-                array('value'=>'1', 'title'=>'כן')
-            ),
-            'validation'=>'required'
-        ),
-
-        'alert_noanswer_calls_sms'=>array(
-            'label'=>'שלח התראות SMS על שיחות שלא נענו',
-            'type'=>'select',
-            'default'=>'0',
-            'options'=>array(
-                array('value'=>'0', 'title'=>'לא'),
-                array('value'=>'1', 'title'=>'כן')
-            ),
-            'validation'=>'required'
-        ),
-
-        'alert_calls_sms_phone'=>array(
-            'label'=>'טלפון להתראות SMS על שיחות',
-            'type'=>'text',
-        ),
     );
     public static function create_for_user($user_id){
         $filter_arr = array('user_id'=>$user_id);

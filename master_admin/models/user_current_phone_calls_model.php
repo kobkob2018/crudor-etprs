@@ -4,10 +4,11 @@
     protected static $main_table = 'user_current_phone_calls';
 
     public static function insert_call($call){
-      $user_id = self::get_user_by_call($call);
-      if(!$user_id){
-        return;
+      $call['user_phone'] = self::get_user_phone_by_call($call);
+      if(!$call['user_phone']){
+        return $call;
       }
+      $user_id = $call['user_phone']['user_id'];
       $call_data = array(
         'user_id'=>$user_id,
         'call_from'=>$call['call_from'],
@@ -16,9 +17,10 @@
         'link_sys_identity'=>$call['link_sys_identity'],
       );
       self::create($call_data);
+      return $call;
     }
 
-    protected static function get_user_by_call($call){
+    protected static function get_user_phone_by_call($call){
       $db = Db::getInstance();
       $did = isset($call['did'])? $call['did'] : "" ;
       if((!$did) || $did == ''){
@@ -33,7 +35,7 @@
       if(!$user_phone){
         return false;
       }
-      return $user_phone['user_id'];
+      return $user_phone;
 
     }
 
