@@ -25,7 +25,7 @@
         return self::$current_page; 
     }
 
-    protected function update_page_views($page_id){
+    protected static function update_page_views($page_id){
         $db = Db::getInstance();
         $sql = "UPDATE content_pages SET views = views + 1 WHERE id = :page_id";	
         $req = $db->prepare($sql);
