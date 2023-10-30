@@ -49,6 +49,7 @@
 
         $cat_params = array('cat_f','cat_s','cat_spec');
         $cat_labels = array();
+        $city_labels = array();
         foreach($biz_requests as $key=>$biz_request){
            
             $cat_label_arr = array();
@@ -62,7 +63,16 @@
                     $cat_label_arr[] = $cat_labels[$cat];
                 }
             }
-            
+            $city_label = $city_id = $biz_request['city'];
+
+            if(!isset($city_labels[$city_id])){
+                $city_labels[$city_id] = self::get_city_label($city_id);
+                 if($city_labels[$city_id] != ""){
+                    $city_label = $city_labels[$city_id];
+                 }   
+            }
+            $biz_request['cat_label'] = $city_label;
+
             $biz_request['cat_label'] = implode(", ",$cat_label_arr);
             
             $biz_requests[$key] = $biz_request;
@@ -197,6 +207,33 @@
             return "";
         }
         return $cat['cat_name'];
+    }
+
+    protected static function get_city_label($city_id){
+        if(!is_numeric($city_id)){
+            return $city_id;
+        }
+        $sql = "SELECT name FROM cities WHERE id  = :city_id";
+        $bk_db = self::getLeadsDb();
+        $req = $bk_db->prepare($sql);
+        $req->execute(array('city_id'=>$city_id));
+        $city =  $req->fetch();
+        if(!$city){
+            return self::get_area_label($city_id);
+        }
+        return $city['name'];
+    }
+
+    protected static function get_area_label($area_id){
+        $sql = "SELECT name FROM areas WHERE id  = :area_id";
+        $bk_db = self::getLeadsDb();
+        $req = $bk_db->prepare($sql);
+        $req->execute(array('area_id'=>$area_id));
+        $area_id =  $req->fetch();
+        if(!$area_id){
+            return "";
+        }
+        return $area_id['name'];
     }
 
     protected static function get_where_arr($filter,$table = 'estimate_form'){

@@ -159,7 +159,7 @@
 	
 	public function register(){
 		echo "register is under construction";
-		$this->include_view('user/login.php');
+		$this->include_view('user/register.php');
     }
 
 	protected function send_login_sms_code($user_phone, $sms_code){
