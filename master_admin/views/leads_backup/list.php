@@ -80,7 +80,7 @@
             <?= $biz_request['ip'] ?>
         </div>
         <div class="col">
-            <?= $biz_request['city'] ?>
+            <?= $biz_request['city_label'] ?>
         </div>
         <div class="col">
             <?= $biz_request['cat_label'] ?>
