@@ -71,7 +71,7 @@
                     $city_label = $city_labels[$city_id];
                  }   
             }
-            $biz_request['cat_label'] = $city_label;
+            $biz_request['city_label'] = $city_label;
 
             $biz_request['cat_label'] = implode(", ",$cat_label_arr);
             
