@@ -68,7 +68,7 @@
 
             $cat_id = $info['biz_form']['cat_id'];
 
-            $cat_tree = Biz_categories::get_item_parents_tree($cat_id,'id, googleADSense, use_parent_gas');
+            $cat_tree = Biz_categories::get_item_parents_tree($cat_id,'id, googleADSense, use_parent_gas, show_whatsapp_button');
             $this->add_data('cat_tree',$cat_tree); 
             $googleADSense = false;
             foreach($cat_tree as $cat){
