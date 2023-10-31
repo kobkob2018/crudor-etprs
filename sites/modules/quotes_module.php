@@ -88,6 +88,9 @@
                 }
             }
             foreach($quote as $search=>$replace){
+                if(is_null($replace)){
+                    $replace = "";
+                }
                 $html_final = str_replace("{{".$search."}}",$replace,$html_final);
             }
             return $html_final;
