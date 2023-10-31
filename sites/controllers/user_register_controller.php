@@ -46,7 +46,7 @@
     }   
 
     protected function create_success_message(){
-        SystemMessages::add_success_message("המוצר נוצר בהצלחה");
+        SystemMessages::add_success_message("ההרשמה בוצעה בהצלחה");
 
     }
 
@@ -61,15 +61,22 @@
     protected function create_item($fixed_values){
       $token = md5(time().rand(10000,99999));
       $fixed_values['token'] = $token;
-      
-      $row_id = User_register::create($fixed_values);
+      $filter_arr = array('email'=>$fixed_values['email']);
+      $user_row = User_register::find($filter_arr,'id');
+      if($user_row){
+        $row_id = $user_row['id'];
+        User_register::update($row_id,$fixed_values);
+      }
+      else{
+        $row_id = User_register::create($fixed_values);
+      }
       $email_info = $fixed_values;
       $email_info['row_id'] = $row_id;
       $email_info['confirm_url'] = outer_url("user_register/email_confirm/?token=".$token."&row_id=".$row_id);
       $email_info['site'] = $this->data['site'];
       
       $email_content = $this->include_ob_view("user_register/email_confirm_notification.php",$email_info);
-exit($email_content);
+
       $this->send_email($fixed_values['email'],"אישור אימייל הרשמה",$email_content);
 
       return $row_id;
