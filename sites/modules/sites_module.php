@@ -112,13 +112,17 @@
 
         protected function setup_text_replaces($text){
           $site_data = $this->controller->data['site'];
+          
           $replace_arr = array(
             'site_url' => outer_url(),
             'site_title' => $site_data['title'],
             'site_domain' => $site_data['domain'],
             'site_logo' => $this->controller->file_url_of('logo',$site_data['logo']),
           );
-          
+          if(isset($this->controller->data['biz_form'])){
+            $biz_form = $this->controller->data['biz_form'];
+            $replace_arr['mobile_btn_text'] = $biz_form['mobile_btn_text'];
+          }
           foreach($replace_arr as $search=>$replace){
             $text = str_replace('{{'.$search.'}}',$replace,$text);
           }

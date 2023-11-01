@@ -123,7 +123,7 @@
             </div>
         </form>
         <div class="submit-wrap pending-state form-group biz-form-bg">
-            <input type="submit" class="submit-button form-input color-button" data-status="pending" value="שליחה" />
+            <input type="submit" class="submit-button form-input color-button" data-status="pending" value="<?= $info['biz_form']['btn_text'] ?>" />
                     
             <?php if(isset($info['recapcha_data'])): ?>
                 <div class="recapcha-g-note">          

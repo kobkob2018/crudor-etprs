@@ -9,7 +9,22 @@
         'title'=>array(
             'label'=>'כותרת',
             'type'=>'text',
+            'default'=>'קבלו הצעת מחיר',
             'validation'=>''
+        ),
+
+        'mobile_btn_text'=>array(
+            'label'=>'טקסט לכפתור פתיחת טופס במובייל',
+            'type'=>'text',
+            'default'=>'להצעת מחיר לחצו כאן',
+            'validation'=>'required'
+        ),
+
+        'btn_text'=>array(
+            'label'=>'טקסט לכפתור שליחה',
+            'type'=>'text',
+            'default'=>'שליחה',
+            'validation'=>'required'
         ),
 
         'cat_id'=>array(
