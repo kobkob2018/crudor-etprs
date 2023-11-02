@@ -3,11 +3,7 @@
     public $add_models = array("quotes","quote_cat");
 
     protected function init_setup($action){
-        $cat_id = $this->add_cat_info_data();
-        if(!$cat_id){
-            return $this->redirect_to(inner_url("quote_cats/list/"));
-            return false;
-        }
+        $this->add_cat_info_data();
         return parent::init_setup($action);
     }  
 
@@ -56,9 +52,24 @@
         $payload = array(
             'order_by'=>'label'
         );
-        $quote_list = Quotes::get_list($filter_arr,"*", $payload);      
+        $quote_list = Quotes::get_list($filter_arr,"*", $payload);  
         $this->data['quote_list'] = $quote_list;
         $this->include_view('quotes/list.php');
+    }
+
+    public function user_list(){
+        //if(session__isset())
+        
+        $filter_arr = array('user_id'=>$this->user['id']);
+        $payload = array(
+            'order_by'=>'label'
+        );
+        $quote_list = Quotes::get_list($filter_arr,"*", $payload);  
+        $this->data['quote_list'] = $this->prepare_forms_for_all_list($quote_list);
+        //for the add item form
+        $form_handler = $this->init_form_handler();
+        $form_handler->update_fields_collection($this->get_fields_collection());
+        $this->include_view('quotes/user_list.php');
     }
 
     protected function add_cat_info_data(){
@@ -147,7 +158,15 @@
     }
 
     protected function after_delete_redirect(){
-        return $this->redirect_to(inner_url("/quotes/list/?cat_id=".$this->data['cat_info']['id']));
+        $list_action = 'list';
+        if(isset($_REQUEST['list_action'])){
+            $list_action = $_REQUEST['list_action'];
+        }
+        $url = inner_url("/quotes/$list_action/");
+        if(isset($this->data['cat_info'])){
+            $url.= "?cat_id=".$this->data['cat_info']['id']; 
+        }
+        return $this->redirect_to($url);
     }
 
     public function delete_url($item_info){
@@ -167,7 +186,12 @@
     }
 
     protected function create_item($fixed_values){
-        return Quotes::create($fixed_values);
+        $fixed_values['user_id'] = $this->user['id'];
+        $item_id = Quotes::create($fixed_values);
+        if(isset($fixed_values['cat_id']) && $fixed_values['cat_id'] != '0'){
+            $this->add_model("quote_cat_assign"); 
+            Quote_cat_assign::add_item_to_cat($item_id,$fixed_values['cat_id']);
+        }
     }
   }
 ?>

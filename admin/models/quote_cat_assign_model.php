@@ -40,5 +40,16 @@
             $req->execute($sql_arr);
             return;
         }
+
+        public static function add_item_to_cat($item_id, $cat_id){
+            $filter_arr = array('quote_id'=>$item_id,'cat_id'=>$cat_id);
+            $assign = self::find($filter_arr,'cat_id');
+            if($assign){
+                return;
+            }
+            $fixed_values = $filter_arr;
+            return self::create($fixed_values); 
+        }
+
     }
 ?>

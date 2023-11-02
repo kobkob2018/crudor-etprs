@@ -232,6 +232,14 @@ h4{
     max-width: 100px;
 }
 
+.flex-table .col-top{
+    vertical-align: top;
+}
+
+.flex-table .col-bottom{
+    vertical-align: bottom;
+}
+
 .flex-table .table-input{
     width: 100px;
 }

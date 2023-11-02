@@ -100,6 +100,32 @@
             return;
         }
 
+        protected $site_user_can = false;
+        public function get_site_user_can(){
+            if($this->site_user_can){
+                return $this->site_user_can;
+            }
+            $user = $this->user;
+
+            $user_is = Helper::user_is('author',$user);
+            if(!$user_is){
+                $this->site_user_can = array();
+                return $this->site_user_can;
+            }
+            $work_on_site = Sites::get_user_workon_site();
+            $user_can_list = TableModel::simple_get_list_by_table_name(array('user_id'=>$user['id'],'site_id'=>$work_on_site['id']),'site_user_can','permission_to');
+
+            if(!$user_can_list){
+                $this->site_user_can = array();
+                return $this->site_user_can;
+            }
+            $this->site_user_can = array();
+            foreach($user_can_list as $premittion){
+                $this->site_user_can[$premittion['permission_to']] = '1';
+            }
+            return $this->site_user_can;
+        }
+
         public function get_assets_dir(){
 
             $info = $this->action_data;

@@ -69,6 +69,21 @@
       return self::user_is($needed_roll,$work_on_site);
     }
 
+    public function site_user_can($permittion_to){
+      if(!$this->site_user_is('author')){
+        return false;
+      }
+      if($this->site_user_is('admin')){
+        return true;
+      }
+      
+      $user_can_list = $this->controller->call_module(get_config('main_module'),'get_site_user_can');
+
+      if(isset($user_can_list[$permittion_to])){
+        return true;
+      }
+      return false;
+    }
 
     public function get_video_embed_type($file_name){
       $video_types = array(
