@@ -814,7 +814,20 @@
 			
 			<?php if(isset($day_income_arr['user'])): foreach($day_income_arr['user'] as $user_id=>$user_income_arr): ?>
 
-				
+			<tr>
+            <th>לקוח</th>
+			<th>אחסון</th>
+			<th>דומיין</th>
+			<th>פרסום</th>
+			<td>כמות לידים</td>
+			<td>לידים מחוייבים</td>
+			<th>סגירה עם לקוח</th>
+			<th>לידים בכוכביות</th>
+			<th>כמות לידים לכל התקופה</th>
+			<th>מחיר ליד</th>
+			<th>לידים</th>
+			<th>סך הכל</th>
+			</tr>				
 				<tr>
 					<td>
 						<?php echo $user_income_arr['biz_name']; ?>
