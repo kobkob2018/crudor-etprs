@@ -19,6 +19,7 @@
             if(!$this->handle_admin_domains_access()){
                 return false;
             }
+            return $this->handle_access_site_user_is('admin');
             return $this->handle_access_workon_site_only();
         }
 
@@ -65,24 +66,28 @@
             return true;
         }
 
-        public function handle_access_site_user_is(){
-
+        public function handle_access_site_user_is($needed_roll = false){
+            
             if(!$this->handle_access_workon_site_only()){
                 return false;
             }
-            $this->controller->add_model('sites');
             
-            $needed_roll = $this->action_data;
+            $this->controller->add_model('sites');
+            if(!$needed_roll){
+                $needed_roll = $this->action_data;
+            }
+            
             $user = $this->user;
             $work_on_site = Sites::get_user_workon_site();
-
+            
             $user_is = Helper::user_is($needed_roll,$user,$work_on_site);
             if($user_is){
                 return true;
             }
-
+            
             SystemMessages::add_err_message('אינך רשאי לצפות בתוכן זה');
-            $this->redirect_to(inner_url(''));
+            
+            $this->redirect_to(inner_url('tasks/list/'));
             return;
         }
 
@@ -95,6 +100,31 @@
                 return true;
             }
 
+            SystemMessages::add_err_message('אינך רשאי לצפות בתוכן זה');
+            $this->redirect_to(inner_url(''));
+            return;
+        }
+
+
+        public function handle_access_user_can(){ 
+            $this->controller->add_model('sites');
+            $user_can = $this->action_data;
+            $user = $this->user;
+            $work_on_site = Sites::get_user_workon_site();
+
+            $user_is_admin = Helper::user_is('admin',$user,$work_on_site);
+            if($user_is_admin){
+                return true;
+            }
+            $user_is_author = Helper::user_is('author',$user,$work_on_site);
+            if($user_is_author){
+                $site_user_can = $this->get_site_user_can();
+                foreach($site_user_can as $permittion_to=>$can){
+                    if($permittion_to == $user_can){
+                        return true;
+                    }
+                }
+            }
             SystemMessages::add_err_message('אינך רשאי לצפות בתוכן זה');
             $this->redirect_to(inner_url(''));
             return;

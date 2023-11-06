@@ -1,10 +1,22 @@
 <?php
 	class TasksController extends CrudController{
 		public $add_models = array("tasks");
-        protected function handle_access($action){
-            return parent::handle_access($action);         
-        }
 
+        protected function handle_access($action){
+            
+            switch ($action){
+                case 'list':
+                case 'edit':
+                case 'add':
+                    
+                    return $this->call_module('admin','handle_access_workon_site_only');
+                    break;
+                default:
+                    return parent::handle_access($action); 
+                    break;               
+            }
+    
+        }
         public function list(){
             //if(session__isset())
             $filter_arr = $this->get_base_filter();
@@ -150,7 +162,12 @@
         }        
 
         protected function get_fields_collection(){
-          return Tasks::setup_field_collection();
+            $field_collection = Tasks::setup_field_collection();
+            $this->add_model('sites');
+            if(!Helper::user_is('master_admin',$this->user,Sites::get_user_workon_site())){
+                unset($field_collection['user_id']);  
+            }
+            return $field_collection;
         }
     
         protected function update_item($item_id,$update_values){
@@ -162,6 +179,9 @@
           }
     
         protected function create_item($fixed_values){
+            if(!isset($fixed_values['user_id'])){
+                $fixed_values['user_id'] = $this->user['id'];
+            }
             return Tasks::create($fixed_values);
         }
 

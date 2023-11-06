@@ -2,6 +2,18 @@
   class QuotesController extends CrudController{
     public $add_models = array("quotes","quote_cat");
 
+    protected function handle_access($action){
+        switch ($action){
+          case 'my_list':
+            return $this->call_module('admin','handle_access_user_can','quotes');
+            break;
+          default:
+            return parent::handle_access(($action));
+            break;
+          
+        }
+    }
+
     protected function init_setup($action){
         $this->add_cat_info_data();
         return parent::init_setup($action);
