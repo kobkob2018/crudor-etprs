@@ -104,9 +104,6 @@
             תאריך
         </div>
         <div class="col">
-            שליחות
-        </div>
-        <div class="col">
             שם מלא
         </div>
         <div class="col">
@@ -123,6 +120,9 @@
         </div>
         <div class="col">
             עיר
+        </div>
+        <div class="col">
+            שליחות
         </div>
         <div class="col">
             קטגוריה
@@ -154,9 +154,6 @@
             <?php endif; ?>
         </div>
         <div class="col">
-            <?= $biz_request['recivers'] ?>
-        </div>
-        <div class="col">
             <?= $biz_request['full_name'] ?>
         </div>
         <div class="col">
@@ -175,6 +172,9 @@
         </div>
         <div class="col">
             <?= $biz_request['city_name'] ?>
+        </div>
+        <div class="col">
+            <?= $biz_request['recivers'] ?>
         </div>
         <div class="col">
             <?php foreach($biz_request['cat_tree'] as $cat): ?>

@@ -1,8 +1,4 @@
-<h2><?= $info['title'] ?></h2>
-<div class="eject-box">
-    <a href="<?= inner_url("quote_cats/list/") ?>">חזרה לרשימה ראשית</a>
-</div>
-<hr/>
+<h2>הצעות המחיר שלי</h2>
 <div class="items-table flex-table">
     <div class="table-th row">
         <div class="col col-tiny">מיקום</div>
@@ -32,15 +28,15 @@
         <div class="col col-top">
             <textarea class = 'table-input' name = 'row[price_text]'><?= $this->get_form_input('price_text') ?></textarea>
         </div>
-        <div class="col cat-list-select-wrap">
-            <div class="cat-list-finder-wrap">
+        <div class="col quote-list-select-wrap">
+            <div class="quote-list-finder-wrap">
                 <input type="text" placeholder="חפש רשימה" class="list-select" onkeyup="list_quote_cat_options(this)" />
-                <div class="cat-list-wrap hidden">
+                <div class="quote-list-wrap hidden">
                     <a class = 'close-list-x' href="javascript://" onclick="close_result_list(this)">
                         X
                     </a>
                 
-                    <div class="cat-list-results">
+                    <div class="quote-list-results">
                         
                     </div>
                 </div>
@@ -67,13 +63,13 @@
             <div class="col">שיוך לרשימות</div>
             <div class="col"></div>
             <div class="col"></div>
+            <div class="col"></div>
         </div>
         <?php foreach($this->data['quote_list'] as $item): ?>
             <form  class="table-tr row" action = "" method = "POST" >
                 <input type="hidden" name="sendAction" value="listUpdateSend" />
                 <input type="hidden" name="db_row_id" value="<?= $item['id'] ?>" /> 
-                <input type="hidden" name="assign[]" value="-1" /> 
-
+                <input type="hidden" name="assign[]" value="-1" />
                 <div class="col col-tiny">
                     <input type="text" class = 'table-input' name = 'row[priority]' value = "<?= $this->get_form_input('priority',$item['form_identifier']) ?>" />
                 </div>
@@ -89,16 +85,15 @@
                 <div class="col col-top">
                     <textarea class = 'table-input' name = 'row[price_text]'><?= $this->get_form_input('price_text',$item['form_identifier']) ?></textarea>
                 </div>
-
-                <div class="col cat-list-select-wrap">
-                    <div class="cat-list-finder-wrap">
+                <div class="col quote-list-select-wrap">
+                    <div class="quote-list-finder-wrap">
                         <input type="text" placeholder="חפש רשימה" class="list-select" onkeyup="list_quote_cat_options(this)" />
-                        <div class="cat-list-wrap hidden">
+                        <div class="quote-list-wrap hidden">
                             <a class = 'close-list-x' href="javascript://" onclick="close_result_list(this)">
                                 X
                             </a>
                         
-                            <div class="cat-list-results">
+                            <div class="quote-list-results">
                                 
                             </div>
                         </div>
@@ -116,7 +111,7 @@
 
                 <div class="col"><input type="submit" value="שמור" /></div>
                 <div class="col">
-                    <a class = 'delete-item-x' href="<?= inner_url('quotes/delete/') ?>?row_id=<?= $item['id'] ?>&list_action=user_list">
+                    <a class = 'delete-item-x' href="<?= inner_url('quotes/delete/') ?>?row_id=<?= $item['id'] ?>&list_action=my_list">
                         X
                     </a>
                 </div>
@@ -126,6 +121,7 @@
 <?php else: ?>
     <h4>אין הפניות</h4>
 <?php endif; ?>
+
 <div class="api-to-ui hidden">
     <div class="cat-result-template" onclick="select_cat_assign(this)">
 
@@ -139,7 +135,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    const quote_cat_list = <?= json_encode($info['user_cat_list_arr']) ?>;
+    const quote_cat_list = <?= json_encode($info['quote_cat_list_arr']) ?>;
     function find_quote_cat_by_str(search){
         if(search.length == 1){
             return quote_cat_list.filter((cat) => cat.label.startsWith(search));
@@ -147,9 +143,9 @@
         return quote_cat_list.filter((cat) => cat.label.includes(search));
     }
     function select_cat_assign(selected_el){
-        const finder_wrap = selected_el.closest(".cat-list-finder-wrap");
-        const result_wrap = finder_wrap.querySelector(".cat-list-wrap");
-        const result_list = finder_wrap.querySelector(".cat-list-results");
+        const finder_wrap = selected_el.closest(".quote-list-finder-wrap");
+        const result_wrap = finder_wrap.querySelector(".quote-list-wrap");
+        const result_list = finder_wrap.querySelector(".quote-list-results");
         const apitoui = document.querySelector(".api-to-ui");
         result_wrap.classList.add("hidden");
         result_list.innerHTML = "";
@@ -163,18 +159,18 @@
     }
 
     function close_result_list(close_el){
-        const finder_wrap = close_el.closest(".cat-list-finder-wrap");
-        const result_wrap = finder_wrap.querySelector(".cat-list-wrap");
-        const result_list = finder_wrap.querySelector(".cat-list-results");
+        const finder_wrap = close_el.closest(".quote-list-finder-wrap");
+        const result_wrap = finder_wrap.querySelector(".quote-list-wrap");
+        const result_list = finder_wrap.querySelector(".quote-list-results");
         result_wrap.classList.add("hidden");
         result_list.innerHTML = "";
         finder_wrap.querySelector(".list-select").value = "";
     }
 
     function list_quote_cat_options(input){
-        const finder_wrap = input.closest(".cat-list-finder-wrap");
-        const result_wrap = finder_wrap.querySelector(".cat-list-wrap");
-        const result_list = finder_wrap.querySelector(".cat-list-results");
+        const finder_wrap = input.closest(".quote-list-finder-wrap");
+        const result_wrap = finder_wrap.querySelector(".quote-list-wrap");
+        const result_list = finder_wrap.querySelector(".quote-list-results");
         const apitoui = document.querySelector(".api-to-ui");
         result_list.innerHTML = "";
         //console.log(result_list);
@@ -205,10 +201,10 @@
 
 </script>
 <style type="text/css">
-    .cat-list-finder-wrap{
+    .quote-list-finder-wrap{
         position: relative;
     }
-    .cat-list-wrap{
+    .quote-list-wrap{
         position: absolute;
         left: 0px;
         z-index: 2;

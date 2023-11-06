@@ -7,14 +7,29 @@
     }
 
     public function list(){
-        //if(session__isset())
-        $filter_arr = $this->get_base_filter();
-        $payload = array(
-            'order_by'=>'label'
-        );
-        $cat_list = Quote_cat::get_list($filter_arr,"*", $payload); 
-        $this->data['cat_list'] = $cat_list;
-        $this->include_view('quote_cats/list.php');
+      $this->add_model("user_quote_cat_enable");
+      $this->add_model("site_users");
+      $filter_arr = $this->get_base_filter();
+      $payload = array(
+          'order_by'=>'label'
+      );
+      $cat_list = Quote_cat::get_list($filter_arr,"*", $payload); 
+      $quote_cat_labels = Helper::eazy_index_arr_by('id',$cat_list,'label');
+      $this->data['cat_list'] = $cat_list;
+      $info = array();
+      $info['quote_cat_list_arr'] = $cat_list;
+      $user_list = Site_users::get_site_users_that_can($this->data['work_on_site']['id'],'quotes');
+      foreach($user_list as $key=>$user){
+
+        $user_quote_cat_enable = User_quote_cat_enable::get_list(array('user_id'=>$user['id']),'cat_id');
+        $user_cats = array();
+        foreach($user_quote_cat_enable as $cat){
+            $user_cats[$cat['cat_id']] = array('id'=>$cat['cat_id'],'label'=>$quote_cat_labels[$cat['cat_id']]);
+        }
+        $user_list[$key]['cats_assigned'] = $user_cats;
+      }
+      $this->data['user_list'] = $user_list;
+      $this->include_view('quote_cats/list.php',$info);
     }
 
 
@@ -37,6 +52,22 @@
     
     $this->add_form_builder_data($fields_collection,'delete_confirm',$this->data['cat_info']['id']);  
     $this->include_view('quote_cats/delete_form.php');
+}
+
+public function assignUserSend(){
+  if(!isset($_REQUEST['assign_user_id']) || !isset($_REQUEST['assign'])){
+    return $this->redirect_to(inner_url("quote_cats/list/"));
+  }
+  $this->add_model("user_quote_cat_enable");
+  $assign_cats = array();
+  foreach($_REQUEST['assign'] as $cat){
+      if($cat != '-1'){
+          $assign_cats[] = $cat;
+      }
+  }   
+  User_quote_cat_enable::assign_cats_to_item($_REQUEST['assign_user_id'], $assign_cats);  
+  SystemMessages::add_success_message("הרשימות שוייכו אל הלקוח"); 
+  return $this->redirect_to(inner_url("quote_cats/list/"));
 }
 
 public function delete_confirm(){

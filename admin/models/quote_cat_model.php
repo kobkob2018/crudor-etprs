@@ -3,7 +3,12 @@
 
     protected static $main_table = 'quote_cat';
     protected static $select_options = false;
-
+    protected static $auto_delete_from_attached_tables = array(
+        'quote_cat_assign'=>array(
+            'table'=>'quote_cat_assign',
+            'id_key'=>'cat_id'
+        )
+    ); 
     public static $fields_collection = array(
         'label'=>array(
             'label'=>'תווית(לשימוש בניהול)',

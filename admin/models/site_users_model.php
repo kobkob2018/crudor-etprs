@@ -84,5 +84,26 @@
         return;
     }
 
+
+    public static function get_site_users_that_can($site_id,$permission_to){
+        $filter_arr = array('site_id'=>$site_id,'status'=>'1');
+        $site_users = self::get_list($filter_arr);
+        $return_arr = array();
+        foreach($site_users as $site_user){
+            $user = Users::get_by_id($site_user['user_id']);
+            $user['roll'] = $site_user['roll'];
+            if($site_user['roll'] == 'admin' || $site_user['roll'] == 'master_admin'){       
+                $return_arr[$user['id']] = $user;
+            }
+            elseif($site_user['roll'] == 'author'){
+                $user_can_arr = array('site_id'=>$site_id,'user_id'=>$user['id'],'permission_to'=>$permission_to);
+                $user_can = self::simple_find_by_table_name($user_can_arr,'site_user_can');
+                if($user_can){       
+                    $return_arr[$user['id']] = $user;
+                }
+            }
+        }
+        return $return_arr;
+    }
 }
 ?>

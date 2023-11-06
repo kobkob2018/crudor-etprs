@@ -3,7 +3,12 @@
 
     protected static $main_table = 'quotes';
 
-
+    protected static $auto_delete_from_attached_tables = array(
+        'quote_cat_assign'=>array(
+            'table'=>'quote_cat_assign',
+            'id_key'=>'quote_id'
+        )
+    ); 
     public static $fields_collection = array(
 
         'priority'=>array(

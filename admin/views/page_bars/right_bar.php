@@ -149,8 +149,8 @@
     <?php endif; ?>
     <ul class="item-group">
         <?php if($view->site_user_can('quotes')): //can switch to site_user_is.. ?>
-            <li class="bar-item <?= $view->a_class("quotes/user_list/") ?> <?= $view->a_class("quotes/user_list/") ?>">
-                <a href="<?= inner_url('quotes/user_list/') ?>" title="הצעות המחיר שלי" class="a-link">הצעות המחיר שלי</a>
+            <li class="bar-item <?= $view->a_class("quotes/my_list/") ?> <?= $view->a_class("quotes/my_list/") ?>">
+                <a href="<?= inner_url('quotes/my_list/') ?>" title="הצעות המחיר שלי" class="a-link">הצעות המחיר שלי</a>
             </li>
         <?php endif; ?>
     </ul>

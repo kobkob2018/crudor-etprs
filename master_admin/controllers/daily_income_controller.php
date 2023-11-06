@@ -169,6 +169,7 @@
 		);
 		$user['static_costs'] = $user_static_costs;
 		$user['leads_count_total'] = 0;
+		$user['billed_leads_count_total'] = 0;
 		$user['deal_closed_count'] = 0;
 		$user_list[$user['user_id']] = $user;
 		$user_id_list[$user['user_id']] = $user['user_id'];
@@ -321,6 +322,7 @@
 		"hosting"=>0, //hostPriceMon
 		"advertyzing_global"=>0, //advertisingPrice
 		"leads_count"=>0, //leads
+		"billed_leads_count"=>0, //leads
 		"deal_closed_count"=>0, //leads
 		"payByPassword0"=>0,
 		"tracking_count"=>0,
@@ -338,7 +340,8 @@
 			"tracking_count"=>0,
 			"tracking_cookie_count"=>0,			
 			"deal_closed_count"=>0,
-            "leads_count"=>0
+            "leads_count"=>0,
+			"billed_leads_count"=>0,
 		); 
 		$row_date_arr = explode("-",$row_date);
 		$days_in_row_mont = cal_days_in_month ( CAL_GREGORIAN , $row_date_arr[1] , $row_date_arr[0] );
@@ -359,8 +362,15 @@
 						$user_lead_daily_outcome = $user_lead_count*$user['lead_price'];
 						$daily_income_arr['leads']+=$user_lead_daily_outcome;
 						$user_income_row['leads']=$user_lead_daily_outcome;
+					}
+					$billed_leads_count = 0;
+					foreach($lead_list[$row_date][$user['user_id']] as $lead){
+						if($lead['billed'] != '0'){
+							$billed_leads_count++;
+						}
 					}					
 					$user_income_row['leads_count']=$user_lead_count;
+					$user_income_row['billed_leads_count']=$billed_leads_count;
 					$user_income_row['lead_list'] = $lead_list[$row_date][$user['user_id']];
 					if(isset($closed_deal_leads[$row_date][$user['user_id']])){				
 						$user_income_row['closed_deal_leads'] = $closed_deal_leads[$row_date][$user['user_id']];
@@ -373,11 +383,13 @@
 					}
 				}
 				else{
-					$user_income_row['leads_count']=0;		
+					$user_income_row['leads_count']=0;
+					$user_income_row['billed_leads_count']=0;	
 				}
 
 	
 				$daily_income_arr['leads_count']+=$user_income_row['leads_count'];
+				$daily_income_arr['billed_leads_count']+=$user_income_row['billed_leads_count'];
 				
 				
 				//payByPassword 0 leads only here -----	
@@ -400,6 +412,8 @@
 				}
 			
 				$user_list[$key]['leads_count_total']+=$user_income_row['leads_count'];
+				$user_list[$key]['billed_leads_count_total']+=$user_income_row['billed_leads_count'];
+				
 				$daily_income_arr['hosting']+=$user['static_costs']['hostPriceMon'][$days_in_row_mont];
 				$user_income_row['hosting']=$user['static_costs']['hostPriceMon'][$days_in_row_mont];
 				if($user['domainEndDate'] >= $row_date){
@@ -449,6 +463,9 @@
 		$all_days_income['hosting']+=$daily_income_arr['hosting'];
 		$all_days_income['advertyzing_global']+=$daily_income_arr['advertyzing_global'];
 		$all_days_income['leads_count']+=$daily_income_arr['leads_count'];
+		$all_days_income['billed_leads_count']+=$daily_income_arr['billed_leads_count'];
+
+		
 		$all_days_income['payByPassword0']+=$daily_income_arr['payByPassword0'];	  			
 		$all_days_income['tracking_count']+=$daily_income_arr['tracking_count']; // ----- tracking_count tracking_cookie_count
 		$all_days_income['tracking_cookie_count']+=$daily_income_arr['tracking_cookie_count'];
@@ -691,6 +708,7 @@
 			<th>דומיין</th>
 			<th>פרסום</th>
 			<td>כמות לידים</td>
+			<th>לידים מחוייבים</th>
 			<th>לידים</th>
 			<th>סגירה עם לקוח</th>
 			<th>לידים בכוכביות</th>
@@ -706,6 +724,8 @@
 				<td><?php echo number_format ($day_income_arr['domain'],2); ?></td>
 				<td><?php echo number_format ($day_income_arr['advertyzing_global'],2); ?></td>
 				<td><?php echo $day_income_arr['leads_count']; ?></td>
+				<td><?php echo $day_income_arr['billed_leads_count']; ?></td>
+				
 				<td><?php echo number_format ($day_income_arr['leads'],2); ?></td>
 				<td><?php echo $day_income_arr['deal_closed_count']; ?></td>
 				<td><?php echo $day_income_arr['payByPassword0']; ?></td>
@@ -722,6 +742,8 @@
 			<td style="color:green"><?php echo number_format ($all_days_income['domain'],2); ?></td>
 			<td style="color:green"><?php echo number_format ($all_days_income['advertyzing_global'],2); ?></td>
 			<td style="color:green"><?php echo $all_days_income['leads_count']; ?></td>
+			<td style="color:green"><?php echo $all_days_income['billed_leads_count']; ?></td>
+			
 			<td style="color:green"><?php echo number_format ($all_days_income['leads'],2); ?></td>
 			<td style="color:green"><?php echo $all_days_income['deal_closed_count']; ?></td>
 			<td style="color:green"><?php echo $all_days_income['payByPassword0']; ?></td>
@@ -749,6 +771,7 @@
                 <th>דומיין</th>
                 <th>פרסום</th>
                 <td>כמות לידים</td>
+				<td>לידים מחוייבים</td>
                 <th>לידים</th>
                 <th>סגירה עם לקוח</th>
                 <th>לידים בכוכביות</th>
@@ -762,6 +785,7 @@
 				<td><?php echo number_format ($day_income_arr['domain'],2); ?></td>
 				<td><?php echo number_format ($day_income_arr['advertyzing_global'],2); ?></td>
 				<td><?php echo $day_income_arr['leads_count']; ?></td>
+				<td><?php echo $day_income_arr['billed_leads_count']; ?></td>		
 				<td><?php echo number_format ($day_income_arr['leads'],2); ?></td>
 				<td><?php echo $day_income_arr['deal_closed_count']; ?></td>
 				<td><?php echo $day_income_arr['payByPassword0']; ?></td>
@@ -778,6 +802,7 @@
 			<th>דומיין</th>
 			<th>פרסום</th>
 			<td>כמות לידים</td>
+			<td>לידים מחוייבים</td>
 			<th>סגירה עם לקוח</th>
 			<th>לידים בכוכביות</th>
 			<th>כמות לידים לכל התקופה</th>
@@ -801,10 +826,14 @@
 					<td><?php echo number_format ($user_income_arr['domain'],2); ?></td>
 					<td><?php echo number_format ($user_income_arr['advertyzing_global'],2); ?></td>
 					<td><?php echo $user_income_arr['leads_count']; ?></td>
+					<td><?php echo $user_income_arr['billed_leads_count']; ?></td>
+					
 					<td><?php echo $user_income_arr['deal_closed_count']; ?></td>
 					<td><?php echo $user_income_arr['payByPassword0']; ?></td>
 						
 					<td><?php echo $user_list[$user_id]['leads_count_total']; ?></td>
+					<td><?php echo $user_list[$user_id]['billed_leads_count_total']; ?></td>
+					
 					<td><?php echo number_format ($user_list[$user_id]['lead_price'],2); ?></td>
 					<td><?php echo number_format ($user_income_arr['leads'],2); ?></td>
 					<td><?php echo number_format ($user_income_arr['sum_all'],2); ?></td>
