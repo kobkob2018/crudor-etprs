@@ -912,7 +912,7 @@
 											}
 										}
 									?>
-									<tr>
+									<tr class="billed-0<?= $lead['billed'] ?>">
 										<td><?php $date_in_arr = explode(" ",$lead['date_in']); echo $date_in_arr[1]; ?>
 											<br/>
 											<a target='_BLANK' href='<?= inner_url('myleads/quick_access/') ?>?user_id=<?= $user_income_arr['user_id'] ?>&lead_id=<?= $lead['id']; ?>'>צפייה במערכת ניהול לידים</a>
@@ -930,7 +930,12 @@
                                         </td>
 										<td><?php echo $lead['tag_name']; ?></td>
 										<td><a target="_blank" href="<?= inner_url('biz_requests/view/') ?>?row_id=<?= $lead['request_id']; ?>"><?= $lead['full_name'] ?></a></td>
-										<td><?php echo $lead['phone']; ?></td>
+										<td>
+											<?php echo $lead['phone']; ?>
+											<?php if(!$lead['billed']): ?>
+												<br/> לא חוייב
+											<?php endif; ?>
+										</td>
 										<td><?php echo $lead['resource']; ?></td>
 										<td><?php echo $lead['ip']; ?></td>
 										<td><?php echo $lead['campaign_str']; ?> [<?php echo $lead['campaign_name']; ?>]</td>
@@ -1105,3 +1110,9 @@
   }
 
 ?>
+<style type="text/css">
+
+	tr.billed-00 td{
+		background: #ffb4b4;
+	}
+</style>
