@@ -158,12 +158,11 @@
 
     protected function create_item($fixed_values){
         $user_can_options = array();
-        if(isset($update_values['user_can'])){
-            $user_can_options = $update_values['user_can'];
-            unset($update_values['user_can']);
+        if(isset($fixed_values['user_can'])){
+            $user_can_options = $fixed_values['user_can'];
+            unset($fixed_values['user_can']);
         }
         $fixed_values['site_id'] = $this->data['work_on_site']['id'];
-        print_r_help($fixed_values);
         $item_id = Site_users::create($fixed_values);
 
         Site_users::update_user_can($item_id,$fixed_values['user_id'],$this->data['work_on_site']['id'],$user_can_options);
