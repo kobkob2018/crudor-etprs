@@ -358,19 +358,20 @@
 				if(isset($lead_list[$row_date][$user['user_id']])){
 					
 					$user_lead_count = count($lead_list[$row_date][$user['user_id']]);
+					$user_billed_leads_count = 0;
+					foreach($lead_list[$row_date][$user['user_id']] as $lead){
+						if($lead['billed'] != '0'){
+							$user_billed_leads_count++;
+						}
+					}	
 					if($user['lead_price'] != 0 && $user['lead_price'] != ""){
-						$user_lead_daily_outcome = $user_lead_count*$user['lead_price'];
+						$user_lead_daily_outcome = $user_billed_leads_count*$user['lead_price'];
 						$daily_income_arr['leads']+=$user_lead_daily_outcome;
 						$user_income_row['leads']=$user_lead_daily_outcome;
 					}
-					$billed_leads_count = 0;
-					foreach($lead_list[$row_date][$user['user_id']] as $lead){
-						if($lead['billed'] != '0'){
-							$billed_leads_count++;
-						}
-					}					
+				
 					$user_income_row['leads_count']=$user_lead_count;
-					$user_income_row['billed_leads_count']=$billed_leads_count;
+					$user_income_row['billed_leads_count']=$user_billed_leads_count;
 					$user_income_row['lead_list'] = $lead_list[$row_date][$user['user_id']];
 					if(isset($closed_deal_leads[$row_date][$user['user_id']])){				
 						$user_income_row['closed_deal_leads'] = $closed_deal_leads[$row_date][$user['user_id']];
