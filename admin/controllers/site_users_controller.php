@@ -163,6 +163,7 @@
             unset($update_values['user_can']);
         }
         $fixed_values['site_id'] = $this->data['work_on_site']['id'];
+        print_r_help($fixed_values);
         $item_id = Site_users::create($fixed_values);
 
         Site_users::update_user_can($item_id,$fixed_values['user_id'],$this->data['work_on_site']['id'],$user_can_options);
