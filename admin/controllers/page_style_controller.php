@@ -2,12 +2,29 @@
   class Page_styleController extends CrudController{
     public $add_models = array("sites","adminPages", "page_style", "biz_categories");
 
+    protected function handle_access($action){
+        return $this->call_module('admin','handle_access_user_can','pages');
+    }
+
     protected function init_setup($action){
         $page_id = $this->add_page_info_data();
         if(!$page_id){
             return $this->redirect_to(inner_url("pages/list/"));
             return false;
         }
+
+        $page_info = $this->data['page_info'];
+        $work_on_site = Sites::get_user_workon_site();
+        $user_can = true;
+        if(!$this->view->site_user_is('admin')){
+            $user_can = $this->user['id'] = $page_info['user_id'];
+        }
+        if($page_info['site_id'] != $work_on_site['id'] || (!$user_can)){
+            SystemMessages::add_err_message("אין גישה לתוכן זה");
+            return $this->redirect_to(inner_url("pages/list/"));
+            return false;
+        }
+
         return parent::init_setup($action);
     }
 
@@ -34,7 +51,7 @@
             return false;
         }
         $page_id = $_GET['page_id'];
-        $page_info = AdminPages::get_by_id($page_id, 'id, title, link');
+        $page_info = AdminPages::get_by_id($page_id, 'id, site_id, user_id, title, link');
         $this->data['page_info'] = $page_info;
         if($page_info && isset($page_info['id'])){
             return $page_info['id'];
