@@ -27,7 +27,10 @@
                     <span class="fa fa-eye-slash" title="דף נסתר"></span>
                 <?php endif; ?>
                 <a href = "<?= inner_url('blocks/list/') ?>?page_id=<?= $content_page['id'] ?>" title="ערוך דף"><?= $content_page['title'] ?></a>
-
+                <?php if(isset($content_page['user_label'])): ?>
+                    <br/>
+                    <b>נוצר ע"י: </b><?= $content_page['user_label'] ?>
+                <?php endif; ?>
             </div>
             <div class="col">
                 <a href = "<?= $this->data['work_on_site']['url'] ?>/<?= $content_page['link'] ?>/" target="_BLANK" title="צפה באתר">צפה באתר</a>

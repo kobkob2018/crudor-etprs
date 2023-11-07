@@ -16,7 +16,7 @@
           return true;
           break;
         default:
-          return parent::handle_access(($action));
+          return $this->call_module('admin','handle_access_user_can','pages');
           break;
         
       }
@@ -25,8 +25,26 @@
 		public function list(){
       
       $filter_arr = array('site_id'=>$this->data['work_on_site']['id']);
-      $content_pages = AdminPages::get_list($filter_arr, 'id, title, link, visible, views, convertions, spam_convertions');
-      
+      $user_id_admin = $this->view->user_is('admin',Sites::get_user_workon_site());
+      if(!$user_id_admin){
+        $filter_arr['user_id'] = $this->user['id'];
+      }
+      $content_pages = AdminPages::get_list($filter_arr, 'id, user_id, title, link, visible, views, convertions, spam_convertions');
+      if($user_id_admin){
+        $users_by_id = array();
+        foreach($content_pages as $key=>$page){
+          if(!isset($users_by_id[$page['user_id']])){
+            $users_by_id[$page['user_id']] = Users::get_by_id($page['user_id'],'id, full_name, biz_name');
+          }
+          $page_user = $users_by_id[$page['user_id']];
+          $page['user'] = $page_user;
+          $page['user_label'] = "no-user-found";
+          if($page_user){
+            $page['user_label'] = $page_user['full_name'];
+          }
+          $content_pages[$key] = $page;
+        }
+      }
       $this->data['content_pages'] = $content_pages;
 
       if(session__isset('page_export_prepare')){
@@ -122,6 +140,7 @@
       $work_on_site = Sites::get_user_workon_site();
       $site_id = $work_on_site['id'];
       $fixed_values['site_id'] = $site_id;
+      $fixed_values['user_id'] = $this->user['id'];
       $fixed_values['link'] = str_replace(" ","-",$fixed_values['link']);
       return AdminPages::create($fixed_values);
     }

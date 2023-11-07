@@ -97,12 +97,6 @@
                 <li class="bar-item child-item <?= $view->a_class("pages/add/") ?>">
                     <a href="<?= inner_url('pages/add/') ?>" title="דף חדש" class="a-link">דף חדש</a>
                 </li>
-                <li class="bar-item child-item <?= $view->a_class("pages/dir_list/") ?>">
-                    <a href="<?= inner_url('pages/dir_list/') ?>" title="רשימת תיקיות" class="a-link">רשימת תיקיות</a>
-                </li>
-                <li class="bar-item child-item <?= $view->a_class("pages/dir_add/") ?>">
-                    <a href="<?= inner_url('pages/dir_add/') ?>" title="הוספת תיקייה" class="a-link">הוספת תיקייה</a>
-                </li>
             <?php endif; ?>          
         </ul>
 
@@ -148,10 +142,27 @@
         </ul>
     <?php endif; ?>
     <ul class="item-group">
+        <?php if($view->site_user_is('author')): //can switch to site_user_is.. ?>
+            <li class="bar-item <?= $view->a_class("quotes/my_list/") ?> <?= $view->a_class("quotes/my_list/") ?>">
+               <h3>תוכן אישי באתר</h3>
+            </li>
+        <?php endif; ?>
         <?php if($view->site_user_can('quotes')): //can switch to site_user_is.. ?>
             <li class="bar-item <?= $view->a_class("quotes/my_list/") ?> <?= $view->a_class("quotes/my_list/") ?>">
                 <a href="<?= inner_url('quotes/my_list/') ?>" title="הצעות המחיר שלי" class="a-link">הצעות המחיר שלי</a>
             </li>
+        <?php endif; ?>
+        <?php if($view->site_user_can('pages')): //can switch to site_user_is.. ?>
+            <li class="bar-item <?= $view->a_class("pages/list/") ?> <?= $view->a_c_class("pages, blocks") ?>">
+                <hr/>
+                <a href="<?= inner_url('pages/list/') ?>" title="דפים באתר" class="a-link">דפים באתר</a>
+            </li>
+            <?php if($view->controller_is("pages") || $view->controller_is("blocks")): ?>
+                <li class="bar-item child-item <?= $view->a_class("pages/add/") ?>">
+                    <a href="<?= inner_url('pages/add/') ?>" title="דף חדש" class="a-link">דף חדש</a>
+                    <hr/>
+                </li>
+            <?php endif; ?>  
         <?php endif; ?>
     </ul>
 </div>
