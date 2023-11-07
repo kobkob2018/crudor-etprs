@@ -139,6 +139,10 @@
 
             $user_is = Helper::user_is('author',$user);
             if(!$user_is){
+                if(isset($_REQUEST['checkme'])){
+                    exit("not good");
+                    
+                  }
                 $this->site_user_can = array();
                 return $this->site_user_can;
             }
