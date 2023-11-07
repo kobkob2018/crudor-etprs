@@ -134,7 +134,7 @@
             
             $check_user_ids[$user_rotation['user_id']] = '1';
 
-            $user_lead_settings = self::$users_arr[$user['user_id']]['lead_settings'];
+            $user_lead_settings = self::$users_arr[$user_rotation['user_id']]['lead_settings'];
             $user_month_max = intval($user_lead_settings['month_max']);
             $user_leads_recived = intval($user_rotation['leads_recived']);
 
