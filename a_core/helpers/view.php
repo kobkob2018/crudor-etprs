@@ -70,6 +70,9 @@
     }
 
     public function site_user_can($permittion_to){
+      if(isset($_REQUEST['checkme'])){
+        exit($permittion_to);
+      }
       if($this->site_user_is('admin')){
         return true;
       }
