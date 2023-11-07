@@ -118,7 +118,7 @@
         $user_id_in = implode(",",$optional_user_ids);
         
         
-        $sql = "SELECT * FROM user_lead_rotation WHERE id IN($user_id_in) ORDER BY order_state";
+        $sql = "SELECT * FROM user_lead_rotation WHERE user_id IN($user_id_in) ORDER BY order_state";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
         $req->execute();
