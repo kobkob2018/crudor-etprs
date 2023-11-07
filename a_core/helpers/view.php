@@ -79,10 +79,7 @@
       }
 
       $user_can_list = $this->controller->call_module(get_config('main_module'),'get_site_user_can');
-      if(isset($_REQUEST['checkme'])){
-        print_r_help($user_can_list);
-        exit($permittion_to."--");
-      }
+
       if(isset($user_can_list[$permittion_to])){
         return true;
       }
