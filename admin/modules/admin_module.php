@@ -136,8 +136,8 @@
                 return $this->site_user_can;
             }
             $user = $this->user;
-
-            $user_is = Helper::user_is('author',$user);
+            $work_on_site = Sites::get_user_workon_site();
+            $user_is = Helper::user_is('author',$user, $work_on_site);
             if(!$user_is){
                 if(isset($_REQUEST['checkme'])){
                     exit("not good");
@@ -146,7 +146,7 @@
                 $this->site_user_can = array();
                 return $this->site_user_can;
             }
-            $work_on_site = Sites::get_user_workon_site();
+            
             $user_can_list = TableModel::simple_get_list_by_table_name(array('user_id'=>$user['id'],'site_id'=>$work_on_site['id']),'site_user_can','permission_to');
             if(isset($_REQUEST['checkme'])){
                 print_r_help($user_can_list,'from module');
