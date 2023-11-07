@@ -130,31 +130,31 @@
         $user_count = 0;
         $max_sends_arr_int = intval($lead_info['max_lead_send']);
         
-        foreach($result as $user){
+        foreach($result as $user_rotation){
             
-            $check_user_ids[$user['id']] = '1';
+            $check_user_ids[$user_rotation['user_id']] = '1';
 
-            $user_lead_settings = self::$users_arr[$user['id']]['lead_settings'];
+            $user_lead_settings = self::$users_arr[$user['user_id']]['lead_settings'];
             $user_month_max = intval($user_lead_settings['month_max']);
-            $user_leads_recived = intval($user['leads_recived']);
+            $user_leads_recived = intval($user_rotation['leads_recived']);
 
             
             if($user_count < $max_sends_arr_int || $max_sends_arr_int == 0){
                 
                 if($user_leads_recived < $user_month_max || $user_month_max == 0){
                     
-                    if(isset($duplicated_user_leads[$user['id']])){
-                        $users_in_end_rotation[] = $user['id'];
+                    if(isset($duplicated_user_leads[$user_rotation['user_id']])){
+                        $users_in_end_rotation[] = $user_rotation['user_id'];
                     }
                     else{
-                        $users_in_rotation[] = $user['id'];
+                        $users_in_rotation[] = $user_rotation['user_id'];
                         $user_count++;
                     }
                 }
                 else{
                     
                     if($user_lead_settings['flex_max'] == '1'){
-                        $users_in_end_rotation[] = $user['id'];
+                        $users_in_end_rotation[] = $user_rotation['user_id'];
                     }
                 }
             }
