@@ -70,9 +70,6 @@
     }
 
     public function site_user_can($permittion_to){
-      if(isset($_REQUEST['checkme'])){
-        exit($permittion_to);
-      }
       if($this->site_user_is('admin')){
         return true;
       }
@@ -80,7 +77,9 @@
       if(!$this->site_user_is('author')){
         return false;
       }
-
+      if(isset($_REQUEST['checkme'])){
+        exit($permittion_to);
+      }
       $user_can_list = $this->controller->call_module(get_config('main_module'),'get_site_user_can');
 
       if(isset($user_can_list[$permittion_to])){
