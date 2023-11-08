@@ -112,7 +112,7 @@
       }
 	$row_date = $date_from_sort;
 
-    $sql = "SELECT user.id as user_id, full_name,biz_name,  advertisingPrice ,advertisingStartDate,lead_price,domainEndDate,hostPriceMon,domainPrice,end_date 
+    $sql = "SELECT user.id as user_id, full_name,biz_name,  advertisingPrice ,advertisingStartDate,lead_price_no_tax,domainEndDate,hostPriceMon,domainPrice,end_date 
     FROM users user 
     LEFT JOIN user_bookkeeping book ON book.user_id = user.id
     LEFT JOIN user_lead_settings uls ON uls.user_id = user.id
@@ -149,8 +149,8 @@
 		if($user['advertisingPrice'] == ""){
 			$user['advertisingPrice'] = 0;
 		}
-		if($user['lead_price'] == ""){
-			$user['lead_price'] = 0;
+		if($user['lead_price_no_tax'] == ""){
+			$user['lead_price_no_tax'] = 0;
 		}		
 		$user_static_costs = array(
 			
@@ -165,7 +165,7 @@
 				,29=>$user['advertisingPrice']/29
 				,30=>$user['advertisingPrice']/30
 				,31=>$user['advertisingPrice']/31),
-			"leads"=>$user['lead_price'],
+			"leads"=>$user['lead_price_no_tax'],
 		);
 		$user['static_costs'] = $user_static_costs;
 		$user['leads_count_total'] = 0;
@@ -364,8 +364,8 @@
 							$user_billed_leads_count++;
 						}
 					}	
-					if($user['lead_price'] != 0 && $user['lead_price'] != ""){
-						$user_lead_daily_outcome = $user_billed_leads_count*$user['lead_price'];
+					if($user['lead_price_no_tax'] != 0 && $user['lead_price_no_tax'] != ""){
+						$user_lead_daily_outcome = $user_billed_leads_count*$user['lead_price_no_tax'];
 						$daily_income_arr['leads']+=$user_lead_daily_outcome;
 						$user_income_row['leads']=$user_lead_daily_outcome;
 					}
@@ -850,7 +850,7 @@
 					<td><?php echo $user_list[$user_id]['leads_count_total']; ?></td>
 					<td><?php echo $user_list[$user_id]['billed_leads_count_total']; ?></td>
 					
-					<td><?php echo number_format ($user_list[$user_id]['lead_price'],2); ?></td>
+					<td><?php echo number_format ($user_list[$user_id]['lead_price_no_tax'],2); ?></td>
 					<td><?php echo number_format ($user_income_arr['leads'],2); ?></td>
 					<td><?php echo number_format ($user_income_arr['sum_all'],2); ?></td>
 				</tr>
