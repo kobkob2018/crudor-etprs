@@ -14,7 +14,7 @@
         <div class="col"></div>
     </div>
 
-    <form  class="table-tr row" action = "" method = "POST" enctype="multipart/form-data">>
+    <form  class="table-tr row" action = "" method = "POST" enctype="multipart/form-data" >
         <input type="hidden" name="sendAction" value="listCreateSend" />
         <input type="hidden" name="db_row_id" value="new" />
         <input type="hidden" name="row[user_id]" value="<?= $info['list_user']['id'] ?>" />
@@ -76,7 +76,7 @@
             <div class="col"></div>
         </div>
         <?php foreach($this->data['quote_list'] as $item): ?>
-            <form  class="table-tr row" action = "" method = "POST" enctype="multipart/form-data">>
+            <form  class="table-tr row" action = "" method = "POST" enctype="multipart/form-data">
                 <input type="hidden" name="sendAction" value="listUpdateSend" />
                 <input type="hidden" name="db_row_id" value="<?= $item['id'] ?>" /> 
                 <input type="hidden" name="assign[]" value="-1" /> 
