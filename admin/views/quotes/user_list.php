@@ -10,10 +10,11 @@
         <div class="col">תאור</div>
         <div class="col">מחיר</div>
         <div class="col">טקסט למחיר</div>
+        <div class="col">שיוך לרשימות</div>
         <div class="col"></div>
     </div>
 
-    <form  class="table-tr row" action = "" method = "POST" >
+    <form  class="table-tr row" action = "" method = "POST" enctype="multipart/form-data">>
         <input type="hidden" name="sendAction" value="listCreateSend" />
         <input type="hidden" name="db_row_id" value="new" />
         <input type="hidden" name="row[user_id]" value="<?= $info['list_user']['id'] ?>" />
@@ -22,6 +23,10 @@
         </div>
         <div class="col">
             <input type="text" class = 'table-input' name = 'row[label]' value = "<?= $this->get_form_input('label') ?>" />
+            <div class="sub-row">
+                <b>תמונה\לוגו</b><br/>
+                <input type="file" name="row[image]" id="row_image" accept="image/png, image/gif, image/jpeg, image/x-icon, image/svg+xml" class="form-input" value="" />
+            </div>
         </div>
         <div class="col col-top">
             <textarea class = 'table-input' name = 'row[description]'><?= $this->get_form_input('description') ?></textarea>
@@ -29,6 +34,7 @@
         <div class="col">
             <input type="text" class = 'table-input' name = 'row[price]' value = "<?= $this->get_form_input('price') ?>" />
         </div>
+
         <div class="col col-top">
             <textarea class = 'table-input' name = 'row[price_text]'><?= $this->get_form_input('price_text') ?></textarea>
         </div>
@@ -70,7 +76,7 @@
             <div class="col"></div>
         </div>
         <?php foreach($this->data['quote_list'] as $item): ?>
-            <form  class="table-tr row" action = "" method = "POST" >
+            <form  class="table-tr row" action = "" method = "POST" enctype="multipart/form-data">>
                 <input type="hidden" name="sendAction" value="listUpdateSend" />
                 <input type="hidden" name="db_row_id" value="<?= $item['id'] ?>" /> 
                 <input type="hidden" name="assign[]" value="-1" /> 
@@ -80,6 +86,20 @@
                 </div>
                 <div class="col">
                     <input type="text" class = 'table-input' name = 'row[label]' value = "<?= $this->get_form_input('label',$item['form_identifier']) ?>" />
+                    <div class="sub-row">
+                        <b>תמונה\לוגו</b><br/>
+                        <input type="file" name="row[image]" id="row_image" accept="image/png, image/gif, image/jpeg, image/x-icon, image/svg+xml" class="form-input" value="" />                      
+                        <?php if($file_url = $this->get_form_file_url('image',$item['form_identifier'])): ?>
+                        <div>
+                            
+                            <a href="<?= $file_url ?>" target="_BLANK">  
+                                <img src='<?= $file_url ?>?cache=<?= rand() ?>'  style="max-width:200px;"/>
+                            </a>
+                            <br/>
+                            <a href="<?= current_url() ?>&remove_file=image">הסר תמונה</a>
+                        </div>
+                        <?php endif; ?>
+                    </div>
                 </div>
                 <div class="col col-top">
                     <textarea class = 'table-input' name = 'row[description]'><?= $this->get_form_input('description',$item['form_identifier']) ?></textarea>
@@ -93,6 +113,7 @@
                 <div class="col col-top">
                     <textarea class = 'table-input' name = 'row[phone]'><?= $this->get_form_input('phone',$item['form_identifier']) ?></textarea>
                 </div>
+
                 <div class="col cat-list-select-wrap">
                     <div class="cat-list-finder-wrap">
                         <input type="text" placeholder="חפש רשימה" class="list-select" onkeyup="list_quote_cat_options(this)" />
