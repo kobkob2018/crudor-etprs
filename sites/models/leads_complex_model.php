@@ -136,7 +136,9 @@
         }
         
         $user_id_in = implode(",",$optional_user_ids);
-          
+        if(isset($_REQUEST['prevent_db_listing'])){
+            print_help($user_id_in, "user_id_in (line 140 leads_complex_model");   
+        } 
         $sql = "SELECT * FROM user_lead_rotation WHERE user_id IN($user_id_in) ORDER BY order_state";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
@@ -167,7 +169,11 @@
                     }
                     else{
                         $users_in_rotation[] = $user_rotation['user_id'];
+
                         $user_count++;
+                        if(isset($_REQUEST['prevent_db_listing'])){
+                            print_r_help($users_in_rotation, "now user_count:".$user_count);   
+                        } 
                     }
                 }
                 else{
@@ -184,6 +190,9 @@
                 if($user_count < $max_sends_arr_int){
                     $users_in_rotation[] = $user_id;
                     $user_count++;
+                    if(isset($_REQUEST['prevent_db_listing'])){
+                        print_r_help($users_in_rotation, "END ROTAION-- user_count:".$user_count);   
+                    } 
                 }
             }
         }
