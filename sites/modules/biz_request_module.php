@@ -36,6 +36,10 @@
         }
 
         public function enter_lead(){
+            if(isset($_REQUEST['prevent_db_listing'])){
+                print_r_help($_REQUEST,"the request");
+                print_r_help($_SESSION,"the session");
+            }
             $action_data = $this->action_data;
             $form_info = $this->controller->data['form_info'];
             $return_array = $action_data['return_array'];
