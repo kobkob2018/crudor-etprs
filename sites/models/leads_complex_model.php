@@ -14,16 +14,37 @@
         }
         
         $optional_user_ids = self::get_cat_user_ids($lead_info);
-        
+
+        if(isset($_REQUEST['prevent_db_listing'])){
+            print_r_help($optional_user_ids, "get_cat_user_ids");   
+        }
+
         $optional_user_ids = self::filter_inactive_users($optional_user_ids);
+
+        if(isset($_REQUEST['prevent_db_listing'])){
+            print_r_help($optional_user_ids, "filter_inactive_users");   
+        }
 
         $optional_user_ids = self::filter_city_users($optional_user_ids, $lead_info);
 
+        if(isset($_REQUEST['prevent_db_listing'])){
+            print_r_help($optional_user_ids, "filter_city_users");   
+        }
+
         $duplicated_user_leads = self::get_duplicated_user_leads($optional_user_ids, $lead_info);
+
+        if(isset($_REQUEST['prevent_db_listing'])){
+            print_r_help($duplicated_user_leads, "get_duplicated_user_leads");   
+        }
 
        // user_ids
        // send_count
         $lead_sends_arr = self::get_lead_max_sends_arr($optional_user_ids, $lead_info, $duplicated_user_leads);
+
+        if(isset($_REQUEST['prevent_db_listing'])){
+            print_r_help($lead_sends_arr, "get_lead_max_sends_arr");   
+        }
+
        // user_ids
        // send_count
        // users (info , lead_settings)        
