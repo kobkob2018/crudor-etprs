@@ -10,6 +10,8 @@
         <div class="col">תאור</div>
         <div class="col">מחיר</div>
         <div class="col">טקסט למחיר</div>
+        <div class="col">טלפון</div>
+        <div class="col">לינק</div>
         <div class="col">שיוך לרשימות</div>
         <div class="col"></div>
     </div>
@@ -37,6 +39,12 @@
 
         <div class="col col-top">
             <textarea class = 'table-input' name = 'row[price_text]'><?= $this->get_form_input('price_text') ?></textarea>
+        </div>
+        <div class="col col-top">
+            <textarea class = 'table-input' name = 'row[phone]'><?= $this->get_form_input('phone') ?></textarea>
+        </div>
+        <div class="col col-top">
+            <textarea class = 'table-input' name = 'row[link]'><?= $this->get_form_input('link') ?></textarea>
         </div>
         <div class="col cat-list-select-wrap">
             <div class="cat-list-finder-wrap">
@@ -71,6 +79,7 @@
             <div class="col">מחיר</div>
             <div class="col">טקסט למחיר</div>
             <div class="col">טלפון</div>
+            <div class="col">לינק</div>
             <div class="col">שיוך לרשימות</div>
             <div class="col"></div>
             <div class="col"></div>
@@ -113,7 +122,9 @@
                 <div class="col col-top">
                     <textarea class = 'table-input' name = 'row[phone]'><?= $this->get_form_input('phone',$item['form_identifier']) ?></textarea>
                 </div>
-
+                <div class="col col-top">
+                    <textarea class = 'table-input' name = 'row[link]'><?= $this->get_form_input('link',$item['form_identifier']) ?></textarea>
+                </div>
                 <div class="col cat-list-select-wrap">
                     <div class="cat-list-finder-wrap">
                         <input type="text" placeholder="חפש רשימה" class="list-select" onkeyup="list_quote_cat_options(this)" />

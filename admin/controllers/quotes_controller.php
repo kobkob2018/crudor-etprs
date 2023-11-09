@@ -268,6 +268,7 @@
             }   
             Quote_cat_assign::assign_cats_to_item($item_id, $assign_cats);   
         }
+        return $item_id;
     }
   }
 ?>

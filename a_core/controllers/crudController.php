@@ -509,11 +509,14 @@
     
         $validate_result = $form_handler->validate();
         $fixed_values = $validate_result['fixed_values'];
+
         if($validate_result['success']){
             $this->update_item($row_id,$form_handler->fix_values_for_update($fixed_values));
+            $files_result = $form_handler->upload_files($validate_result, $row_id);
             $this->update_success_message();
-            
         }
+
+
         else{
           SystemMessages::add_err_message("שגיאה בעריכת הרכיב");
           if(!empty($validate_result['err_messages'])){
@@ -525,16 +528,32 @@
         $this->redirect_to(current_url()); 
     }
 
+
     public function listCreateSend(){
         
         $form_handler = $this->init_form_handler();
     
         $validate_result = $form_handler->validate();
-        $fixed_values = $validate_result['fixed_values'];
+        
         if($validate_result['success']){
-            $row_id = $this->create_item($fixed_values);
-            $this->create_success_message();
-            
+            $fixed_values = $validate_result['fixed_values'];
+            $row_id = $this->create_item($form_handler->fix_values_for_update($fixed_values));
+            if(!$row_id){
+                return;
+            }
+            $fixed_row_values = array();
+            foreach($fixed_values as $key=>$value){
+                $fixed_row_value = str_replace('{{row_id}}',$row_id,$value);
+                if($fixed_row_value != $value){
+                    $fixed_row_values[$key] = $fixed_row_value;
+                }
+            }
+            if(!empty($fixed_row_values)){
+                $this->update_item($row_id,$fixed_row_values);
+            }
+            $validate_result['fixed_values'] = $fixed_row_values;
+            $files_result = $form_handler->upload_files($validate_result, $row_id);
+            $this->create_success_message();          
         }
         else{
           SystemMessages::add_err_message("שגיאה בעריכת הרכיב");
