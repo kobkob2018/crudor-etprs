@@ -121,6 +121,20 @@
         }
     }
 
+
+    protected static function get_users_by_rotation($optional_user_ids){
+        $user_id_in = implode(",",$optional_user_ids);
+        if(isset($_REQUEST['prevent_db_listing'])){
+            print_help($user_id_in, "user_id_in (line 140 leads_complex_model");   
+        } 
+        $sql = "SELECT * FROM user_lead_rotation WHERE user_id IN($user_id_in) ORDER BY order_state";
+        $db = Db::getInstance();		
+        $req = $db->prepare($sql);
+        $req->execute();
+        $users_in_rotation = $req->fetchAll();
+        return $users_in_rotation;
+    }
+
     public static function get_lead_max_sends_arr($optional_user_ids, $lead_info, $duplicated_user_leads){
         $users_send_count = count($optional_user_ids);
         if($users_send_count > 0){
@@ -135,25 +149,32 @@
             return $max_sends_arr;
         }
         
-        $user_id_in = implode(",",$optional_user_ids);
-        if(isset($_REQUEST['prevent_db_listing'])){
-            print_help($user_id_in, "user_id_in (line 140 leads_complex_model");   
-        } 
-        $sql = "SELECT * FROM user_lead_rotation WHERE user_id IN($user_id_in) ORDER BY order_state";
-        $db = Db::getInstance();		
-        $req = $db->prepare($sql);
-        $req->execute();
-        $result = $req->fetchAll();
-        
+        $users_from_rotation = self::get_users_by_rotation($optional_user_ids);
+
         $check_user_ids = array();
+        foreach($users_from_rotation as $user_rotation){
+            $check_user_ids[$user_rotation['user_id']] = '1';
+        }
+        $users_rotation_checked = true;
+        foreach($optional_user_ids as $check_user_id){
+            if(!isset($check_user_ids[$check_user_id])){
+                // this is only for bug in which rotation row was not created for the user
+                //normally a row should exist
+                self::fix_user_id_in_rotation_table($check_user_id);
+                $users_rotation_checked = false;
+            }
+        }
+        if(!$users_rotation_checked){
+            $users_from_rotation = self::get_users_by_rotation($optional_user_ids);
+        }
         $users_in_rotation = array();
         $users_in_end_rotation = array();
         $user_count = 0;
         $max_sends_arr_int = intval($lead_info['max_lead_send']);
         
-        foreach($result as $user_rotation){
+        foreach($users_from_rotation as $user_rotation){
             
-            $check_user_ids[$user_rotation['user_id']] = '1';
+            
 
             $user_lead_settings = self::$users_arr[$user_rotation['user_id']]['lead_settings'];
             $user_month_max = intval($user_lead_settings['month_max']);
@@ -197,13 +218,6 @@
             }
         }
 
-        foreach($optional_user_ids as $check_user_id){
-            if(!isset($check_user_ids[$check_user_id])){
-                // this is only for bug in which rotation row was not created for the user
-                //normally a row should exist
-                self::fix_user_id_in_rotation_table($check_user_id);
-            }
-        }
         $max_sends_arr['user_ids'] = $users_in_rotation;
         $max_sends_arr['send_count'] = $user_count;
         return $max_sends_arr;
@@ -212,16 +226,20 @@
     // this is only for bug in which rotation row was not created for the user
     //normally a row should exist
     public static function fix_user_id_in_rotation_table($user_id){
-        $sql = "INSERT INTO user_lead_rotation(user_id) VALUES($user_id)";
-
-        if(isset($_REQUEST['prevent_db_listing'])){
-            print_help($sql, "preventing sql listing in rotation fix 2");
-            return;
-        }
-
+        $filter_arr = array('user_id'=>$user_id);
+        $sql = "SELECT id FROM  user_lead_rotation WHERE user_id = :user_id";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
-        $req->execute();
+        $req->execute($filter_arr);
+        $result_row = $req->fetch();
+        if($result_row){
+            return $result_row['id'];
+        }
+        $sql = "INSERT INTO user_lead_rotation(user_id) VALUES(:user_id)";
+        $db = Db::getInstance();		
+        $req = $db->prepare($sql);
+        $req->execute($filter_arr);
+        return $db->lastInsertId();
     }
 
     public static function filter_inactive_users($optional_user_ids){
