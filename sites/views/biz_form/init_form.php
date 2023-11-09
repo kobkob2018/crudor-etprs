@@ -26,9 +26,9 @@
             <input type="hidden" name="biz[site_ref]" value="<?= $_SERVER['HTTP_HOST'] ?>" />
             <?php if(isset($_REQUEST['test_form'])): ?>
                 <div class="test-group form-group">
-                    <input type="button" class="tester-button form-input" data-status="pending" value="שליחת בדיקה רגילה" onclick="help_debug_forms(false)" />
+                    <input type="button" class="tester-button form-input" data-status="pending" value="שליחת בדיקה רגילה" onclick="help_debug_forms(0)" />
                     <br/><br/>
-                    <input type="button" class="tester-button form-input" data-status="pending" value="שליחת בדיקה ללא רישום במסד הנתונים" onclick="help_debug_forms(true)" />
+                    <input type="button" class="tester-button form-input" data-status="pending" value="שליחת בדיקה ללא רישום במסד הנתונים" onclick="help_debug_forms(1)" />
 
                 </div>
             <?php endif; ?>

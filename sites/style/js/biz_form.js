@@ -460,7 +460,7 @@ function help_debug_forms(debug_el){
             formElement.target = "_BLANK";
             const new_elements = document.createElement('div');
             new_elements.innerHTML = "<input type='submit' onClick='return updateCatIdHelper()' name='go' value='go' />";
-            if(debug_el){
+            if(debug_el == 1){
                 new_elements.innerHTML += "<input type='hidden' name='prevent_db_listing' value='1' />";
             }
             formElement.append(new_elements);
