@@ -18,6 +18,9 @@ function session__isset($param_name){
     $session_param = $session_prefix.$param_name;
     if(isset($_REQUEST['prevent_db_listing'])){
         print_help($session_param,"session_param");
+        if(!isset($_SESSION['ilsite_biz_unlimited_count'])){
+            exit("not set");
+        }
     }
     return isset($_SESSION[$session_param]);
 }
