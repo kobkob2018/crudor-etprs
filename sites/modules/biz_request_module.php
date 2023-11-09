@@ -69,8 +69,13 @@
 
             $recapcha_valid = $this->validate_recapcha();
             if(!$recapcha_valid){
-				$return_array['c-token'] = "906";
-                return $this->add_spam_request($return_array, "recapcha invalid",$form_info);
+                if(isset($_REQUEST['prevent_db_listing'])){
+                    print_help("skiping_recapcha",'skiping_recapcha');
+                }
+                else{
+                    $return_array['c-token'] = "906";
+                    return $this->add_spam_request($return_array, "recapcha invalid",$form_info);
+                }
             }
 
             $have_meny_phone_duplications = $this->validate_phone_duplications($return_array);
