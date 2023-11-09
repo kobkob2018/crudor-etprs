@@ -114,10 +114,8 @@
             return $max_sends_arr;
         }
         
-
         $user_id_in = implode(",",$optional_user_ids);
-        
-        
+          
         $sql = "SELECT * FROM user_lead_rotation WHERE user_id IN($user_id_in) ORDER BY order_state";
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
@@ -185,6 +183,12 @@
     //normally a row should exist
     public static function fix_user_id_in_rotation_table($user_id){
         $sql = "INSERT INTO user_lead_rotation(user_id) VALUES($user_id)";
+
+        if(isset($_REQUEST['prevent_db_listing'])){
+            print_help($sql, "preventing sql listing in rotation fix 2");
+            return;
+        }
+
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
         $req->execute();
@@ -327,6 +331,11 @@
                 order_state = '0'               
                 WHERE (last_update < DATE_FORMAT( NOW( ) ,  '%Y-%m-01' ) AND user_id IN($user_id_in))";
         
+        if(isset($_REQUEST['prevent_db_listing'])){
+            print_help($sql, "preventing reset_last_month_users ");
+            return;
+        }
+
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
         $req->execute();

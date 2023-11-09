@@ -95,7 +95,13 @@
             }
 
             $lead_sends_arr = Leads_complex::find_users_for_lead($this->lead_info);
-
+            if(isset($_REQUEST['prevent_db_listing'])){
+                print_help("preventing listing here!!!");
+                
+                print_r_help($lead_sends_arr);
+                
+                exit("preventing listing here!!!");
+            }
             $this->lead_info['recivers'] = $lead_sends_arr['send_count'];
 
             $optional_fields = array(
