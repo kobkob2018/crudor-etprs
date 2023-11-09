@@ -21,6 +21,11 @@ function session__isset($param_name){
         if(!isset($_SESSION['ilsite_biz_unlimited_count'])){
             exit("not set");
         }
+        else{
+            if($session_param == 'ilsite_biz_unlimited_count'){
+                exit("yes set");
+            }
+        }
     }
     return isset($_SESSION[$session_param]);
 }
