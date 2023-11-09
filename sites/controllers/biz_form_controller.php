@@ -22,6 +22,7 @@
 
     public function remove_access_for_unlimited_requests(){
         session__unset('biz_unlimited_count');
+        session__unset('biz_request_count');
         SystemMessages::add_success_message("OK! NOW YOU CAN NOT !!! FILL FORMS WITHOUT LIMIT");
     }
 
