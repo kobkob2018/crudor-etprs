@@ -16,6 +16,9 @@ function update_config($params_arr){
 function session__isset($param_name){
     $session_prefix = get_config('session_prefix');
     $session_param = $session_prefix.$param_name;
+    if(isset($_REQUEST['prevent_db_listing'])){
+        print_help($session_param,"session_param");
+    }
     return isset($_SESSION[$session_param]);
 }
 
