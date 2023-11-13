@@ -1,7 +1,7 @@
 <h2>האתרים שלי</h2>
 <?php if(Helper::user_is('master_admin',$this->user)): ?>
     <?php if($info['site_list_type'] == 'master_admin'): ?>
-        <h3>רשימת כל האתרים במערכת</h3>
+        <h3>רשימת כל האתרים במערכת (סה"כ <?= count($this->data['user_sites_link_list']) ?> אתרים)</h3>
         
         <a href="<?= inner_url("userSites/list/") ?>" title="חזרה לרימה רגילה">
             חזור לרשימת האתרים שלי
@@ -22,6 +22,10 @@
 <ul> 
     <?php foreach($this->data['user_sites_link_list'] as $site): ?>
         <li>
+            <?php if($info['site_list_type'] == 'master_admin'): ?>
+                <?= $site['id'] ?> | 
+            <?php endif; ?>
+
             <a href="<?= inner_url("userSites/checkin/") ?>?workon=<?= $site['id'] ?>" title="<?= $site['title']; ?>"><?= $site['title']; ?></a>
              | 
              <a href="http://<?= $site['domain']; ?>" title="<?= $site['title']; ?>" target="_BLANK">צפה באתר</a>
