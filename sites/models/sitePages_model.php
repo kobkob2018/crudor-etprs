@@ -21,7 +21,9 @@
         else{
             self::$current_page = self::get_by_link($_REQUEST['page']);
         }
-        self::update_page_views(self::$current_page['id']);
+        if(self::$current_page){
+            self::update_page_views(self::$current_page['id']);
+        }
         return self::$current_page; 
     }
 
@@ -49,7 +51,11 @@
             return false;
         }
         if(!isset(self::$pages_by_link[$link])){
-            self::$pages_by_link[$link] = self::simple_find(array('link'=>$link,'site_id'=>$current_site['id']));
+            $filter_arr = array('link'=>$link,'site_id'=>$current_site['id'],'status'=>'1');
+            if(isset($_REQUEST['demo_view'])){
+                unset($filter_arr['status']);
+            }
+            self::$pages_by_link[$link] = self::simple_find($filter_arr);
         }
         return self::$pages_by_link[$link];
     }

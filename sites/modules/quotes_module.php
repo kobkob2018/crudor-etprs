@@ -76,8 +76,15 @@
 
                     $condition_arr = explode("-->",$condition);
                     $condition_term = trim($condition_arr[0]);
+                    $condition_term_not = str_replace("!","",$condition_term);
+
                     $condition_str = $condition_arr[1];
-                    if($quote[$condition_term]){
+                    if($quote[$condition_term_not]){
+                        if($condition_term_not == $condition_term){
+                            $html_part_0 = $condition_str;
+                        }
+                    }
+                    elseif($condition_term_not != $condition_term){      
                         $html_part_0 = $condition_str;
                     }
                     $html_final.=$html_part_0;

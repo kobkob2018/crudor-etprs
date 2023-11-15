@@ -52,6 +52,11 @@
                             <a href = <?= inner_url('quotes/user_list/?user_id='.$user['id']) ?>>
                                 רשימת הצעות מחיר
                             </a>
+                            <br/>
+                            <br/>
+                            <a href = <?= inner_url('quotes_user/list/?user_id='.$user['id']) ?>>
+                                מאפיינים כלליים בהצעות מחיר של הלקוח
+                            </a>
                         </div>
                     </div>
                 <?php endforeach; ?>

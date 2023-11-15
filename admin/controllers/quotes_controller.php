@@ -1,6 +1,6 @@
 <?php
   class QuotesController extends CrudController{
-    public $add_models = array("quotes","quote_cat");
+    public $add_models = array("quotes","quote_cat","quotes_user");
 
     protected function handle_access($action){
         switch ($action){
@@ -71,7 +71,6 @@
 
     public function my_list(){
         $info = array('list_user'=>$this->user);
-        $info['title'] = "הצעות המחיר שלי";
         return $this->setup_user_list($this->user['id'],$info);
     }
 
@@ -87,8 +86,8 @@
         $this->add_model("quote_cat_assign");
         $user_id = session__get('quots_list_user');
         $user = Users::get_by_id($user_id);
+        $this->data['user_info'] = $user;
         $info = array('list_user'=>$user);
-        $info['title'] = "הצעות המחיר של ".$user['biz_name'].", ".$user['full_name'];
         return $this->setup_user_list($user_id,$info);
     }
 
@@ -221,6 +220,14 @@
         return $this->redirect_to($url);
     }
 
+    public function redirect_back_to_item($item_info){
+        if(isset($_REQUEST['user_id'])){
+            $user_id = $_REQUEST['user_id'];
+            return $this->redirect_to(inner_url("quotes/user_list/?user_id=$user_id"));
+        }
+        return parent::redirect_back_to_item($item_info);
+    }
+
     public function delete_url($item_info){
         return inner_url("quotes/delete/?cat_id=".$this->data['cat_info']['id']."&row_id=".$item_info['id']);
     }
@@ -249,9 +256,20 @@
           
     }
 
-    protected function create_item($fixed_values){
+    protected function create_item($fixed_values){ 
+        $fixed_values['status'] = '1';
         if(isset($_REQUEST['row']['user_id'])){
-            $fixed_values['user_id'] = $_REQUEST['row']['user_id'];
+            $user_id = $_REQUEST['row']['user_id'];
+            $fixed_values['user_id'] = $user_id;
+            //automaticlly set the quote status by the user settings
+            $quotes_user = Quotes_user::find(array('user_id'=>$user_id));
+            if(!$quotes_user){
+                //untill no settings created for the user, his quotes are suspended
+                $fixed_values['status'] = '9';
+            }
+            elseif($quotes_user['status'] == '0'){
+                $fixed_values['status'] = '9';
+            }
         }
         $item_id = Quotes::create($fixed_values);
         if(isset($fixed_values['cat_id']) && $fixed_values['cat_id'] != '0'){

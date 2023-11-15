@@ -46,7 +46,6 @@
     }
 
     public function include_edit_view(){
-        $this->data['news_post_info'] = $this->data['item_info'];
         $this->include_view('news/edit.php');
     }
 

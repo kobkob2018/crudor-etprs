@@ -16,3 +16,4 @@
         </div>
     </div>
 </div>
+<?php $this->register_script('js','tree_selector',styles_url('style/js/quotes_lazyload.js'),'foot'); ?> 

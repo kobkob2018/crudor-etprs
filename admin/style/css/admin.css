@@ -647,6 +647,13 @@ a.filter-a-clicker.selected{
     max-width: 150px;
 }
 
+.red{
+    color: red;
+}
+
+.green{
+    color: green;
+}
 @media only screen and (max-width: 900px) {
   
     #right_bar_wrap{

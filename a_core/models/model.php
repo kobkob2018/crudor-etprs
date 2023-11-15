@@ -112,6 +112,16 @@
         if(is_null($value)){
           $fields_sql_arr[] = " $key IS NULL ";
         }
+        elseif(is_array($value)){
+          $in_items_arr = array();
+          foreach($value as $in_key=>$in_var){
+            $item_key = $key."_".$in_key;
+            $in_items_arr[] = ":".$item_key;
+            $execute_arr[$item_key] = $in_var;
+          }
+          $in_sql = implode(", ",$in_items_arr);
+          $fields_sql_arr[] = "$key IN ($in_sql)";
+        }
         else{
 
             $fields_sql_arr[] = "$key = :$key";

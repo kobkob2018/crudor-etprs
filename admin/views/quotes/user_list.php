@@ -1,8 +1,14 @@
-<h2><?= $info['title'] ?></h2>
-<div class="eject-box">
-    <a href="<?= inner_url("quote_cats/list/") ?>">חזרה לרשימה ראשית</a>
-</div>
-<hr/>
+
+<?php if(isset($this->data['user_info'])): ?>
+    <div class="eject-box">
+        <a href="<?= inner_url("quote_cats/list/") ?>">חזרה לרשימה ראשית</a>
+    </div>
+    <?php $this->include_view("quotes/user_header.php"); ?>
+    <hr/>
+    <h2>הצעות מחיר של לקוח: <?= $this->data['user_info']['full_name'] ?></h2>
+<?php else: ?>
+    <h2>הצעות המחיר שלי</h2>
+<?php endif; ?>
 <div class="items-table flex-table">
     <div class="table-th row">
         <div class="col col-tiny">מיקום</div>
@@ -48,7 +54,7 @@
         </div>
         <div class="col cat-list-select-wrap">
             <div class="cat-list-finder-wrap">
-                <input type="text" placeholder="חפש רשימה" class="list-select" onkeyup="list_quote_cat_options(this)" />
+                <input type="text" placeholder="חפש רשימה" class="list-select" onkeyup="list_quote_cat_options(this)" onfocus="list_quote_cat_options(this)"/>
                 <div class="cat-list-wrap hidden">
                     <a class = 'close-list-x' href="javascript://" onclick="close_result_list(this)">
                         X
@@ -105,7 +111,7 @@
                                 <img src='<?= $file_url ?>?cache=<?= rand() ?>'  style="max-width:200px;"/>
                             </a>
                             <br/>
-                            <a href="<?= current_url() ?>&remove_file=image">הסר תמונה</a>
+                            <a href="<?= inner_url('quotes/edit/?cat_id=none&user_id='.$item['user_id'].'&row_id='.$item['id']) ?>&remove_file=image">הסר תמונה</a>
                         </div>
                         <?php endif; ?>
                     </div>
@@ -127,7 +133,12 @@
                 </div>
                 <div class="col cat-list-select-wrap">
                     <div class="cat-list-finder-wrap">
-                        <input type="text" placeholder="חפש רשימה" class="list-select" onkeyup="list_quote_cat_options(this)" />
+                        <?php if($view->user_is('master_admin') && $item['status'] == '9'): ?>
+                            <div>
+                                <b class="red">הצעות המחיר בהשהייה</b>
+                            </div>
+                        <?php endif; ?>
+                        <input type="text" placeholder="חפש רשימה" class="list-select" onkeyup="list_quote_cat_options(this)"  onfocus="list_quote_cat_options(this)"/>
                         <div class="cat-list-wrap hidden">
                             <a class = 'close-list-x' href="javascript://" onclick="close_result_list(this)">
                                 X
@@ -214,7 +225,7 @@
         result_list.innerHTML = "";
         //console.log(result_list);
         if(input.value.length < 1){
-            return;
+           // return;
         }
         const found_list = find_quote_cat_by_str(input.value);
         found_list.forEach(cat => {

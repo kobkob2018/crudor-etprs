@@ -29,7 +29,10 @@
       if(!$user_id_admin){
         $filter_arr['user_id'] = $this->user['id'];
       }
-      $content_pages = AdminPages::get_list($filter_arr, 'id, user_id, title, link, visible, views, convertions, spam_convertions');
+      if(isset($_REQUEST['setup_status'])){
+        $filter_arr['status'] = array('5','9');
+      }
+      $content_pages = AdminPages::get_list($filter_arr, 'id, status, user_id, title, link, visible, views, convertions, spam_convertions');
       if($user_id_admin){
         $users_by_id = array();
         foreach($content_pages as $key=>$page){
@@ -142,6 +145,9 @@
       $fixed_values['site_id'] = $site_id;
       $fixed_values['user_id'] = $this->user['id'];
       $fixed_values['link'] = str_replace(" ","-",$fixed_values['link']);
+      if(!$this->view->site_user_is('admin')){
+        $fixed_values['status'] = '5';
+      }
       return AdminPages::create($fixed_values);
     }
 

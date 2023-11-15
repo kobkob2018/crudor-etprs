@@ -11,7 +11,7 @@
       $req->execute($execute_arr);
       $quote_cat = $req->fetch();
 
-      $sql = "SELECT * FROM quotes WHERE id IN (SELECT quote_id FROM quote_cat_assign WHERE cat_id = :cat_id)";
+      $sql = "SELECT * FROM quotes WHERE status = '1' AND id IN (SELECT quote_id FROM quote_cat_assign WHERE cat_id = :cat_id)";
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
       $quotes_list = $req->fetchAll();
@@ -22,7 +22,8 @@
     }
 
     public static $asset_mapping = array(
-      'quote_img'=>'quotes'
+      'quote_img'=>'quotes',
+      'quotes_user_img'=>'quotes_user'
     );
 
 }
