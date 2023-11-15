@@ -22,7 +22,7 @@
             foreach($fetch_users as $user_id){
                 
                 $user_info = SiteQuotes::simple_find_by_table_name(array('user_id'=>$user_id),'quotes_user');
-                $img_url = $this->file_url_of('quotes_user_img',$user_info['image']);
+                $img_url = $this->file_url_of('quotes_user_img',$user_info['image'],'master');
 
                 $user_info['image_url'] = $img_url."?cache=".$cash_version;
                 $return_array['users'][$user_id] = $user_info;
