@@ -31,7 +31,13 @@
         return print(json_encode($return_array,true));
     }
 
-    
+    public function cat_demo(){
+        $this->data['add_nofollow_tag'] = true;
+        $cat_id = $_REQUEST['cat_id'];
+        
+        echo("{{% mod | quotes | print_cat | cat_id:$cat_id state:open %}}");
+        return;
+    }
 
   }
 ?>

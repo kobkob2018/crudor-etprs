@@ -42,7 +42,7 @@
 		<?php if(isset($this->data['page_style']) && $this->data['page_style'] && $this->data['page_style']['styling_tags'] != ''): ?>
 			<?= $this->data['page_style']['styling_tags'] ?>
 		<?php endif; ?>
-		<?php if($this->data['site']['disable_robots'] == '1' || isset($_REQUEST['demo_view'])): ?>
+		<?php if($this->data['site']['disable_robots'] == '1' || isset($this->data['add_nofollow_tag'])): ?>
 			<META NAME="robots" CONTENT="noindex,nofollow">
 		<?php endif; ?>
 		<?= $this->data['site_styling']['styling_tags'] ?>

@@ -2,7 +2,9 @@
     <a class="back-link" href="<?= inner_url('quote_cats/list/') ?>">חזרה לרשימת התיקיות</a>
 </div>
 
-<h3>ניהול תיקיית הצעות מחיר <?= $this->data['cat_info']['label'] ?></h3>
+<h3>ניהול תיקיית הצעות מחיר <?= $this->data['cat_info']['label'] ?> 
+    &nbsp;<a href="<?= get_config("master_url") ?>/quotes/cat_demo/?cat_id=<?= $this->data['cat_info']['id'] ?>" target="_new">[צפה באתר]</a>
+</h3>
 <hr/>
 
 <div class="yellowish form-group left-text">

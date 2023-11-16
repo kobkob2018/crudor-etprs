@@ -34,6 +34,9 @@
       $page_style = SitePage_style::get_current_page_style();
       $this->data['page_style'] = $page_style;
       $this->data['page_layout'] = '0';
+      if(isset($_REQUEST['demo_view'])){
+        $this->data['add_nofollow_tag'] = true;
+      }
       if($page_style){
         $this->data['page_layout'] = $page_style['page_layout'];
         if($page_style['page_layout'] == '1'){

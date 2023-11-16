@@ -149,12 +149,15 @@
                             </div>
                         </div>
                         <?php foreach($item['cats_assigned'] as $cat): ?>
-                            <div class="cat-assign-template">
+                            <div class="cat-assign-template cat-assign-checkbox" data-cat_id="<?= $cat['id'] ?>">
                                 <input class="assign-input" type="hidden" name="assign[]" value="<?= $cat['id'] ?>"  />
                                 <a class="cat-remove-x" href="javascript://" onclick="remove_cat_assign(this)">X</a>
                                 <span class="cat-label">
                                     <?= $cat['label'] ?>
                                 </span> 
+                                <?php if($view->user_is('master_admin')): ?>
+                                    &nbsp;<a class="edit-cat-link" href="javascript://" onclick="nav_to_cat_edit(this)" title="ערוך תיקייה">[ערוך]</a>
+                                <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -176,12 +179,15 @@
     <div class="cat-result-template" onclick="select_cat_assign(this)">
 
     </div>
-    <div class="cat-assign-template">
+    <div class="cat-assign-template cat-assign-checkbox">
         <input class="assign-input" type="hidden" name="assign[]"  />
         <a class="cat-remove-x" href="javascript://" onclick="remove_cat_assign(this)">X</a>
         <span class="cat-label">
 
-        </span> 
+        </span>
+        <?php if($view->user_is('master_admin')): ?>
+            &nbsp;<a class="edit-cat-link" href="javascript://" onclick="nav_to_cat_edit(this)" title="ערוך תיקייה">[ערוך]</a>
+        <?php endif; ?>
     </div>
 </div>
 <script type="text/javascript">
@@ -204,8 +210,16 @@
         
         cat_assign_el.querySelector(".cat-label").innerHTML = selected_el.innerHTML;
         cat_assign_el.querySelector(".assign-input").value = cat_id;
+        cat_assign_el.dataset.cat_id = cat_id;
         finder_wrap.append(cat_assign_el);
         finder_wrap.querySelector(".list-select").value = "";
+    }
+
+    function nav_to_cat_edit(a_el){
+        const a_parent = a_el.closest(".cat-assign-checkbox");
+        const edit_url = "<?= inner_url('quote_cats/edit/?row_id=') ?>"+a_parent.dataset.cat_id;
+        window.open(edit_url, "_new");
+
     }
 
     function close_result_list(close_el){
@@ -261,6 +275,9 @@
         background: #c2c2c2;
         padding: 5px;
         margin-top: 5px;
+    }
+    .cat-assign-checkbox{
+        margin-bottom: 10px;
     }
     .close-list-x, .cat-remove-x{
         text-decoration: none;

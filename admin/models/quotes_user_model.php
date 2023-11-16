@@ -31,16 +31,19 @@
             'assets_dir'=>'master',
             'name_file'=>'user_{{row_id}}.{{ext}}'
         ),
-
         'link'=>array(
             'label'=>'כתובת קישור לדף הלקוח',
             'type'=>'text'
         ),
-
         'phone'=>array(
             'label'=>'טלפון שיופיע בהצעות המחיר',
             'type'=>'text'
-        )
+        ),
+        'city_name'=>array(
+            'label'=>'שם עיר',
+            'type'=>'text'
+        ),
+        
     );
 
     public static function set_user_quotes_statuses($user_id, $set_to_status){
