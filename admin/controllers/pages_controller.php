@@ -50,7 +50,7 @@
 
       $info = array();
       $info['filter_form'] = $filter_form;
-      $payload = array('pagination'=>array('page_limit'=>'2'));
+      $payload = array('pagination'=>array('page_limit'=>'1000'));
       if(isset($filter_form['values']['paging_page_id'])){
         $payload['pagination']['page'] = $filter_form['values']['paging_page_id'];
       }
