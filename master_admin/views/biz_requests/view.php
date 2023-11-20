@@ -1,5 +1,6 @@
+<?php $biz_request = $info['biz_request']; ?>
 <div class="eject-box">
-    <a href="<?= $this->eject_url() ?>">חזרה לרשימה</a>
+    <a href="<?= $this->eject_url() ?>">חזרה לרשימה</a> | <a href="<?= inner_url("biz_requests/edit/") ?>?row_id=<?= $biz_request['id'] ?>">עריכה</a>
 </div>
 
 <h2>שליחת ליד ידנית ללקוחות</h2>
@@ -37,7 +38,7 @@
             סטטוס עבודה
         </div>
     </div>
-    <?php $biz_request = $info['biz_request']; ?>
+    
     <div class="request-list-tr table-tr row  campaign_type-0<?= $biz_request['campaign_type'] ?>">
         <div class="col">
             <?= hebdt($biz_request['date_in'],"d-m-Y") ?><br/>

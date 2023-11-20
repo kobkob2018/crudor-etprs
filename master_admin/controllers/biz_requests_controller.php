@@ -241,6 +241,36 @@
         $this->include_view('biz_requests/spam_list.php',$info);
     }    
 
+    public function edit(){
+        return parent::edit();
+    }
+
+    public function include_edit_view(){
+        $this->include_view('biz_requests/edit.php');
+    }
+
+    protected function update_success_message(){
+        SystemMessages::add_success_message("הבקשה להצעת מחיר עודכנה בהצלחה");
+        SystemMessages::add_err_message("יש לשים לב שלא עודכנו הלידים עצמם");
+
+    }
+
+    protected function get_item_info($row_id){
+        return MasterBiz_requests::get_by_id($row_id);
+    }
+
+    public function url_back_to_item($item_info){
+        return inner_url("biz_requests/view/?row_id=".$item_info['id']);
+    }
+
+    protected function get_fields_collection(){
+        return MasterBiz_requests::setup_field_collection();
+    }
+
+    protected function update_item($item_id,$update_values){
+        return MasterBiz_requests::update($item_id,$update_values);
+    }
+
     public function view(){
         
         if(!isset($_REQUEST['row_id'])){

@@ -3,6 +3,49 @@
 
     protected static $main_table = 'biz_requests';
 
+
+    public static $fields_collection = array(
+
+        'status'=>array(
+            'label'=>'סטטוס',
+            'type'=>'select',
+            'default'=>'0',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'הצעות חדשות'),
+                array('value'=>'1', 'title'=>'הצעות בטיפול'),
+                array('value'=>'2', 'title'=>'הצעות שמחכות'),
+                array('value'=>'3', 'title'=>'הצעות שנשלחו'),
+                array('value'=>'4', 'title'=>'הצעות לא רלוונטיות'),
+                array('value'=>'5', 'title'=>'הצעות מחוקות')
+            )
+        ),
+
+        'full_name'=>array(
+            'label'=>'שם מלא',
+            'type'=>'text',
+            'validation'=>'required'
+        ),
+
+        'phone'=>array(
+            'label'=>'טלפון',
+            'type'=>'text',
+            'validation'=>'required'
+        ),
+
+        'email'=>array(
+            'label'=>'אימייל',
+            'type'=>'text',
+            'validation'=>'required'
+        ),
+
+        'note'=>array(
+            'label'=>'הערות',
+            'type'=>'textbox',
+            'css_class'=>'small-text left-text',
+            'validation'=>''
+        ),
+    );
+
     public static function get_request($request_id){
         $biz_request = self::get_by_id($request_id);
         if(!$biz_request){

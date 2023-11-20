@@ -152,6 +152,11 @@
                 <a href="<?= inner_url('quotes/my_list/') ?>" title="הצעות המחיר שלי" class="a-link">הצעות המחיר שלי</a>
             </li>
         <?php endif; ?>
+        <?php if($view->site_user_can('products')): ?>
+            <li class="bar-item <?= $view->a_class("products/list/") ?> <?= $view->a_c_class("product_cats, products") ?>">
+                <a href="<?= inner_url('products/list/') ?>" title="מוצרים" class="a-link">ניהול מוצרים</a>
+            </li>
+        <?php endif; ?>
         <?php if($view->site_user_can('pages')): //can switch to site_user_is.. ?>
             <li class="bar-item <?= $view->a_class("pages/list/") ?> <?= $view->a_c_class("pages, blocks") ?>">
                 <hr/>

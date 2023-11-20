@@ -82,13 +82,20 @@
     }
 
     public static function simple_get_list_by_table_name($filter_arr,$table_name, $select_params = "*", $payload = array()){
-      $req = static::simple_find_with_filter_req_by_table_name($filter_arr,$table_name, $select_params, $payload);
+      $req_return = static::simple_find_with_filter_req_by_table_name($filter_arr,$table_name, $select_params, $payload);
       
-      if(!isset($payload['NO_FETCH_ASSOC'])){
-        $result = $req->fetchAll(PDO::FETCH_ASSOC);
+      if(is_array($req_return)){
+        $req = $req_return['req'];
       }
       else{
-        $result = $req->fetchAll();
+        $req = $req_return;
+      }
+
+      if(!isset($payload['NO_FETCH_ASSOC'])){
+        $list = $req->fetchAll(PDO::FETCH_ASSOC);
+      }
+      else{
+        $list = $req->fetchAll();
       }
       if(isset($payload['add_custom_param'])){
         $add_custom_param = $payload['add_custom_param'];
@@ -98,14 +105,21 @@
         if(isset($add_custom_param['more_info'])){
           $more_info = $add_custom_param['more_info'];
         }
-        foreach($result as $key=>$item){
-          $result[$key] = $controller_interface->$method($item, $more_info);
+        foreach($list as $key=>$item){
+          $list[$key] = $controller_interface->$method($item, $more_info);
         }      
-      }      
-      return $result;
+      }
+      if(is_array($req_return)){
+        return array(
+          'paging'=>$req_return['paging'],
+          'list'=>$list
+        );
+      }   
+      return $list;
     }
     
     protected static function simple_find_with_filter_req_by_table_name($filter_arr,$table_name, $select_params = "*", $payload = array()){
+      $db = Db::getInstance();		
       $fields_sql_arr = array('1');
       $execute_arr = array();
       foreach($filter_arr as $key=>$value){
@@ -134,11 +148,50 @@
       if(isset($payload['order_by'])){
         $order_by_sql = " ORDER BY " . $payload['order_by'];
       }
-      $sql = "SELECT $select_params FROM $table_name WHERE $fields_sql $order_by_sql";
-      $db = Db::getInstance();		
+      $limit_sql = "";
+      $paging_result = false;
+      if(isset($payload['pagination'])){
+        $pagination_arr = self::create_pagination_arr($payload['pagination']);
+        $page_start = intval($pagination_arr['page']) - 1;
+        $limit_start = $page_start*intval($pagination_arr['page_limit']);
+        $limit_sql = "LIMIT ".$limit_start.", ".$pagination_arr['page_limit'];
+        $paging_sql = "SELECT COUNT(".$pagination_arr['count_by'].") as row_count FROM $table_name WHERE $fields_sql";
+        
+        $paging_req = $db->prepare($paging_sql);
+        $paging_req->execute($execute_arr);
+        $paging_result = $paging_req->fetch();
+        $row_count = $paging_result['row_count'];
+        $page_count = intval($row_count)/intval($pagination_arr['page_limit']);
+        $page_count = floor($page_count);
+        $not_exact_count = intval($row_count)%intval($pagination_arr['page_limit']);
+        if($not_exact_count){
+          $page_count += 1;
+        }
+        $paging_result['page_count'] = $page_count;
+      }
+      $sql = "SELECT $select_params FROM $table_name WHERE $fields_sql $order_by_sql $limit_sql";
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
-      return $req;
+      if(!$paging_result){
+        return $req;
+      }
+      return array(
+        'req'=>$req,
+        'paging'=>$paging_result
+      );
+    }
+
+    //create defult values for pagination
+    protected static function create_pagination_arr($payload_pagination){
+      $pagination_arr = array(
+        'page'=>'1',
+        'page_limit'=>'50',
+        'count_by'=>'id'
+      );
+      foreach($payload_pagination as $key=>$val){
+        $pagination_arr[$key] = $val;
+      }
+      return $pagination_arr;
     }
 
     public static function simple_delete_arr_by_table_name($item_arr, $table_name){

@@ -32,7 +32,35 @@
       if(isset($_REQUEST['setup_status'])){
         $filter_arr['status'] = array('5','9');
       }
-      $content_pages = AdminPages::get_list($filter_arr, 'id, status, user_id, title, link, visible, views, convertions, spam_convertions');
+
+      $session_filter = $this->get_session_filter();
+      $filter_values = $session_filter['values'];
+      $filter_field_collection = array(
+          'priority'=>array(
+            'label'=>'מיקום',
+            'type'=>'text',
+            'default'=>'10',
+            'validation'=>'required, int'
+        ),
+
+        'title'=>array(
+            'label'=>'כותרת',
+            'type'=>'text',
+            'validation'=>'required'
+        ), 
+      );
+
+      $set_filter_collection = TableModel::setup_field_collection($filter_field_collection, $session_filter['identifier']);
+      $filter_form_handler = $this->setup_filter_form_handler($session_filter['identifier'], $session_filter['values'], $set_filter_collection);
+      $info = array();
+      $info['filter_form'] = $filter_form_handler;
+      $payload = array('pagination'=>array('page_limit'=>'1000'));
+      if(isset($filter_values['paging_page_id'])){
+        $payload['pagination']['page'] = $filter_values['paging_page_id'];
+      }
+      $content_pages_arr = AdminPages::get_list($filter_arr, 'id, status, user_id, title, link, visible, views, convertions, spam_convertions',$payload);
+
+      $content_pages = $content_pages_arr['list'];
       if($user_id_admin){
         $users_by_id = array();
         foreach($content_pages as $key=>$page){
@@ -49,17 +77,17 @@
         }
       }
       $this->data['content_pages'] = $content_pages;
+      $pagination = $content_pages_arr['paging'];
+      $this->data['pagination'] = $pagination;
 
       if(session__isset('page_export_prepare')){
         $import_filter_arr = array('id'=>session__get('page_export_prepare'));
         $this->data['page_import_prepare'] = AdminPages::find($import_filter_arr, 'id, title, link');
       }
 
-      $this->include_view('content_pages/list.php');
+      $this->include_view('content_pages/list.php',$info);
 
     }
-
-
 
     public function edit(){
       return parent::edit();

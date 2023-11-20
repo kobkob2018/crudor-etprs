@@ -2,8 +2,11 @@
   class CrudController extends Controller{
 
     protected $assets_map = array('static'=>'');
+    protected $session_filter = false;
+    
     protected function init_setup($action){
         $this->set_priority_from_session();
+        $this->init_filter_session();
         return parent::init_setup($action);
     }
 
@@ -463,6 +466,30 @@
         $this->redirect_to(current_url());
     }
 
+    public function setup_filter_form_handler($filter_name, $filter, $field_collection){
+        return $this->setup_item_form_handler($filter_name,$filter,$field_collection);
+/*
+        global $controller;
+        global $action;
+
+        $form_builder_data = array(
+            'controller'=>$controller,
+            'action'=>$action
+        );
+        
+        $enctype_str = '';
+        foreach($fields_collection as $field){
+            if($field['type'] == 'file'){
+                $enctype_str = 'enctype="multipart/form-data"';
+            }
+        }
+        $form_builder_data['enctype_str'] = $enctype_str;
+        $form_builder_data['sendAction'] = $sendAction;
+        $form_builder_data['db_row_id'] = $row_id;
+        $form_builder_data['fields_collection'] = $fields_collection;
+        $this->data['form_builder'] = $form_builder_data;
+        */
+    }
 
     public function setup_item_form_handler($item_key,$item,$field_collection){
         if(!$item || $item == null){
@@ -528,7 +555,6 @@
         $this->redirect_to(current_url()); 
     }
 
-
     public function listCreateSend(){
         
         $form_handler = $this->init_form_handler();
@@ -564,6 +590,42 @@
           }
         }
         $this->redirect_to(current_url()); 
+    }
+
+    protected function init_filter_session(){
+        $filter_name = $this->get_session_filter_name();
+        $this->session_filter = array('set'=>false);
+        if(isset($_REQUEST['filter'])){
+            $this->session_filter = $_REQUEST['filter'];
+            session__set($filter_name, $this->session_filter);
+            return $this->redirect_back_to_action();
+        }
+        elseif(session__isset($filter_name)){
+            $this->session_filter = session__get($filter_name);
+        }
+    }
+ 
+    protected function reset_filter(){       
+        $filter_name = $this->get_session_filter_name();
+        session__unset($filter_name);
+        return $this->redirect_back_to_action();
+    }
+
+    protected function redirect_back_to_action(){
+        global $controller,$action;
+        return $this->redirect_to(inner_url($controller.'/'.$action.'/'));
+    }
+    
+    protected function get_session_filter(){
+        return array(
+            'identifier'=>$this->get_session_filter_name(),
+            'values'=>$this->session_filter
+        );
+    }
+
+    protected function get_session_filter_name(){
+        global $controller,$action;
+        return $controller."_".$action."_filter";
     }
 
     protected function after_add_redirect($new_row_id){
