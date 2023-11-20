@@ -151,6 +151,7 @@
       $limit_sql = "";
       $paging_result = false;
       if(isset($payload['pagination'])){
+        
         $pagination_arr = self::create_pagination_arr($payload['pagination']);
         $page_start = intval($pagination_arr['page']) - 1;
         $limit_start = $page_start*intval($pagination_arr['page_limit']);
@@ -167,7 +168,10 @@
         if($not_exact_count){
           $page_count += 1;
         }
+        
         $paging_result['page_count'] = $page_count;
+        $paging_result['page'] = $pagination_arr['page'];
+        $paging_result['page_limit'] = $pagination_arr['page_limit'];
       }
       $sql = "SELECT $select_params FROM $table_name WHERE $fields_sql $order_by_sql $limit_sql";
       $req = $db->prepare($sql);

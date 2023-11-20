@@ -654,6 +654,23 @@ a.filter-a-clicker.selected{
 .green{
     color: green;
 }
+
+.filter-form{
+    zoom: 0.6;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    background: #e9e9d394;
+    padding: 18px;
+    box-shadow: 5px 5px 5px gray;
+    transition: all 0.7s;
+    border-radius: 5px;
+
+}
+.filter-form:hover{
+    zoom:1;
+    background: #e9e9d3;
+}
 @media only screen and (max-width: 900px) {
   
     #right_bar_wrap{

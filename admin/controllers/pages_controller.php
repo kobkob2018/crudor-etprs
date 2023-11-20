@@ -25,6 +25,7 @@
 		public function list(){
       
       $filter_arr = array('site_id'=>$this->data['work_on_site']['id']);
+
       $user_id_admin = $this->view->user_is('admin',Sites::get_user_workon_site());
       if(!$user_id_admin){
         $filter_arr['user_id'] = $this->user['id'];
@@ -33,33 +34,28 @@
         $filter_arr['status'] = array('5','9');
       }
 
-      $session_filter = $this->get_session_filter();
-      $filter_values = $session_filter['values'];
-      $filter_field_collection = array(
-          'priority'=>array(
-            'label'=>'מיקום',
-            'type'=>'text',
-            'default'=>'10',
-            'validation'=>'required, int'
+      $filter_form = $this->setup_session_filter_form(array(
+        'paging_page_id'=>array(
+          'label'=>'עמוד',
+          'type'=>'pagination',
+          'validation'=>'required, int'
         ),
 
-        'title'=>array(
-            'label'=>'כותרת',
+        'free_search'=>array(
+            'label'=>'חיפוש חפשי',
             'type'=>'text',
             'validation'=>'required'
         ), 
-      );
+      ));
 
-      $set_filter_collection = TableModel::setup_field_collection($filter_field_collection, $session_filter['identifier']);
-      $filter_form_handler = $this->setup_filter_form_handler($session_filter['identifier'], $session_filter['values'], $set_filter_collection);
       $info = array();
-      $info['filter_form'] = $filter_form_handler;
-      $payload = array('pagination'=>array('page_limit'=>'1000'));
-      if(isset($filter_values['paging_page_id'])){
-        $payload['pagination']['page'] = $filter_values['paging_page_id'];
+      $info['filter_form'] = $filter_form;
+      $payload = array('pagination'=>array('page_limit'=>'2'));
+      if(isset($filter_form['values']['paging_page_id'])){
+        $payload['pagination']['page'] = $filter_form['values']['paging_page_id'];
       }
       $content_pages_arr = AdminPages::get_list($filter_arr, 'id, status, user_id, title, link, visible, views, convertions, spam_convertions',$payload);
-
+      $info['filter_form']['pagination'] = $content_pages_arr['paging'];
       $content_pages = $content_pages_arr['list'];
       if($user_id_admin){
         $users_by_id = array();
@@ -77,8 +73,6 @@
         }
       }
       $this->data['content_pages'] = $content_pages;
-      $pagination = $content_pages_arr['paging'];
-      $this->data['pagination'] = $pagination;
 
       if(session__isset('page_export_prepare')){
         $import_filter_arr = array('id'=>session__get('page_export_prepare'));
@@ -87,6 +81,26 @@
 
       $this->include_view('content_pages/list.php',$info);
 
+    }
+
+    protected function setup_session_filter_form($fields_collection){
+      $session_filter = $this->get_session_filter();
+      $filter_values = $session_filter['values'];
+      $pagination = array('page_limit'=>'1000');
+      $pagination['page'] = '1';
+      if(isset($filter_values['paging_page_id'])){
+        $pagination['page'] = $filter_values['paging_page_id'];
+      }
+
+      $set_filter_collection = TableModel::setup_field_collection($fields_collection, $session_filter['identifier']);
+      $filter_form_handler = $this->setup_filter_form_handler($session_filter['identifier'], $session_filter['values'], $set_filter_collection);
+      return array(
+        'fields'=>$set_filter_collection,
+        'values'=>$filter_values,
+        'pagination'=>$pagination,
+        'form_handler'=>$filter_form_handler,
+        'identifier'=>$session_filter['identifier']
+      );
     }
 
     public function edit(){

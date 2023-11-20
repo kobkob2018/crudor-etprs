@@ -600,12 +600,16 @@
             session__set($filter_name, $this->session_filter);
             return $this->redirect_back_to_action();
         }
+        elseif(isset($_REQUEST['reset_session_filter'])){
+            session__unset($filter_name);
+            return $this->redirect_back_to_action();
+        }
         elseif(session__isset($filter_name)){
             $this->session_filter = session__get($filter_name);
         }
     }
  
-    protected function reset_filter(){       
+    protected function reset_session_filter(){       
         $filter_name = $this->get_session_filter_name();
         session__unset($filter_name);
         return $this->redirect_back_to_action();
