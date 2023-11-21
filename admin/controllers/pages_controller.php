@@ -31,7 +31,7 @@
         $filter_arr['user_id'] = $this->user['id'];
       }
 
-      $list_info = $this->get_paginated_list_info($filter_arr,array('page_limit'=>'3'));
+      $list_info = $this->get_paginated_list_info($filter_arr,array('page_limit'=>'300'));
 
       if($user_id_admin){
         $users_by_id = array();
