@@ -127,14 +127,28 @@
           $fields_sql_arr[] = " $key IS NULL ";
         }
         elseif(is_array($value)){
-          $in_items_arr = array();
-          foreach($value as $in_key=>$in_var){
-            $item_key = $key."_".$in_key;
-            $in_items_arr[] = ":".$item_key;
-            $execute_arr[$item_key] = $in_var;
+          if(isset($value['str_like']) && isset($value['columns_like'])){
+            if($value['str_like'] != ""){
+              $execute_arr[$key] = "%".$value['str_like']."%";
+              $columns_like_sql_arr =  array();
+              foreach($value['columns_like'] as $column_like){
+                $columns_like_sql_arr[] = " $column_like LIKE (:$key) ";
+              }
+            }
+            $columns_like_sql = implode(" OR ",$columns_like_sql_arr);
+            $fields_sql_arr[] = "($columns_like_sql)";
           }
-          $in_sql = implode(", ",$in_items_arr);
-          $fields_sql_arr[] = "$key IN ($in_sql)";
+          else{
+            $in_items_arr = array();
+            foreach($value as $in_key=>$in_var){
+              $item_key = $key."_".$in_key;
+              $in_items_arr[] = ":".$item_key;
+              $execute_arr[$item_key] = $in_var;
+            }
+            $in_sql = implode(", ",$in_items_arr);
+            $fields_sql_arr[] = "$key IN ($in_sql)";
+          }
+
         }
         else{
 
@@ -174,6 +188,7 @@
         $paging_result['page_limit'] = $pagination_arr['page_limit'];
       }
       $sql = "SELECT $select_params FROM $table_name WHERE $fields_sql $order_by_sql $limit_sql";
+    
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
       if(!$paging_result){

@@ -39,7 +39,7 @@
         <?php endif; ?>
         <div class="col">מחיקה</div>
     </div>
-    <?php foreach($this->data['content_pages'] as $content_page): ?>
+    <?php foreach($info['list'] as $content_page): ?>
         <div class="table-tr row is-visible-0<?= $content_page['visible'] ?>">
             <div class="col">
                 <?php if($content_page['visible'] != '1'): ?>

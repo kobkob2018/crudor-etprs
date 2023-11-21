@@ -596,7 +596,28 @@
         $filter_name = $this->get_session_filter_name();
         $this->session_filter = array('set'=>false);
         if(isset($_REQUEST['filter'])){
-            $this->session_filter = $_REQUEST['filter'];
+            $request_filter = $_REQUEST['filter'];
+            $session_filter = false;
+            if(session__isset($filter_name)){
+                $session_filter = session__get($filter_name);
+            }
+            if(!isset($request_filter['paging_page_id'])){
+                $request_filter['paging_page_id'] = '0';
+            }
+            if($request_filter['paging_page_id'] == '0'){
+                $request_filter['paging_page_id'] = '1';
+                $this->session_filter = $request_filter;
+            }
+            else{
+                if($session_filter){
+                    $this->session_filter = $session_filter;
+                }
+                else{
+                    $this->session_filter = $request_filter;
+                }
+                $this->session_filter['paging_page_id'] = $request_filter['paging_page_id'];
+                
+            }
             session__set($filter_name, $this->session_filter);
             return $this->redirect_back_to_action();
         }
@@ -608,7 +629,83 @@
             $this->session_filter = session__get($filter_name);
         }
     }
- 
+
+    protected function setup_session_filter_form($fields_collection,$pagination = false){
+        $session_filter = $this->get_session_filter();
+        $filter_values = $session_filter['values'];
+        if(!$pagination){
+            $pagination = array('page_limit'=>'1000');
+        }
+        $pagination['page'] = '1';
+        if(isset($filter_values['paging_page_id'])){
+            $pagination['page'] = $filter_values['paging_page_id'];
+        }
+
+        $set_filter_collection = TableModel::setup_field_collection($fields_collection, $session_filter['identifier']);
+        $filter_form_handler = $this->setup_filter_form_handler($session_filter['identifier'], $session_filter['values'], $set_filter_collection);
+        return array(
+            'fields'=>$set_filter_collection,
+            'values'=>$filter_values,
+            'pagination'=>$pagination,
+            'form_handler'=>$filter_form_handler,
+            'identifier'=>$session_filter['identifier']
+        );
+    }
+  
+    protected function get_paginated_list_info($filter_arr,$pagination = array('page_limit'=>'1000')){
+        $filter_fields_colection = $this->get_filter_fields_colection();
+        $filter_fields_colection = array(
+        'paging_page_id'=>array(
+            'label'=>'עמוד',
+            'type'=>'pagination',
+            'validation'=>'required, int'
+          )) + $filter_fields_colection;
+
+        $filter_form = $this->setup_session_filter_form($filter_fields_colection);
+
+        $list_info = array();
+        $list_info['filter_form'] = $filter_form;
+        
+        $payload = array('pagination'=>$pagination);
+        if(isset($filter_form['values']['paging_page_id'])){
+            $payload['pagination']['page'] = $filter_form['values']['paging_page_id'];
+
+            foreach($filter_form['values'] as $param_key=>$param_val){
+                if($param_key != 'paging_page_id' && isset($filter_form['fields'][$param_key])){
+                    $filter_arr = $this->feed_list_filter_with_field($filter_arr,$param_key, $filter_form['fields'][$param_key],$param_val);
+                }
+            }
+        }
+        $paginated_list = $this->get_paginated_list($filter_arr, $payload);
+        $list_info['filter_form']['pagination'] = $paginated_list['paging'];
+        $list_info['list'] = $paginated_list['list'];
+        return $list_info;
+    }
+
+    protected function feed_list_filter_with_field($filter_arr,$param_key, $field, $value){
+        $filter_type = false;
+        if(isset($field['filter_type'])){
+            $filter_type = $field['filter_type'];
+        }
+        if(!$filter_type){
+            $filter_arr[$param_key] = $value;
+        }
+        if($filter_type == 'like' && $value != ""){
+
+            $filter_arr[$param_key] = array('str_like'=>$value,'columns_like'=>$field['columns_like']);
+        }
+        return $filter_arr;
+    }
+
+    protected function get_paginated_list($filter_arr, $payload){
+        exit("error: must override get_paginated_list function");
+        return null;
+    }
+    protected function get_filter_fields_colection(){
+        exit("error: must override get_filter_fields_colection function");
+        return null;
+    }
+
     protected function reset_session_filter(){       
         $filter_name = $this->get_session_filter_name();
         session__unset($filter_name);

@@ -30,17 +30,12 @@
       if(!$user_id_admin){
         $filter_arr['user_id'] = $this->user['id'];
       }
-      if(isset($_REQUEST['setup_status'])){
-        $filter_arr['status'] = array('5','9');
-      }
 
-////
-      $list_info = $this->get_list_info($filter_arr);
-      $content_pages = $list_info['list'];
+      $list_info = $this->get_paginated_list_info($filter_arr,array('page_limit'=>'300'));
 
       if($user_id_admin){
         $users_by_id = array();
-        foreach($content_pages as $key=>$page){
+        foreach($list_info['list'] as $key=>$page){
           if(!isset($users_by_id[$page['user_id']])){
             $users_by_id[$page['user_id']] = Users::get_by_id($page['user_id'],'id, full_name, biz_name');
           }
@@ -50,11 +45,9 @@
           if($page_user){
             $page['user_label'] = $page_user['full_name'];
           }
-          $content_pages[$key] = $page;
+          $list_info['list'][$key] = $page;
         }
       }
-
-      $this->data['content_pages'] = $content_pages;
 
       if(session__isset('page_export_prepare')){
         $import_filter_arr = array('id'=>session__get('page_export_prepare'));
@@ -65,61 +58,42 @@
 
     }
 
-
-
-    protected function get_list_info($filter_arr){
-      $filter_form = $this->setup_session_filter_form($this->get_filter_fields_colection());
-
-      $list_info = array();
-      $list_info['filter_form'] = $filter_form;
-      $payload = array('pagination'=>array('page_limit'=>'1000'));
-      if(isset($filter_form['values']['paging_page_id'])){
-        $payload['pagination']['page'] = $filter_form['values']['paging_page_id'];
-      }
-      $paginated_list = $this->get_paginated_list($filter_arr, $payload);
-      $list_info['filter_form']['pagination'] = $paginated_list['paging'];
-      $list_info['list'] = $paginated_list['list'];
-      return $list_info;
-    }
-
     protected function get_filter_fields_colection(){
       return array(
-        'paging_page_id'=>array(
-          'label'=>'עמוד',
-          'type'=>'pagination',
-          'validation'=>'required, int'
-        ),
-
+        
+        'get_pending_pages'=>array(
+          'label'=>'הצג עמודים',
+          'type'=>'select',
+          'default'=>'0',
+          'options'=>array(
+              array('value'=>'0', 'title'=>'הכל'),
+              array('value'=>'1', 'title'=>'ממתינים לאישור')
+          ),
+        ), 
+        
         'free_search'=>array(
             'label'=>'חיפוש חפשי',
             'type'=>'text',
-            'validation'=>'required'
+            'validation'=>'required',
+            'filter_type'=>'like',
+            'columns_like'=>array('title','link','description'),
         ), 
       );
     }
 
-    protected function get_paginated_list($filter_arr, $payload){
-      return AdminPages::get_list($filter_arr, 'id, status, user_id, title, link, visible, views, convertions, spam_convertions',$payload);
+    protected function feed_list_filter_with_field($filter_arr,$param_key, $field, $value){
+      if($param_key == 'get_pending_pages'){
+        if($value == '1'){
+          $filter_arr['status'] = array('5','9');
+        }
+        return $filter_arr;
+      }
+      return parent::feed_list_filter_with_field($filter_arr,$param_key, $field, $value);
     }
 
-    protected function setup_session_filter_form($fields_collection){
-      $session_filter = $this->get_session_filter();
-      $filter_values = $session_filter['values'];
-      $pagination = array('page_limit'=>'1000');
-      $pagination['page'] = '1';
-      if(isset($filter_values['paging_page_id'])){
-        $pagination['page'] = $filter_values['paging_page_id'];
-      }
-
-      $set_filter_collection = TableModel::setup_field_collection($fields_collection, $session_filter['identifier']);
-      $filter_form_handler = $this->setup_filter_form_handler($session_filter['identifier'], $session_filter['values'], $set_filter_collection);
-      return array(
-        'fields'=>$set_filter_collection,
-        'values'=>$filter_values,
-        'pagination'=>$pagination,
-        'form_handler'=>$filter_form_handler,
-        'identifier'=>$session_filter['identifier']
-      );
+    protected function get_paginated_list($filter_arr, $payload){
+      $payload['order_by'] = "title, id";
+      return AdminPages::get_list($filter_arr, 'id, status, user_id, title, link, visible, views, convertions, spam_convertions',$payload);
     }
 
     public function edit(){
