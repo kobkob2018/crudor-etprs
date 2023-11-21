@@ -58,19 +58,8 @@
 
     }
 
-    protected function get_filter_fields_colection(){
-      return array(
-        
-        'get_pending_pages'=>array(
-          'label'=>'הצג עמודים',
-          'type'=>'select',
-          'default'=>'0',
-          'options'=>array(
-              array('value'=>'0', 'title'=>'הכל'),
-              array('value'=>'1', 'title'=>'ממתינים לאישור')
-          ),
-        ), 
-        
+    protected function get_filter_fields_collection(){
+      $filter_fields_collection = array(        
         'free_search'=>array(
             'label'=>'חיפוש חפשי',
             'type'=>'text',
@@ -79,6 +68,21 @@
             'columns_like'=>array('title','link','description'),
         ), 
       );
+
+      if($this->view->user_is('admin')){
+        $filter_fields_collection['get_pending_pages'] = array(
+          'label'=>'הצג עמודים',
+          'type'=>'select',
+          'default'=>'0',
+          'options'=>array(
+              array('value'=>'0', 'title'=>'הכל'),
+              array('value'=>'1', 'title'=>'ממתינים לאישור')
+          ),
+        );
+      }
+
+      return $filter_fields_collection;
+
     }
 
     protected function feed_list_filter_with_field($filter_arr,$param_key, $field, $value){

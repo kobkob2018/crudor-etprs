@@ -1,20 +1,7 @@
 <h3>דפים באתר</h3>
 
-<?php if($view->site_user_is('admin')): ?>
-
-    <?php if(isset($info['filter_form'])): ?>
-        <?php $this->include_view('form_builder/filter_form.php',$info); ?>
-    <?php endif; ?>
-
-    <?php if(isset($_REQUEST['setup_status'])): ?>
-        <div class="eject-box">
-            <a class="back-link" href="<?= inner_url('pages/list/') ?>">צפה בכל הדפים באתר</a>
-        </div>
-    <?php else: ?>
-        <div class="eject-box">
-            <a class="back-link" href="<?= inner_url('pages/list/?setup_status=1') ?>">צפה בדפים הממתינים לאישור</a>
-        </div>
-    <?php endif; ?>
+<?php if(isset($info['filter_form'])): ?>
+    <?php $this->include_view('form_builder/filter_form.php',$info); ?>
 <?php endif; ?>
 
 <?php if(isset($this->data['page_import_prepare']) && $view->site_user_is('master_admin')): ?>

@@ -653,7 +653,7 @@
     }
   
     protected function get_paginated_list_info($filter_arr,$pagination = array('page_limit'=>'1000')){
-        $filter_fields_colection = $this->get_filter_fields_colection();
+        $filter_fields_colection = $this->get_filter_fields_collection();
         $filter_fields_colection = array(
         'paging_page_id'=>array(
             'label'=>'עמוד',
@@ -701,8 +701,8 @@
         exit("error: must override get_paginated_list function");
         return null;
     }
-    protected function get_filter_fields_colection(){
-        exit("error: must override get_filter_fields_colection function");
+    protected function get_filter_fields_collection(){
+        exit("error: must override get_filter_fields_collection function");
         return null;
     }
 

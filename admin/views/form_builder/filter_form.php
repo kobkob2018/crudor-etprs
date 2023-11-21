@@ -1,5 +1,9 @@
 <div class = "form-wrap filter-form">
-    <?php $this->include_view('messages/formMessages.php'); ?>
+    
+    <div class="focus-box">
+        <h4>מסנן חיפוש</h4>
+        <a href="<?= current_url(array("reset_session_filter"=>'1')) ?>">איפוס מסנן</a>
+    </div>
     <form name="send_form" class="send-form form-validate" id="send_form" method="post" action="">
         <input type="hidden" name="sendAction" value="setup_filter" />
 
