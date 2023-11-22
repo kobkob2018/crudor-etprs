@@ -177,6 +177,11 @@
             <?= $biz_request['recivers'] ?>
         </div>
         <div class="col">
+            <?php if($biz_request['cat_id'] == '0' || $biz_request['cat_id'] == ''): ?>
+                לא נבחרה קטגוריה
+            <?php elseif(empty($biz_request['cat_tree'])): ?>
+                הקטגוריה נמחקה
+            <?php endif; ?>
             <?php foreach($biz_request['cat_tree'] as $cat): ?>
                 <?= $cat['label'] ?><br/>
             <?php endforeach; ?>
