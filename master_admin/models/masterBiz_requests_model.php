@@ -35,7 +35,7 @@
         'email'=>array(
             'label'=>'אימייל',
             'type'=>'text',
-            'validation'=>'required'
+            'validation'=>''
         ),
 
         'note'=>array(
