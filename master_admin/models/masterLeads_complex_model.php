@@ -233,6 +233,10 @@
 
 
     public static function get_cat_tree_user_ids($lead_info){
+        if(empty($lead_info['cat_id_arr'])){
+            SystemMessages::add_err_message("הקטגוריה של בקשה זו נמחקה");
+            return array();
+        }
         $cat_id_in = implode(",",$lead_info['cat_id_arr']);
         $sql = "SELECT distinct user_id FROM user_cat WHERE cat_id IN ($cat_id_in)";
         
