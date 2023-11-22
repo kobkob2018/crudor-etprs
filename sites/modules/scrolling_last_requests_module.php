@@ -16,20 +16,29 @@
             if($last_requests){
                 foreach($last_requests  as $key=>$biz_request){
                     $cat_id = $biz_request['cat_id'];
-                    if(!$cat_id){
+                    if(!$cat_id || $cat_id == ""){
                         continue;
                     }
                     if(!isset($cat_names[$cat_id])){
                         $cat_name = Biz_categories::get_by_id($cat_id,'label');
+                        if(!$cat_name){
+                            continue;
+                        }
                         if(!$cat_name){
                             $cat_name = "";
                         }
                         $cat_names[$cat_id] = $cat_name['label'];
                     }
                     $city_id = $biz_request['city_id'];
+                    if(!$city_id || $city_id == ""){
+                        continue;
+                    }
                     $biz_request['cat_name'] = $cat_names[$cat_id];
                     if(!isset($city_names[$cat_id])){
                         $city_name = Cities::get_by_id($city_id,'label');
+                        if(!$city_name){
+                            continue;
+                        }
                         if(!$city_name){
                             $city_name = array("label"=>"");
                         }
