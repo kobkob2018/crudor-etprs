@@ -72,16 +72,7 @@
                 return false;
             }
             
-            $this->controller->add_model('sites');
-            if(!$needed_roll){
-                $needed_roll = $this->action_data;
-            }
-            
-            $user = $this->user;
-            $work_on_site = Sites::get_user_workon_site();
-            
-            $user_is = Helper::user_is($needed_roll,$user,$work_on_site);
-            if($user_is){
+            if($this->check_if_site_user_is($needed_roll)){
                 return true;
             }
             
@@ -105,6 +96,22 @@
             return;
         }
 
+        public function check_if_site_user_is($needed_roll = false){
+
+            $this->controller->add_model('sites');
+            if(!$needed_roll){
+                $needed_roll = $this->action_data;
+            }
+            
+            $user = $this->user;
+            $work_on_site = Sites::get_user_workon_site();
+            
+            $user_is = Helper::user_is($needed_roll,$user,$work_on_site);
+            if($user_is){
+                return true;
+            }
+            return false;
+        }
 
         public function handle_access_user_can(){ 
             $this->controller->add_model('sites');

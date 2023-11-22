@@ -654,6 +654,16 @@
   
     protected function get_paginated_list_info($filter_arr,$pagination = array('page_limit'=>'1000')){
         $filter_fields_colection = $this->get_filter_fields_collection();
+        foreach($filter_fields_colection as $key=>$field){
+            if(isset($field['handle_access'])){
+                $method = $field['handle_access']['method'];
+                $value = $field['handle_access']['value'];
+                $main_module = get_config('main_module');
+                if(!$this->call_module($main_module,$method, $value)){
+                    unset($filter_fields_colection[$key]);
+                }
+            }
+        }
         $filter_fields_colection = array(
         'paging_page_id'=>array(
             'label'=>'עמוד',
@@ -690,8 +700,13 @@
         if(!$filter_type){
             $filter_arr[$param_key] = $value;
         }
-        if($filter_type == 'like' && $value != ""){
+        if($filter_type == 'constant' && $value == '1'){
+            foreach($field['constatnt'] as $c_key=>$c_val){
+                $filter_arr[$c_key] = $c_val;
+            }
+        }
 
+        if($filter_type == 'like' && $value != ""){
             $filter_arr[$param_key] = array('str_like'=>$value,'columns_like'=>$field['columns_like']);
         }
         return $filter_arr;
@@ -703,7 +718,7 @@
     }
     protected function get_filter_fields_collection(){
         exit("error: must override get_filter_fields_collection function");
-        return null;
+        return array();
     }
 
     protected function reset_session_filter(){       

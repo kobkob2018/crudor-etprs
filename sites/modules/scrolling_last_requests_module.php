@@ -16,6 +16,9 @@
             if($last_requests){
                 foreach($last_requests  as $key=>$biz_request){
                     $cat_id = $biz_request['cat_id'];
+                    if(!$cat_id){
+                        continue;
+                    }
                     if(!isset($cat_names[$cat_id])){
                         $cat_name = Biz_categories::get_by_id($cat_id,'label');
                         if(!$cat_name){

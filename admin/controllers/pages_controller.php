@@ -26,14 +26,14 @@
       
       $filter_arr = array('site_id'=>$this->data['work_on_site']['id']);
 
-      $user_id_admin = $this->view->user_is('admin',Sites::get_user_workon_site());
-      if(!$user_id_admin){
+      $user_is_admin = $this->view->user_is('admin',Sites::get_user_workon_site());
+      if(!$user_is_admin){
         $filter_arr['user_id'] = $this->user['id'];
       }
 
       $list_info = $this->get_paginated_list_info($filter_arr,array('page_limit'=>'300'));
 
-      if($user_id_admin){
+      if($user_is_admin){
         $users_by_id = array();
         foreach($list_info['list'] as $key=>$page){
           if(!isset($users_by_id[$page['user_id']])){
@@ -67,10 +67,7 @@
             'filter_type'=>'like',
             'columns_like'=>array('title','link','description'),
         ), 
-      );
-
-      if($this->view->user_is('admin')){
-        $filter_fields_collection['get_pending_pages'] = array(
+        'get_pending_pages'=>array(
           'label'=>'הצג עמודים',
           'type'=>'select',
           'default'=>'0',
@@ -78,20 +75,15 @@
               array('value'=>'0', 'title'=>'הכל'),
               array('value'=>'1', 'title'=>'ממתינים לאישור')
           ),
-        );
-      }
-
+          'filter_type'=>'constant',
+          'constatnt'=>array('status'=>array('5','9')),
+          'handle_access'=>array('method'=>'check_if_site_user_is','value'=>'admin')
+        ), 
+      );
       return $filter_fields_collection;
-
     }
 
     protected function feed_list_filter_with_field($filter_arr,$param_key, $field, $value){
-      if($param_key == 'get_pending_pages'){
-        if($value == '1'){
-          $filter_arr['status'] = array('5','9');
-        }
-        return $filter_arr;
-      }
       return parent::feed_list_filter_with_field($filter_arr,$param_key, $field, $value);
     }
 
