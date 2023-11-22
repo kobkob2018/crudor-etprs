@@ -2,6 +2,10 @@
   class Product_imagesController extends CrudController{
     public $add_models = array("product_images","products");
 
+    protected function handle_access($action){
+        return $this->call_module('admin','handle_access_user_can','products');
+    }
+
     protected function init_setup($action){
         $product_id = $this->add_product_info_data();
         if(!$product_id){
@@ -128,6 +132,7 @@
     protected function create_item($fixed_values){
         $fixed_values['product_id'] = $this->data['product_info']['id'];
         $fixed_values['site_id'] = $this->data['work_on_site']['id'];
+        $fixed_values['user_id'] = $this->user['id'];
         return Product_images::create($fixed_values);
     }
 

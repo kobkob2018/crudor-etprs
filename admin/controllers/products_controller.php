@@ -2,6 +2,10 @@
   class ProductsController extends CrudController{
     public $add_models = array("products","product_cat");
 
+    protected function handle_access($action){
+        return $this->call_module('admin','handle_access_user_can','products');
+    }
+
     protected function init_setup($action){
         return parent::init_setup($action);
     }  
@@ -51,13 +55,68 @@
         //if(session__isset())
         
         $filter_arr = $this->get_base_filter();
-        $payload = array(
-            'order_by'=>'label'
-        );
-        $product_list = Products::get_list($filter_arr,"*", $payload);      
-        $this->data['product_list'] = $product_list;
-        $this->include_view('products/list.php');
+        $user_is_admin = $this->view->user_is('admin',Sites::get_user_workon_site());
+        if(!$user_is_admin){
+          $filter_arr['user_id'] = $this->user['id'];
+        }
+
+        //$product_list = Products::get_list($filter_arr,"*", $payload);     
+        $list_info = $this->get_paginated_list_info($filter_arr);
+        if($user_is_admin){
+            $users_by_id = array();
+            foreach($list_info['list'] as $key=>$page){
+              if(!isset($users_by_id[$page['user_id']])){
+                $users_by_id[$page['user_id']] = Users::get_by_id($page['user_id'],'id, full_name, biz_name');
+              }
+              $page_user = $users_by_id[$page['user_id']];
+              $page['user'] = $page_user;
+              $page['user_label'] = "no-user-found";
+              if($page_user){
+                $page['user_label'] = $page_user['full_name'];
+              }
+              $list_info['list'][$key] = $page;
+            }
+          }
+
+        //$this->data['product_list'] = $list_info['list'];
+        $this->include_view('products/list.php',$list_info);
     }
+
+    protected function get_filter_fields_collection(){
+        $filter_fields_collection = array(        
+          'free_search'=>array(
+              'label'=>'חיפוש חפשי',
+              'type'=>'text',
+              'validation'=>'required',
+              'filter_type'=>'like',
+              'columns_like'=>array('label'),
+          ), 
+          'get_pending_pages'=>array(
+            'label'=>'הצג מוצרים',
+            'type'=>'select',
+            'default'=>'0',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'הכל'),
+                array('value'=>'1', 'title'=>'ממתינים לאישור')
+            ),
+            'filter_type'=>'constant',
+            'constatnt'=>array('status'=>array('5','9')),
+            'handle_access'=>array('method'=>'check_if_site_user_is','value'=>'admin')
+          ), 
+        );
+        return $filter_fields_collection;
+      }
+  
+      protected function feed_list_filter_with_field($filter_arr,$param_key, $field, $value){
+        return parent::feed_list_filter_with_field($filter_arr,$param_key, $field, $value);
+      }
+  
+      protected function get_paginated_list($filter_arr, $payload){
+        $payload['order_by'] = "label, id";
+        return Products::get_list($filter_arr, '*',$payload);
+      }
+
+
 
     protected function get_base_filter(){
         $filter_arr = array(
@@ -147,6 +206,10 @@
 
     protected function create_item($fixed_values){
         $fixed_values['site_id'] = $this->data['work_on_site']['id'];
+        $fixed_values['user_id'] = $this->user['id'];
+        if(!$this->view->site_user_is('admin')){
+            $fixed_values['status'] = '5';
+        }
         return Products::create($fixed_values);
     }
   }
