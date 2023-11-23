@@ -9,14 +9,20 @@
 
             $data = $this->decode_action_data_arr();
             $this->controller->add_asset_mapping(siteNet_banners::$assets_mapping);
-            $this->controller->add_asset_mapping(SiteSupplier_cubes::$assets_mapping);  
-            $cube = SiteSupplier_cubes::get_by_id($data['cube']);
-            if(!$cube){
+            $this->controller->add_asset_mapping(SiteSupplier_cubes::$assets_mapping); 
+            if(isset($data['cat'])) {
+                $supplier_cubes = SiteSupplier_cubes::get_cat_supplier_cubes($data['cat']);
+            }
+            elseif(isset($data['cube'])){
+                $cube = SiteSupplier_cubes::get_by_id($data['cube']);
+                if(!$cube){
+                    return;
+                }
+                $supplier_cubes = array($cube);
+            }
+            else{
                 return;
             }
-            $supplier_cubes = array($cube);
-            
-
             
             $cube['banner'] = false;
             if($cube['banner_id'] != ""){
@@ -40,7 +46,7 @@
             if(!$biz_form_data){
                 return;
             }
-            if($biz_form_data['cat_id'] == ""){
+            if($biz_form_data['cat_id'] == "" || $biz_form_data['add_cat_cubes'] != "1"){
                 return;
             }
 

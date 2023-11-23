@@ -31,7 +31,7 @@
             'type'=>'file',
             'file_type'=>'img',
             'validation'=>'img',
-            'img_max'=>'1000000',
+            'img_max'=>'100000',
             'upload_to'=>'gallery',
             'name_file'=>'s_img_{{row_id}}.{{ext}}'
         ),
@@ -41,7 +41,7 @@
             'type'=>'file',
             'file_type'=>'img',
             'validation'=>'img',
-            'img_max'=>'1000000',
+            'img_max'=>'100000',
             'upload_to'=>'gallery',
             'name_file'=>'img_{{row_id}}.{{ext}}'
         ),

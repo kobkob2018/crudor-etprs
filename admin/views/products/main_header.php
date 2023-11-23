@@ -1,7 +1,7 @@
 <?php if($view->site_user_is('admin')): ?>
     <div class="sub-header focus-box">
         <div class="item-edit-menu">
-            <a href = "<?= inner_url('products/list/') ?>" class="item-edit-a <?= $view->a_c_class('products, product_images') ?>">מוצרים באתר</a>
+            <a href = "<?= inner_url('products/list/?reset_session_filter=1') ?>" class="item-edit-a <?= $view->a_c_class('products, product_images') ?>">מוצרים באתר</a>
             | 
             <a href = "<?= inner_url('product_cats/list/') ?>" class="item-edit-a <?= $view->a_c_class('product_cats') ?>">תיקיות מוצרים</a>
             | 

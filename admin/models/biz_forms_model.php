@@ -91,6 +91,16 @@
             )
         ),
 
+        'add_cat_cubes'=>array(
+            'label'=>'הוסף קוביות ספקים לפי הקטגוריה',
+            'type'=>'select',
+            'default'=>'1',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא פעיל'),
+                array('value'=>'1', 'title'=>'פעיל')
+            )
+        ),
+
     );
 }
 ?>

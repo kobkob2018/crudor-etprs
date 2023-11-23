@@ -12,7 +12,9 @@
     <?php endif; ?>
     <?php $this->call_module('site_menus','right_menu'); ?>
     <?php if(isset($this->data['is_home_page']) && !$this->data['is_home_page']): ?>
-        <?php $this->call_module('scrolling_last_requests','print'); ?>
+        <?php if($this->data['site_styling']['add_scrolling_requests'] == '1'): ?>
+            <?php $this->call_module('scrolling_last_requests','print'); ?>
+        <?php endif; ?>
     <?php endif; ?>
     <div class="grab-content right-bot-grabber" data-grab="go-right-bot"></div>
 </div>

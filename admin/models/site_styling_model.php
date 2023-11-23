@@ -36,6 +36,18 @@
             'reachtext'=>true,
             'css_class'=>'big-text',
         ),
+
+        'add_scrolling_requests'=>array(
+            'label'=>'הוסף פניות אחרונות - חדשות רצות',
+            'type'=>'select',
+            'default'=>'1',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא פעיל'),
+                array('value'=>'1', 'title'=>'פעיל')
+            )
+        ),
+
+        
     );
 }
 ?>

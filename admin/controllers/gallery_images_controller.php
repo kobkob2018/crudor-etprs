@@ -2,6 +2,10 @@
   class Gallery_imagesController extends CrudController{
     public $add_models = array("gallery_images","gallery","gallery_cat","gallery_cat_assign");
 
+    protected function handle_access($action){
+        return $this->call_module('admin','handle_access_user_can','gallery');
+    }
+
     protected function init_setup($action){
         if($action != 'gallery_list' && $action!='delete_gallery_cat'){
             $gallery_id = $this->add_gallery_info_data();
@@ -17,19 +21,77 @@
         $payload = array(
             'order_by'=>'label'
         );
-        $item_list = Gallery::get_list(array('site_id'=>$this->data['work_on_site']['id']),"*", $payload);
-        $gallery_cats = Gallery_cat::get_list(array('site_id'=>$this->data['work_on_site']['id']));
-        foreach($item_list as $item_key=>$item){
-            $item['cat_assign_checkbox_list'] = $this->get_cat_assign_checkbox_list($item['id'],$gallery_cats);
-            $item_list[$item_key] = $item;
+        $filter_arr = array('site_id'=>$this->data['work_on_site']['id']);
+        $user_is_admin = $this->view->user_is('admin',Sites::get_user_workon_site());
+        if(!$user_is_admin){
+          $filter_arr['user_id'] = $this->user['id'];
         }
-        $this->data['item_list'] = $this->prepare_forms_for_all_list($item_list,Gallery::setup_field_collection(),"gallery_");
-        
+        $list_info = $this->get_paginated_list_info($filter_arr);
+        if($user_is_admin){
+            $users_by_id = array();
+            foreach($list_info['list'] as $key=>$page){
+              if(!isset($users_by_id[$page['user_id']])){
+                $users_by_id[$page['user_id']] = Users::get_by_id($page['user_id'],'id, full_name, biz_name');
+              }
+              $page_user = $users_by_id[$page['user_id']];
+              $page['user'] = $page_user;
+              $page['user_label'] = "no-user-found";
+              if($page_user){
+                $page['user_label'] = $page_user['full_name'];
+              }
+              $list_info['list'][$key] = $page;
+            }
+          }
 
-        $this->data['gallery_cats'] = $this->prepare_forms_for_all_list($gallery_cats,Gallery_cat::setup_field_collection(),"cat_");
+        $item_list = Gallery::get_list($filter_arr,"*", $payload);
+        $gallery_cats = Gallery_cat::get_list(array('site_id'=>$this->data['work_on_site']['id']));
+        foreach($list_info['list'] as $item_key=>$item){
+            $item['cat_assign_checkbox_list'] = $this->get_cat_assign_checkbox_list($item['id'],$gallery_cats);
+            $list_info['list'][$item_key] = $item;
+        }
+        $list_info['list'] = $this->prepare_forms_for_all_list($list_info['list'],Gallery::setup_field_collection(),"gallery_");
+
+        if($this->view->site_user_is('admin')){
+            $this->data['gallery_cats'] = $this->prepare_forms_for_all_list($gallery_cats,Gallery_cat::setup_field_collection(),"cat_");
+        }
         
-        $this->include_view('gallery_images/gallery_list.php');
+        $this->include_view('gallery_images/gallery_list.php',$list_info);
     }
+
+    protected function get_filter_fields_collection(){
+        $filter_fields_collection = array(        
+          'free_search'=>array(
+              'label'=>'חיפוש חפשי',
+              'type'=>'text',
+              'validation'=>'required',
+              'filter_type'=>'like',
+              'columns_like'=>array('label'),
+          ), 
+          'get_pending_pages'=>array(
+            'label'=>'הצג גלריות',
+            'type'=>'select',
+            'default'=>'0',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'הכל'),
+                array('value'=>'1', 'title'=>'ממתינים לאישור')
+            ),
+            'filter_type'=>'constant',
+            'constatnt'=>array('status'=>array('5','9')),
+            'handle_access'=>array('method'=>'check_if_site_user_is','value'=>'admin')
+          ), 
+        );
+        return $filter_fields_collection;
+      }
+  
+      protected function feed_list_filter_with_field($filter_arr,$param_key, $field, $value){
+        return parent::feed_list_filter_with_field($filter_arr,$param_key, $field, $value);
+      }
+  
+      protected function get_paginated_list($filter_arr, $payload){
+        $payload['order_by'] = "label, id";
+        return Gallery::get_list($filter_arr, '*',$payload);
+      }
+
 
     protected function get_cat_assign_checkbox_list($gallery_id,$gallery_cats){
         $cats_assigned = Gallery_cat_assign::get_gallery_assigned_cats($gallery_id);
@@ -61,6 +123,10 @@
         if($validate_result['success']){
             $fixed_values = $validate_result['fixed_values'];
             $fixed_values['site_id'] = $this->data['work_on_site']['id'];
+            $fixed_values['user_id'] = $this->user['id'];
+            if(!$this->view->site_user_is('admin')){
+                $fixed_values['status'] = '5';
+            }
             $row_id = Gallery::create($fixed_values);
             SystemMessages::add_success_message("הגלרייה נוצרה בהצלחה");
         }
@@ -310,6 +376,7 @@
         $work_on_site = Sites::get_user_workon_site();
         $site_id = $work_on_site['id'];
         $fixed_values['site_id'] = $site_id;
+        $fixed_values['user_id'] = $this->user['id'];
         $fixed_values['gallery_id'] = $this->data['gallery_info']['id'];
         return Gallery_images::create($fixed_values);
     }

@@ -9,8 +9,8 @@
         'video_format' => 'שדה {{label}} חייב להיות קובץ מסוג וידאו',
         'int'=>'שדה {{label}} חייב להיות מספר',
         'date'=>'שדה {{label}} חייב להיות תאריך תקין',
-        'img_max'=>'שדה {{label}} - תמונה גדולה מידיי( מקסימום מותר - {{img_max}} ביט)',
-        'vid_max'=>'שדה {{label}} - וידאו גדול מידיי( מקסימום מותר - {{vid_max}} ביט)',
+        'img_max'=>'שדה {{label}} - תמונה גדולה מידיי( מקסימום מותר - {{img_max}}k)',
+        'vid_max'=>'שדה {{label}} - וידאו גדול מידיי( מקסימום מותר - {{vid_max}}k)',
         'default'=>'שדה {{label}} לא תקין',
     );
 
@@ -216,7 +216,7 @@
             if($size > $field['img_max']){
                 $is_valid = false;
                 $return_array['success'] = false;
-                $return_array['message'] = str_replace('{{img_max}}',$field['img_max'],$this->error_messages['img_max']);
+                $return_array['message'] = str_replace('{{img_max}}',$field['img_max']/1000,$this->error_messages['img_max']);
                 $return_array['fixed_value'] = $validate_payload['db_value'];
             }
         }
@@ -264,7 +264,7 @@
             if($size > $field['vid_max']){
                 $is_valid = false;
                 $return_array['success'] = false;
-                $return_array['message'] = str_replace('{{vid_max}}',$field['vid_max'],$this->error_messages['vid_max']);
+                $return_array['message'] = str_replace('{{vid_max}}',$field['vid_max']/1000,$this->error_messages['vid_max']);
                 $return_array['fixed_value'] = $validate_payload['db_value'];
             }
         }

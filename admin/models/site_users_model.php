@@ -49,7 +49,7 @@
     public static $user_can_options = array(
         array('value'=>'pages', 'title'=>'עמודים'),
         array('value'=>'products', 'title'=>'מוצרים'),
-        array('value'=>'galeries', 'title'=>'גלריות'),
+        array('value'=>'gallery', 'title'=>'גלריות'),
         array('value'=>'quotes', 'title'=>'הצעות מחיר'),
     );
 

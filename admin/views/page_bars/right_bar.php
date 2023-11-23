@@ -154,7 +154,13 @@
         <?php endif; ?>
         <?php if($view->site_user_can('products')): ?>
             <li class="bar-item <?= $view->a_class("products/list/") ?> <?= $view->a_c_class("product_cats, products") ?>">
-                <a href="<?= inner_url('products/list/') ?>" title="מוצרים" class="a-link">ניהול מוצרים</a>
+                <a href="<?= inner_url('products/list/?reset_session_filter=1') ?>" title="מוצרים" class="a-link">ניהול מוצרים</a>
+            </li>
+        <?php endif; ?>
+
+        <?php if($view->site_user_can('gallery')): ?>
+            <li class="bar-item <?= $view->a_class("gallery_images/gallery_list/") ?> <?= $view->a_c_class("product_cats, products") ?>">
+                <a href="<?= inner_url('gallery_images/gallery_list/?reset_session_filter=1') ?>" title="גלריות תמונות" class="a-link">גלריות תמונות</a>
             </li>
         <?php endif; ?>
         <?php if($view->site_user_can('pages')): //can switch to site_user_is.. ?>
