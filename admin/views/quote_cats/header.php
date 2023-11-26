@@ -1,3 +1,4 @@
+<?php $this->include_view('quotes/queue_options.php',array('enable_assign_user'=>false)); ?>
 <div class="eject-box">
     <a class="back-link" href="<?= inner_url('quote_cats/list/') ?>">חזרה לרשימת התיקיות</a>
 </div>

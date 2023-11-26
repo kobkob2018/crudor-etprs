@@ -74,6 +74,26 @@
         return $this->setup_user_list($this->user['id'],$info);
     }
 
+    public function assign_queue_to_user(){
+        if(!session__isset('quots_list_user')){
+            return $this->redirect_to(inner_url("quote_cats/list/"));
+        }
+        $session_param = 'quotes_queue';
+        if(!session__isset($session_param)){
+            return $this->redirect_to(inner_url("quotes/user_list/"));
+        }
+        $quotes_queue = session__get($session_param);
+        if(!is_array($quotes_queue)){
+            return $this->redirect_to(inner_url("quotes/user_list/"));
+        }
+        $user_id = session__get('quots_list_user');
+        foreach($quotes_queue as $quote_id){
+            Quotes::update($quote_id, array('user_id'=>$user_id));   
+        }
+        session__unset($session_param);
+        return $this->redirect_to(inner_url("quotes/user_list/"));
+    }
+
     public function user_list(){
         
         if(isset($_REQUEST['user_id'])){
@@ -146,6 +166,66 @@
     
         );  
         return $filter_arr;     
+    }
+
+    public function reset_queue(){
+        if(session__isset('quotes_queue')){
+            session__unset('quotes_queue');
+        }
+        SystemMessages::add_success_message("תור הצעות מחיר לשיוך ללקוח הוסר");
+        return $this->redirect_to(inner_url('quote_cats/list/'));
+    }
+
+    public function enter_queue(){
+        $return_action = 'list';
+        if(isset($_REQUEST['return_to'])){
+            $return_action = $_REQUEST['return_to'];
+        }
+        $qstr = "";
+        if(isset($_REQUEST['cat_id'])){
+            $qstr = "?cat_id=".$_REQUEST['cat_id'];
+        }
+        $return_url = inner_url("quotes/".$return_action."/".$qstr);
+        $session_queue = array();
+        $session_param = 'quotes_queue';
+        if(session__isset($session_param)){
+            $session_queue = session__get($session_param);
+        }
+        if(!isset($_REQUEST['row_id'])){
+            SystemMessages::add_err_message("לא נבחרה הצעת מחיר");
+            return $this->redirect_to($return_url);
+        }
+        $row_id = $_REQUEST['row_id'];
+        if($row_id == 'all'){
+            if(!isset($_REQUEST['cat_id'])){
+                SystemMessages::add_err_message("לא נבחרה תיקייה");
+                return $this->redirect_to($return_url);
+            }
+            $cat_id = $_REQUEST['cat_id'];
+            $cat_quotes = Quotes::simple_get_list_by_table_name(array('cat_id'=>$cat_id),'quote_cat_assign');
+            if($cat_quotes){
+                foreach($cat_quotes as $quote){
+                    $check_quote = Quotes::get_by_id($quote['quote_id']);
+                    
+                    if($check_quote && !in_array($quote['quote_id'],$session_queue)){
+                        $session_queue[] = $quote['quote_id'];
+                    } 
+                }
+                SystemMessages::add_success_message("הצעות המחיר בתיקייה נוספו לתור");
+                
+            }
+        }
+        else{
+            if(!in_array($row_id,$session_queue)){
+                $session_queue[] = $row_id;
+            }  
+
+            SystemMessages::add_success_message("הצעת המחיר נוספה לתור");
+        }
+        session__set($session_param,$session_queue);
+        SystemMessages::add_success_message("יש לגשת לדף לקוח וללחוץ על כפתור - שיוך הצעות מחיר שבתור ללקוח זה");
+
+        return $this->redirect_to($return_url);
     }
 
     public function edit(){

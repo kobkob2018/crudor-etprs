@@ -1,3 +1,4 @@
+<?php $this->include_view('quotes/queue_options.php',array('enable_assign_user'=>false)); ?>
 <div class="flex-box">
     <div class="flex-col">
 

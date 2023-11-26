@@ -6,6 +6,8 @@
     <?php $this->include_view("quotes/user_header.php"); ?>
     <hr/>
     <h2>הצעות מחיר של לקוח: <?= $this->data['user_info']['full_name'] ?></h2>
+
+    <?php $this->include_view('quotes/queue_options.php',array('enable_assign_user'=>true)); ?>
 <?php else: ?>
     <h2>הצעות המחיר שלי</h2>
 <?php endif; ?>
