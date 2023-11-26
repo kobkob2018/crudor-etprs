@@ -22,6 +22,7 @@
                 array('value'=>'products', 'title'=>'(products) קטגוריית מוצרים'),               
                 array('value'=>'s.pr', 'title'=>'(s.pr) דף מוצר'),
                 array('value'=>'link', 'title'=>'(טקסט) דף תוכן\נחיתה'),
+                array('value'=>'co', 'title'=>'(co) דף צור קשר'),
                 array('value'=>'landing', 'title'=>'דף נחיתה במערכת ישנה (landing.php)'),
             ),
             'validation'=>'required'
@@ -36,6 +37,7 @@
                 array('value'=>'ud', 'title'=>'(ud) דף מוצר'),               
                 array('value'=>'link', 'title'=>'דף תוכן\נחיתה (טקסט)'),
                 array('value'=>'ld', 'title'=>'דף נחיתה במערכת ישנה (ld)'),
+                array('value'=>'0', 'title'=>'דף צור קשר (ללא פרמטר נוסף, יש לשים 0 במזהה הפריט)'),
             ),
             'validation'=>'required'
         ),

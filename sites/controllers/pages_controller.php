@@ -113,6 +113,7 @@
         'landing'=>array(
           'ld'
         ),
+        'co'=>array('0'),        
       );
 
       $auto_to_home_main_params = array('landing');
@@ -120,14 +121,19 @@
       if(!isset($options_arr[$main_param])){
         return $this->check_migration_redirect();
       }
-       
+     
       $found_redirection = false;
       foreach($options_arr[$main_param] as $id_param){
         if(!isset($_GET[$id_param]) || $_GET[$id_param] == ""){
-          continue;
+          if($id_param != '0'){
+            continue;
+          }
+          $item_id = '0';
         }
-        
-        $item_id = $_GET[$id_param];
+        else{
+          $item_id = $_GET[$id_param];
+        }
+
         $filter_arr = array(
           'site_id'=>$this->data['site']['id'],
           'm_param'=>$main_param,
@@ -167,7 +173,7 @@
       );
 
       if(!isset($options_arr[$main_param])){
-        return $this->check_migration_redirect();
+        return;
       }
 
       $migration_arr = array(
