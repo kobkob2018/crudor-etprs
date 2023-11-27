@@ -75,6 +75,12 @@
 
 </div>
 
+<?php if($view->site_user_is('master_admin')): ?>
+    <div class="focus-box">
+    באפשרותך לשייך הצעות מחיר ללקוח אחר על ידי הוספתן לתור, ואז בעמוד הצעות המחיר של הלקוח, ללחוץ על כפתוך השיוך.
+    </div>
+<?php endif; ?>
+
 <hr/>
 
 
@@ -112,14 +118,18 @@
                             <a href="<?= $file_url ?>" target="_BLANK">  
                                 <img src='<?= $file_url ?>?cache=<?= rand() ?>'  style="max-width:200px;"/>
                             </a>
-                            <br/>
-                            <a href="<?= inner_url('quotes/edit/?cat_id=none&user_id='.$item['user_id'].'&row_id='.$item['id']) ?>&remove_file=image">הסר תמונה</a>
+                            <?php if($view->site_user_is('master_admin')): ?>
+                                <br/>
+                                <a href="<?= inner_url('quotes/edit/?cat_id=none&user_id='.$item['user_id'].'&row_id='.$item['id']) ?>&remove_file=image">הסר תמונה</a>
+                            <?php endif; ?>
                         </div>
                         <?php endif; ?>
                     </div>
                 </div>
                 <div class="col col-top">
                     <textarea class = 'table-input' name = 'row[description]'><?= $this->get_form_input('description',$item['form_identifier']) ?></textarea>
+                    <br/>
+                    <a href = "<?= inner_url('quotes/enter_queue/') ?>?return_to=user_list&row_id=<?= $item['id'] ?>" title="הוספה לתור">הוספה לתור</a>
                 </div>
                 <div class="col">
                     <input type="text" class = 'table-input' name = 'row[price]' value = "<?= $this->get_form_input('price',$item['form_identifier']) ?>" />
