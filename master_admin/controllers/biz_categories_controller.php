@@ -94,6 +94,11 @@
     }
 
     public function delete(){
+      if(!isset($_REQUEST['alt_cat_select'])){
+        $this->data['item_info'] = $this->get_item_info($_GET['row_id']);
+        $this->include_view('biz_categories/delete_form.php');
+        return;
+      }
       return parent::delete();      
     }
 
@@ -119,6 +124,9 @@
     }
 
     protected function delete_success_message(){
+      if(!$this->data['deleted_success']){
+        return;
+      }
       SystemMessages::add_success_message("הקטגוריה נמחקה");
     }
 
@@ -127,6 +135,34 @@
     }   
 
     protected function delete_item($row_id){
+      $this->data['deleted_success'] = false;
+      $alt_cat_select = $_REQUEST['alt_cat_select'];
+      $alt_cat_check = Biz_categories::get_by_id($alt_cat_select);
+      if(!$alt_cat_check){
+        SystemMessages::add_err_message("מספר הקטגוריה שבחרת לא תקין");
+        return;
+      }
+      $check_ok = true;
+      if($row_id == $alt_cat_select){
+        $check_ok = false;
+      }
+      $cat_offsprings = Biz_categories::simple_get_item_offsprings($row_id,'id, parent');
+      $cat_id_list = array($row_id);
+      foreach($cat_offsprings as $cat){
+        if($cat['id'] == $alt_cat_select){
+          $check_ok = false;
+        }
+        $cat_id_list[] = $cat['id'];
+      }
+      if(!$check_ok){
+        SystemMessages::add_err_message("הקטגוריה שבחרת להעביר אליה את הלידים תמחק עם הפעולה. תהליך לא תקין");
+        return;
+      }
+      $this->data['deleted_success'] = true;
+      //leads
+      Biz_categories::transfer_leads_to_alt_cat($alt_cat_select, $cat_id_list);
+      //forms
+      Biz_categories::transfer_forms_to_alt_cat($alt_cat_select, $cat_id_list);
       return Biz_categories::delete_with_offsprings($row_id);
     }
 

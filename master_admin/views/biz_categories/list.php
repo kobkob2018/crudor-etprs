@@ -17,6 +17,7 @@
 <?php if(!empty($this->data['cat_list'])): ?>
     <div class="items-table flex-table">
         <div class="table-th row">
+            <div class="col col-tiny">#</div>
             <div class="co col-tiny">מיקום</div>
             <div class="col">קטגוריה</div>
             <div class="col">טלפון</div>
@@ -27,6 +28,9 @@
         </div>
         <?php foreach($this->data['cat_list'] as $cat): ?>
             <div class="table-tr row  pale-0<?= $cat['visible'] ?>">
+                <div class="col col-tiny">
+                    <?= $cat['id'] ?>
+                </div>
                 <div class="col col-tiny">
                     <?= $cat['priority'] ?>
                 </div>

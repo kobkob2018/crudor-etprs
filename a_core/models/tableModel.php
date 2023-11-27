@@ -269,6 +269,30 @@ class TableModel extends Model{
         return $fields_collection;
     }
 
+    public static function transfer_leads_to_alt_cat($alt_cat_select, $cat_id_list){
+        if(empty($cat_id_list)){
+            return;
+        }
+        $db = Db::getInstance();
+        $execute_arr = array('alt_cat_select'=>$alt_cat_select);
+        $cat_id_in = implode(", ",$cat_id_list);
+        $sql = "UPDATE biz_requests set cat_id = :alt_cat_select WHERE cat_id IN ($cat_id_in)";
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
+    }
+
+    public static function transfer_forms_to_alt_cat($alt_cat_select, $cat_id_list){
+        if(empty($cat_id_list)){
+            return;
+        }
+        $db = Db::getInstance();
+        $execute_arr = array('alt_cat_select'=>$alt_cat_select);
+        $cat_id_in = implode(", ",$cat_id_list);
+        $sql = "UPDATE biz_forms set cat_id = :alt_cat_select WHERE cat_id IN ($cat_id_in)";
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
+    }
+
     public static $fields_collections_fixed = array();
 
     public static $fields_collection = array();
