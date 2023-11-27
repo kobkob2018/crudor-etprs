@@ -166,8 +166,8 @@
                     <div class="col">
                     <?= $user['monthly_sent_leads'] ?> 
                         (
-                            <?= $user['lead_settings']['month_max'] ?> MAX 
-                            <?php if($user['lead_settings']['flex_max'] == '1'): ?>
+                            <?= $user['info']['lead_settings']['month_max'] ?> MAX 
+                            <?php if($user['info']['lead_settings']['flex_max'] == '1'): ?>
                                 גמיש
                             <?php endif; ?>
                         ) 
