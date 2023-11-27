@@ -165,12 +165,10 @@
                     <div class="col"><?= $user['info']['user']['city_name'] ?></div>
                     <div class="col">
                     <?= $user['monthly_sent_leads'] ?> 
-                        (
-                            <?= $user['info']['lead_settings']['month_max'] ?> MAX 
+                        (<?= $user['info']['lead_settings']['month_max'] ?> MAX 
                             <?php if($user['info']['lead_settings']['flex_max'] == '1'): ?>
                                 גמיש
-                            <?php endif; ?>
-                        ) 
+                            <?php endif; ?>) 
                     <br/>    
                     <?= $user['info']['lead_settings']['lead_credit'] ?>
                     </div>
