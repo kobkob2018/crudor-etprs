@@ -92,7 +92,7 @@
         ),
 
         'month_max'=>array(
-            'label'=>'מקסימום לידים ברוטציה',
+            'label'=>'מקסימום לידים ברוטציה (0=ללא הגבלה)',
             'type'=>'text',
             'default'=>'10',
             'validation'=>'int'
