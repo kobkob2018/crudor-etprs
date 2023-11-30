@@ -667,6 +667,13 @@ a.filter-a-clicker.selected{
     border-radius: 5px;
 
 }
+a.set-status-11, a.set-status-99, a.set-status-55{
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: text;
+    pointer-events:none;
+}
 .filter-form:hover{
     zoom:1;
     background: #e9e9d3;

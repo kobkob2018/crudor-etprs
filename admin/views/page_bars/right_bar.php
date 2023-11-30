@@ -147,6 +147,11 @@
                <h3>תוכן אישי באתר</h3>
             </li>
         <?php endif; ?>
+        <?php if($view->site_user_can('menus')): ?>
+            <li class="bar-item <?= $view->a_class("menus/portal_menu/") ?>">
+                <a href="<?= inner_url('menus/portal_menu/') ?>" title="תפריט הפורטל" class="a-link">תפריט הפורטל</a>
+            </li>
+        <?php endif; ?>
         <?php if($view->site_user_can('quotes')): //can switch to site_user_is.. ?>
             <li class="bar-item <?= $view->a_class("quotes/my_list/") ?> <?= $view->a_class("quotes/my_list/") ?>">
                 <a href="<?= inner_url('quotes/my_list/') ?>" title="הצעות המחיר שלי" class="a-link">הצעות המחיר שלי</a>

@@ -119,6 +119,11 @@
             'site_domain' => $site_data['domain'],
             'site_logo' => $this->controller->file_url_of('logo',$site_data['logo']),
           );
+          if(isset($this->controller->data['text_replace'])){
+            foreach($this->controller->data['text_replace'] as $search=>$replace){
+              $replace_arr[$search] = $replace;
+            }            
+          }
           if(isset($this->controller->data['biz_form'])){
             $biz_form = $this->controller->data['biz_form'];
             $replace_arr['mobile_btn_text'] = $biz_form['mobile_btn_text'];

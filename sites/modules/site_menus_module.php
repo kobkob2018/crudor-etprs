@@ -15,6 +15,16 @@
             $this->include_view('site_menus/right_menu.php');
         }
 
+        public function portal_menu(){
+            $data = $this->controller->data;
+            $page_id = -1;
+            if(isset($data['page'])){
+                $page_id = $data['page']['id'];
+            }
+            $portal_menu_items = SiteMenuItems::get_menu_items_tree($data['site']['id'], SiteMenuItems::$menu_type_list['portal'], false, $this->controller->data['page']['user_id']);
+            $this->add_data('portal_menu_items',$portal_menu_items);
+            $this->include_view('site_menus/portal_menu.php');
+        }
 
         public function top_menu(){
             $data = $this->controller->data;

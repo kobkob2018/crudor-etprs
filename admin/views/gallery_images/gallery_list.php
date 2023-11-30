@@ -69,7 +69,18 @@
                             <br/>
                             <b class="red">הגלרייה לא אושרה</b>
                         <?php endif; ?>
-                        
+                        <?php if($view->site_user_is('admin')): ?>
+                            <br/>
+                            <div class="focus-box">
+                                שינוי סטטוס:
+                                <br/>
+                                <a class="set-status-1<?= $item['status'] ?>" href = "<?= inner_url('gallery_images/status_update/') ?>?row_id=<?= $item['id'] ?>&status=1" title="מאשר">מאשר</a>
+                                | 
+                                <a class="set-status-9<?= $item['status'] ?>" href = "<?= inner_url('gallery_images/status_update/') ?>?row_id=<?= $item['id'] ?>&status=9" title="לא מאשר">לא מאשר</a>
+                                | 
+                                <a class="set-status-5<?= $item['status'] ?>" href = "<?= inner_url('gallery_images/status_update/') ?>?row_id=<?= $item['id'] ?>&status=5" title="ממתין לאישור">ממתין לאישור</a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <div class = "col">
                         <select name='row[active]' class='form-select'>

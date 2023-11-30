@@ -13,8 +13,6 @@
         <div class="table-th row">
             <div class="col  col-first col-tiny">מיקום</div>
             <div class="col">תווית</div>
-            <div class="col">סוג הקישור</div>
-            <div class="col">כתובת הקישור</div>
             <div class="col">קישור לדף</div>
             <div class="col">ייפתח ב</div>
             <div class="col col-small">תווית עיצוב</div>
@@ -25,25 +23,13 @@
             <input type="hidden" name="sendAction" value="listCreateSend" />
             <input type="hidden" name="menu_identifier" value="<?= $this->data['menu_identifier'] ?>" />
             <input type="hidden" name="db_row_id" value="new" />
+            <input type="hidden" name = 'row[link_type]' value = "<?= $this->get_form_input('link_type') ?>" />
             <div class="col col-first col-tiny">                   
                 <input type="text" class = 'table-input' name = 'row[priority]' value = "<?= $this->get_form_input('priority') ?>" />
             </div>
             <div class="col">
                 <input type="text" class = 'table-input' name = 'row[label]' value = "<?= $this->get_form_input('label') ?>" />
             </div>
-
-            <div class="col">
-                <select name='row[link_type]' class='table-select'>
-                    <?php foreach($this->get_select_options('link_type') as $option): ?>
-                        <option value="<?= $option['value'] ?>" <?= $option['selected'] ?>><?= $option['title'] ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-
-            <div class="col">
-                <input type="text" class = 'table-input' name = 'row[url]' value = "<?= $this->get_form_input('url') ?>" />
-            </div>
-
 
             <div class="col">
                 <select name='row[page_id]' class='table-select'>
@@ -87,8 +73,6 @@
         <div class="table-th row">
         <div class="col  col-first col-tiny">מיקום</div>
             <div class="col">תווית</div>
-            <div class="col">סוג הקישור</div>
-            <div class="col">כתובת הקישור</div>
             <div class="col">קישור לדף</div>
             <div class="col">ייפתח ב</div>
             <div class="col col-small">תווית עיצוב</div>
@@ -99,35 +83,13 @@
             <form  class="table-tr row" action = "" method = "POST" >
                 <input type="hidden" name="sendAction" value="listUpdateSend" />
                 <input type="hidden" name="db_row_id" value="<?= $item['id'] ?>" /> 
+                <input type="hidden" name = 'row[link_type]' value = "<?= $this->get_form_input('link_type',$item['form_identifier']) ?>" />
                 <div class="col col-first col-tiny">
                     <input type="text" class = 'table-input' name = 'row[priority]' value = "<?= $this->get_form_input('priority',$item['form_identifier']) ?>" />
                 </div>
 
                 <div class="col">
                     <input type="text" class = 'table-input' name = 'row[label]' value = "<?= $this->get_form_input('label',$item['form_identifier']) ?>" />
-                    <br/>
-                    <a href = "<?= inner_url('menus/'.$this->data['action_name'].'/') ?>?row_id=<?= $item['id'] ?>" title="בחירה">תתי תפריט</a>
-                </div>
-
-                <div class="col">
-                   <select name='row[link_type]' class='table-select'>
-                       <?php foreach($this->get_select_options('link_type',$item['form_identifier']) as $option): ?>
-                           <option value="<?= $option['value'] ?>" <?= $option['selected'] ?>><?= $option['title'] ?></option>
-                       <?php endforeach; ?>
-                   </select>
-               </div>
-
-
-
-                <div class="col">
-                    <input type="text" class = 'table-input' name = 'row[url]' value = "<?= $this->get_form_input('url',$item['form_identifier']) ?>" />
-                        <br/>
-                    <?php if(isset($this->data['move_item'])): ?>
-                        <a class='go-button' href="<?= inner_url('menus/'.$this->data['action_name'].'/') ?>?row_id=<?= $item['id'] ?>&move_item=here">העבר לכאן</a>
-                    <?php else: ?>
-
-                        <a href = "<?= inner_url('menus/'.$this->data['action_name'].'/') ?>?move_item=<?= $item['id'] ?>" title="העברה">העברה</a>
-                    <?PHP endif; ?>
                 </div>
 
 
@@ -152,7 +114,7 @@
                 </div>
                 <div class="col"><input type="submit" value="שמור" /></div>
                 <div class="col">
-                    <a class = 'delete-item-x' href="<?= inner_url('menus/delete/') ?>?row_id=<?= $item['id'] ?>&menu_identifier=<?= $this->data['menu_identifier'] ?><?php if(isset($_REQUEST['portal_user_id'])): ?>&portal_user_id=<?= $_REQUEST['portal_user_id'] ?><?php endif; ?>">
+                    <a class = 'delete-item-x' href="<?= inner_url('menus/portal_delete/') ?>?row_id=<?= $item['id'] ?>&menu_identifier=<?= $this->data['menu_identifier'] ?>">
                         X
                     </a>
                 </div>

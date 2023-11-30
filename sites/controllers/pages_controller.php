@@ -45,6 +45,12 @@
         }
 
         if($page_style['page_layout'] == '2'){
+          //combune body
+          $this->set_body('combine_body');
+        }
+        if($page_style['page_layout'] == '3'){
+          //portal body
+          $this->call_module('portal_user','use');
           $this->set_body('combine_body');
         }
       }
@@ -67,11 +73,9 @@
     }
 
     protected function home(){
-      if(isset($_GET['m'])){
-        $check_redirect = $this->check_redirect();
-        if($check_redirect){
-          return;
-        }
+      $check_redirect = $this->check_redirect();
+      if($check_redirect){
+        return;
       }
       $this->data['is_home_page'] = true;
       return $this->page_view();
@@ -95,7 +99,11 @@
 
     protected function check_redirect(){
       $this->add_model('siteRedirections');
-      $main_param = $_GET['m'];
+
+      $main_param = 'home';
+      if(isset($_GET['m'])){
+        $main_param = $_GET['m'];
+      }
       
       $options_arr = array(
         's.pr'=>array(
@@ -113,7 +121,8 @@
         'landing'=>array(
           'ld'
         ),
-        'co'=>array('0'),        
+        'co'=>array('0'),
+        'home'=>array('0'),        
       );
 
       $auto_to_home_main_params = array('landing');
@@ -121,9 +130,11 @@
       if(!isset($options_arr[$main_param])){
         return $this->check_migration_redirect();
       }
-     
+         
       $found_redirection = false;
+      
       foreach($options_arr[$main_param] as $id_param){
+        
         if(!isset($_GET[$id_param]) || $_GET[$id_param] == ""){
           if($id_param != '0'){
             continue;
@@ -133,7 +144,7 @@
         else{
           $item_id = $_GET[$id_param];
         }
-
+        
         $filter_arr = array(
           'site_id'=>$this->data['site']['id'],
           'm_param'=>$main_param,
@@ -141,6 +152,7 @@
           'item_id'=>$item_id
         );
         $redirection = SiteRedirections::find($filter_arr,'url, label');
+
         if($redirection){
           $found_redirection = $redirection['url'];
         }
@@ -148,7 +160,9 @@
           
         }
       }
+      
       if($found_redirection){
+        
         header("Location: $found_redirection", true, 301);
         return true;
       }
@@ -162,6 +176,9 @@
     }
 
     protected function check_migration_redirect(){
+      if(!isset($_GET['m'])){
+        return;
+      }
       $main_param = $_GET['m'];
 
       $options_arr = array(

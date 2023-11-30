@@ -187,6 +187,9 @@
         $paging_result['page'] = $pagination_arr['page'];
         $paging_result['page_limit'] = $pagination_arr['page_limit'];
       }
+      elseif(isset($payload['limit'])){
+        $limit_sql = "LIMIT ".$payload['limit'];
+      }
       $sql = "SELECT $select_params FROM $table_name WHERE $fields_sql $order_by_sql $limit_sql";
     
       $req = $db->prepare($sql);

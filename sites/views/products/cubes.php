@@ -2,10 +2,10 @@
     <div class="midpage-title-wrap">
         <h3 class="color-title med-title">קטלוג מוצרים</h3>
     </div>
-    <div class="product-list">
+    <div class="product-list center-flex-row flex-wrap box-list">
         <?php foreach($info['product_list'] as $product): ?>
             <div class="product-box list-box">
-                <div class="box-title color-b">
+                <div class="box-title big-title">
                     <?= $product['label'] ?>
                 </div>
 

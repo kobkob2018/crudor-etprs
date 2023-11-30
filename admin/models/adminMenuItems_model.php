@@ -11,18 +11,24 @@
         return self::simple_get_list($filter_arr);
     }
 
-    public static function get_select_page_options(){
+    public static function get_select_page_options($controller){
         if(self::$select_page_options){
             return self::$select_page_options;
         }
 
         $work_on_site = Sites::get_user_workon_site();
         $site_id = $work_on_site['id'];
-
+        $execute_arr = array('site_id'=>$site_id);
+        $user_id = $controller->get_user_id_filter();
+        $user_filter_sql = "";
+        if($user_id){
+            $execute_arr['user_id'] = $user_id;
+            $user_filter_sql = " AND user_id = :user_id ";
+        }
         $db = Db::getInstance();
-        $sql = "SELECT id, title FROM content_pages WHERE site_id = :site_id order by title";
+        $sql = "SELECT id, title FROM content_pages WHERE site_id = :site_id $user_filter_sql order by title";
         $req = $db->prepare($sql);
-        $req->execute(array('site_id'=>$site_id));
+        $req->execute($execute_arr);
         $page_list = $req->fetchAll();
         $return_options = array();
         foreach($page_list as $page){
@@ -36,10 +42,64 @@
         'top'=>'1',
         'right'=>'2',
         'hero'=>'3',
-        'bottom'=>'4'
+        'bottom'=>'4',
+        'portal'=>'5'
     );
 
+    public static $portal_fields_collection = array(
+        'parent'=>array(
+            'type'=>'hidden'
+        ),
+        'site_id'=>array(
+            'type'=>'hidden'
+        ),
+        'priority'=>array(
+            'label'=>'מיקום',
+            'type'=>'text',
+            'default'=>'100',
+        ),
 
+        'label'=>array(
+            'label'=>'תווית',
+            'type'=>'text',
+            'validation'=>'required'
+        ),
+
+
+        'menu_id'=>array(
+            'type'=>'hidden'
+        ),   
+
+        'link_type'=>array(
+            'label'=>'סוג הקישור ccc',
+            'type'=>'text',
+            'default'=>'1',
+            'validation'=>'required'
+        ),
+        
+        'page_id'=>array(
+            'label'=>'קישור לדף',
+            'type'=>'select',
+            'options_method'=>array('model'=>'AdminMenuItems','method'=>'get_select_page_options'),
+        ),
+
+        'target'=>array(
+            'label'=>'ייפתח ב',
+            'type'=>'select',
+            'default'=>'0',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'אותו הדף'),
+                array('value'=>'1', 'title'=>'דף חדש')
+            ),
+            'validation'=>'required'
+        ),
+
+        'css_class'=>array(
+            'label'=>'תווית עיצוב',
+            'type'=>'text',
+        ), 
+
+    );
 
     public static $fields_collection = array(
         'parent'=>array(

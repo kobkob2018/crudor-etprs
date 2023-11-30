@@ -209,7 +209,7 @@ class TableModel extends Model{
         return self::simple_get_item_parents_tree_by_table_name($item_id, $table_name, $select_params, $recursive_arr, $deep);
     }
 
-    public static function setup_field_collection($fields_collection = false, $collection_identifier = 'main'){
+    public static function setup_field_collection($fields_collection = false, $collection_identifier = 'main',$controller = null){
         if($collection_identifier != 'new'){
             if(isset(static::$fields_collections_fixed[$collection_identifier])){
                 return static::$fields_collections_fixed[$collection_identifier];
@@ -234,7 +234,7 @@ class TableModel extends Model{
             if(isset($build_field['options_method'])){
                 $options_method = $build_field['options_method'];
                 $method_name = $options_method['method'];
-                $options = $options_method['model']::$method_name();
+                $options = $options_method['model']::$method_name($controller);
                 $build_field['options'] = $options;
             }
 

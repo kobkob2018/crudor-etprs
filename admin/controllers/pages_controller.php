@@ -15,6 +15,9 @@
         case 'error':
           return true;
           break;
+        case 'status_update':
+          return $this->call_module('admin','handle_access_user_is','admin');
+          break;
         default:
           return $this->call_module('admin','handle_access_user_can','pages');
           break;
@@ -90,6 +93,18 @@
     protected function get_paginated_list($filter_arr, $payload){
       $payload['order_by'] = "title, id";
       return AdminPages::get_list($filter_arr, 'id, status, user_id, title, link, visible, views, convertions, spam_convertions',$payload);
+    }
+
+    public function status_update(){
+      if(!(isset($_REQUEST['status']) && isset($_REQUEST['row_id']))){
+        SystemMessages::add_err_message("חסר מידע לפעולה");
+        return $this->redirect_to(inner_url('pages/list/'));
+      }
+      $row_id = $_REQUEST['row_id'];
+      $status = $_REQUEST['status'];
+      AdminPages::update($row_id,array('status'=>$status));
+      SystemMessages::add_success_message("סטטוס הפריט עודכן בהצלחה");
+      return $this->redirect_to(inner_url('pages/list/'));
     }
 
     public function edit(){

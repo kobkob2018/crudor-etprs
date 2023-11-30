@@ -41,6 +41,17 @@
     }
 
     public function edit(){
+        if(isset($_GET['user_id']) && !isset($_GET['row_id'])){
+            $user_id = $_GET['user_id'];
+            //if(session__isset())
+            $filter_arr = array('user_id'=>$user_id,'site_id'=>$this->data['work_on_site']['id']);
+            $site_user_info = Site_users::find($filter_arr,"id");      
+            
+            if($site_user_info){
+                $row_id = $site_user_info['id'];
+                return $this->redirect_to(inner_url("site_users/edit/?user_id=$user_id&row_id=$row_id"));
+            }
+        }
         return parent::edit();
     }
 
@@ -62,7 +73,8 @@
 
     public function include_edit_view(){
         $user_id = $this->data['item_info']['user_id'];
-        $user = Users::get_by_id($user_id,"full_name");
+        $user = Users::get_by_id($user_id,"id, full_name, biz_name");
+        $this->data['user_info'] = $user;
         $this->data['item_info']['full_name'] = $user['full_name'];
         $this->data['site_user_info'] = $this->data['item_info'];
         $this->include_view('site_users/edit.php');

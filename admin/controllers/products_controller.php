@@ -3,7 +3,14 @@
     public $add_models = array("products","product_cat");
 
     protected function handle_access($action){
-        return $this->call_module('admin','handle_access_user_can','products');
+        switch ($action){
+            case 'status_update':
+                return $this->call_module('admin','handle_access_user_is','admin');
+                break;
+            default:
+                return $this->call_module('admin','handle_access_user_can','products');
+                break; 
+        }
     }
 
     protected function init_setup($action){
@@ -123,6 +130,18 @@
             'site_id'=>$this->data['work_on_site']['id']
         );  
         return $filter_arr;      
+    }
+
+    public function status_update(){
+        if(!(isset($_REQUEST['status']) && isset($_REQUEST['row_id']))){
+            SystemMessages::add_err_message("חסר מידע לפעולה");
+            return $this->redirect_to(inner_url('products/list/'));
+        }
+        $row_id = $_REQUEST['row_id'];
+        $status = $_REQUEST['status'];
+        Products::update($row_id,array('status'=>$status));
+        SystemMessages::add_success_message("סטטוס הפריט עודכן בהצלחה");
+        return $this->redirect_to(inner_url('products/list/'));
     }
 
     public function edit(){

@@ -30,6 +30,18 @@
                     <br/>
                     <b class="red">המוצר לא אושר</b>
                 <?php endif; ?>
+                <?php if($view->site_user_is('admin')): ?>
+                    <br/>
+                    <div class="focus-box">
+                        שינוי סטטוס:
+                        <br/>
+                        <a class="set-status-1<?= $product['status'] ?>" href = "<?= inner_url('products/status_update/') ?>?row_id=<?= $product['id'] ?>&status=1" title="מאשר">מאשר</a>
+                        | 
+                        <a class="set-status-9<?= $product['status'] ?>" href = "<?= inner_url('products/status_update/') ?>?row_id=<?= $product['id'] ?>&status=9" title="לא מאשר">לא מאשר</a>
+                        | 
+                        <a class="set-status-5<?= $product['status'] ?>" href = "<?= inner_url('products/status_update/') ?>?row_id=<?= $product['id'] ?>&status=5" title="ממתין לאישור">ממתין לאישור</a>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="col">
                 <a href = "<?= inner_url('products/delete/') ?>?row_id=<?= $product['id'] ?>" title="מחק">מחק</a>

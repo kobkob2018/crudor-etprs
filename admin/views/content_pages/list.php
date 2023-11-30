@@ -45,6 +45,19 @@
                     <br/>
                     <b class="red">הדף לא אושר</b>
                 <?php endif; ?>
+
+                <br/>
+                <?php if($view->site_user_is('admin')): ?>
+                    <div class="focus-box">
+                        שינוי סטטוס:
+                        <br/>
+                        <a class="set-status-1<?= $content_page['status'] ?>" href = "<?= inner_url('pages/status_update/') ?>?row_id=<?= $content_page['id'] ?>&status=1" title="מאשר">מאשר</a>
+                        | 
+                        <a class="set-status-9<?= $content_page['status'] ?>" href = "<?= inner_url('pages/status_update/') ?>?row_id=<?= $content_page['id'] ?>&status=9" title="לא מאשר">לא מאשר</a>
+                        | 
+                        <a class="set-status-5<?= $content_page['status'] ?>" href = "<?= inner_url('pages/status_update/') ?>?row_id=<?= $content_page['id'] ?>&status=5" title="ממתין לאישור">ממתין לאישור</a>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="col">
                 <?php if($content_page['status'] != '1'): ?>

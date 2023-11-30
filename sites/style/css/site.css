@@ -272,7 +272,9 @@ i.fa{
 .flex-row{
     display: flex;   
 }
-
+.center-bar .center-flex-row{
+    display: flex;   
+}
 .flex-wrap{
     flex-wrap: wrap;
 }

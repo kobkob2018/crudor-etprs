@@ -20,6 +20,6 @@
         </h3>
 
     <?php else: ?>
-        <h3><?= $this->data['page_title'] ?> ניהול ראשי</h3>
+        <h3>ניהול - <?= $this->data['page_title'] ?></h3>
     <?php endif; ?>
 </div>

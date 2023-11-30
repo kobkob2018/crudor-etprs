@@ -51,6 +51,8 @@
         array('value'=>'products', 'title'=>'מוצרים'),
         array('value'=>'gallery', 'title'=>'גלריות'),
         array('value'=>'quotes', 'title'=>'הצעות מחיר'),
+        array('value'=>'forms', 'title'=>'טופס בדף'),
+        array('value'=>'menus', 'title'=>'תפריט פורטל'),
     );
 
     public static function get_user_can($site_id,$user_id){

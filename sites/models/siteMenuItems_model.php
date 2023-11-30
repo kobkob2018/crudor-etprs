@@ -85,19 +85,22 @@
         return $page_item;
     }
 
-    public static function get_menu_items_tree($site_id, $menu_id, $page_id = false, $menu_item_id = '0'){
+    public static function get_menu_items_tree($site_id, $menu_id, $page_id = false,$user_id = false, $menu_item_id = '0'){
         
         $filter_arr = array(
             'site_id'=>$site_id,
             'menu_id'=>$menu_id,
             'parent'=>$menu_item_id
         );
+        if($user_id){
+            $filter_arr['user_id'] = $user_id;
+        }
         $payload = array('order_by'=>'priority');
         $items = self::simple_get_list($filter_arr,"*",$payload);
         if(is_array($items)){
             
             foreach($items as $item_key=>$menu_item){
-                $children = self::get_menu_items_tree($site_id, $menu_id, $page_id, $menu_item['id']);
+                $children = self::get_menu_items_tree($site_id, $menu_id, $page_id, $user_id, $menu_item['id']);
                 if($children){
                     
                     $items[$item_key]['children'] = $children;
@@ -164,7 +167,8 @@
         'top'=>'1',
         'right'=>'2',
         'hero'=>'3',
-        'bottom'=>'4'
+        'bottom'=>'4',
+        'portal'=>'5',
     );
 }
 ?>

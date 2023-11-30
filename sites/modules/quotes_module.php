@@ -9,11 +9,12 @@
             }
             $this->add_asset_mapping(SiteQuotes::$asset_mapping);
             $cat_id = $action_data['cat_id'];
-            $quotes_arr = SiteQuotes::get_cat_quotes($cat_id);
-            if(!$quotes_arr['list']){
+            $quote_list = SiteQuotes::get_cat_quotes($cat_id);
+            
+            if(!$quote_list){
                 return;
             }
-            $quote_cat = $quotes_arr['cat'];
+            $quote_cat = SiteQuotes::get_quotes_cat($cat_id);
             $open_state = 'closed';
             if(isset($action_data['state'])){
                 $open_state = $action_data['state'];
@@ -27,8 +28,8 @@
             }
             $quote_cat['custom_html'] = $this->clean_browser_type_html($quote_cat['custom_html']);
             $quote_cat['title_html'] = $this->clean_browser_type_html($quote_cat['title_html']);
-            $quote_list = array();
-            foreach($quotes_arr['list'] as $key=>$quote){
+            
+            foreach($quote_list as $key=>$quote){
                 $img_url = $this->controller->file_url_of('quote_img',$quote['image'],'master');
 
                 $quote['img_url'] = $img_url."?cache=".get_config('cash_version');
@@ -41,6 +42,46 @@
                 'list'=>$quote_list
             );
             $this->include_view('quotes/print_cat.php',$info);
+        }
+
+        public function print_user(){        
+            $action_data = $this->decode_action_data_arr();
+
+            $this->add_asset_mapping(SiteQuotes::$asset_mapping);
+            $user_id = $this->controller->data['page']['user_id'];
+            $quote_list = SiteQuotes::get_list(array('status'=>'1','user_id'=>$user_id));
+            
+            if(!$quote_list){
+                return;
+            }
+            $quote_user = array();
+            $open_state = 'closed';
+            if(isset($action_data['state'])){
+                $open_state = $action_data['state'];
+            }
+            $quote_user['open_state'] = $open_state;
+            $quote_user['user_id'] = $user_id;
+            
+            $quote_user['custom_html'] = $this->controller->include_ob_view('quotes/row_html_user.php');
+
+            $quote_user['title_html'] = $this->controller->include_ob_view('quotes/title_html_user.php');
+        
+            $quote_user['custom_html'] = $this->clean_browser_type_html($quote_user['custom_html']);
+            $quote_user['title_html'] = $this->clean_browser_type_html($quote_user['title_html']);
+            
+            foreach($quote_list as $key=>$quote){
+                $img_url = $this->controller->file_url_of('quote_img',$quote['image'],'master');
+
+                $quote['img_url'] = $img_url."?cache=".get_config('cash_version');
+                $quote['html'] = $this->proccess_quote_html($quote_user['custom_html'],$quote);
+                $quote_list[$key] = $quote;
+            }
+
+            $info = array(
+                'quote_user'=>$quote_user,
+                'list'=>$quote_list
+            );
+            $this->include_view('quotes/print_user.php',$info);
         }
 
         protected function clean_browser_type_html($html){

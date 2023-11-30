@@ -12,8 +12,8 @@
             'options'=>array(
                 array('value'=>'0', 'title'=>'דף תוכן'),
                 array('value'=>'1', 'title'=>'דף נחיתה'),
-                array('value'=>'2', 'title'=>'דף משולב')
-                
+                array('value'=>'2', 'title'=>'דף משולב'),
+                array('value'=>'3', 'title'=>'דף פורטל משולב')
             )
         ),
 

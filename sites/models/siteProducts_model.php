@@ -109,5 +109,9 @@
         return $sub_list;
     }
 
+    public static function get_user_products($user_id, $limit = '4', $order_by = 'rand()'){
+        return self::get_list(array('user_id'=>$user_id),array('limit'=>$limit, 'order_by'=>$order_by));
+    }
+
   }
 ?>

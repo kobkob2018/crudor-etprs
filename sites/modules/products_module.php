@@ -22,5 +22,25 @@
             );
             $this->include_view('products/cubes.php', $info);
         }
+
+        public function user_cubes(){
+            
+            $this->controller->add_asset_mapping(SiteProducts::$assets_mapping);
+            $user_id = $this->controller->data['page']['user_id'];
+            $action_data = $this->decode_action_data_arr();
+            $limit = '6';
+            $order_by = 'rand()';
+            if(isset($action_data['limit'])){
+                $limit = trim($action_data['limit']);
+            }
+            if(isset($action_data['order_by'])){
+                $limit = trim($action_data['order_by']);
+            }
+            $user_products = SiteProducts::get_list(array('status'=>'1','user_id'=>$user_id),'*',array('limit'=>$limit, 'order_by'=>$order_by));
+            $info = array(
+                'product_list'=>$user_products
+            );
+            $this->include_view('products/cubes.php', $info);
+        }
 	}
 ?>

@@ -3,7 +3,13 @@
     public $add_models = array("gallery_images","gallery","gallery_cat","gallery_cat_assign");
 
     protected function handle_access($action){
-        return $this->call_module('admin','handle_access_user_can','gallery');
+        switch ($action){
+            case 'status_update':
+                return $this->call_module('admin','handle_access_user_is','admin');
+            default:
+                return $this->call_module('admin','handle_access_user_can','gallery');
+                break; 
+        }
     }
 
     protected function init_setup($action){
@@ -22,7 +28,7 @@
             'order_by'=>'label'
         );
         $filter_arr = array('site_id'=>$this->data['work_on_site']['id']);
-        $user_is_admin = $this->view->user_is('admin',Sites::get_user_workon_site());
+        $user_is_admin = $this->view->site_user_is('admin');
         if(!$user_is_admin){
           $filter_arr['user_id'] = $this->user['id'];
         }
@@ -217,6 +223,20 @@
 
     }
 
+    public function status_update(){
+        
+        if(!(isset($_REQUEST['status']) && isset($_REQUEST['row_id']))){
+            SystemMessages::add_err_message("חסר מידע לפעולה");
+            return $this->redirect_to(inner_url('gallery_images/gallery_list/'));
+        }
+        $row_id = $_REQUEST['row_id'];
+        $status = $_REQUEST['status'];
+        
+        Gallery::update($row_id,array('status'=>$status));
+        SystemMessages::add_success_message("סטטוס הפריט עודכן בהצלחה");
+        return $this->redirect_to(inner_url('gallery_images/gallery_list/'));
+    }
+    
     public function delete_gallery(){
         $fields_collection = Gallery::setup_field_collection(Gallery::get_fields_collection_for_gallery_delete($this->data['gallery_info']['id'],$this->data['work_on_site']['id']));
         
@@ -257,8 +277,11 @@
     }
 
     protected function add_gallery_info_data(){
-
         if(!isset($_GET['gallery_id'])){
+            global $action;
+            if($action == 'status_update'){
+                return $_GET['row_id'];
+            }
             return false;
         }
         $gallery_id = $_GET['gallery_id'];
