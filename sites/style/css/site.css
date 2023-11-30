@@ -188,6 +188,10 @@ i.fa{
     text-align: center;
 }
 
+.footer-bottom-wrap .bottom-link,.footer-bottom-wrap .copyright-main{
+    margin: 7px;
+} 
+
 .bottom-menu .main-menu-ietm-wrap{
     font-size: 1.3em;
 }
@@ -1158,10 +1162,10 @@ a.news-ticker-a-content{
 
     .footer-bottom-wrap{
         display: flex;
-        justify-content: space-between;
         align-items: center;
         text-align: right;
     }
+
 }
 
 
