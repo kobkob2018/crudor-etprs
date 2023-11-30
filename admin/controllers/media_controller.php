@@ -1,6 +1,10 @@
 <?php
   class MediaController extends CrudController{
 
+    protected function handle_access($action){
+        return $this->call_module('admin','handle_access_user_can','uploads');
+    }
+
     public function upload(){
         $accepted_origins = array("http://".$_SERVER['HTTP_HOST'],"https://".$_SERVER['HTTP_HOST']);
 

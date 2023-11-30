@@ -53,6 +53,7 @@
         array('value'=>'quotes', 'title'=>'הצעות מחיר'),
         array('value'=>'forms', 'title'=>'טופס בדף'),
         array('value'=>'menus', 'title'=>'תפריט פורטל'),
+        array('value'=>'uploads', 'title'=>'העלאת תמונות בעורך'),
     );
 
     public static function get_user_can($site_id,$user_id){

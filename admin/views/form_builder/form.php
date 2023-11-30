@@ -52,7 +52,7 @@
                             <?php if(isset($build_field['reachtext']) && $build_field['reachtext'] === 'optional'): ?>              
                                 <a href="javascript://" onClick = "initReachEditor(this,'row_<?= $field_key ?>_textarea')" >פתח עורך טקסט עשיר</a>  
                             <?php endif; ?> 
-                            <textarea name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>_textarea" class="form-input form-textarea" data-msg-required="*"><?= $this->get_form_input($field_key); ?></textarea>
+                            <textarea name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>_textarea" class="form-input form-textarea" data-msg-required="*" data-add_img_upload='<?= $this->view->site_user_can('uploads') ?>'><?= $this->get_form_input($field_key); ?></textarea>
                             <?php if(isset($build_field['reachtext']) && $build_field['reachtext']): ?>
                                 <?php $this->register_script('js','tinymce',global_url('vendor/tinymce/tinymce/tinymce.min.js')); ?>
                                 <?php $this->register_script('js','tinymce_helper',styles_url('style/js/tinymce_helper.js?cache='.get_config('cash_version'))); ?>
