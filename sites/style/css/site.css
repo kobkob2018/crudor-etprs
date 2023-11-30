@@ -1164,6 +1164,7 @@ a.news-ticker-a-content{
         display: flex;
         align-items: center;
         text-align: right;
+        justify-content: center;
     }
 
 }
