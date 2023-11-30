@@ -32,8 +32,10 @@ function session__set($param_name,$param_val,$session_prefix = 'auto'){
 }
 
 
-function session__unset($param_name){
-    $session_prefix = get_config('session_prefix');
+function session__unset($param_name,$session_prefix = 'auto'){
+    if($session_prefix == 'auto'){
+        $session_prefix = get_config('session_prefix');
+    }
     $session_param = $session_prefix.$param_name;
     unset($_SESSION[$session_param]);
 }

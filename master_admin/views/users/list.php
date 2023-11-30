@@ -14,6 +14,8 @@
         <div class="col">פעיל</div>
         <div class="col">תפקיד</div>
         <div class="col">מערכת לידים</div>
+        <div class="col">מערכת ניהול אתרים</div>
+        
         <div class="col">מחיקה</div>
     </div>
     <?php foreach($this->data['users'] as $user): ?>
@@ -34,10 +36,16 @@
                 
             </div>
             <div class="col">
-                <a target="_BLANK" href="<?= inner_url('myleads/quick_access/?user_id=') ?><?= $user['id'] ?>" title="מערכת ניהול לידים">
+                <a target="_BLANK" href="<?= inner_url('auto_login/myleads/?user_id=') ?><?= $user['id'] ?>" title="מערכת ניהול לידים">
                     מערכת נהול לידים
                 </a>
-                
+
+            </div>
+            <div class="col">
+
+                <a target="_BLANK" href="<?= inner_url('auto_login/admin/?user_id=') ?><?= $user['id'] ?>" title="מערכת ניהול לידים">
+                    מערכת ניהול אתרים
+                </a>                         
             </div>
             <div class="col">
                 <a href = "<?= inner_url('users/delete/') ?>?&row_id=<?= $user['id'] ?>" title="מחק">מחק</a>
