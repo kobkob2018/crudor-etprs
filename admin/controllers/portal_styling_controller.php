@@ -1,7 +1,11 @@
 <?php
-  class Portal_userController extends CrudController{
-    public $add_models = array("portal_user");
+  class Portal_stylingController extends CrudController{
+    public $add_models = array("portal_styling");
 
+    protected function handle_access($action){   
+      return $this->call_module('admin','handle_access_site_user_is','master_admin');
+    }
+    
     protected function init_setup($action){
         $user_id = $this->add_user_info_data();
         if(!$user_id){
@@ -9,6 +13,7 @@
             $this->redirect_to(inner_url("site_users/list/"));
             return false;
         }
+
         return parent::init_setup($action);
     }
 
@@ -33,14 +38,14 @@
         $user_id = $_GET['user_id'];
         //if(session__isset())
         $filter_arr = array('user_id'=>$user_id);
-        $settings_info = Portal_user::find($filter_arr,"id");      
+        $settings_info = Portal_styling::find($filter_arr,"id");      
         
         if($settings_info){
             $row_id = $settings_info['id'];
-            return $this->redirect_to(inner_url("portal_user/edit/?user_id=$user_id&row_id=$row_id"));
+            return $this->redirect_to(inner_url("portal_styling/edit/?user_id=$user_id&row_id=$row_id"));
         }
         else{
-            return $this->redirect_to(inner_url("portal_user/add/?user_id=$user_id"));
+            return $this->redirect_to(inner_url("portal_styling/add/?user_id=$user_id"));
         }
     }
 
@@ -64,80 +69,70 @@
         return parent::delete();      
     }
 
+
     public function include_edit_view(){
-        $this->include_view('portal_user/edit.php');
+        $this->include_view('portal_styling/edit.php');
     }
 
     public function include_add_view(){
-        $this->include_view('portal_user/add.php');
+        $this->include_view('portal_styling/add.php');
     }   
 
     protected function update_success_message(){
-        SystemMessages::add_success_message("הפורטל עודכן בהצלחה");
+        SystemMessages::add_success_message("העיצוב עודכן בהצלחה");
 
     }
 
     protected function create_success_message(){
-        SystemMessages::add_success_message("הפורטל נוצר בהצלחה");
+        SystemMessages::add_success_message("העיצוב נוצר בהצלחה");
 
     }
 
     protected function delete_success_message(){
-        SystemMessages::add_success_message("פרטי הפורטל נמחקו");
+        SystemMessages::add_success_message("העיצוב נמחק");
     }
 
     protected function row_error_message(){
-      SystemMessages::add_err_message("לא נבחר פורטל");
+      SystemMessages::add_err_message("לא נבחר עיצוב");
     }   
 
     protected function delete_item($row_id){
-        return Portal_user::delete($row_id);
+      return Portal_styling::delete($row_id);
     }
 
     protected function get_item_info($row_id){
-      return Portal_user::get_by_id($row_id);
+      return Portal_styling::get_by_id($row_id);
     }
 
     public function eject_url(){
         if(!isset($this->data['user_info'])){
             return inner_url('site_users/list/');
         }
-        return inner_url('portal_user/list/?user_id='.$this->data['user_info']['id']);
+        return inner_url('portal_styling/list/?user_id='.$this->data['user_info']['id']);
     }
 
     public function url_back_to_item($item_info){
         $row_id = $item_info['id'];
         $user_id = $_GET['user_id'];
-        return inner_url("portal_user/edit/?user_id=$user_id&row_id=$row_id");
-    }
-
-    protected function after_delete_redirect(){
-        $user_id = $_GET['user_id'];
-        return $this->redirect_to(inner_url("/portal_user/list/?user_id=$user_id"));
-    }
-
-    public function delete_url($item_info){
-        $row_id = $item_info['id'];
-        $user_id = $item_info['user_id'];
-        return inner_url("portal_user/delete/?user_id=$user_id&row_id=$row_id");
+        return inner_url("portal_styling/edit/?user_id=$user_id&row_id=$row_id");
     }
 
     protected function get_fields_collection(){
-        return Portal_user::setup_field_collection();
+      return Portal_styling::setup_field_collection();
     }
 
     protected function update_item($item_id,$update_values){
-        return Portal_user::update($item_id,$update_values);
+        return Portal_styling::update($item_id,$update_values);
+    }
+
+    protected function get_priority_space($filter_arr, $item_to_id){
+        return Portal_styling::get_priority_space($filter_arr, $item_to_id);
     }
 
     protected function create_item($fixed_values){
-        if(!isset($_GET['user_id'])){
-            SystemMessages::add_err_message($this->row_error_message());
-            return $this->redirect_to("site_users/list/");
-        }
-        $user_id = $_GET['user_id'];
+        $user_id = $this->data['user_info']['id'];
         $fixed_values['user_id'] = $user_id;
-        return Portal_user::create($fixed_values);
+        return Portal_styling::create($fixed_values);
     }
 
   }

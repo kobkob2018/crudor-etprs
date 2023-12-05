@@ -1,10 +1,10 @@
 <?php
   class QuotesController extends CrudController{
-    public $add_models = array("siteQuotes");
+    public $add_models = array("siteQuotes","siteQuotes_user");
 
     public function fetch_users(){
         $this->set_layout("blank");
-        $this->add_asset_mapping(SiteQuotes::$asset_mapping);
+        $this->add_asset_mapping(SiteQuotes_user::$asset_mapping);
         $return_array = array('res'=>'ok','users'=>array());
         $request_body = file_get_contents('php://input');
 
@@ -21,7 +21,7 @@
             }
             foreach($fetch_users as $user_id){
                 
-                $user_info = SiteQuotes::simple_find_by_table_name(array('user_id'=>$user_id),'quotes_user');
+                $user_info = SiteQuotes_user::find(array('user_id'=>$user_id),"user_id, label, image, link, phone, city_name");
                 $img_url = $this->file_url_of('quotes_user_img',$user_info['image'],'master');
 
                 $user_info['image_url'] = $img_url."?cache=".$cash_version;

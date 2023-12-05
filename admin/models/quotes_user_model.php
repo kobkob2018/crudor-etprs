@@ -43,6 +43,19 @@
             'label'=>'שם עיר',
             'type'=>'text'
         ),
+
+        'custom_html'=>array(
+            'label'=>'HTML של הצעת מחיר',
+            'type'=>'textbox',
+            'css_class'=>'small-text',
+            'validation'=>''
+        ),
+        'title_html'=>array(
+            'label'=>'HTML של שורת הכותרת',
+            'type'=>'textbox',
+            'css_class'=>'small-text',
+            'validation'=>''
+        ),
         
     );
 

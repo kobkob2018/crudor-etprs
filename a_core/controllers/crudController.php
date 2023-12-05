@@ -25,9 +25,6 @@
 
         $this->data['item_info'] = $this->get_item_info($row_id);
 
-
-
-
         if(!$this->data['item_info']){
             $this->row_error_message();
             return $this->eject_redirect();
@@ -52,37 +49,6 @@
         $this->add_form_builder_data($fields_collection,'updateSend',$this->data['item_info']['id']);  
         $this->include_edit_view();
   
-    }
-  
-    public function updateSend(){
-        $row_id = false;
-        if(isset($_REQUEST['db_row_id'])){
-            $row_id = $_REQUEST['db_row_id'];
-        }
-        elseif(isset($this->data['db_row_id'])){
-            $row_id = $this->data['db_row_id'];
-        }
-        if(!$row_id){
-            return;
-        }
-        $form_handler = $this->init_form_handler();
-        $validate_result = $form_handler->validate();
-        $fixed_values = $validate_result['fixed_values'];
-        foreach($fixed_values as $key=>$value){
-            $fixed_values[$key] = str_replace('{{row_id}}',$row_id,$value);
-        }
-        $validate_result['fixed_values'] = $fixed_values;
-        if($validate_result['success']){
-            $this->update_item($row_id,$form_handler->fix_values_for_update($fixed_values));
-            $files_result = $form_handler->upload_files($validate_result, $row_id);
-            $this->update_success_message();
-            $this->after_edit_redirect($this->data['item_info']);
-        }
-        else{
-            if(!empty($validate_result['err_messages'])){
-                $this->data['form_err_messages'] = $validate_result['err_messages'];
-            }
-        }
     }
 
     protected function remove_file($fields_collection, $form_handler){
@@ -189,6 +155,109 @@
                 $this->data['form_err_messages'] = $validate_result['err_messages'];
             }
         }
+    }
+
+    public function updateSend(){
+        $row_id = false;
+        if(isset($_REQUEST['db_row_id'])){
+            $row_id = $_REQUEST['db_row_id'];
+        }
+        elseif(isset($this->data['db_row_id'])){
+            $row_id = $this->data['db_row_id'];
+        }
+        if(!$row_id){
+            return;
+        }
+        $form_handler = $this->init_form_handler();
+        $validate_result = $form_handler->validate();
+        $fixed_values = $validate_result['fixed_values'];
+        foreach($fixed_values as $key=>$value){
+            $fixed_values[$key] = str_replace('{{row_id}}',$row_id,$value);
+        }
+        $validate_result['fixed_values'] = $fixed_values;
+        if($validate_result['success']){
+            $this->update_item($row_id,$form_handler->fix_values_for_update($fixed_values));
+            $files_result = $form_handler->upload_files($validate_result, $row_id);
+            $this->update_success_message();
+            $this->after_edit_redirect($this->data['item_info']);
+        }
+        else{
+            if(!empty($validate_result['err_messages'])){
+                $this->data['form_err_messages'] = $validate_result['err_messages'];
+            }
+        }
+    }
+
+    public function listUpdateSend($prefix = "item_"){
+        if(!isset($_REQUEST['db_row_id'])){
+          return;
+        }
+        $row_id = $_REQUEST['db_row_id'];
+        $item_identifier = $prefix.$row_id;
+        
+        if(!isset($this->form_handlers[$item_identifier])){
+            return;
+        }
+        $form_handler = $this->form_handlers[$item_identifier];
+    
+        $validate_result = $form_handler->validate();
+        $fixed_values = $validate_result['fixed_values'];
+        foreach($fixed_values as $key=>$value){
+            $fixed_values[$key] = str_replace('{{row_id}}',$row_id,$value);
+        }
+        $validate_result['fixed_values'] = $fixed_values;
+        if($validate_result['success']){
+            $this->update_item($row_id,$form_handler->fix_values_for_update($fixed_values));
+            $files_result = $form_handler->upload_files($validate_result, $row_id);
+            $this->update_success_message();
+        }
+
+        else{
+          SystemMessages::add_err_message("שגיאה בעריכת הרכיב");
+          if(!empty($validate_result['err_messages'])){
+              foreach($validate_result['err_messages'] as $message){
+                SystemMessages::add_err_message($message);
+              }
+          }
+        }
+        $this->redirect_to(current_url()); 
+    }
+
+    public function listCreateSend(){
+        
+        $form_handler = $this->init_form_handler();
+    
+        $validate_result = $form_handler->validate();
+        
+        if($validate_result['success']){
+            $fixed_values = $validate_result['fixed_values'];
+            $row_id = $this->create_item($form_handler->fix_values_for_update($fixed_values));
+            if(!$row_id){
+                return;
+            }
+            $fixed_row_values = array();
+            foreach($fixed_values as $key=>$value){
+                $fixed_row_value = str_replace('{{row_id}}',$row_id,$value);
+                if($fixed_row_value != $value){
+                    $fixed_row_values[$key] = $fixed_row_value;
+                }
+            }
+            if(!empty($fixed_row_values)){
+                $this->update_item($row_id,$fixed_row_values);
+            }
+            $validate_result['fixed_values'] = $fixed_row_values;
+            $files_result = $form_handler->upload_files($validate_result, $row_id);
+            $this->create_success_message();          
+        }
+        else{
+          SystemMessages::add_err_message("שגיאה בעריכת הרכיב");
+          if(!empty($validate_result['err_messages'])){
+              foreach($validate_result['err_messages'] as $message){
+                SystemMessages::add_err_message($message);
+              }
+          }
+        }
+        $this->redirect_to(current_url()); 
     }
 
     public function delete(){
@@ -522,75 +591,7 @@
         return $item_list;
     }
 
-    public function listUpdateSend($prefix = "item_"){
-        if(!isset($_REQUEST['db_row_id'])){
-          return;
-        }
-        $row_id = $_REQUEST['db_row_id'];
-        $item_identifier = $prefix.$row_id;
-        
-        if(!isset($this->form_handlers[$item_identifier])){
-            return;
-        }
-        $form_handler = $this->form_handlers[$item_identifier];
-    
-        $validate_result = $form_handler->validate();
-        $fixed_values = $validate_result['fixed_values'];
 
-        if($validate_result['success']){
-            $this->update_item($row_id,$form_handler->fix_values_for_update($fixed_values));
-            $files_result = $form_handler->upload_files($validate_result, $row_id);
-            $this->update_success_message();
-        }
-
-
-        else{
-          SystemMessages::add_err_message("שגיאה בעריכת הרכיב");
-          if(!empty($validate_result['err_messages'])){
-              foreach($validate_result['err_messages'] as $message){
-                SystemMessages::add_err_message($message);
-              }
-          }
-        }
-        $this->redirect_to(current_url()); 
-    }
-
-    public function listCreateSend(){
-        
-        $form_handler = $this->init_form_handler();
-    
-        $validate_result = $form_handler->validate();
-        
-        if($validate_result['success']){
-            $fixed_values = $validate_result['fixed_values'];
-            $row_id = $this->create_item($form_handler->fix_values_for_update($fixed_values));
-            if(!$row_id){
-                return;
-            }
-            $fixed_row_values = array();
-            foreach($fixed_values as $key=>$value){
-                $fixed_row_value = str_replace('{{row_id}}',$row_id,$value);
-                if($fixed_row_value != $value){
-                    $fixed_row_values[$key] = $fixed_row_value;
-                }
-            }
-            if(!empty($fixed_row_values)){
-                $this->update_item($row_id,$fixed_row_values);
-            }
-            $validate_result['fixed_values'] = $fixed_row_values;
-            $files_result = $form_handler->upload_files($validate_result, $row_id);
-            $this->create_success_message();          
-        }
-        else{
-          SystemMessages::add_err_message("שגיאה בעריכת הרכיב");
-          if(!empty($validate_result['err_messages'])){
-              foreach($validate_result['err_messages'] as $message){
-                SystemMessages::add_err_message($message);
-              }
-          }
-        }
-        $this->redirect_to(current_url()); 
-    }
 
     protected function init_filter_session(){
         $filter_name = $this->get_session_filter_name();

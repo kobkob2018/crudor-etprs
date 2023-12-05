@@ -14,7 +14,7 @@
         ),
 
         'label'=>array(
-            'label'=>'שם (לשזיהוי בניהול)',
+            'label'=>'שם (לזיהוי בניהול)',
             'type'=>'text',
             'validation'=>'required'
         ),      

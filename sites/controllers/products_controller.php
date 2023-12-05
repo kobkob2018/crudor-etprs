@@ -10,7 +10,7 @@
         header('HTTP/1.0 404 Not Found');
         $this->include_view('pages/error.php');
     }
-    protected function view(){
+    protected function view($with_portal_view = false){
         $site_id = $this->data['site']['id'];
 
         $product_id = false;
@@ -24,11 +24,19 @@
                 return $this->error();
             }
             $product = SiteProducts::get_by_id($product_id);
+            if($with_portal_view){
+                $this->call_module('portal_user','use',array('user_id'=>$product['user_id']));
+            }
             $product_images = SiteProducts::get_product_images($product_id);  
             if(!$product){
                 return $this->error();
             }
-            $more_products = SiteProducts::get_more_products($product_id);
+            if($with_portal_view){
+                $more_products = SiteProducts::get_more_user_products($product_id,$product['user_id']);
+            }
+            else{
+                $more_products = SiteProducts::get_more_products($product_id);
+            }
 
             if($product['meta_title'] != ""){
                 $this->add_data("page_meta_title",$product['meta_title']);
@@ -99,7 +107,13 @@
         
     }
 
+    public function portal_view(){
+        return $this->view(true);
+
+    }
+
     public function set_url($url_params = array()){
+        global $action;
         $final_url_params = array();
         $check_url_params = array('cat','sub','p');
         foreach($check_url_params as $param){
@@ -116,7 +130,8 @@
         }
         
         $url_q = implode("&",$url_q_params);
-        $final_url = inner_url("products/view/?".$url_q);
+        $view_url = $action;
+        $final_url = inner_url("products/".$view_url."/?".$url_q);
         return $final_url;
     }
 

@@ -15,12 +15,8 @@
         }
         $filter_arr = array('site_id'=>$current_site['id']);
 
-        $result_arr = self::get_list($filter_arr);
+        $result = self::find($filter_arr);
 
-        $result = false;
-        if(isset($result_arr[0])){
-            $result = $result_arr[0];
-        }
         self::$current_site_styling_set = true;
         self::$current_site_styling = $result;
         return self::$current_site_styling;

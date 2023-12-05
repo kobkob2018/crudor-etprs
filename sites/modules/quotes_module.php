@@ -44,17 +44,19 @@
             $this->include_view('quotes/print_cat.php',$info);
         }
 
-        public function print_user(){        
+        public function print_user(){     
             $action_data = $this->decode_action_data_arr();
-
-            $this->add_asset_mapping(SiteQuotes::$asset_mapping);
+            $this->controller->add_model("siteQuotes_user");
+            $this->add_asset_mapping(SiteQuotes_user::$asset_mapping);
             $user_id = $this->controller->data['page']['user_id'];
+
+            $quote_user = SiteQuotes_user::find(array('user_id'=>$user_id));
             $quote_list = SiteQuotes::get_list(array('status'=>'1','user_id'=>$user_id));
             
             if(!$quote_list){
                 return;
             }
-            $quote_user = array();
+
             $open_state = 'closed';
             if(isset($action_data['state'])){
                 $open_state = $action_data['state'];
@@ -62,18 +64,28 @@
             $quote_user['open_state'] = $open_state;
             $quote_user['user_id'] = $user_id;
             
-            $quote_user['custom_html'] = $this->controller->include_ob_view('quotes/row_html_user.php');
-
-            $quote_user['title_html'] = $this->controller->include_ob_view('quotes/title_html_user.php');
-        
+            if($quote_user['custom_html'] == ""){
+                $quote_user['custom_html'] = $this->controller->include_ob_view('quotes/row_html_user.php');
+            }
+            if($quote_user['title_html'] == ''){
+                $quote_user['title_html'] = $this->controller->include_ob_view('quotes/title_html_user.php');
+            }
             $quote_user['custom_html'] = $this->clean_browser_type_html($quote_user['custom_html']);
             $quote_user['title_html'] = $this->clean_browser_type_html($quote_user['title_html']);
             
+            $quote_user_procces_values = array();
+            foreach($quote_user as $key=>$val){
+                if($key != 'custom_html' && $key != 'title_html'){
+                    $quote_user_procces_values['user_'.$key] = $val;
+                }
+            }
+
             foreach($quote_list as $key=>$quote){
                 $img_url = $this->controller->file_url_of('quote_img',$quote['image'],'master');
 
                 $quote['img_url'] = $img_url."?cache=".get_config('cash_version');
-                $quote['html'] = $this->proccess_quote_html($quote_user['custom_html'],$quote);
+                $quote_html = $this->proccess_quote_html($quote_user['custom_html'],$quote);
+                $quote['html'] = $this->proccess_quote_html($quote_html,$quote_user_procces_values);
                 $quote_list[$key] = $quote;
             }
 

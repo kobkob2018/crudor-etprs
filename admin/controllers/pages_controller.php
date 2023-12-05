@@ -192,7 +192,21 @@
       if(!$this->view->site_user_is('admin')){
         $fixed_values['status'] = '5';
       }
-      return AdminPages::create($fixed_values);
+      $page_id = AdminPages::create($fixed_values);
+      if(!$this->view->site_user_is('admin')){
+        $this->create_portal_style_setup($page_id);
+      }
+      return $page_id;
+    }
+
+    protected function create_portal_style_setup($page_id){
+      $this->add_model('page_style');
+      $fixed_values = array();
+      $fixed_values['site_id'] = $this->data['work_on_site']['id'];
+      $fixed_values['user_id'] = $this->user['id'];
+      $fixed_values['page_id'] = $page_id;
+      $fixed_values['page_layout'] = '3';
+      return Page_style::create($fixed_values);
     }
 
     public function prepare_export(){

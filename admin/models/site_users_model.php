@@ -95,6 +95,7 @@
         foreach($site_users as $site_user){
             $user = Users::get_by_id($site_user['user_id']);
             $user['roll'] = $site_user['roll'];
+            $user['user_id'] = $user['id'];
             if($site_user['roll'] == 'admin' || $site_user['roll'] == 'master_admin'){       
                 $return_arr[$user['id']] = $user;
             }

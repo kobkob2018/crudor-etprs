@@ -25,7 +25,6 @@
 
     public static $asset_mapping = array(
       'quote_img'=>'quotes',
-      'quotes_user_img'=>'quotes_user'
     );
 
 }

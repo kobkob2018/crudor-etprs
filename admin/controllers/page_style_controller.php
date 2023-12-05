@@ -154,6 +154,7 @@
 
         $work_on_site = Sites::get_user_workon_site();
         $site_id = $work_on_site['id'];
+        $fixed_values['user_id'] = $this->user['id'];
         $fixed_values['site_id'] = $site_id;
         $fixed_values['page_id'] = $this->data['page_info']['id'];
         return Page_style::create($fixed_values);

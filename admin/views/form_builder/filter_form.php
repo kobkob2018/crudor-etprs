@@ -17,7 +17,7 @@
                     </div>
                     <div class='form-group-en'> 
                         <?php if($build_field['type'] == 'text' || $build_field['type'] == 'date'): ?>
-                            <input type='text' name='filter[<?= $field_key ?>]" id="filter_<?= $field_key ?>' class='form-input <?= $build_field['validate_frontend'] ?>' data-msg-required='*' value="<?= $this->get_form_input($field_key,$info['filter_form']['identifier']); ?>"  />
+                            <input type='text' name='filter[<?= $field_key ?>]' id='filter_<?= $field_key ?>' class='form-input <?= $build_field['validate_frontend'] ?>' data-msg-required='*' value="<?= $this->get_form_input($field_key,$info['filter_form']['identifier']); ?>"  />
                         <?php endif; ?>
 
               

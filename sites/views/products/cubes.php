@@ -12,7 +12,7 @@
                 <div class="box-content">
                     <?php if($product['image']): ?>
                         <div class="box-image">
-                            <a href="<?= inner_url("products/view/?p=".$product['id']) ?>" title="<?= $product['label'] ?>">
+                            <a href="<?= inner_url("products/".$info['view_url']."/?p=".$product['id']) ?>" title="<?= $product['label'] ?>">
                                 <img src="<?= $this->file_url_of('product_image',$product['image']) ?>" alt="<?= $product['label'] ?>" />
                             </a>
                         </div>
@@ -26,7 +26,7 @@
                         </div> 
                     <?php endif; ?>
                     <div class="box-go-to">
-                        <a href="<?= inner_url("products/view/?p=".$product['id']) ?>" title="<?= $product['label'] ?>">
+                        <a href="<?= inner_url("products/".$info['view_url']."/?p=".$product['id']) ?>" title="<?= $product['label'] ?>">
                             למידע נוסף
                         </a>
                     </div>

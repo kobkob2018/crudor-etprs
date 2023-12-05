@@ -58,6 +58,21 @@
         return $product_list;
     } 
 
+    public static function get_more_user_products($product_id, $user_id, $limit = '4'){
+        $execute_arr = array('product_id'=>$product_id, 'user_id'=>$user_id);
+        $db = Db::getInstance();
+        $sql = "SELECT * 
+                FROM products 
+                WHERE user_id = :user_id 
+                AND status = '1' 
+                AND id != :product_id
+                LIMIT $limit";	
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
+        $product_list = $req->fetchAll();
+        return $product_list;
+    } 
+
     public static function get_cat_list($site_id){
         $execute_arr = array('site_id'=>$site_id);
         $db = Db::getInstance();

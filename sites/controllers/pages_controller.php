@@ -50,7 +50,7 @@
         }
         if($page_style['page_layout'] == '3'){
           //portal body
-          $this->call_module('portal_user','use');
+          $this->call_module('portal_user','use',array('user_id'=>$this->data['page']['user_id']));
           $this->set_body('combine_body');
         }
       }

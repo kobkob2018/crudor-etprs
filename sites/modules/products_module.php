@@ -18,7 +18,8 @@
                 return;
             }
             $info = array(
-                'product_list'=>$product_list
+                'product_list'=>$product_list,
+                'view_url'=>'view'
             );
             $this->include_view('products/cubes.php', $info);
         }
@@ -38,7 +39,8 @@
             }
             $user_products = SiteProducts::get_list(array('status'=>'1','user_id'=>$user_id),'*',array('limit'=>$limit, 'order_by'=>$order_by));
             $info = array(
-                'product_list'=>$user_products
+                'product_list'=>$user_products,
+                'view_url'=>'portal_view'
             );
             $this->include_view('products/cubes.php', $info);
         }

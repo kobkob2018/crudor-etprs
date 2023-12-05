@@ -21,7 +21,12 @@
         $assets_dir = $this->get_assets_dir();
         $assets_dir_path = $assets_dir['path'];
         $assets_dir_url = $assets_dir['url'];
-        $upload_to = 'media/uploads';
+        $upload_to_portal = "";
+        if(!$this->view->site_user_is('admin')){
+            $user_id = $this->user['id'];
+            $upload_to_portal = '/p/'.$user_id;
+        }
+        $upload_to = 'media/uploads'.$upload_to_portal;
 
         $media_dir_path = $assets_dir_path;
         $upload_to_arr = explode("/",$upload_to);
@@ -109,8 +114,48 @@
         $this->set_layout('blank');
 
         $this->data['meta_title'] = "ספריית המדיה";
-        $upload_dir = 'media/uploads';
-        
+
+        $portal_dir = "";
+        if($this->view->site_user_is('admin')){
+            $this->add_model('site_users');
+            $user_list = Site_users::get_site_users_that_can($this->data['work_on_site']['id'],'uploads');
+            $selected_portal_dir = array(
+                'user_id'=>'0',
+                'label'=>'תיקיית העלאות ראשית'
+            );
+            $this->data['main_portal_dir'] = array(
+                'label'=>'תיקייה ראשית',
+                'selected'=>' selected '
+            );
+            foreach($user_list as $key=>$portal_user){
+                $portal_user['selected'] = "";
+                if(isset($_GET['portal'])){
+                    $selected_portal = $_GET['portal'];
+                    $portal_dir = '/p/'.$selected_portal;
+                    
+                    
+                    if($portal_user['user_id'] == $selected_portal){
+                        $portal_user['selected'] = " selected ";
+                        $this->data['main_portal_dir']['selected'] = "";
+                        $selected_portal_dir = array(
+                            'user_id'=>$portal_user['user_id'],
+                            'label'=>$portal_user['full_name']
+                        );
+                    }
+                }
+                $user_list[$key] = $portal_user;
+            }
+            $this->data['selected_portal_dir'] = $selected_portal_dir;
+
+            $this->data['portal_users'] = $user_list;
+        }
+        else{
+            $user_id = $this->user['id'];
+            $portal_dir = '/p/'.$user_id;
+        }
+
+        $upload_dir = 'media/uploads'.$portal_dir;
+
 
         $assets_dir = Sites::get_user_workon_site_asset_dir();
         $media_dir_path = $assets_dir['path'].$upload_dir;
@@ -129,7 +174,6 @@
         }
         $this->data['library_images'] = $images_in_dir;
         $this->include_view("media_library/popup_window.php");
-
     }
 
 

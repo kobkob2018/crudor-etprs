@@ -13,8 +13,7 @@
             $site = Sites::get_current_site();
             $this->add_asset_mapping(Sites::$asset_mapping);
             
-            if($site){
-                
+            if($site){  
                 $this->add_data('page_meta_title', $site['meta_title']);
                 $this->init_meta_values($site);
             }

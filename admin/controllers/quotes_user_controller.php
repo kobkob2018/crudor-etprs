@@ -5,9 +5,8 @@
     protected function init_setup($action){
         $user_id = $this->add_user_info_data();
         if(!$user_id){
-            exit("here");
+            SystemMessages::add_err_message("לא נבחר משתמש");
             return $this->redirect_to(inner_url("quote_cats/list/"));
-            return false;
         }
 
         return parent::init_setup($action);
@@ -46,6 +45,7 @@
     }
 
     public function edit(){
+        $this->add_theme_list_data();
         return parent::edit();
     }
 
@@ -53,9 +53,34 @@
         return parent::updateSend();
     }
 
+    public function export_to_theme(){
+        if(!isset($_REQUEST['user_id'])){
+          return $this->redirect_to(inner_url("admin/quote_cats/list/"));
+        }
+        $user_id = $_REQUEST['user_id'];
+        if(!isset($_REQUEST['theme_label']) || $_REQUEST['theme_label'] == ""){
+          SystemMessages::add_err_message("יש לבחור שם למבנה החדש");
+          return $this->redirect_to(inner_url("quotes_user/list/?user_id=".$user_id));
+        }
+        $quotes_user = Quotes_user::find(array('user_id'=>$user_id));
+        $new_theme = array(
+          'label'=>$_REQUEST['theme_label'],
+          'custom_html'=>$quotes_user['custom_html'],
+          'title_html'=>$quotes_user['title_html']
+        );
+        Quotes_user::simple_create_by_table_name($new_theme,'quote_cat_theme');
+        SystemMessages::add_success_message("המבנה נוצר בהצלחה: ".$new_theme['label']);
+        return $this->redirect_to(inner_url("quotes_user/list/?user_id=".$user_id));
+    }
+
     public function add(){
+        $this->add_theme_list_data();
         return parent::add();
-    }       
+    }   
+
+    protected function add_theme_list_data(){
+        $this->data['cat_theme_list'] = Quotes_user::simple_get_list_by_table_name(array(),'quote_cat_theme');
+    }
 
     public function createSend(){
         return parent::createSend();

@@ -52,10 +52,10 @@
             <li class="bar-item <?= $view->a_class("site/edit/") ?>">
                 <a href="<?= inner_url('site/edit/') ?>" title="ניהול" class="a-link">ניהול</a>
             </li>  
-            <li class="bar-item <?= $view->a_c_class("site_styling/list/") ?>">
+            <li class="bar-item <?= $view->a_c_class("site_styling") ?>">
                 <a href="<?= inner_url('site_styling/list/') ?>" title="מבנה הדף" class="a-link">מבנה הדף</a>
             </li>  
-            <li class="bar-item <?= $view->a_c_class("site_colors/edit/") ?>">
+            <li class="bar-item <?= $view->a_c_class("site_colors") ?>">
                 <a href="<?= inner_url('site_colors/edit/') ?>" title="צבעים" class="a-link">צבעים</a>
             </li>         
         </ul>
