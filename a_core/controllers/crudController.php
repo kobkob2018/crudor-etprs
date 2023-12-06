@@ -706,9 +706,20 @@
                 $filter_arr[$c_key] = $c_val;
             }
         }
-
         if($filter_type == 'like' && $value != ""){
             $filter_arr[$param_key] = array('str_like'=>$value,'columns_like'=>$field['columns_like']);
+        }
+        if($filter_type == 'method' && $value != ""){
+            $filter_method = $field['method'];
+            if(!method_exists($this,$filter_method)){
+                return $filter_arr;
+            }
+            
+            $filter_return = $this->$filter_method($value);
+            if(!$filter_return){
+                return $filter_arr;
+            }
+            $filter_arr[$filter_return['key']] = $filter_return['value'];
         }
         return $filter_arr;
     }

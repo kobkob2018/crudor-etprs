@@ -66,10 +66,16 @@
         'free_search'=>array(
             'label'=>'חיפוש חפשי',
             'type'=>'text',
-            'validation'=>'required',
             'filter_type'=>'like',
             'columns_like'=>array('title','link','description'),
         ), 
+        'user_id_free'=>array(
+          'label'=>'לפי שם משתמש',
+          'type'=>'text',
+          'filter_type'=>'method',
+          'method'=>'find_users_by_string',
+          'handle_access'=>array('method'=>'check_if_site_user_is','value'=>'admin')
+      ), 
         'get_pending_pages'=>array(
           'label'=>'הצג עמודים',
           'type'=>'select',
@@ -84,6 +90,25 @@
         ), 
       );
       return $filter_fields_collection;
+    }
+
+    public function find_users_by_string($str){
+      $users_find = Users::get_list(array(
+        'free_search'=>array(
+          'str_like'=>$str, 
+          'columns_like'=>array('biz_name','full_name'))
+      ),'id');
+
+      $user_id_in_arr = array('-1');
+      if($users_find){
+        foreach($users_find as $user_found){
+          $user_id_in_arr[] = $user_found['id'];
+        }
+      }
+      return array(
+        'key'=>'user_id',
+        'value'=>$user_id_in_arr
+      );
     }
 
     protected function feed_list_filter_with_field($filter_arr,$param_key, $field, $value){
