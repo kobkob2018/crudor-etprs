@@ -86,7 +86,8 @@
                 <?php endif; ?>
                 <?php if((!isset($info['input_remove']['email'])) && $this->data['biz_form']['add_email']): ?>
                     <div class="form-group email-field-switch-on">
-                        <input type="text" name="biz[email]" id="biz_phone" class="form-input validate" placeholder="אימייל" required data-msg_required="יש למלא אימייל" data-msg_invalid="יש למלא אימייל תקין" />
+                        <?php /* email is not required anymore  */  ?>
+                        <input type="text" name="biz[email]" id="biz_phone" class="form-input validate" placeholder="אימייל" data-msg_required="יש למלא אימייל" data-msg_invalid="יש למלא אימייל תקין" />
                     </div>
                 <?php else: ?>
                     <input type="hidden" name="biz[email]" value="no-mail" />
