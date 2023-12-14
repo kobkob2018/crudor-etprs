@@ -6,6 +6,16 @@
 
     public static $fields_collection = array(
 
+        'direction'=>array(
+            'label'=>'כיוון שפה',
+            'type'=>'select',
+            'default'=>'rtl',
+            'options'=>array(
+                array('value'=>'rtl', 'title'=>'מימין לשמאל (עברית\ערבית)'),
+                array('value'=>'ltr', 'title'=>'משמאל לימין (אנגלית\רוסית)')
+            )
+        ),
+
         'header_html'=>array(
             'label'=>'תוכן ראש',
             'type'=>'textbox',

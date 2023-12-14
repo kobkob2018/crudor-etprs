@@ -26,8 +26,8 @@
             if($quote_cat['title_html'] == ""){
                 $quote_cat['title_html'] = $this->controller->include_ob_view('quotes/title_html_default.php');
             }
-            $quote_cat['custom_html'] = $this->clean_browser_type_html($quote_cat['custom_html']);
-            $quote_cat['title_html'] = $this->clean_browser_type_html($quote_cat['title_html']);
+            $quote_cat['custom_html'] = $this->clean_browser_type_html($quote_cat['custom_html'],$action_data);
+            $quote_cat['title_html'] = $this->clean_browser_type_html($quote_cat['title_html'],$action_data);
             
             foreach($quote_list as $key=>$quote){
                 $img_url = $this->controller->file_url_of('quote_img',$quote['image'],'master');
@@ -70,8 +70,8 @@
             if($quote_user['title_html'] == ''){
                 $quote_user['title_html'] = $this->controller->include_ob_view('quotes/title_html_user.php');
             }
-            $quote_user['custom_html'] = $this->clean_browser_type_html($quote_user['custom_html']);
-            $quote_user['title_html'] = $this->clean_browser_type_html($quote_user['title_html']);
+            $quote_user['custom_html'] = $this->clean_browser_type_html($quote_user['custom_html'],$action_data);
+            $quote_user['title_html'] = $this->clean_browser_type_html($quote_user['title_html'],$action_data);
             
             $quote_user_procces_values = array();
             foreach($quote_user as $key=>$val){
@@ -96,11 +96,14 @@
             $this->include_view('quotes/print_user.php',$info);
         }
 
-        protected function clean_browser_type_html($html){
+        protected function clean_browser_type_html($html, $action_data){
             
             $browser_type_remove = "mobile";
             if(is_mobile()){
                 $browser_type_remove = "desktop";               
+            }
+            elseif(isset($action_data['mobile']) && $action_data['mobile'] == 'yes'){
+                $browser_type_remove = "desktop";
             }
             $html_arr = explode("<!--".$browser_type_remove."_only-->",$html);
             $return_html = "";

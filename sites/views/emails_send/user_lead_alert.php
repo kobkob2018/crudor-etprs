@@ -1,4 +1,4 @@
-<div style="direction:rtl;">
+<div style="<?= $this->data['directions']['direction'] ?>">
 
 	<h2>שלום <?= $info['user']['info']['full_name']; ?>.<br/></h2>
 	<h3>התקבלה בקשה להצעת מחיר מהאתר <?= $info['site']['domain'] ?></h3>

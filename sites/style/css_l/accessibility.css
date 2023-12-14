@@ -1,0 +1,156 @@
+#accessibility_wrap {
+    background: #eaeaea;
+    color: #332a1a;
+    border: 2px solid black;
+    box-shadow: 5px 5px 5px grey;
+}
+#accessibility_wrap a {
+    color: black;
+}
+
+#accessibility_wrap  .acc-nav-wrap a{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+:target::before {
+    content: '';
+    display: block;
+    height:      180px;
+    margin-top: -180px;
+}
+
+.acc-nav-wrap{
+    margin-bottom:20px;
+}
+.acc-nav{
+    
+}
+ul.acc-nav li{
+    display: block;
+    margin-top:10px;
+    border-top: 1px solid gray ;
+    padding-left: 10px;
+}
+
+.acc-nav-door{
+    display: block;
+    font-size: 22px;
+}
+
+.accessibility .item {
+    font-size: 25px;
+    border-bottom: 1px solid;
+    margin: 12px;
+    font-family: monospace, sans-serif, serif;
+    color: black;
+}
+.accessibility a.acc-icon {
+    border: 1px solid black;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 12px;
+    background: white;
+    color: black;
+    width: 42px;
+    height: 44px;
+    line-height: 19px;
+    text-align: center;
+    font-size: 30px;
+}
+.accessibility a.acc-icon.reset {
+    width: auto;
+    height: auto;
+    font-size: 0.9em;
+}
+.accessibility .label {
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.accessibility .state {
+    float: right;
+    font-size: 0.8em;
+    padding-top: 20px;
+}
+body.biggerfont-1 {
+    font-size: 18px;
+}
+body.biggerfont-2 {
+    font-size: 20px;
+}
+body.biggerfont-3 {
+    font-size: 25px;
+}
+body.contrastOn img {
+    -webkit-filter: grayscale(100%);
+}
+body.contrastOn .page-wrap *{
+    background: white !important;
+    color: black !important;
+    border-color: black;
+}
+body.contrastOn .page-wrap a{
+    color: blue !important;
+    text-decoration: underline !important;
+}
+body.contrastOn .footer {
+    border-top: 1px solid black;
+}
+
+body.contrastOn .top-fix,body.contrastOn .big-title{
+    border-bottom:1px solid black;
+}
+
+body.contrastOn .color-button, body.contrastOn .color-button a,body.contrastOn a.color-button,body.contrastOn a.color-button i{
+    background: black !important;
+    color: white !important;
+}
+
+body.linksOn .header a, body.linksOn .main-content a {
+    text-decoration: underline !important;
+}
+body .accessibility .biggerfont {
+    display: none;
+}
+body .accessibility .biggerfont-0-label {
+    display: block;
+}
+body .accessibility .contrast-on-label {
+    display: none;
+}
+body .accessibility .links-on-label {
+    display: none;
+}
+body.biggerfont-1 .biggerfont.biggerfont-1-label {
+    display: block;
+}
+body.biggerfont-1 .biggerfont-0-label {
+    display: none;
+}
+body.biggerfont-2 .biggerfont.biggerfont-2-label {
+    display: block;
+}
+body.biggerfont-2 .biggerfont-0-label {
+    display: none;
+}
+body.biggerfont-3 .biggerfont.biggerfont-3-label {
+    display: block;
+}
+body.biggerfont-3 .biggerfont-0-label {
+    display: none;
+}
+body.linksOn .links-on-label {
+    display: block;
+}
+body.linksOn .links-off-label {
+    display: none;
+}
+body.contrastOn .contrast-off-label {
+    display: none;
+}
+body.contrastOn .contrast-on-label {
+    display: block;
+}

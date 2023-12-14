@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<?php $this->register_script('style','register_style',styles_url('style/css/refister_form.css'),'foot'); ?> 
+<?php $this->register_script('style','register_style',styles_url('style/css/register_form.css'),'foot'); ?> 
 
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded",()=>{

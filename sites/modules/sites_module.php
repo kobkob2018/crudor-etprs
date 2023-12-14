@@ -24,6 +24,21 @@
             
             $site_styling = SiteSite_styling::get_current_site_styling();
             $this->add_data('site_styling',$site_styling);
+            $css_dir = "css";
+            $direction = "rtl";
+            $text_align = "right";
+            if(isset($site_styling['direction']) && $site_styling['direction'] == 'ltr'){
+              $css_dir = "css_l";
+              $direction = "ltr";
+              $text_align = "left";
+            }
+            $directions_data = array(
+              'css_dir'=>$css_dir,
+              'text_align'=>$text_align,
+              'direction'=>$direction,
+            );
+
+            $this->add_data('directions',$directions_data);
             return;
         }        
 

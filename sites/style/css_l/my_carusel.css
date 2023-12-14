@@ -1,0 +1,183 @@
+.mycarusel .items{
+    padding: 10px;
+    position: relative;
+    min-height: 200px;
+    box-sizing: border-box;
+}
+
+.mycarusel .item{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top:0;
+    right: 0;
+    transition: 1s;
+}
+
+
+.mycarusel .item.carusel-on{
+    display: block;
+    opacity: 1;   
+}
+
+.mycarusel .item.carusel-off{
+    display: none;
+    opacity: 0;
+    
+}
+
+.mycarusel .item.carusel-coming{
+    opacity: 0;
+    display: block;
+    right:-30px;
+}
+
+.mycarusel .item.carusel-removing{
+    opacity: 0;
+    right:30px;
+    
+    
+}
+
+.mycarusel .item.carusel-coming-prev{
+    opacity: 0;
+    display: block;
+    right:30px;
+}
+
+
+.mycarusel .item.carusel-removing-prev{
+    opacity: 0;
+    right:-30px;
+} 
+
+
+
+
+.gallery-modal{
+    display: none;
+    opacity: 0;
+    transition: 2s opacity;
+}
+
+.gallery-modal.modal-on{
+    display: block;
+    opacity: 1;
+}
+
+.gallery-carusel-wrap{
+
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background: #111111eb;
+    top: 0;
+    right: 0;
+}
+
+.gallery-carusel-wrap a.closebtn{
+    color: white;
+    position: absolute;
+    top: 20px;
+    left: 45px;
+    font-size: 3.6em;
+    display: block;
+    z-index: 1;
+}
+
+.gallery-carusel{
+
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+.gallery-carusel .carusel-control{
+    position: absolute;
+    top: 45%;
+    z-index: 1;
+    font-size: 50px;
+    color: white;
+}
+.gallery-carusel .carusel-control.next{
+    right:auto;
+    left:50px;
+}
+.gallery-carusel .carusel-control.previous{
+    left: auto;
+    right: 50px;
+}
+.mycarusel .items{
+    height: 100vh;
+    width: 100%;
+}
+.mycarusel .item{
+    height: 100%;
+}
+.mycarusel .item-content{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+/* Define the scrollbar style */
+.mycarusel .item-content::-webkit-scrollbar {
+    width: 3px;
+}
+
+.mycarusel .item-content::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 3px;
+}
+
+.mycarusel .item-title{
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: auto;
+}
+.mycarusel .item-content  .item-text-wrap{
+    margin: 20px auto auto;
+    max-width: 80%;
+}
+.mycarusel .item-content  .item-text{
+    color: black;
+    background: white;
+    display: block;
+    padding: 10px;
+    text-align: left;
+    
+    border-radius: 5px;
+}
+
+.gallery-wrap.inner-section{
+    margin: 40px 0px;
+}
+.gallery-wrap .gallery{
+
+    background: linear-gradient(-45deg, #d7c29a, #c8ae7d00);
+    padding: 20px;
+}
+.gallery-wrap .gallery .gallery-items{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.gallery-wrap .gallery .gallery-item{
+    width: 23%;
+    margin: 10px 1%;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 2px 2px 4px gray;
+}
+
+
+
+@media screen and(max-width: 780px) {
+    .gallery-wrap .gallery .gallery-item{
+        width: 48%;
+        margin: 10px 1%;
+    }
+}
+           

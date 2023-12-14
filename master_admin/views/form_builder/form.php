@@ -134,7 +134,7 @@
                 <label id="submit_label"></label>
             </div>
             <div class="form-group-en">
-                <input type="submit"  class="submit-btn"  value="שליחה" />
+                <input onclick="this.disabled=true; this.value='שולח...'; this.form.submit(); return false;" type="submit"  class="submit-btn"  value="שליחה" />
             </div>
         </div>
         <?php if(isset($this->data['item_delete_url'])): ?>
