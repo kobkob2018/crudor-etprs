@@ -102,7 +102,7 @@
                                     <?php endif; ?>
                                 </a>
                                 <br/>
-                                <a href="<?= current_url() ?>&remove_file=<?= $field_key ?>">הסר <?= $build_field['label'] ?></a>
+                                <a href="<?= current_url(array('remove_file'=>$field_key)) ?>">הסר <?= $build_field['label'] ?></a>
                             </div>
                             <?php endif; ?>
                             
