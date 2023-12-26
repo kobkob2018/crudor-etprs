@@ -985,8 +985,9 @@ a.news-ticker-a-content{
     font-size: 1.5em;
 }
 
-.flexush table{display: block; max-width: 100%;}
-.flexush table tr{display: flex; flex-wrap: wrap;}
+.flexush table{display: block; max-width: 100%; border: none; width: 100%;}
+.flexush table tbody{display: block; border: none; width: 100%;}
+.flexush table tr{display: flex; flex-wrap: wrap; justify-content: space-between;}
 .flexush table td{display: block;}
 
 @media only screen and (min-width: 890px) {
