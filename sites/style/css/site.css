@@ -987,8 +987,8 @@ a.news-ticker-a-content{
 
 .flexush table{display: block; max-width: 100%; border: none; width: 100%;}
 .flexush table tbody{display: block; border: none; width: 100%;}
-.flexush table tr{display: flex; flex-wrap: wrap; justify-content: space-between;}
-.flexush table td{display: block;}
+.flexush table tr{display: flex; flex-wrap: wrap; justify-content: space-between; text-align: center;}
+.flexush table td{display: block; border: none; text-align: center;}
 
 @media only screen and (min-width: 890px) {
     .acc-fix-door.patchy{
