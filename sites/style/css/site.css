@@ -986,7 +986,7 @@ a.news-ticker-a-content{
 }
 
 .flexush table{border: none; }
-.flexush table td{border: none; text-align: center;}
+.flexush table td{border: none; text-align: center; vertical-align: top;}
 
 @media only screen and (min-width: 890px) {
     .acc-fix-door.patchy{
