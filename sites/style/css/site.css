@@ -985,10 +985,10 @@ a.news-ticker-a-content{
     font-size: 1.5em;
 }
 
-.flexush table{display: block; max-width: 100%; border: none; width: 100%;}
-.flexush table tbody{display: block; border: none; width: 100%;}
-.flexush table tr{display: flex; flex-wrap: wrap; justify-content: space-between; text-align: center;}
-.flexush table td{display: block; border: none; text-align: center;}
+.flexush table{display: block; border: none; }
+.flexush table tbody{display: block;}
+.flexush table tr{display: flex; flex-direction: column; text-align: center;}
+.flexush table td{border: none;}
 
 @media only screen and (min-width: 890px) {
     .acc-fix-door.patchy{
