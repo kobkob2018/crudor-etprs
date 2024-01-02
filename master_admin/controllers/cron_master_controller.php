@@ -84,49 +84,50 @@ class Cron_masterController extends CrudController{
     print_help($now_round_monthly_midnight_str,'now_round_monthly_midnight_str');
 
     if($now_time_str == $now_round_hour_str){
-      Helper::clear_log("last_hour_logs.txt");
       foreach($this->scedualed_module_tasks['hourly'] as $task){
-        $this->invoke_task($task);
+        $this->invoke_task($task,"hourly_logs.txt");
       }
     }
 
     if($now_time_str == $now_round_day_morning_str){
       foreach($this->scedualed_module_tasks['daily_mornings'] as $task){
-        $this->invoke_task($task);
+        $this->invoke_task($task,"daily_mornings_logs.txt");
       }
 
       foreach($this->scedualed_module_tasks['weekly_night_time'][$today_is] as $task){
-        $this->invoke_task($task);
+        $this->invoke_task($task,"weekly_night_time_logs.txt");
       }
     }
 
     if($now_time_str == $now_round_day_midnight_str){
+      Helper::clear_log("last_hour_logs.txt");
       foreach($this->scedualed_module_tasks['daily_midnight'] as $task){
-        $this->invoke_task($task);
+        $this->invoke_task($task,"daily_midnight_logs.txt");
       }
       
       foreach($this->scedualed_module_tasks['weekly_day_time'][$today_is] as $task){
-        $this->invoke_task($task);
+        $this->invoke_task($task, "weekly_day_time_logs.txt");
       }
     }
 
     if($now_time_str == $now_round_monthly_midnight_str){
+      Helper::clear_log("hourly_logs.txt");
       foreach($this->scedualed_module_tasks['monthly'] as $task){
-        $this->invoke_task($task);
+        $this->invoke_task($task, "monthly_logs.txt");
       }
     }
 
   }
 
-  protected function invoke_task($task){
+  protected function invoke_task($task, $logfile = "last_hour_logs.txt"){
     print_help($task['label'],'Invoking task');
-    Helper::add_log("last_hour_logs.txt","\n ".$task['label'].": ".date("m/d/Y H:i", time()));
+    Helper::add_log($logfile,"\n ".$task['label'].": ".date("m/d/Y H:i", time()));
     try {
       $this->call_module($task['module'],$task['action']);
-      Helper::add_log("last_hour_logs.txt","\n  success \n");
+      Helper::add_log($logfile,"\n  success \n");
     } 
     catch (Exception $e) {
-      Helper::add_log("last_hour_logs.txt","\n  failed: ".$e->getMessage()." \n");
+      Helper::add_log($logfile,"\n  failed: ".$e->getMessage()." \n");
       echo 'The task failed: ',  $e->getMessage(), "\n";
     }
     
