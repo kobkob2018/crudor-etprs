@@ -11,6 +11,10 @@
         public function init_layout(){
             $this->controller->add_model('sites');
             $site = Sites::get_current_site();
+            global $system_iso_code;
+            if(isset($site['iso_code'])){
+              $system_iso_code = $site['iso_code'];
+            }
             $this->add_asset_mapping(Sites::$asset_mapping);
             
             if($site){  

@@ -91,6 +91,13 @@
             'validation'=>'required'
         ),
 
+        'iso_code'=>array(
+            'label'=>'שפה',
+            'type'=>'select',
+            'default'=>'he_IL',
+            'options_method'=>array('model'=>'adminSites','method'=>'get_select_language_options')
+        ),
+
         'disable_robots'=>array(
             'label'=>'הסתר ממנועי החיפוש של גוגל',
             'type'=>'select',
@@ -166,5 +173,22 @@
         ), 
 
     );
+
+    public static function get_select_language_options(){
+        $filter_arr = array('system_id'=>'admin');
+        $languages = self::simple_get_list_by_table_name($filter_arr,'languages');
+        $return_options = array();
+        $default_found = false;
+        foreach($languages as $language){
+            if($language['iso_code'] == 'he_IL'){
+                $default_found = true;
+            }
+            $return_options[] = array('value'=>$language['iso_code'],'title'=>$language['label'].'('.$language['iso_code'].')');
+        }
+        if(!$default_found){
+            $return_options[] = array('value'=>'he_IL','title'=>'PLEASE CREATE he_IL language as default language!!');
+        }
+        return $return_options;
+    }
 }
 ?>

@@ -1,6 +1,6 @@
 <?php if(!empty($info['news'])): ?>
     <div class="kova ">
-        
+        <h2><?= __tr("Hi, How are you?") ?></h2>
         <h3 class="big-title">חדשות האתר</h3>
         <div class="kova-content">
             <div class="news-ticker-wrap">

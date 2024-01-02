@@ -235,3 +235,13 @@ function var_dump_help($val,$name = 'the-field'){
 function print_help($str,$name = 'the-field'){
     echo "<hr>".$name.': '.$str."<hr>";
 }
+
+function __tr($msgid){
+    global $init_request;
+    $system_id = get_config("default_system");
+    if(isset($init_request['system'])){
+        return $init_request['system']."/".$file_path;
+    }
+    global $system_iso_code;
+    return Translation::__translate("main",$system_id, $system_iso_code, $msgid);
+}

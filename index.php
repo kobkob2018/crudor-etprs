@@ -18,7 +18,7 @@ if(!isset($init_request)){
     }
 }
 
-
+$system_iso_code = "en_US";
 
 require_once('a_core/config.php');
 require_once('a_core/secret.php');
@@ -28,6 +28,7 @@ require_once('a_core/models/tableModel.php');
 require_once('a_core/controllers/controller.php');
 require_once('a_core/controllers/crudController.php');
 require_once('a_core/modules/module.php');
+require_once('a_core/helpers/translation.php');
 require_once('a_core/helper.php');
 require_once('a_core/helpers/helper.php');
 require_once('a_core/helpers/view.php');
