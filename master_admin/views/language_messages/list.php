@@ -6,18 +6,18 @@
     <h4>הוספת תרגום</h4>
     <div class="items-table flex-table">
         <div class="table-th row">
-            <div class="col">משפט מקור</div>
-            <div class="col">תרגום לשפה: <?= $this->data['current_language']['label'] ?></div>
+            <div class="col big-text">משפט מקור</div>
+            <div class="col big-text">תרגום לשפה: <?= $this->data['current_language']['label'] ?></div>
         </div>
 
         <form  class="table-tr row" action = "" method = "POST" >
             <input type="hidden" name="sendAction" value="createSend" />
             <input type="hidden" name="db_row_id" value="new" />
 
-            <div class="col">
+            <div class="col big-text">
                 <input type="text" class = 'table-input' name = 'row[msgid]' value = "<?= $this->get_form_input('msgid') ?>" />
             </div>
-            <div class="col">
+            <div class="col big-text">
                 <input type="text" class = 'table-input' name = 'row[msgstr]' value = "<?= $this->get_form_input('msgstr') ?>" />
             </div>
             <div class="col"><input type="submit" value="שמור" /></div>
@@ -34,8 +34,8 @@
 <?php if(!empty($this->data['message_list'])): ?>
     <div class="items-table flex-table">
         <div class="table-th row">
-            <div class="col">משפט מקור</div>
-            <div class="col">תרגום לשפה: <?= $this->data['current_language']['label'] ?></div>
+            <div class="col big-text">משפט מקור</div>
+            <div class="col big-text">תרגום לשפה: <?= $this->data['current_language']['label'] ?></div>
             <div class="col"></div>
             <div class="col"></div>
         </div>
@@ -43,10 +43,10 @@
             <form  class="table-tr row" action = "" method = "POST" >
                 <input type="hidden" name="sendAction" value="listUpdateSend" />
                 <input type="hidden" name="db_row_id" value="<?= $message['id'] ?>" /> 
-                <div class="col">
+                <div class="col big-text">
                     <input type="text" class = 'table-input' name = 'row[msgid]' value = "<?= $this->get_form_input('msgid',$message['form_identifier']) ?>" />
                 </div>
-                <div class="col">
+                <div class="col big-text">
                     <input type="text" class = 'table-input' name = 'row[msgstr]' value = "<?= $this->get_form_input('msgstr',$message['form_identifier']) ?>" />
                 </div>
 

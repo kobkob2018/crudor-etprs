@@ -147,6 +147,20 @@ class Language_messagesController extends CrudController{
     $fixed_values['system_id'] = $this->data['current_language']['system_id'];
     $fixed_values['language_id'] = $this->data['current_language']['id'];
     $fixed_values['iso_code'] = $this->data['current_language']['iso_code'];
+
+    $msg_find_arr = array(
+      'system_id'=>$fixed_values['system_id'],
+      'language_id'=>$fixed_values['language_id'],
+      'iso_code'=>$fixed_values['iso_code'],
+      'msgid'=>$fixed_values['msgid'],
+    );
+    $msg_find = Language_messages::find($msg_find_arr);
+
+    if($msg_find){
+      SystemMessages::add_err_message("המשפט הזה כבר קיים בתרגומים");
+      return $this->redirect_to(current_url());
+    }
+
     $return_val =  Language_messages::create($fixed_values);
     $this->export_language_to_json();
     return $return_val;

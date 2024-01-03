@@ -1,6 +1,6 @@
 <?php
 	class cron_bookkeepingModule extends Module{
-        public $add_models = array("user_pending_emails","User_bookkeeping");
+        public $add_models = array("user_pending_emails","user_bookkeeping");
 
         //each minute cronjob at cron_master_controller.php
         public function daily_alerts(){
