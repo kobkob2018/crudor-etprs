@@ -8,13 +8,13 @@
     }
 
     private function get_messages_from_json($system_id, $iso_code){
-        if(!is_dir("languages")){
+        if(!is_dir("locale")){
             return false;
         }
-        if(!is_dir("languages/".$system_id)){
+        if(!is_dir("locale/".$system_id)){
             return false;
         }
-        $json_file_name = "languages/".$system_id."/".$iso_code.".json";
+        $json_file_name = "locale/".$system_id."/".$iso_code.".json";
         if(!file_exists($json_file_name)){
             return false;
         }
