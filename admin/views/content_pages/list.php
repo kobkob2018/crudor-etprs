@@ -47,7 +47,12 @@
                 <?php endif; ?>
 
                 <br/>
-                <?php if($view->site_user_is('admin')): ?>
+
+                <?php if($content_page['archived'] == '1'): ?>
+                    <div class="focus-box">
+                        <a href = "<?= inner_url('pages/restore_from_archive/') ?>?row_id=<?= $content_page['id'] ?>" onclick = "return confirm('האם לשחזר את הדף מהארכיון?');" title="שחזר מהארכיון">שחזר מהארכיון</a>
+                    </div>
+                <?php elseif($view->site_user_is('admin')): ?>
                     <div class="focus-box">
                         שינוי סטטוס:
                         <br/>
@@ -60,7 +65,7 @@
                 <?php endif; ?>
             </div>
             <div class="col">
-                <?php if($content_page['status'] != '1'): ?>
+                <?php if($content_page['status'] != '1' || $content_page['archived'] == '1'): ?>
                     <a href = "<?= $this->data['work_on_site']['url'] ?>/<?= $content_page['link'] ?>/?demo_view=1" target="_BLANK" title="צפה באתר">צפה בהדמייה של הדף</a>
                 <?php else: ?>
                     <a href = "<?= $this->data['work_on_site']['url'] ?>/<?= $content_page['link'] ?>/" target="_BLANK" title="צפה באתר">צפה באתר</a>
@@ -78,7 +83,11 @@
                 </div>
             <?php endif; ?>
             <div class="col">
-                <a href = "<?= inner_url('pages/delete/') ?>?row_id=<?= $content_page['id'] ?>" title="מחק">מחק</a>
+                <?php if($content_page['archived'] == '1'): ?>
+                    <a href = "<?= inner_url('pages/delete/') ?>?row_id=<?= $content_page['id'] ?>" onclick = "return confirm('האם למחוק את הדף לצמיתות?');" title="מחק">מחק</a>
+                <?php else: ?>
+                    <a href = "<?= inner_url('pages/delete/') ?>?row_id=<?= $content_page['id'] ?>" onclick = "return confirm('האם להעביר את הדף לארכיון?')" title="העבר לארכיון">העבר לארכיון</a>
+                <?php endif; ?>
             </div>
         </div>
     <?php endforeach; ?>

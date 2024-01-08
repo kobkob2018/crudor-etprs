@@ -19,7 +19,7 @@
         <ol>
             <li>
                 באמצעות כרטיס אשראי, עד 12 תשלומים ללא רבית והצמדה, 
-                <a href="<?= get_config('base_url') ?>/myleads/bookkeeping/view/">                       
+                <a href="<?= get_config('base_url') ?>/myleads/bookkeeping/view/?msg_id=<?= $info['message_id'] ?>&token=<?= $info['token'] ?>">                       
                     לחץ כאן לתשלום בכרטיס אשראי
                 </a>
                     * 

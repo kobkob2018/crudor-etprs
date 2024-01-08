@@ -51,7 +51,7 @@
             return false;
         }
         $page_id = $_GET['page_id'];
-        $page_info = AdminPages::get_by_id($page_id, 'id, status, site_id, user_id, title, link');
+        $page_info = AdminPages::get_by_id($page_id, 'id, archived, status, site_id, user_id, title, link');
         $this->data['page_info'] = $page_info;
         if($page_info && isset($page_info['id'])){
             return $page_info['id'];

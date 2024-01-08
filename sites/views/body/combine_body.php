@@ -26,6 +26,6 @@
     <?php elseif($this->data['site_styling'] && $this->data['site_styling']['footer_html'] != ''): ?>
 		<?= $this->data['site_styling']['footer_html'] ?>
 	<?php else: ?>
-        © כל הזכויות שומורות <a href="https://il-biz.co.il" class="copyrightBottom" title="פורטל עסקים ישראל">פורטל עסקים ישראל</a>&nbsp;&nbsp;&nbsp; <a href="https://il-biz.co.il" class="copyrightBottom" target="_blank" title="IL-BIZ קידום עסקים באינטרנט">IL-BIZ קידום עסקים באינטרנט</a>&nbsp;&nbsp;&nbsp; <a href="http://kidum.ilbiz.co.il/" class="copyrightBottom" target="_blank" title="קידום באינטרנט">קידום באינטרנט</a> - אילן שוורץ&nbsp;&nbsp;&nbsp; <a href="https://il-biz.co.il" class="copyrightBottom" target="_blank" title="בניית אתרים">בניית אתרים</a>
+        © <?= __tr("All rights reserved") ?> <a href="https://il-biz.co.il" class="copyrightBottom" title="<?= __tr("Israel business portal") ?>"><?= __tr("Israel business portal") ?></a>&nbsp;&nbsp;&nbsp; <a href="https://il-biz.co.il" class="copyrightBottom" target="_blank" title="<?= __tr("IL-BIZ Internet business promotion") ?>"><?= __tr("IL-BIZ Internet business promotion") ?></a>&nbsp;&nbsp;&nbsp; <a href="http://kidum.ilbiz.co.il/" class="copyrightBottom" target="_blank" title="<?= __tr("Web promotion") ?>"><?= __tr("Web promotion") ?></a> - <?= __tr("Ilan Shvartz") ?>&nbsp;&nbsp;&nbsp; <a href="https://il-biz.co.il" class="copyrightBottom" target="_blank" title="<?= __tr("Websites building") ?>"><?= __tr("Websites building") ?></a>
     <?php endif; ?>
 </div>

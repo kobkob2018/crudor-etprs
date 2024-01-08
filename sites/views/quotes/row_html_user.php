@@ -32,9 +32,9 @@
 	<div class="col col-last">
 		<!-- if link -->
 		<div class="quote-link">
-			<a class="color-button"  href="{{link}}" title="לנציג">
+			<a class="color-button"  href="{{link}}" title="<?= __tr("To representative") ?>">
 				<span class="whitelink nounderline">
-				לנציג
+				<?= __tr("To representative") ?>
 				</span>
 			</a>
 			
@@ -72,15 +72,15 @@
 	<div class="row">
 		<div class="quote-phone col col-right">
 		<!-- if phone -->
-			<a class="quote-phone-link"  href="tel:{{phone}}"><span class="fa fa-phone color-button"></span>&nbsp;<b class="color-b">התקשר</b></a>
+			<a class="quote-phone-link"  href="tel:{{phone}}"><span class="fa fa-phone color-button"></span>&nbsp;<b class="color-b"><?= __tr("Call") ?></b></a>
 		<!-- endif -->	
 		</div>
 		
 		<div class="quote-link col col-left">
 		<!-- if link -->
-			<a class="color-button" href="{{link}}" title="לנציג">
+			<a class="color-button" href="{{link}}" title="<?= __tr("To representative") ?>">
 				<span class="whitelink nounderline">
-				לנציג
+				<?= __tr("To representative") ?>
 				</span>
 			</a>
 		<!-- endif -->	

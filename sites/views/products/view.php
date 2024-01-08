@@ -3,7 +3,7 @@
         <form action = "<?= inner_url("products/view/") ?>" class="cat-select-form" name="cat_select_form" method="GET" >
             <select name="cat" class="cat-select select-cat-auto-submit">
                 <option value="">
-                    בחר נושא
+                    <?= __tr("Select a subject") ?>
                 </option>
                 <?php foreach($info['cat_list'] as $cat): ?>
                     <option value="<?= $cat['id'] ?>" <?= $cat['selected_str'] ?> >
@@ -66,7 +66,7 @@
                 <?php endif; ?>
                 <?php if($info['product']['price']): ?>
                     <div class="box-price color-b">
-                        <?= $info['product']['price'] ?> ש"ח 
+                        <?= $info['product']['price'] ?> <?= __tr("NIS") ?> 
                     </div> 
                 <?php endif; ?>
             </div>
@@ -148,7 +148,7 @@
         <div class="product-content">
             <?php if($info['product']['price']): ?>
                 <div class="color-b">
-                    <b>מחיר: <?= $info['product']['price'] ?> ש"ח </b>
+                    <b><?= __tr("Price") ?>: <?= $info['product']['price'] ?> <?= __tr("NIS") ?> </b>
                     
                 </div> 
                 <br/>
@@ -162,7 +162,7 @@
 
 <?php if($info['product_list']): ?>
     <div id="content_title_wrap" class="title-wrap flex-row flex-wrap">
-        <h1 id="content_title" class="main-title grow-1 color-title">קטלוג מוצרים</h1>
+        <h1 id="content_title" class="main-title grow-1 color-title"><?= __tr("Product catalogue") ?></h1>
         <div id="share_buttons_wrap">
             <?php $this->call_module('share_buttons','print'); ?>
         </div>
@@ -187,12 +187,12 @@
                     </div>
                     <?php if($product['price']): ?>
                         <div class="box-price color-b">
-                            <?= $product['price'] ?> ש"ח 
+                            <?= $product['price'] ?> <?= __tr("NIS") ?> 
                         </div> 
                     <?php endif; ?>
                     <div class="box-go-to">
                         <a href="<?= $this->set_url(array('p'=>$product['id'])) ?>" title="<?= $product['label'] ?>">
-                            למידע נוסף
+                        <?= __tr("More info") ?>
                         </a>
                     </div>
                 </div>
@@ -203,7 +203,7 @@
 
 <?php if($info['more_products'] && $info['product']): ?>
     <div class="midpage-title-wrap">
-        <h3 class="color-title">גולשים שהתעניינו ב - <?= $info['product']['label'] ?> התעניינו גם במוצרים הבאים</h3>
+        <h3 class="color-title"><?= __tr("Users that watched $1 also watched the following products",array($info['product']['label'])) ?></h3>
     </div>
     <div class="product-list flex-row flex-wrap box-list">
         <?php foreach($info['more_products'] as $product): ?>
@@ -225,12 +225,12 @@
                     </div>
                     <?php if($product['price']): ?>
                         <div class="box-price color-b">
-                            <?= $product['price'] ?> ש"ח 
+                            <?= $product['price'] ?> <?= __tr("NIS") ?> 
                         </div> 
                     <?php endif; ?>
                     <div class="box-go-to">
                         <a href="<?= $this->set_url(array('p'=>$product['id'])) ?>" title="<?= $product['label'] ?>">
-                            למידע נוסף
+                            <?= __tr("More info") ?>
                         </a>
                     </div>
                 </div>

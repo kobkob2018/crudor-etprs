@@ -140,7 +140,12 @@
         <?php if(isset($this->data['item_delete_url'])): ?>
             <div class="delete-box">
                 <hr/>
-                <a href="<?= $this->delete_url($this->data['item_info']) ?>"  class="delete-link" >מחיקה</a>
+                <?php if($this->data['item_delete_type'] == 'delete'): ?>
+                    <a href="<?= $this->delete_url($this->data['item_info']) ?>" onclick="return confirm('האם למחוק את הפריט?');"  class="delete-link" >מחיקה</a>
+                <?php endif; ?>
+                <?php if($this->data['item_delete_type'] == 'archive'): ?>
+                    <a href="<?= $this->delete_url($this->data['item_info']) ?>" onclick="return confirm('האם להעביר את הפריט לארכיון?');"  class="delete-link" >העברה לארכיון</a>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
     </form>

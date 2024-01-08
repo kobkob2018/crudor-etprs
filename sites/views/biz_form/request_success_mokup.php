@@ -1,3 +1,3 @@
 <div class="request-success-wrap">
-    <b>בקשתך נשלחה</b>
+    <b><?= __tr("Your request sent") ?></b>
 </div>

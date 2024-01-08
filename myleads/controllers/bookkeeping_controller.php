@@ -39,7 +39,7 @@
 
     public function send_to_yaad_domain(){
         $info = $this->get_info();
-        if(!$info['allow_host_payment']){
+        if(!$info['allow_domain_payment']){
             SystemMessages::add_err_message("אין אפשרות לחדש את תוקף הדומיין. אנא פנה לשירות לקוחות למידע נוסף");
             return $this->redirect_to(inner_url("bookkeeping/view/"));
         }

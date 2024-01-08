@@ -46,6 +46,16 @@ i.fa{
     font-style: normal;
 }
 
+.list-style ol li{
+    list-style: decimal; 
+    margin: 10px 25px;
+ }
+ 
+ .list-style ul li{
+    list-style: disc; 
+    margin: 10px 25px;
+ }
+
 .page-fixed-top{
     position: fixed;
     width: 100%;

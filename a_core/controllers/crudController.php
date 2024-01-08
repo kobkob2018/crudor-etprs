@@ -32,7 +32,14 @@
         $item_delete_url = $this->delete_url($this->data['item_info']);
         if($item_delete_url && $item_delete_url != ""){
             $this->data['item_delete_url'] = $item_delete_url;
+            $item_delete_type = 'delete';
+            if(isset($this->data['item_info']['archived']) && $this->data['item_info']['archived'] == '0'){
+                $item_delete_type = 'archive';
+            }
+            $this->data['item_delete_type'] = $item_delete_type;
         }
+        
+
         
         $fields_collection = $this->get_fields_collection();
 
@@ -275,14 +282,49 @@
 
         $item_info = $this->data['item_info'];
 
-        $fields_collection = $this->get_fields_collection();
+        if(!$this->move_to_archive_before_delete($item_info)){
+            $fields_collection = $this->get_fields_collection();
+            $this->delete_item_files($item_info,$fields_collection);
+            $this->delete_item($this->data['item_info']['id']);
+            $this->delete_success_message();
+        }
 
-        $this->delete_item_files($item_info,$fields_collection);
 
-        $this->delete_item($this->data['item_info']['id']);
-        $this->delete_success_message();
         return $this->after_delete_redirect();
     }
+
+    public function move_to_archive_before_delete($item_info){
+        if(!isset($item_info['archived'])){
+            return false;
+        }
+        if($item_info['archived'] == '1'){
+            return false;
+        }
+        $fixed_values = array('archived'=>'1');
+        $this->update_item($item_info['id'],$fixed_values);
+        $this->archived_success_message();
+        return true;
+    }
+
+    public function restore_from_archive(){
+        if(!isset($_GET['row_id'])){
+            $this->row_error_message();
+            return $this->eject_redirect();
+        }
+
+        $this->data['item_info'] = $this->get_item_info($_GET['row_id']);
+        if(!$this->data['item_info']){
+            $this->row_error_message();
+            return $this->eject_redirect();
+        }
+
+        $item_info = $this->data['item_info'];
+        $fixed_values = array('archived'=>'0');
+        $this->update_item($item_info['id'],$fixed_values);
+        $this->restore_success_message();
+        return $this->redirect_back_to_item($item_info);
+    }
+
 
     protected function delete_item_files($item_info, $fields_collection){
         $form_handler = $this->init_form_handler();
@@ -619,6 +661,7 @@
                 $this->session_filter['paging_page_id'] = $request_filter['paging_page_id'];
                 
             }
+            $this->session_filter['set'] = true;
             session__set($filter_name, $this->session_filter);
             return $this->redirect_back_to_action();
         }
@@ -634,6 +677,14 @@
     protected function setup_session_filter_form($fields_collection,$pagination = false){
         $session_filter = $this->get_session_filter();
         $filter_values = $session_filter['values'];
+        if(!$filter_values['set']){
+            
+            foreach($fields_collection as $filter_key=>$filter_field){
+                if(!isset($filter_values[$filter_key]) && isset($filter_field['default'])){
+                    $filter_values[$filter_key] = $filter_field['default'];
+                }
+            }
+        }
         if(!$pagination){
             $pagination = array('page_limit'=>'1000');
         }
@@ -673,20 +724,25 @@
           )) + $filter_fields_colection;
 
         $filter_form = $this->setup_session_filter_form($filter_fields_colection);
+        
+
 
         $list_info = array();
         $list_info['filter_form'] = $filter_form;
         
         $payload = array('pagination'=>$pagination);
-        if(isset($filter_form['values']['paging_page_id'])){
-            $payload['pagination']['page'] = $filter_form['values']['paging_page_id'];
+        if(!isset($filter_form['values']['paging_page_id'])){
+            $filter_form['values']['paging_page_id'] = '1';
+        }
+        $payload['pagination']['page'] = $filter_form['values']['paging_page_id'];
 
-            foreach($filter_form['values'] as $param_key=>$param_val){
-                if($param_key != 'paging_page_id' && isset($filter_form['fields'][$param_key])){
-                    $filter_arr = $this->feed_list_filter_with_field($filter_arr,$param_key, $filter_form['fields'][$param_key],$param_val);
-                }
+        foreach($filter_form['values'] as $param_key=>$param_val){
+            if($param_key != 'paging_page_id' && isset($filter_form['fields'][$param_key])){
+                
+                $filter_arr = $this->feed_list_filter_with_field($filter_arr,$param_key, $filter_form['fields'][$param_key],$param_val);
             }
         }
+        
         $paginated_list = $this->get_paginated_list($filter_arr, $payload);
         $list_info['filter_form']['pagination'] = $paginated_list['paging'];
         $list_info['list'] = $paginated_list['list'];
@@ -819,7 +875,16 @@
         return null;
   
     }
+
+
+    protected function archived_success_message(){
+        return SystemMessages::add_success_message("The item has moved to archive");
+    } 
   
+    protected function restore_success_message(){
+        return SystemMessages::add_success_message("The item has been restored from archive");
+    } 
+    
     protected function get_item_info($row_id){
         return null;
     }

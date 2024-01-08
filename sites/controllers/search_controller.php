@@ -9,11 +9,11 @@
 
     protected function result(){
       if(!isset($_REQUEST['user_search'])){
-        SystemMessages::add_err_message("חיפוש ריק");
+        SystemMessages::add_err_message(__tr("Empty search"));
         return;
       }
       if($_REQUEST['user_search'] == ""){
-        SystemMessages::add_err_message("חיפוש ריק");
+        SystemMessages::add_err_message(__tr("Empty search"));
         return;
       }
       $search = $_REQUEST['user_search'];

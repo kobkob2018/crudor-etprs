@@ -1,6 +1,6 @@
 <?php if(!empty($info['news'])): ?>
     <div class="kova ">
-        <h3 class="big-title">חדשות האתר</h3>
+        <h3 class="big-title"><?= __tr("Site news") ?></h3>
         <div class="kova-content">
             <div class="news-ticker-wrap">
                 <div class="news-ticker">
@@ -15,7 +15,7 @@
                                 <?php if($news_post['link'] == ""): ?>
                                     <?= nl2br($news_post['content']) ?>
                                 <?php else: ?>
-                                    <a class= "news-ticker-a-content" href = "<?= $news_post['link'] ?>" title = "לצפייה בהמשך הכתבה">
+                                    <a class= "news-ticker-a-content" href = "<?= $news_post['link'] ?>" title = "<?= __tr("To expend post") ?>">
                                         <?= nl2br($news_post['content']) ?>
                                     </a>
                                 <?php endif; ?>

@@ -51,9 +51,10 @@
             return false;
         }
         if(!isset(self::$pages_by_link[$link])){
-            $filter_arr = array('link'=>$link,'site_id'=>$current_site['id'],'status'=>'1');
+            $filter_arr = array('link'=>$link,'site_id'=>$current_site['id'],'status'=>'1','archived'=>'0');
             if(isset($_REQUEST['demo_view'])){
                 unset($filter_arr['status']);
+                unset($filter_arr['archived']);
             }
             self::$pages_by_link[$link] = self::simple_find($filter_arr);
         }
@@ -75,7 +76,7 @@
             $execute_arr['tag'] = "%".$tag."%";
         }
 
-        $sql = "SELECT count(id) as item_count FROM content_pages WHERE site_id = :site_id AND active = '1' AND visible = '1' $tag_sql";	
+        $sql = "SELECT count(id) as item_count FROM content_pages WHERE site_id = :site_id AND active = '1' AND visible = '1' AND archived = '0' $tag_sql";	
         $req = $db->prepare($sql);
         $req->execute($execute_arr);
         $count_result = $req->fetch();
@@ -92,7 +93,7 @@
             $paging_current = $paging['page'];
         }
 
-        $sql = "SELECT * FROM content_pages WHERE site_id = :site_id AND active = '1' AND visible = '1' $tag_sql ORDER BY priority desc LIMIT $paging_page, $limit";	
+        $sql = "SELECT * FROM content_pages WHERE site_id = :site_id AND active = '1' AND visible = '1' AND archived = '0' $tag_sql ORDER BY priority desc LIMIT $paging_page, $limit";	
         $req = $db->prepare($sql);
         $req->execute($execute_arr);
         $page_list = $req->fetchAll();
@@ -121,6 +122,7 @@
                         ) 
                         AND site_id = :site_id 
                         AND active = '1' 
+                        AND archived = '0' 
                         AND visible = '1'";	
 
 

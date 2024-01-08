@@ -80,11 +80,11 @@
 
     public function demo_request(){
         $form_id = '1';
-        $full_name = "קובי בודק";
+        $full_name = "kobi check";
         $email = "stam_mail@f.com";
         $phone = "054232323";
         $city_arr = array('1','2','3','4','5','6','7','8','9','10','32','46','47','48','49');
-        $note = "סתם פתק";
+        $note = "just a note";
         $cat_id_arr = array('53','57','58','52','54','55','56');
 
         $city_id = $city_arr[rand(0,(count($city_arr) - 1))];
@@ -188,7 +188,7 @@
         
         if(!isset($_REQUEST['cat_id'])){
             $return_array['success'] = false;
-            $return_array['error'] = array('msg'=>'לא נבחרה קטגוריה');
+            $return_array['error'] = array('msg'=>__tr("Category was not selected"));
             return $return_array;
         }
 

@@ -26,9 +26,9 @@
             <input type="hidden" name="biz[site_ref]" value="<?= $_SERVER['HTTP_HOST'] ?>" />
             <?php if(isset($_REQUEST['test_form'])): ?>
                 <div class="test-group form-group">
-                    <input type="button" class="tester-button form-input" data-status="pending" value="שליחת בדיקה רגילה" onclick="help_debug_forms(0)" />
+                    <input type="button" class="tester-button form-input" data-status="pending" value="<?= __tr("Regular check send") ?>" onclick="help_debug_forms(0)" />
                     <br/><br/>
-                    <input type="button" class="tester-button form-input" data-status="pending" value="שליחת בדיקה ללא רישום במסד הנתונים" onclick="help_debug_forms(1)" />
+                    <input type="button" class="tester-button form-input" data-status="pending" value="<?= __tr("Check submit without db registration") ?>" onclick="help_debug_forms(1)" />
 
                 </div>
             <?php endif; ?>
@@ -54,10 +54,10 @@
                         name="biz[full_name]" 
                         id="biz_name" 
                         class="form-input validate" 
-                        placeholder="שם מלא" 
+                        placeholder="<?= __tr("Full name") ?>" 
                         required 
-                        data-msg_required="נא להוסיף שם מלא" 
-                        data-msg_invalid="נא להוסיף שם מלא תקין"
+                        data-msg_required="<?= __tr("Please add Full name") ?>" 
+                        data-msg_invalid="<?= __tr("Please add a valid Full name") ?>"
                         pattern="^(([A-Za-z_\-'\u0022\u0590-\u05FF ])\2?(?!\2))+$" 
                         minlength="2"
                         />
@@ -73,8 +73,8 @@
                         minlength="9" 
                         maxlength="10"  
                         class="form-input validate phoneNumber" 
-                        placeholder="טלפון" 
-                        required data-msg_required="יש למלא טלפון" data-msg_invalid="יש למלא טלפון תקין"
+                        placeholder="<?= __tr("Phone") ?>" 
+                        required data-msg_required="<?= __tr("Please add phone number") ?>" data-msg_invalid="<?= __tr("Please add a valid phne number") ?>"
                         <?php if(isset($info['custom_phone'])): ?> 
                             value = "<?= $info['custom_phone'] ?>" 
                         <?php endif; ?>
@@ -87,20 +87,20 @@
                 <?php if((!isset($info['input_remove']['email'])) && $this->data['biz_form']['add_email']): ?>
                     <div class="form-group email-field-switch-on">
                         <?php /* email is not required anymore  */  ?>
-                        <input type="text" name="biz[email]" id="biz_phone" class="form-input validate" placeholder="אימייל" data-msg_required="יש למלא אימייל" data-msg_invalid="יש למלא אימייל תקין" />
+                        <input type="text" name="biz[email]" id="biz_phone" class="form-input validate" placeholder="<?= __tr("Email") ?>" data-msg_required="<?= __tr("Please add email") ?>" data-msg_invalid="<?= __tr("Please add a valid email") ?>" />
                     </div>
                 <?php else: ?>
                     <input type="hidden" name="biz[email]" value="no-mail" />
                 <?php endif; ?>
                 <?php if(!isset($info['input_remove']['city'])): ?> 
                     <div class="form-group">
-                        <select name="biz[city_id]" id="biz_city_id" class="form-input validate" required data-msg_required="אנא בחר עיר">
-                            <option value = "" class="select-note">בחר עיר</option>
-                            <option value = "" class="select-note-2" disabled>ניתן לקבל שירות בערים הבאות:</option>
+                        <select name="biz[city_id]" id="biz_city_id" class="form-input validate" required data-msg_required="<?= __tr("Please select city") ?>">
+                            <option value = "" class="select-note"><?= __tr("Select a city") ?></option>
+                            <option value = "" class="select-note-2" disabled><?= __tr("You can get sevrice at the folowing cities") ?>:</option>
                             <?php foreach($this->data['city_select']['options'] as $option): ?>
                                 <option value = "<?= $option['id'] ?>" class="city-option deep-<?= $option['deep'] ?> city_<?= $option['id'] ?>" data-parent="<?= $option['parent'] ?>"><?= $option['label'] ?></option>
                             <?php endforeach; ?>
-                            <option value = "" class="select-note red">במידה ולא מצאת את שם העיר ברשימה, אין לנו נותן שירות</option>
+                            <option value = "" class="select-note red"><?= __tr("If you don't find the city, we don't have a service provider there") ?></option>
                         </select>
                     </div>      
                 <?php else: ?>
@@ -113,7 +113,7 @@
                         name="biz[note]" 
                         id="biz_note" 
                         class="form-input validate" 
-                        placeholder="הערות\בקשות" 
+                        placeholder="<?= __tr("Notes") ?>" 
                         ></textarea>
                     </div>
                 <?php else: ?>

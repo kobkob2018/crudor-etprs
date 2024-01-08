@@ -1,6 +1,6 @@
 <?php if($info['product_list']): ?>
     <div class="midpage-title-wrap">
-        <h3 class="color-title med-title">קטלוג מוצרים</h3>
+        <h3 class="color-title med-title"><?= __tr("Product catalogue") ?></h3>
     </div>
     <div class="product-list center-flex-row flex-wrap box-list">
         <?php foreach($info['product_list'] as $product): ?>
@@ -22,12 +22,12 @@
                     </div>
                     <?php if($product['price']): ?>
                         <div class="box-price color-b">
-                            <?= $product['price'] ?> ש"ח 
+                            <?= $product['price'] ?> <?= __tr("NIS") ?> 
                         </div> 
                     <?php endif; ?>
                     <div class="box-go-to">
                         <a href="<?= inner_url("products/".$info['view_url']."/?p=".$product['id']) ?>" title="<?= $product['label'] ?>">
-                            למידע נוסף
+                            <?= __tr("More info") ?>
                         </a>
                     </div>
                 </div>

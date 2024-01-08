@@ -230,7 +230,7 @@
             if(!filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)){
                 $return_array['success'] = false;
                 $return_array['reason'] = "invalid IP address";
-                $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
+                $return_array['error'] = array('msg'=>__tr("Error accured. Please reload and try again"));
                 return $return_array;
             }
 
@@ -240,7 +240,7 @@
                 if(str_contains($blocked_ips, $_SERVER['REMOTE_ADDR'])){
                     $return_array['success'] = false;
                     $return_array['reason'] = "IP blocked";
-                    $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
+                    $return_array['error'] = array('msg'=>__tr("Error accured. Please reload and try again"));
                     return $return_array;
                 }
             }
@@ -248,7 +248,7 @@
             if(!isset($_REQUEST['biz']) || ! is_array($_REQUEST['biz'])){
                 $return_array['success'] = false;
                 $return_array['reason'] = "empty request";
-                $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
+                $return_array['error'] = array('msg'=>__tr("Error accured. Please reload and try again"));
                 return $return_array;
             }
 
@@ -257,7 +257,7 @@
                 if(str_contains($blocked_phones, $_REQUEST['biz']['phone'])){
                     $return_array['success'] = false;
                     $return_array['reason'] = "phone blocked";
-                    $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
+                    $return_array['error'] = array('msg'=>__tr("Error accured. Please reload and try again"));
                     return $return_array;
                 }
             }
@@ -283,7 +283,7 @@
                 if(!isset($_REQUEST['biz'][$field_key])){
                     $return_array['success'] = false;
                     $return_array['reason'] = "missing field: ".$field_key;
-                    $return_array['error'] = array('msg'=>"אירעה שגיאה. אנא טען את הדף ונסה שוב");
+                    $return_array['error'] = array('msg'=>__tr("Error accured. Please reload and try again"));
                     return $return_array;
                 }
             }
@@ -456,7 +456,7 @@
                     'user_id'=>$user['info']['id'],
                     'email_to'=>$user['info']['email'],
                     'phone_to'=>$user['info']['phone'],
-                    'title'=>"בקשה להצעת מחיר באתר",
+                    'title'=>__tr("Quote request from the website"),
                     'content'=>$email_content,
                     'sms_content'=>$sms_content,
                     'send_times'=>$user_send_times,

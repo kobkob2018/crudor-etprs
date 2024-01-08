@@ -14,7 +14,7 @@
       );
       $user_register = User_register::find($filter_arr);
       if(!$user_register){
-        echo "פג תוקף האישור של המייל";
+        echo __tr("Email token expired");
         return;
       }
       User_register::update($row_id,array("token"=>'','status'=>'email_confirmed'));
@@ -46,7 +46,7 @@
     }   
 
     protected function create_success_message(){
-        SystemMessages::add_success_message("ההרשמה בוצעה בהצלחה");
+        SystemMessages::add_success_message(__tr("Register success"));
 
     }
 
@@ -77,7 +77,7 @@
       
       $email_content = $this->include_ob_view("user_register/email_confirm_notification.php",$email_info);
 
-      $this->send_email($fixed_values['email'],"אישור אימייל הרשמה",$email_content);
+      $this->send_email($fixed_values['email'],__tr("Register email confirmation"),$email_content);
 
       return $row_id;
     }
@@ -96,7 +96,7 @@
       $user_found = Users::find($filter_arr);
       if($user_found){
           $return_array['success'] = false;
-          $return_array['message'] = "משתמש עם האימייל הזה כבר קיים";
+          $return_array['message'] = __tr("A user with this email already exists");
       }
       return $return_array;
     }
@@ -111,7 +111,7 @@
 
         if($value == '' && $action == 'add'){
             $return_array['success'] = false;
-            $return_array['message'] = "יש לבחור סיסמא חזקה יותר";
+            $return_array['message'] = __tr("Please select a stronger password");
             return $return_array;
         }
 
@@ -125,13 +125,13 @@
 
         if($value != $password_confirm){
             $return_array['success'] = false;
-            $return_array['message'] = "הסיסמאות אינן תואמות";
+            $return_array['message'] = __tr("Passwords not match");
             return $return_array;
         }
 
         if(strlen($value) < 6 ){
             $return_array['success'] = false;
-            $return_array['message'] = "יש לבחור סיסמא חזקה יותר";
+            $return_array['message'] = __tr("Please select a stronger password");
             return $return_array;
         }
 

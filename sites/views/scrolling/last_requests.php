@@ -1,7 +1,7 @@
 <?php if(!empty($info['last_requests'])): ?>
     <div class="kova ">
         
-        <h3 class="big-title">פניות אחרונות מהאתר</h3>
+        <h3 class="big-title"><?= __tr("Last requests from the site") ?></h3>
         <div class="kova-content">
             <div class="news-ticker-wrap">
                 <div class="news-ticker">

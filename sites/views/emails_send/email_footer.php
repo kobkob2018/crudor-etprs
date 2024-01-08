@@ -1,5 +1,5 @@
 <div>
-    בברכה,<br/>
-    מערכת IL-BIZ<br/>
-    קידום עסקים באינטרנט<br/>
+    <?= __tr("Greetings") ?>,<br/>
+    <?= __tr("IL-BIZ Team") ?><br/>
+    <?= __tr("Business web promotion") ?><br/>
 </div>

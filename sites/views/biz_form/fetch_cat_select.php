@@ -1,12 +1,12 @@
 <div class='form-group child-element' data-cat_id=''>
 
-    <select name = 'cat_tree[]' class='form-input validate to-bind' required data-msg_required='יש לבחור שירות'>
+    <select name = 'cat_tree[]' class='form-input validate to-bind' required data-msg_required='<?= __tr("Please select a service") ?>'>
         
             <option value="">
                 <?php if($info['cat_id'] == $this->data['form_info']['cat_id']): ?>
-                    בחר שירות
+                    <?= __tr("Please select a service") ?>
                 <?php else: ?>
-                    בחר
+                    <?= __tr("Select") ?>
                 <?php endif; ?>
             </option>
             <?php foreach($info['children'] as $biz_cat): ?>

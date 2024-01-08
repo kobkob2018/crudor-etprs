@@ -48,7 +48,7 @@
 	<?php $this->include_view('registered_scripts/foot.php'); ?>
 	<div class="hidden biz-form-modal" data-state="empty">
 		<div class="modal-close-button-wrap">
-			<a href="javascript://" onclick="closebizForm()" title="סגור">X</a>
+			<a href="javascript://" onclick="closebizForm()" title="<?= __tr("Close") ?>">X</a>
 		</div>
 		<div class="biz-form-holder"></div>
 	</div>

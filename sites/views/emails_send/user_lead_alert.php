@@ -1,23 +1,23 @@
 <div style="<?= $this->data['directions']['direction'] ?>">
 
-	<h2>שלום <?= $info['user']['info']['full_name']; ?>.<br/></h2>
-	<h3>התקבלה בקשה להצעת מחיר מהאתר <?= $info['site']['domain'] ?></h3>
+	<h2><?= __tr("Hello $1", array($info['user']['info']['full_name'])) ?>.<br/></h2>
+	<h3><?= __tr("A quote request from $1 has arrived", array($info['site']['domain'])) ?></h3>
 	<br/><br/>
 	
-    קטגוריה: <?= $info['lead']['cat_tree_name'] ?> <br/>
-    שם: <?= $info['lead']['full_name'] ?> <br/>
-    טלפון: <?= $info['lead']['phone'] ?> <br/>
-    אימייל: <?= $info['lead']['email'] ?> <br/>
-    עיר: <?= $info['lead']['city_name'] ?> <br/>
-    הערות\בקשות: <?= $info['lead']['note'] ?> <br/>
+    <?= __tr("Category") ?>: <?= $info['lead']['cat_tree_name'] ?> <br/>
+    <?= __tr("Name") ?>: <?= $info['lead']['full_name'] ?> <br/>
+    <?= __tr("Phone") ?>: <?= $info['lead']['phone'] ?> <br/>
+    <?= __tr("Email") ?>: <?= $info['lead']['email'] ?> <br/>
+    <?= __tr("City") ?>: <?= $info['lead']['city_name'] ?> <br/>
+    <?= __tr("Notes") ?>: <?= $info['lead']['note'] ?> <br/>
     <br/><br/>
-	<a href="<?= $info['auth_link'] ?>">לחץ כאן לצפייה במערכת הלידים</a> 
+	<a href="<?= $info['auth_link'] ?>"><?= __tr("Click here to view in Myleads") ?></a> 
     <?php if($info['lead']['alert_leads_credit']): ?>
-        <b>שים לב</b><br/>
+        <b><?= __tr("To your info") ?></b><br/>
         <div style="color:red;">
-            פנייה זו מסומנת בכוכביות מכיוון שהסתיימה לך חבילת הלידים.
+            <?= __tr("This request is marked with '*' because your package is expired") ?>.
             <br/>
-            אנא פנה לשירות הלקוחות.
+            <?= __tr("Please reffer to customer service") ?>.
         </div>
     <?php endif; ?>
 

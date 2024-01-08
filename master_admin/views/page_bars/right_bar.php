@@ -32,6 +32,10 @@
                 <a href="<?= inner_url('cities/list/') ?>" title="ניהול ערים ואזורים" class="a-link">ניהול ערים ואזורים</a>
             </li> 
 
+            <li class="bar-item <?= $view->a_c_class("languages","language_messages") ?>">
+                <a href="<?= inner_url('languages/list/') ?>" title="ניהול תרגומים" class="a-link">ניהול תרגומים</a>
+            </li> 
+
             <li class="bar-item <?= $view->a_c_class("biz_categories") ?>">
                 <a href="<?= inner_url('biz_categories/list/') ?>" title="ניהול קטגוריות בפורטל" class="a-link">ניהול קטגוריות</a>
             </li> 

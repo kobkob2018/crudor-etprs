@@ -1,5 +1,5 @@
 <div class="focus-box register_wrap">
-    <h3>הרשמה למערכת</h3>
+    <h3><?= __tr("System registration") ?></h3>
     <hr/>
     <div id="block_form_wrap" class="form-gen page-form">
         <?php $this->include_view('user_register/pretty_form.php',array('state'=>'reg_form')); ?>

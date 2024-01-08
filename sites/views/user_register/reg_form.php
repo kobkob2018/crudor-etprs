@@ -35,7 +35,7 @@
                         <?php if($build_field['type'] == 'select'): ?>
                         
                             
-                            <select  id='row_<?= $field_key ?>' name='row[<?= $field_key ?>]' class='form-select <?= $build_field['validate_frontend'] ?>' data-msg='יש לבחור <?= $build_field['label'] ?>'>
+                            <select  id='row_<?= $field_key ?>' name='row[<?= $field_key ?>]' class='form-select <?= $build_field['validate_frontend'] ?>' data-msg='<?= __tr("Please select $1", array($build_field['label'])) ?>'>
                                 <?php if(isset($build_field['select_blank'])  && $build_field['select_blank']): ?>
                                     <option value="<?= $build_field['select_blank']['value'] ?>"><?= $build_field['select_blank']['label'] ?></option>
                                 <?php endif; ?>
@@ -49,7 +49,7 @@
                         <?php if($build_field['type'] == 'textbox'): ?>
                             
                             <?php if(isset($build_field['reachtext']) && $build_field['reachtext'] === 'optional'): ?>              
-                                <a href="javascript://" onClick = "initReachEditor(this,'row_<?= $field_key ?>_textarea')" >פתח עורך טקסט עשיר</a>  
+                                <a href="javascript://" onClick = "initReachEditor(this,'row_<?= $field_key ?>_textarea')" ><?= __tr("Open reach text editor") ?></a>  
                             <?php endif; ?> 
                             <textarea name="row[<?= $field_key ?>]" id="row_<?= $field_key ?>_textarea" class="form-input form-textarea" data-msg-required="*"><?= $this->get_form_input($field_key); ?></textarea>
                             <?php if(isset($build_field['reachtext']) && $build_field['reachtext']): ?>
@@ -97,11 +97,11 @@
                                             Your browser does not support the video tag.
                                         </video>
                                     <?php else: ?>
-                                        צפה בקובץ
+                                        <?= __tr("Watch file") ?>
                                     <?php endif; ?>
                                 </a>
                                 <br/>
-                                <a href="<?= current_url() ?>&remove_file=<?= $field_key ?>">הסר <?= $build_field['label'] ?></a>
+                                <a href="<?= current_url() ?>&remove_file=<?= $field_key ?>"><?= __tr("Remove") ?> <?= $build_field['label'] ?></a>
                             </div>
                             <?php endif; ?>
                             
@@ -119,7 +119,7 @@
                     
                     <div class='form-group <?= isset($build_field['css_class'])? $build_field['css_class']: "" ?>'>
                         <div class="form-group-st">
-                            <label for='row[<?= $field_key ?>_confirm]'>אימות <?= $build_field['label'] ?></label>
+                            <label for='row[<?= $field_key ?>_confirm]'><?= __tr("$1 confirmation", array($build_field['label'])) ?></label>
                         </div>
                         <div class='form-group-en'>
                             <input type='password' name='row[<?= $field_key ?>_confirm]" id="row_<?= $field_key ?>_confirm' class='form-input' data-msg-required='*' value=""  />
@@ -133,13 +133,13 @@
                 <label id="submit_label"></label>
             </div>
             <div class="form-group-en">
-                <input type="submit"  class="submit-btn"  value="שליחה" />
+                <input type="submit"  class="submit-btn"  value="<?= __tr("Send") ?>" />
             </div>
         </div>
         <?php if(isset($this->data['item_delete_url'])): ?>
             <div class="delete-box">
                 <hr/>
-                <a href="<?= $this->delete_url($this->data['item_info']) ?>"  class="delete-link" >מחיקה</a>
+                <a href="<?= $this->delete_url($this->data['item_info']) ?>"  class="delete-link" ><?= __tr("Delete") ?></a>
             </div>
         <?php endif; ?>
     </form>

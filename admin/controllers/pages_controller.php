@@ -62,7 +62,17 @@
     }
 
     protected function get_filter_fields_collection(){
-      $filter_fields_collection = array(        
+      $filter_fields_collection = array(  
+        
+        'archived'=>array(
+          'label'=>'חיפוש ב',
+          'type'=>'select',
+          'default'=>'0',
+          'options'=>array(
+              array('value'=>'0', 'title'=>'דפים פעילים'),
+              array('value'=>'1', 'title'=>'ארכיון')
+          ),
+      ), 
         'free_search'=>array(
             'label'=>'חיפוש חפשי',
             'type'=>'text',
@@ -117,7 +127,7 @@
 
     protected function get_paginated_list($filter_arr, $payload){
       $payload['order_by'] = "title, id";
-      return AdminPages::get_list($filter_arr, 'id, status, user_id, title, link, visible, views, convertions, spam_convertions',$payload);
+      return AdminPages::get_list($filter_arr, 'id, archived, status, user_id, title, link, visible, views, convertions, spam_convertions',$payload);
     }
 
     public function status_update(){

@@ -1,11 +1,11 @@
-<h1 class="color-title title-wrap">תוצאות חיפוש "<?= $info['search'] ?>"</h1>
+<h1 class="color-title title-wrap"><?= __tr("Search result") ?> "<?= $info['search'] ?>"</h1>
 
 <?php if(empty($info['pages_list'])): ?>
-    <b class="red">לא נמצאו תוצאות חיפוש</b>
+    <b class="red"><?= __tr("No search matches found") ?></b>
 <?php endif; ?>
 
 <?php if(!empty($info['pages_list'])): ?>
-    <h2 class="color-b title-wrap">תוצאות דפים</h2>
+    <h2 class="color-b title-wrap"><?= __tr("Page results") ?></h2>
 <?php endif; ?>
 
 <?php foreach($info['pages_list'] as $page): ?>
@@ -28,7 +28,7 @@
         <div class="list-article-button-wrap">
 
             <a class="list-article-button a-wrap color-button nice-button" href = "<?= inner_url($page['link']) ?>" title="<?= $page['title'] ?>" >
-                צפה בכתבה
+                <?= __tr("View post") ?>
             </a> 
         </div>
         <div class="clear"></div>      
@@ -36,7 +36,7 @@
 <?php endforeach; ?>
 
 <?php if(!empty($info['pages_list'])): ?>
-    <h2 class="color-b title-wrap">תוצאות מוצרים</h2>
+    <h2 class="color-b title-wrap"><?= __tr("Product results") ?></h2>
 <?php endif; ?>
 
 <?php foreach($info['product_list'] as $product): ?>
@@ -58,7 +58,7 @@
         </div>
         <div class="list-article-button-wrap">
             <a class="list-article-button a-wrap color-button nice-button" href = "<?= $product['url'] ?>" title="<?= $product['title'] ?>" >
-                צפה במוצר
+                <?= __tr("View product") ?>
             </a> 
         </div>
         <div class="clear"></div>      

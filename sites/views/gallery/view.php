@@ -3,7 +3,7 @@
         <form action = "<?= inner_url("gallery/view/") ?>" class="cat-select-form" name="cat_select_form" method="GET" >
             <select name="cat" class="cat-select select-cat-auto-submit">
                 <option value="">
-                    בחר נושא
+                    <?= __tr("Select a subject") ?>
                 </option>
                 <?php foreach($info['cat_list'] as $cat): ?>
                     <option value="<?= $cat['id'] ?>" <?= $cat['selected_str'] ?> >

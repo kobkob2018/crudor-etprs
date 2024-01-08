@@ -18,7 +18,7 @@
         <div class="list-article-button-wrap">
 
             <a class="list-article-button a-wrap color-button nice-button" href = "<?= inner_url($page['link']) ?>" title="<?= $page['title'] ?>" >
-                צפה בכתבה
+                <?= __tr("View post") ?>
             </a> 
         </div>
         <div class="clear"></div>      

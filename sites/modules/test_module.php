@@ -6,7 +6,7 @@
             echo "<hr/>";
             echo "hi this is help function in test module";
             echo "<hr/>";
-            echo "<a href='http://usites.com/usites/admin/'>למערכת הניהול</a>";
+            echo "<a href='http://usites.com/usites/admin/'>To admin</a>";
             echo "<hr/>";
             $current_url = get_config('base_url') . $_SERVER["REQUEST_URI"];
             echo "<p> here is the session:</p>";

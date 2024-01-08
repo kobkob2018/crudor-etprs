@@ -7,7 +7,11 @@
 </div>
 <h3>ניהול דף: <?= $this->data['page_info']['title'] ?></h3>
 <div class='view-on-site'>
-<?php if($this->data['page_info']['status'] != '1'): ?>
+<?php if($this->data['page_info']['status'] != '1' || $this->data['page_info']['archived'] == '1'): ?>
+    <?php if($this->data['page_info']['archived'] == '1'): ?>
+        <b class="red">הדף נמצא בארכיון (בדרך למחיקה)</b>
+        <br/>
+    <?php endif; ?>
     <?php if($this->data['page_info']['status'] == '5'): ?>
         <b class="red">הדף ממתין לאישור מנהל</b>
         <br/>
