@@ -176,17 +176,17 @@ class Language_messagesController extends CrudController{
         $message_json_arr[$message['msgid']] = $message['msgstr'];
     }
     $message_json = json_encode($message_json_arr);
-    if(!is_dir('languages')){
+    if(!is_dir('locale')){
         $oldumask = umask(0) ;
-        $mkdir = @mkdir( 'languages', 0755 ) ;
+        $mkdir = @mkdir( 'locale', 0755 ) ;
         umask( $oldumask ) ;
     }
-    if(!is_dir('languages/'.$system_id)){
+    if(!is_dir('locale/'.$system_id)){
         $oldumask = umask(0) ;
-        $mkdir = @mkdir( 'languages/'.$system_id, 0755 ) ;
+        $mkdir = @mkdir( 'locale/'.$system_id, 0755 ) ;
         umask( $oldumask ) ;
     }
-    $language_file = 'languages/'.$system_id."/".$iso_code.".json";
+    $language_file = 'locale/'.$system_id."/".$iso_code.".json";
     if(file_exists($language_file)){
         unlink($language_file);
     }
