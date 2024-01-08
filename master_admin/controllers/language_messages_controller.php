@@ -180,6 +180,7 @@ class Language_messagesController extends CrudController{
         $oldumask = umask(0) ;
         $mkdir = @mkdir( 'locale', 0755 ) ;
         umask( $oldumask ) ;
+        exit("ok not");
     }
     if(!is_dir('locale/'.$system_id)){
         $oldumask = umask(0) ;
