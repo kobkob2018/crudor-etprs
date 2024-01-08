@@ -191,6 +191,7 @@ class Language_messagesController extends CrudController{
         unlink($language_file);
     }
     file_put_contents($language_file, $message_json);
+    exit("ok");
   }
 }
 ?>
