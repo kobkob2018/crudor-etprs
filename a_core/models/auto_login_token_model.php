@@ -10,7 +10,7 @@
         $expiry_type_sql = "AND expiry_type = :expiry_type ";
         $execute_arr['expiry_type'] = $expiry_type;
       }
-      $sql = "DELETE FROM auto_login_token WHERE $expiry_type_sql AND created_date < (NOW() - INTERVAL :days_old DAY)";
+      $sql = "DELETE FROM auto_login_token WHERE 1 $expiry_type_sql AND created_date < (NOW() - INTERVAL :days_old DAY)";
       $db = Db::getInstance();		
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
