@@ -18,6 +18,10 @@ class Cron_masterController extends CrudController{
         'module'=>'cron_bookkeeping',
         'action'=>'daily_alerts'
       ),
+      array('label'=>'auto_login_token_expiry_cleanups', 
+        'module'=>'cron_auto_login_token',
+        'action'=>'expiry_cleanups'
+      ),
     ),
     'daily_midnight'=>array(),
     'weekly_night_time'=>array(

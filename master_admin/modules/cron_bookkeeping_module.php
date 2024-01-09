@@ -1,6 +1,6 @@
 <?php
 	class cron_bookkeepingModule extends Module{
-        public $add_models = array("user_pending_emails","user_bookkeeping");
+        public $add_models = array("user_pending_emails","user_bookkeeping","auto_login_token");
 
         //each minute cronjob at cron_master_controller.php
         public function daily_alerts(){
@@ -56,38 +56,32 @@
         }
 
         protected function send_domain_alert($email_info){
-            $token = md5(time().rand(10000,99999));
-            $message_id = $this->prepare_email_message_id($email_info['user']);
-            $email_info['token'] = $token;
-            $email_info['message_id'] = $message_id;
+            $token_info = $this->prepare_auto_login_token($email_info['user']['id']);
+            $email_info['token'] = $token_info['token'];
+            $email_info['token_id'] = $token_info['id'];
             $email_content = $this->controller->include_ob_view('emails_send/bookeeping_domain_alert.php',$email_info);
-            $email_id =  $this->append_email($email_info['user'],"הארכת תוקף דומיין",$email_content, $message_id);
+            return $this->append_email($email_info['user'],"הארכת תוקף דומיין",$email_content);
 
         }
 
         protected function send_hosting_alert($email_info){
-            $token = md5(time().rand(10000,99999));
-            $message_id = $this->prepare_email_message_id($email_info['user']);
-            $email_info['token'] = $token;
-            $email_info['message_id'] = $message_id;
+            $token_info = $this->prepare_auto_login_token($email_info['user']['id']);
+            $email_info['token'] = $token_info['token'];
+            $email_info['token_id'] = $token_info['id'];
             $email_content = $this->controller->include_ob_view('emails_send/bookeeping_hosting_alert.php',$email_info);
-            return $this->append_email($email_info['user'],"הארכת תוקף אחסון אתר",$email_content, $message_id);
+            return $this->append_email($email_info['user'],"הארכת תוקף אחסון אתר",$email_content);
         }
 
-        protected function prepare_email_message_id($user_info){
-            $email_pending_message = array(
-                'user_id'=>$user_info['id'],
-                'email_to'=>"prepare",
-                'phone_to'=>"0",
-                'title'=>"prepare",
-                'content'=>"prepare",
-                'sms_content'=>'',
-                'send_times'=>''
+        protected function prepare_auto_login_token($user_id){
+            $token_info = array(
+                'token'=>md5(time().rand(10000,99999)),
+                'user_id'=>$user_id
             );
-            return User_pending_emails::create($email_pending_message);;
+            $token_info['id'] = Auto_login_token::create($token_info);
+            return $token_info;
         }
 
-        protected function append_email($user_info,$email_title,$email_content,$message_id = false){
+        protected function append_email($user_info,$email_title,$email_content){
             $send_times = '[{"hf":"08","mf":"00","ht":"18","mt":"00","d":{"1":"on","2":"on","3":"on","4":"on","6":"on","7":"on"}}]';
             $email_pending_message = array(
                 'user_id'=>$user_info['id'],
@@ -98,12 +92,9 @@
                 'sms_content'=>'',
                 'send_times'=>$send_times
             );
-            if($message_id){
-                return User_pending_emails::update($message_id, $email_pending_message);
-            }
-            if(!$message_id){
-                return User_pending_emails::create($email_pending_message);
-            }     
+
+            return User_pending_emails::create($email_pending_message);
+               
         }
 	}
 ?>

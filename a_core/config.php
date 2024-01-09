@@ -30,7 +30,8 @@ $config = array(
     'email_sender_name'=>'מנהל הרשת',
     'is_mobile'=>false,
 
-    'a_core_models'=>array('userLogin'
+    'a_core_models'=>array(
+        'userLogin'
         ,'users'
         ,'user_rolls'
         ,'systemMessages'
@@ -39,6 +40,7 @@ $config = array(
         ,'biz_categories'
         ,'cities'
         ,'user_pending_emails'
+        ,'auto_login_token'
         ,'test'),
     'override_models'=>array(),
     'access_module'=>'main',
