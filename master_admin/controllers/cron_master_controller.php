@@ -70,7 +70,7 @@ class Cron_masterController extends CrudController{
 
 
     $now_round_hour_str = date("m/d/Y H:00", $now_timestamp);
-    $now_round_day_morning_str = date("m/d/Y 09:05", $now_timestamp);
+    $now_round_day_morning_str = date("m/d/Y 07:00", $now_timestamp);
     $now_round_day_midnight_str = date("m/d/Y 00:00", $now_timestamp);
     $today_is = date('D',$now_timestamp);
     $now_round_monthly_midnight_str = date("m/01/Y 00:00", $now_timestamp);
