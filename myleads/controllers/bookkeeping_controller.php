@@ -3,6 +3,18 @@
   class BookkeepingController extends CrudController{
     public $add_models = array('user_cc_token','myleadsUser_bookkeeping','myleads_pay_by_cc_log');
 
+    protected function handle_access($action){
+		switch ($action){
+		  case 'auth':
+			return true;
+			break;
+		  default:
+			return parent::handle_access(($action));
+			break;
+		  
+		}
+	}
+
     protected function get_info(){
         $info = MyleadsUser_bookkeeping::find(array('user_id'=>$this->user['id']));
         $info['hostPriceYear'] = $info['hostPriceMon']*12*1.17;
@@ -24,6 +36,33 @@
             return $this->redirect_to(inner_url(""));
         }    
         return $this->include_view('bookkeeping/view.php',$info); 
+    }
+
+    public function auth(){
+        if(isset($_REQUEST['msg_id']) && isset($_REQUEST['token'])){
+            return $this->auto_login_with_token($_REQUEST['msg_id'],$_REQUEST['token'],'view');
+        }
+    }
+
+    protected function auto_login_with_token($msg_id, $token, $login_action){
+        $this->add_model('auto_login_token');
+        $md_token = md5($token);
+        $token_filter = array('id'=>$msg_id,'token'=>$md_token);
+        $token_find = Auto_login_token::find($token_filter);
+        if($token_find){
+            Auto_login_token::delete($msg_id);
+            $user_id = $token_find['user_id'];
+            $user_loged_in = false;
+            if($this->user && $this->user['id'] == $user_id){
+                $user_loged_in = true;
+            }
+            if(!$user_loged_in){
+                UserLogin::add_login_trace($user_id,false);
+            }
+        }
+        $this->set_layout('blank');
+        $redirect_to = inner_url("bookkeeping/$login_action/");
+        return $this->redirect_to($redirect_to);
     }
 
     public function send_to_yaad_hosting(){
