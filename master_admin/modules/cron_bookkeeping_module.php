@@ -73,12 +73,14 @@
         }
 
         protected function prepare_auto_login_token($user_id){
+            $token = time().rand(100000,999999);
             $token_info = array(
-                'token'=>md5(time().rand(10000,99999)),
+                'token'=>md5($token),
                 'user_id'=>$user_id
             );
-            $token_info['id'] = Auto_login_token::create($token_info);
-            return $token_info;
+            $return_arr = array('token'=>$token);
+            $return_arr['id'] = Auto_login_token::create($token_info);
+            return $return_arr;
         }
 
         protected function append_email($user_info,$email_title,$email_content){
