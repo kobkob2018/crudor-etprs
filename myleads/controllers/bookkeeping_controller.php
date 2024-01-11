@@ -17,12 +17,12 @@
 
     protected function get_info(){
         $info = MyleadsUser_bookkeeping::find(array('user_id'=>$this->user['id']));
-        $info['hostPriceYear'] = $info['hostPriceMon']*12*1.17;
+        $info['hostPriceYear'] = round($info['hostPriceMon']*12*1.17);
         $info['hosting_days'] = days_to($info['hostEndDate']);
         $info['domain_days'] = days_to($info['domainEndDate']);
         $info['have_hosting'] = ($info['hostPriceMon'] > 0);
         $info['have_domain'] = ($info['domainPrice'] > 0);
-        $info['domainPriceTotal'] = $info['domainPrice']*1.17;
+        $info['domainPriceTotal'] = round($info['domainPrice']*1.17);
         $info['allow_host_payment'] = $info['have_hosting'] && ($info['hosting_days'] < 61);
         $info['allow_domain_payment'] = $info['have_domain'] && ($info['domain_days'] < 61);
         $info['user_cc_tokens'] =  User_cc_token::get_list(array('user_id'=>$this->user['id']));

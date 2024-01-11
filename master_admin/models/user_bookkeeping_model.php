@@ -105,7 +105,7 @@
         $book_list = $req->fetchAll();
         foreach($book_list as $book_id=>$book){
             $book['user'] = Users::get_by_id($book['user_id']);
-            $book['hostPriceYear'] = $book['hostPriceMon']*12*1.17;
+            $book['hostPriceYear'] = round($book['hostPriceMon']*12*1.17);
             $book_list[$book_id] = $book;
         }
         return $book_list;
@@ -120,8 +120,7 @@
         $book_list = $req->fetchAll();
         foreach($book_list as $book_id=>$book){
             $book['user'] = Users::get_by_id($book['user_id']);
-            $book['domainPriceTotal'] = $book['domainPrice']*1.17;
-            
+            $book['domainPriceTotal'] = round($book['domainPrice']*1.17);
             $book_list[$book_id] = $book;
         }
         return $book_list;
@@ -136,7 +135,7 @@
         $book_list = $req->fetchAll();
         foreach($book_list as $book_id=>$book){
             $book['user'] = Users::get_by_id($book['user_id']);
-            $book['domainPriceTotal'] = $book['domainPrice']*1.17;
+            $book['domainPriceTotal'] = round($book['domainPrice']*1.17);
             $book_list[$book_id] = $book;
         }
         return $book_list;
