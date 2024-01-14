@@ -1,3 +1,7 @@
+<?php if(isset($info['item']['test'])): ?>
+OK OK OK 
+<?php endif; ?>
+
 <?php if(isset($info['item']['user_label'])): ?>
     <br/>
     <br/>

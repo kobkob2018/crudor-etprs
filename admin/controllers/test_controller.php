@@ -5,6 +5,10 @@
       return true;
     }
 
+    public function testi(){
+      $this->include_view("portal_user\item_assign_label.php",array('item'=>array('test'=>'kob'),'global_info'=>array()));
+    } 
+
     public $add_models = array("test");
     public function pixelize_me(){
       $this->set_layout("blank");
