@@ -23,24 +23,30 @@
             return $this->handle_access_workon_site_only();
         }
 
+        protected function handle_ajax_access_deny(){
+            global $action;
+            $action_name = $action;
+            if(strpos($action_name, 'ajax_') === 0){
+                $print_result = array(
+                    'success'=>false,
+                    'err_message'=>'User loged out',
+                    'fail_reason'=>'logout_user'
+                );
+                $this->controller->print_json_page($print_result);
+                return true;
+            }
+            return false;
+        }
+
         public function handle_access_login_only(){
-            $action_name = $this->action_data;
              if(!$this->user){
-                if(strpos($action_name, 'ajax_') === 0){
-                    $print_result = array(
-                        'success'=>false,
-                        'err_message'=>'User loged out',
-                        'fail_reason'=>'logout_user'
-                    );
-                    $this->controller->print_json_page($print_result);
-                }
-                else{
+                if(!$this->handle_ajax_access_deny()){
                     session__set('last_requested_url',current_url());
+                    
                     $this->redirect_to(inner_url('userLogin/login/'));
                 }
                 return false;
             }
-            session__unset('last_requested_url');
             return true;
         }
 
@@ -60,7 +66,10 @@
             $this->controller->add_model('sites');
             $work_on_site = Sites::get_user_workon_site();
             if(!$work_on_site){
-                $this->redirect_to(inner_url('userSites/list/'));
+                if(!$this->handle_ajax_access_deny()){
+                    session__set('last_requested_url',current_url());
+                    $this->redirect_to(inner_url('userSites/list/'));
+                }      
                 return false;
             }
             return true;
@@ -114,13 +123,17 @@
         }
 
         public function handle_access_user_can(){ 
+            if(!$this->handle_access_workon_site_only()){
+                return false;
+            }
             $this->controller->add_model('sites');
             $user_can = $this->action_data;
             $user = $this->user;
             $work_on_site = Sites::get_user_workon_site();
-
+            
             $user_is_admin = Helper::user_is('admin',$user,$work_on_site);
             if($user_is_admin){
+                //exit("is admin");
                 return true;
             }
             $user_is_author = Helper::user_is('author',$user,$work_on_site);

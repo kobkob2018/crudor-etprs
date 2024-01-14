@@ -29,5 +29,18 @@
             $this->include_view('user/site_list.php',$info);
         }
 
+        public function get_site_users_list_for_item_assign(){
+            $this->controller->add_model("site_users");
+            $site_id = $this->controller->data['work_on_site']['id'];
+            $users_list = array();
+            $site_users = Site_users::get_list(array('site_id'=>$site_id),"user_id");
+            foreach($site_users as $site_user){
+              $find_user = Users::get_by_id($site_user['user_id'],'id, full_name');
+              if($find_user){
+                $users_list[] = $find_user;
+              }
+            }
+            return $users_list;
+          }
 	}
 ?>

@@ -15,8 +15,11 @@
         case 'error':
           return true;
           break;
+        case 'ajax_assign_user':
+            return $this->call_module('admin','handle_access_site_user_is','master_admin');
+            break;
         case 'status_update':
-          return $this->call_module('admin','handle_access_user_is','admin');
+          return $this->call_module('admin','handle_access_site_user_is','admin');
           break;
         default:
           return $this->call_module('admin','handle_access_user_can','pages');
@@ -57,6 +60,8 @@
         $this->data['page_import_prepare'] = AdminPages::find($import_filter_arr, 'id, title, link');
       }
 
+      $list_info['site_users'] = $this->call_module("user_sites","get_site_users_list_for_item_assign");
+      
       $this->include_view('content_pages/list.php',$list_info);
 
     }
@@ -172,6 +177,32 @@
     public function include_add_view(){
       $this->include_view('content_pages/add.php');
     }   
+
+    public function ajax_assign_user(){
+      $this->set_layout('blank');
+      $return_arr = array("success"=>false,"err"=>'missing_params',"err_msg"=>__tr("Missing params"));
+      if(!(isset($_REQUEST['item_id']) && isset($_REQUEST['user_id']))){
+        return print(json_encode($return_arr));
+      }
+      $user_id = $_REQUEST['user_id'];
+      $item_id = $_REQUEST['item_id'];
+      $user_info = Users::get_by_id($user_id,"id, full_name");
+      if(!$user_info){
+        return print(json_encode($return_arr));
+      }
+      $update_arr = array(
+        'user_id'=>$user_id
+      );
+      AdminPages::update($item_id,$update_arr);
+      
+      $return_arr = array(
+        'success'=>'ok',
+        'item_id'=>$item_id,
+        'user_id'=>$user_info['id'],
+        'user_label'=>$user_info['full_name']
+      );
+      return print(json_encode($return_arr));
+    }
 
     protected function update_success_message(){
       SystemMessages::add_success_message("הדף עודכן בהצלחה");

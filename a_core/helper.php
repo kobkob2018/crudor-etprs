@@ -240,7 +240,7 @@ function __tr($msgid, $replace=array()){
     global $init_request;
     $system_id = get_config("default_system");
     if(isset($init_request['system'])){
-        return $init_request['system']."/".$file_path;
+        $system_id =  $init_request['system'];
     }
     global $system_iso_code;
     return Translation::__translate("main",$system_id, $system_iso_code, $msgid, $replace);

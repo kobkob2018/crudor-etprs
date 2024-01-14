@@ -3,9 +3,13 @@
     public $add_models = array("gallery_images","gallery","gallery_cat","gallery_cat_assign");
 
     protected function handle_access($action){
+        
         switch ($action){
             case 'status_update':
                 return $this->call_module('admin','handle_access_user_is','admin');
+            case 'ajax_assign_user':
+                return $this->call_module('admin','handle_access_site_user_is','master_admin');
+                break;
             default:
                 return $this->call_module('admin','handle_access_user_can','gallery');
                 break; 
@@ -13,7 +17,7 @@
     }
 
     protected function init_setup($action){
-        if($action != 'gallery_list' && $action!='delete_gallery_cat'){
+        if($action != 'gallery_list' && $action!='delete_gallery_cat'  && $action!='ajax_assign_user'){
             $gallery_id = $this->add_gallery_info_data();
             if(!$gallery_id){
                 $this->redirect_to(inner_url("gallery_images/gallery_list/"));
@@ -60,9 +64,35 @@
         if($this->view->site_user_is('admin')){
             $this->data['gallery_cats'] = $this->prepare_forms_for_all_list($gallery_cats,Gallery_cat::setup_field_collection(),"cat_");
         }
-        
+        $list_info['site_users'] = $this->call_module("user_sites","get_site_users_list_for_item_assign");
+
         $this->include_view('gallery_images/gallery_list.php',$list_info);
     }
+
+    public function ajax_assign_user(){
+        $this->set_layout('blank');
+        $return_arr = array("success"=>false,"err"=>'missing_params',"err_msg"=>__tr("Missing params"));
+        if(!(isset($_REQUEST['item_id']) && isset($_REQUEST['user_id']))){
+          return print(json_encode($return_arr));
+        }
+        $user_id = $_REQUEST['user_id'];
+        $item_id = $_REQUEST['item_id'];
+        $user_info = Users::get_by_id($user_id,"id, full_name");
+        if(!$user_info){
+          return print(json_encode($return_arr));
+        }
+        $update_arr = array(
+          'user_id'=>$user_id
+        );
+        $return_arr = array(
+          'success'=>'ok',
+          'item_id'=>$item_id,
+          'user_id'=>$user_info['id'],
+          'user_label'=>$user_info['full_name']
+        );
+        Gallery::update($item_id,$update_arr);
+        return print(json_encode($return_arr));
+      }
 
     protected function get_filter_fields_collection(){
         $filter_fields_collection = array(        

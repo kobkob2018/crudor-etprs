@@ -30,9 +30,22 @@
         }
         else{
             session__set('workon_site',$workon_site);
-            $this->redirect_to(inner_url(''));
-        }       
+            return $this->end_login();
+        }
     }
+
+
+
+    protected function end_login(){
+		$go_to_page = inner_url('');
+		if(session__isset('last_requested_url')){
+			$go_to_page = session__get('last_requested_url');
+			session__unset('last_requested_url');
+		}
+		
+		$this->redirect_to($go_to_page);
+		return;
+	}
 
 
   }

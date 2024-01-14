@@ -18,10 +18,8 @@
         <div class="table-tr row">
             <div class="col">
                 <a href = "<?= inner_url('products/edit/') ?>?row_id=<?= $product['id'] ?>" title="ערוך מוצר"><?= $product['label'] ?></a>
-                <?php if(isset($product['user_label'])): ?>
-                    <br/>
-                    <b>נוצר ע"י: </b><?= $product['user_label'] ?>
-                <?php endif; ?>
+                <?php $this->include_view("portal_user\item_assign_label.php",array('item'=>$product,'global_info'=>$info)) ?>
+                
                 <?php if($product['status'] == '5'): ?>
                     <br/>
                     <b class="red">ממתין לאישור מנהל</b>
@@ -50,3 +48,4 @@
     <?php endforeach; ?>
 </div>
 
+<?php $this->include_view("portal_user\items_assign_scripts.php",array('api_url'=>"products/ajax_assign_user/",'site_users'=>$info['site_users'],'global_info'=>$info)) ?>
