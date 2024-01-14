@@ -18,7 +18,7 @@
         <div class="table-tr row">
             <div class="col">
                 <a href = "<?= inner_url('products/edit/') ?>?row_id=<?= $product['id'] ?>" title="ערוך מוצר"><?= $product['label'] ?></a>
-                <?php // $this->include_view("portal_user\item_assign_label.php",array('item'=>$product,'global_info'=>$info)) ?>
+                <?php $this->include_view("portal_user/item_assign_label.php",array('item'=>$product,'global_info'=>$info)) ?>
                 
                 <?php if($product['status'] == '5'): ?>
                     <br/>
@@ -48,4 +48,4 @@
     <?php endforeach; ?>
 </div>
 
-<?php $this->include_view("portal_user\items_assign_scripts.php",array('api_url'=>"products/ajax_assign_user/",'site_users'=>$info['site_users'],'global_info'=>$info)) ?>
+<?php $this->include_view("portal_user/items_assign_scripts.php",array('api_url'=>"products/ajax_assign_user/",'site_users'=>$info['site_users'],'global_info'=>$info)) ?>

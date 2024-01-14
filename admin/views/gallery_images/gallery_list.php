@@ -57,7 +57,7 @@
                         <br/>
                         <a href = "<?= inner_url('gallery_images/list/') ?>?gallery_id=<?= $item['id'] ?>" title="בחירה">רשימת תמונות בגלריה</a>
 
-                        <?php // $this->include_view("portal_user\item_assign_label.php",array('item'=>$item,'global_info'=>$info)) ?>
+                        <?php $this->include_view("portal_user/item_assign_label.php",array('item'=>$item,'global_info'=>$info)) ?>
                         <?php if($item['status'] == '5'): ?>
                             <br/>
                             <b class="red">ממתין לאישור מנהל</b>
@@ -167,4 +167,4 @@
 <?php endif; ?>
 
 
-<?php $this->include_view("portal_user\items_assign_scripts.php",array('api_url'=>"gallery_images/ajax_assign_user/",'site_users'=>$info['site_users'],'global_info'=>$info)) ?>
+<?php $this->include_view("portal_user/items_assign_scripts.php",array('api_url'=>"gallery_images/ajax_assign_user/",'site_users'=>$info['site_users'],'global_info'=>$info)) ?>
