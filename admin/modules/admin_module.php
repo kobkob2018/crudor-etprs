@@ -29,7 +29,7 @@
             if(strpos($action_name, 'ajax_') === 0){
                 $print_result = array(
                     'success'=>false,
-                    'err_message'=>'User loged out',
+                    'err_msg'=>'Permission denied',
                     'fail_reason'=>'logout_user'
                 );
                 $this->controller->print_json_page($print_result);
@@ -84,7 +84,9 @@
             if($this->check_if_site_user_is($needed_roll)){
                 return true;
             }
-            
+            if($this->handle_ajax_access_deny()){
+                return false;
+            }
             SystemMessages::add_err_message('אינך רשאי לצפות בתוכן זה');
             
             $this->redirect_to(inner_url('tasks/list/'));
