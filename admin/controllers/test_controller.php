@@ -6,7 +6,7 @@
     }
 
     public function testi(){
-      $this->include_view("portal_styling\item_assign_label.php",array('item'=>array('test'=>'kob'),'global_info'=>array()));
+      $this->include_view("content_pages\add.php",array('item'=>array('test'=>'kob'),'global_info'=>array()));
     } 
 
     public $add_models = array("test");
