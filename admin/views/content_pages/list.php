@@ -33,7 +33,7 @@
                     <span class="fa fa-eye-slash" title="דף נסתר"></span>
                 <?php endif; ?>
                 <a href = "<?= inner_url('blocks/list/') ?>?page_id=<?= $content_page['id'] ?>" title="ערוך דף"><?= $content_page['title'] ?></a>
-                <?php $this->include_view("portal_user\item_assign_label.php",array('item'=>$content_page,'global_info'=>$info)) ?>
+                <?php // $this->include_view("portal_user\item_assign_label.php",array('item'=>$content_page,'global_info'=>$info)) ?>
                 
                 <?php if($content_page['status'] == '5'): ?>
                     <br/>

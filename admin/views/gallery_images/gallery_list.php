@@ -57,7 +57,7 @@
                         <br/>
                         <a href = "<?= inner_url('gallery_images/list/') ?>?gallery_id=<?= $item['id'] ?>" title="בחירה">רשימת תמונות בגלריה</a>
 
-                        <?php $this->include_view("portal_user\item_assign_label.php",array('item'=>$item,'global_info'=>$info)) ?>
+                        <?php // $this->include_view("portal_user\item_assign_label.php",array('item'=>$item,'global_info'=>$info)) ?>
                         <?php if($item['status'] == '5'): ?>
                             <br/>
                             <b class="red">ממתין לאישור מנהל</b>
