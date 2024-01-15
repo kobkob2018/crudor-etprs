@@ -1,14 +1,8 @@
-<?php if(isset($_REQUEST['testit'])): ?>
-<script src="style/js/apps/leads_test.js?v=2"></script>
-<?php else: ?>
-	<?php $this->register_script('js','tree_selector',styles_url('style/v1/js/apps/leads.js?cache='.get_config('cash_version'))); ?> 
+<?php $this->register_script('js','leads_main',styles_url('style/v1/js/apps/leads.js?cache='.get_config('cash_version'))); ?> 
 <?php $filter = $this->data['filter']; ?>
 <?php $leads = $this->data['leads']; ?>
 <?php $pages_data = $this->data['pages']; ?>
 
-
-
-<?php endif; ?>
 <div ng-app="leadsApp" ng-controller="leadsCtrl">
 
 	<div class="row-fluid" id="leads_list_page_wrap">
@@ -221,7 +215,8 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr class="responsive-small view_state_{{lead.estimate_form_data['view_state']}} refund_request_sent_{{lead.estimate_form_data['refund_request_sent']}}" ng-repeat="lead in leadsList" data-lead_id="{{lead.estimate_form_data['row_id']}}" ng-click="show_lead($event);">
+
+										<tr class="responsive-small view_state_{{lead.estimate_form_data['view_state']}} refund_request_sent_{{lead.estimate_form_data['refund_request_sent']}} status_{{lead.estimate_form_data['status']}} tag_{{lead.estimate_form_data['tag']}}_00" ng-repeat="lead in leadsList" data-lead_id="{{lead.estimate_form_data['row_id']}}" ng-click="show_lead($event);">
 											<td data-title="#"  class="responsive-hide row_id_col">{{lead.estimate_form_data['row_id']}}</td>
 											<td data-title="סטטוס" class="responsive-hide">{{lead.estimate_form_data['status_str']}}</td>
 											<td data-title="" class="responsive-hide">{{lead.estimate_form_data['tag_str']}}</td>

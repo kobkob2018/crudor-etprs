@@ -157,7 +157,7 @@ leadsApp.controller('leadsCtrl', function($scope, $http) {
 					return;
 				}
 				$scope.lead_data = return_array['lead']['estimate_form_data'];
-				console.log($scope.lead_data);
+				$scope.update_lead_row(lead_id, return_array['lead']['estimate_form_data']);
 				setTimeout(function(){
 					var window_height = jQuery(window).height();
 					var footer_height = jQuery("#footer").outerHeight();
@@ -295,6 +295,7 @@ leadsApp.controller('leadsCtrl', function($scope, $http) {
 				$scope.lead_data = return_array['lead']['lead']['estimate_form_data'];
 				$scope.hide_loading();
 				$scope.show_msg("הליד עודכן בהצלחה");
+				$scope.update_lead_row(lead_id, return_array['lead']['lead']['estimate_form_data']);
 				//$scope.send_filter();
 			}, 
 			function myError(response) {
@@ -328,6 +329,13 @@ leadsApp.controller('leadsCtrl', function($scope, $http) {
 		);
 	};	
 
+	$scope.update_lead_row = function(row_id,form_data){
+		const list_rows = $scope.leadsList.filter((row) => row.estimate_form_data.row_id == row_id);
+		list_rows.forEach((row)=>{
+			row.estimate_form_data = form_data;
+		});
+	}
+
 	$scope.buy_lead = function(){
 		var lead_id = $scope.lead_data['row_id'];
 		$scope.show_loading();
@@ -343,10 +351,14 @@ leadsApp.controller('leadsCtrl', function($scope, $http) {
 					return;
 				}
 				$scope.lead_data = return_array['lead']['estimate_form_data'];
+				$scope.update_lead_row(lead_id, return_array['lead']['estimate_form_data']);
 				if(return_array['success'] != '1'){
 					if(return_array['fail_reason'] = 'no_credit'){
 						$scope.open_lead_sub_form("no_credits_alert_sub_form");
 					}
+				}
+				else{
+					
 				}
 				$scope.hide_loading();
 			}, 

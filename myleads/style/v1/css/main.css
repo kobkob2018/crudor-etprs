@@ -156,18 +156,43 @@ label.error::before{content:"*";}
     /* background-color: #f9f9f9; */
 }
 
-.table-striped>tbody>tr:nth-child(odd).view_state_1>td {
+.table-striped>tbody>tr>td{
+    border-bottom: 2px solid black;
+}
+
+.table-striped>tbody>tr.view_state_1>td {
     background-color: #b9ffbb;
 }
-.table-striped>tbody>tr:nth-child(even).view_state_1>td{
-     background-color: #cdfbff; 
+
+
+.table-striped>tbody>tr.view_state_1.status_0>td {
+    background-color: #b9ffbb;
 }
-.table-striped>tbody>tr:nth-child(odd).refund_request_sent_1>td {
+
+.table-striped>tbody>tr.view_state_1.status_1>td {
+    background-color: #b9daff;
+}
+
+.table-striped>tbody>tr.view_state_1.status_2>td {
+    background-color: #f7ffb9;
+}
+
+.table-striped>tbody>tr.view_state_1.status_3>td {
+    background-color: #92bbd4;
+}
+
+.table-striped>tbody>tr.view_state_1.status_5>td {
+    background-color: #ffd7b9;
+}
+
+.table-striped>tbody>tr.view_state_1.status_4>td {
+    background-color: #f9b9ff;
+}
+
+.table-striped>tbody>tr.refund_request_sent_1>td {
     background-color: #ffd7d7;
 }
-.table-striped>tbody>tr:nth-child(even).refund_request_sent_1>td{
-     background-color: #ffd7d7; 
-}
+
 
 .beck-link{font-weight: bold; font-size: 16px;}
 #responsive-tables .suming-tr{color:red;}
