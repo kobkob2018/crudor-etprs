@@ -82,7 +82,7 @@
 								
 								<select class="multycheckbox" name="leads_filter[tag][]" id="tag_multyselect" multiple="multiple">
 									<?php foreach($filter['tag_options'] as $op_key=>$option): ?>
-										<option value="<?php echo $op_key; ?>" <?php echo $option['selected']; ?>><?php echo $option['str']; ?></option>
+										<option value="<?php echo $op_key; ?>" <?php echo $option['selected']; ?>><?php echo $option['tag']['tag_name']; ?></option>
 									<?php endforeach; ?>
 									
 								</select>
@@ -216,7 +216,7 @@
 									</thead>
 									<tbody>
 
-										<tr class="responsive-small view_state_{{lead.estimate_form_data['view_state']}} refund_request_sent_{{lead.estimate_form_data['refund_request_sent']}} status_{{lead.estimate_form_data['status']}} tag_{{lead.estimate_form_data['tag']}}_00" ng-repeat="lead in leadsList" data-lead_id="{{lead.estimate_form_data['row_id']}}" ng-click="show_lead($event);">
+										<tr class="responsive-small view_state_{{lead.estimate_form_data['view_state']}} refund_request_sent_{{lead.estimate_form_data['refund_request_sent']}} status_{{lead.estimate_form_data['status']}} tag-color-{{lead.estimate_form_data['tag_color']}}" ng-repeat="lead in leadsList" data-lead_id="{{lead.estimate_form_data['row_id']}}" ng-click="show_lead($event);">
 											<td data-title="#"  class="responsive-hide row_id_col">{{lead.estimate_form_data['row_id']}}</td>
 											<td data-title="סטטוס" class="responsive-hide">{{lead.estimate_form_data['status_str']}}</td>
 											<td data-title="" class="responsive-hide">{{lead.estimate_form_data['tag_str']}}</td>
@@ -351,7 +351,7 @@
 											<label for="data_arr[tag]">תיוג</label>
 											<select ng-model="lead_data['tag']" name='data_arr[tag]' class="form-select tag-select input_style">
 												<?php foreach($filter['tag_options'] as $key=>$val): ?>
-													<option value='<?php echo $key; ?>'><?php echo $val['str']; ?></option>		
+													<option value='<?php echo $key; ?>'><?php echo $val['tag']['tag_name']; ?></option>		
 												<?php endforeach; ?>
 											</select>
 										</div>										

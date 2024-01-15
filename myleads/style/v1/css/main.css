@@ -189,6 +189,41 @@ label.error::before{content:"*";}
     background-color: #f9b9ff;
 }
 
+
+.table-striped>tbody>tr.view_state_1.tag-color-1>td {
+    background: #bbbbea;
+}
+.table-striped>tbody>tr.view_state_1.tag-color-2>td {
+    background: #bbe6ea;
+}
+.table-striped>tbody>tr.view_state_1.tag-color-3>td {
+    background: #bbeada;
+}
+.table-striped>tbody>tr.view_state_1.tag-color-4>td {
+    background: #cceabb;
+}
+.table-striped>tbody>tr.view_state_1.tag-color-5>td {
+    background: #e3eabb;
+}
+.table-striped>tbody>tr.view_state_1.tag-color-6>td {
+    background: #ead0bb;
+}
+.table-striped>tbody>tr.view_state_1.tag-color-7>td {
+    background: #eabbcf;
+}
+.table-striped>tbody>tr.view_state_1.tag-color-8>td {
+    background: #eabbe3;
+}
+.table-striped>tbody>tr.view_state_1.tag-color-9>td {
+    background: #d8bbea;
+}
+.table-striped>tbody>tr.view_state_1.tag-color-10>td {
+    background: #bbbeea;
+}
+
+
+
+
 .table-striped>tbody>tr.refund_request_sent_1>td {
     background-color: #ffd7d7;
 }

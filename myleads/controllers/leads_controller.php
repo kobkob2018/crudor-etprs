@@ -338,7 +338,7 @@
 		$tag_options =  Tags::get_user_tag_list();
 		$filter['tag_options'] = array();
 		foreach($tag_options  as $tag_id=>$tag){
-			$filter['tag_options'][$tag_id] = array('selected'=>'','str'=>$tag,'id'=>$tag_id);
+			$filter['tag_options'][$tag_id] = array('selected'=>'','tag'=>$tag,'id'=>$tag_id);
 		}
 		if(isset($filter['tag'])){
 			foreach($filter['tag'] as $option_key){
