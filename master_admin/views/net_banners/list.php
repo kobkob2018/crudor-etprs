@@ -37,9 +37,17 @@
                     </div>
                     <div class="col-30">
                         <?= $banner['clicks'] ?>
+                        <?php if($banner['views']): ?>
+                        <br/>
+                            <?= round(intval($banner['clicks'])/intval($banner['views'])*100) ?>%
+                        <?php endif; ?>
                     </div>
                     <div class="col-30">
                         <?= $banner['convertions'] ?>
+                        <?php if($banner['clicks']): ?>
+                            <br/>
+                            <?= round(intval($banner['convertions'])/intval($banner['clicks'])*100) ?>%
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

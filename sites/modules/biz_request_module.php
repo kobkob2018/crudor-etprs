@@ -124,6 +124,7 @@
                 'form_id',
                 'is_mobile',
                 'banner_id',
+                'cube_id',
                 'aff_id',
                 'referrer',
                 'site_ref',
@@ -149,6 +150,11 @@
             if(isset($fixed_db_values['banner_id']) && $fixed_db_values['banner_id'] != ''){
                 $this->controller->add_model('siteNet_banners');
                 SiteNet_banners::add_count_to_banner($fixed_db_values['banner_id'], 'convertions');
+            }
+
+            if(isset($fixed_db_values['cube_id']) && $fixed_db_values['cube_id'] != ''){
+                $this->controller->add_model('siteSupplier_cubes');
+                SiteSupplier_cubes::add_count_to_cube($fixed_db_values['cube_id'], 'convertions');
             }
 
             $this->send_leads_to_users($request_id,$fixed_db_values,$lead_sends_arr);

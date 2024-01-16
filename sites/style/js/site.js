@@ -102,6 +102,7 @@ initQuotesToggler = ()=>{
 } 
 
 initBannerClickers = ()=>{
+    /*
     document.querySelectorAll('.banner-clicker').forEach(
         clicker=>{
             clicker.addEventListener("click",(event)=>{
@@ -114,6 +115,37 @@ initBannerClickers = ()=>{
                     window.location.href =  link_url;
                 },500);
             });
+        }
+    );
+*/
+    document.querySelectorAll(".counted-module").forEach(
+        counted=>{
+            const count_url = counted.dataset.count_url;
+            const link_url = counted.dataset.link;
+            counted.querySelectorAll(".count-clicker").forEach(
+                clicker=>{
+
+                    clicker.addEventListener("click",(event)=>{
+                        event.preventDefault();
+                        let alt_link_url = link_url;
+                        if(clicker.dataset.link){
+                            alt_link_url = clicker.dataset.link;
+                        }
+                        const pixel = document.createElement('span');
+                        pixel.innerHTML = "<img width='1' height='1' style='display:none' src='"+ count_url +"' />";
+                        clicker.appendChild(pixel);
+                        setTimeout(function(){
+                            if(clicker.target && clicker.target == "_blank"){
+
+                                window.open(alt_link_url);
+                            }   
+                            else{
+                                window.location.href =  alt_link_url;
+                            }
+                        },500);
+                    });
+                }   
+            );
         }
     );
 } 

@@ -1,15 +1,14 @@
 <?php foreach($info['supplier_cubes'] as $cube): ?>
-    <div class="supplier_cubes roundish-cube leftbar-item">
+    <div class="supplier_cubes roundish-cube leftbar-item counted-module" data-link="<?= add_url_params($cube['link'],array('cube_id'=>$cube['id'])) ?>" data-count_url="<?= inner_url("supplier_cube_count/clicks/") ?>?cube_id=<?= $cube['id'] ?>">
+        <img src="<?= inner_url("supplier_cube_count/views/") ?>?cube_id=<?= $cube['id'] ?>" style="display:none" />
         <div class="suplier-title roundish-title section big-title">
-            <a rel="nofollow" href="<?= $cube['link'] ?>" title="<?= $cube['label'] ?>" target="_blank" class="title-a">
+            <a class="title-a count-clicker" href="javascript://" rel="nofollow" title="<?= $cube['label'] ?>" target="_blank">
                 <?= $cube['label'] ?>
             </a>
         </div>
         <?php if($cube['banner']): ?>
             <div class="cube-banner section">
-
-                <img src="<?= inner_url("banner_count/views/") ?>?banner_id=<?= $cube['banner']['id'] ?>" style="display:none" />
-                <a href = "javascript://" class="net-banner banner-clicker" data-link="<?= add_url_params($cube['banner']['goto_href'],array('banner_id'=>$cube['banner_id'])) ?>" data-count_url="<?= inner_url("banner_count/clicks/") ?>?banner_id=<?= $cube['banner']['id'] ?>">
+                <a href = "javascript://" class="net-banner count-clicker" <?php if($cube['banner']['goto_href']): ?>data-link="<?= add_url_params($cube['banner']['goto_href'],array('cube_id'=>$cube['id'])) ?>"<?php endif; ?>>
                     <?php if($cube['banner']['video']): ?>       
                         <video class='cube-banner-vid' width="100%" autoplay loop muted="" playsinline <?php if($cube['banner']['image'] != ""): ?> poster="<?= $this->file_master_url_of('net_banners', $cube['banner']['image']) ?>" <?php endif; ?>>
                             <source src="<?= $this->file_master_url_of('net_banners', $cube['banner']['video']) ?>" alt="<?= $cube['banner']['label'] ?>" type="video/mp4">
@@ -35,7 +34,7 @@
                 <?php endif; ?>
             </div>
             <div class="amin-text">
-                <a class="cube-title" href = "<?= $cube['link'] ?>" title="<?= $cube['label'] ?>">
+                <a class="cube-title count-clicker" href="javascript://" title="<?= $cube['label'] ?>">
                     <?= $cube['label'] ?>
                 </a>
                 <br/> 
@@ -65,7 +64,7 @@
         <?php endif; ?>        
 
         <div class="phone-number section">
-            <a href=<?= $cube['link'] ?> title="<?= $cube['label'] ?>">
+            <a class="count-clicker" href="javascript://" title="<?= $cube['label'] ?>">
                 <?= __tr("Website") ?> <?= $cube['label'] ?>
             </a>
         </div>

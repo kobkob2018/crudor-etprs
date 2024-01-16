@@ -58,5 +58,14 @@
         return $cubes;
     }
 
+    public static function add_count_to_cube($cube_id, $column_name){
+        $execute_arr = array('cube_id'=>$cube_id);
+        $sql = "UPDATE supplier_cubes SET $column_name = $column_name + 1 WHERE id = :cube_id";
+        $db = Db::getInstance();		
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);
+        return;
+    }
+
   }
 ?>

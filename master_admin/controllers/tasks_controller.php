@@ -5,6 +5,21 @@
             return $this->call_module(get_config('main_module'),'handle_access_login_only',$action);
         }
 
+
+        public function check_session(){
+            print_r($_SESSION);
+            exit();
+        }
+
+        public function clear_site_session(){
+            foreach($_SESSION as $key=>$val){
+                if(strpos($key,"ilsite_") === 0){
+                    unset($_SESSION[$key]);
+                }
+            }
+            exit("ok sites session clear");
+        }
+
         public function list(){
             //if(session__isset())
             $filter_arr = $this->get_base_filter();

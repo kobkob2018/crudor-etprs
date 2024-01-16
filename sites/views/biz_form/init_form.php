@@ -35,6 +35,9 @@
             <?php if(isset($_GET['banner_id'])): ?>
                 <input type="hidden" name="biz[banner_id]" value="<?= $_GET['banner_id'] ?>" />
             <?php endif; ?>
+            <?php if(isset($_GET['cube_id'])): ?>
+                <input type="hidden" name="biz[cube_id]" value="<?= $_GET['cube_id'] ?>" />
+            <?php endif; ?>
             <?php if(isset($_GET['aff_id'])): ?>
                 <input type="hidden" name="biz[aff_id]" value="<?= $_GET['aff_id'] ?>" />
             <?php endif; ?>
