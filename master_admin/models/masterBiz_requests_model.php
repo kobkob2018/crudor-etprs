@@ -61,6 +61,7 @@
         $biz_request['city_name'] = $city_name;
         $biz_request['cat_tree'] = Biz_categories::get_item_parents_tree($biz_request['cat_id'],'id,parent,label');
         $biz_request['banner_name'] = self::get_banner_name($biz_request['banner_id']);
+        $biz_request['cube_name'] = self::get_cube_name($biz_request['cube_id']);
         return $biz_request;
     }
 
@@ -87,27 +88,23 @@
         $req->execute($where_params);
         $biz_requests =  $req->fetchAll();
         $banner_names = array();
+        $cube_names = array();
         foreach($biz_requests as $key=>$biz_request){
             $biz_request['cat_tree'] = Biz_categories::get_item_parents_tree($biz_request['cat_id'], 'parent, label');
             $biz_request['banner_name'] = "";
-            
-            if($biz_request['banner_id'] != ""){
+            $biz_request['cube_name'] = "";
+            if($biz_request['banner_id'] != ""){  
                 if(!isset($banner_names[$biz_request['banner_id']])){
-                    $sql = "SELECT label FROM net_banners WHERE id = :banner_id";
-                    $ex_arr = array('banner_id'=>$biz_request['banner_id']);
-                    $req = $db->prepare($sql);
-                    $req->execute($ex_arr);
-                    $banner_result = $req->fetch();
-                    if($banner_result){
-                        $banner_names[$biz_request['banner_id']] = $banner_result['label'];
-                    }
-                    else{
-                        $banner_names[$biz_request['banner_id']] = "";
-                    }
+                    $banner_names[$biz_request['banner_id']] = self::get_banner_name($biz_request['banner_id']);
                 }
                 $biz_request['banner_name'] = $banner_names[$biz_request['banner_id']];
             }
-            
+            if($biz_request['cube_id'] != ""){  
+                if(!isset($cube_names[$biz_request['cube_id']])){
+                    $cube_names[$biz_request['cube_id']] = self::get_cube_name($biz_request['cube_id']);
+                }
+                $biz_request['cube_name'] = $cube_names[$biz_request['cube_id']];
+            }            
             $biz_requests[$key] = $biz_request;
 
         }
@@ -118,20 +115,23 @@
         return $return_arr;
     }
 
-    protected static function get_banner_name($banner_id = ""){
-        $banner_name = "";
-        if($banner_id != "" && $banner_id != '0'){
-            $db = Db::getInstance();
-            $sql = "SELECT label FROM net_banners WHERE id = :banner_id";
-            $ex_arr = array('banner_id'=>$banner_id);
-            $req = $db->prepare($sql);
-            $req->execute($ex_arr);
-            $banner_result = $req->fetch();
-            if($banner_result){
-                $banner_name = $banner_result['label'];
+    protected static function get_banner_name($item_id = ""){
+        return self::get_item_label_from_table($item_id,'net_banners');
+    }
+
+    protected static function get_cube_name($item_id = ""){
+        return self::get_item_label_from_table($item_id,'supplier_cubes');
+    }
+
+    protected static function get_item_label_from_table($item_id, $table_name){
+        $item_name = "";
+        if($item_id != "" && $item_id != '0'){
+            $item_result = Self::simple_find_by_table_name(array('id'=>$item_id),$table_name,'label');
+            if($item_result){
+                $item_name = $item_result['label'];
             }
         }
-        return $banner_name;
+        return $item_name;
     }
 
     public static function add_1_reciver($request_id){

@@ -81,6 +81,9 @@
         </div>
         <div class="col">
             <?= $biz_request['banner_name'] ?>
+            <?php if($biz_request['cube_name'] != ""): ?>
+                <b>קוביית ספקים:</b><br/> <?= $biz_request['cube_name'] ?>
+            <?php endif; ?>
         </div>
         <div class="col">
             <select class="auto-change-status" data-row_id="<?= $biz_request['id'] ?>">
