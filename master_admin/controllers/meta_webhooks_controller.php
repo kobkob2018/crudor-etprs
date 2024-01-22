@@ -10,7 +10,7 @@ class Meta_webhooksController extends CrudController{
         if(isset($_REQUEST['token']) && $_REQUEST['token'] == '1fdb7184e697ab9355a3f1438ddc6ef9'){
             return true;
         }
-        exit("fail");
+        
         return false;
     }
 
