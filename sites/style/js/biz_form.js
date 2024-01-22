@@ -262,7 +262,9 @@ class BizForm{
                 this.wrapElement.insertBefore(successEl,this.formElement);
                 this.formElement.remove();
                 this.submitButton.remove();
-
+                if(window.send_gtag_convertion){
+                    send_gtag_convertion();
+                }
 
             }
             else{
