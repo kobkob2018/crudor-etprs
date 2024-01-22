@@ -10,7 +10,8 @@ class Meta_webhooksController extends CrudController{
         if(isset($_REQUEST['token']) && $_REQUEST['token'] == '1fdb7184e697ab9355a3f1438ddc6ef9'){
             return true;
         }
-        
+        Helper::add_log('meta_webhooks_no_token.txt',"\n\n\n: ".date("m/d/Y H:i", time())."-sent by hooks");
+        exit("fail");
         return false;
     }
 
