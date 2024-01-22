@@ -5,11 +5,12 @@ class Meta_webhooksController extends CrudController{
 
         if(isset($_REQUEST['token']) && $_REQUEST['token'] == 'kobkob'){
             Helper::add_log('meta_webhooks_no_token.txt',"\n\n\n: ".date("m/d/Y H:i", time())."-kobkob");
-            exit("the kobkob ");
+            exit("fail");
         }
-        if(isset($_REQUEST['token']) && $_REQUEST['token'] == 'kobkob5'){
+        if(isset($_REQUEST['token']) && $_REQUEST['token'] == '1fdb7184e697ab9355a3f1438ddc6ef9'){
             return true;
         }
+        exit("fail");
         return false;
     }
 
@@ -20,6 +21,7 @@ class Meta_webhooksController extends CrudController{
             $request_smg = "\n$key: $val";
         }
         Helper::add_log('meta_webhooks.txt',"\n\n\n: ".date("m/d/Y H:i", time()).":$request_smg");
+        exit("ok");
     }
 }
 ?>
