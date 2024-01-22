@@ -74,10 +74,19 @@
                     <?= $content_page['views'] ?>
                 </div>
                 <div class="col">
+
                     <?= $content_page['convertions'] ?>
+                    <?php if($content_page['views']): ?>
+                        <br/>
+                        <?= round(intval($content_page['convertions'])/intval($content_page['views'])*100) ?>%
+                    <?php endif; ?>
                 </div>
                 <div class="col">
                     <?= $content_page['spam_convertions'] ?>
+                    <?php if($content_page['views']): ?>
+                        <br/>
+                        <?= round(intval($content_page['spam_convertions'])/intval($content_page['views'])*100) ?>%
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
             <div class="col">

@@ -66,6 +66,8 @@
                 $info['biz_form']['cat_id'] = $custom_cat;
             }
 
+            $info = $this->init_campaign_info($info);
+
             $cat_id = $info['biz_form']['cat_id'];
 
             $cat_tree = Biz_categories::get_item_parents_tree($cat_id,'id, googleADSense, use_parent_gas, show_whatsapp_button');
@@ -88,6 +90,34 @@
                 $this->add_data('biz_form_on','1');
                 $this->include_view('biz_form/init_form.php',$info);
             }
+        }
+
+        protected function init_campaign_info($info){
+            if(session__isset('campaingn')){
+                $info['campaign'] = session__get('campaign');
+                $info['campaign_type'] = $info['campaign']['type'];
+                $info['campaign_name'] = $info['campaign']['name'];
+            }
+            $campaign = array();
+            if(isset($_REQUEST['campaign'])){
+                $campaign['name'] = $_REQUEST['campaign'];
+                $campaign['type'] = '0';
+            }
+            
+            if(isset($_REQUEST['gclid'])){
+                $campaign['type'] = '2';
+            }
+            if(isset($_REQUEST['fblid'])){
+                $campaign['type'] = '1';
+            }
+            
+            if(!empty($campaign)){
+                session__set('campaign',$campaign);
+                $info['campaign'] = $campaign;
+                $info['campaign_type'] = $info['campaign']['type'];
+                $info['campaign_name'] = $info['campaign']['name'];
+            }
+            return $info;
         }
 
 	}
