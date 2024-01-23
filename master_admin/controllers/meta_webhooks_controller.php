@@ -2,7 +2,8 @@
 class Meta_webhooksController extends CrudController{
 
     public function msg_recived(){
-        
+        $this->set_layout('blank');
+        exit("1417343539");
         $request_smg = "";
         foreach($_REQUEST as $key=>$val){
             $request_smg = "\n$key: $val";
