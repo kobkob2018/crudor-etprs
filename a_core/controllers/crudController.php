@@ -645,7 +645,6 @@
                 $session_filter = session__get($filter_name);
             }
             if(!isset($request_filter['paging_page_id'])){
-                session__unset($order_by_name);
                 $request_filter['paging_page_id'] = '0';
             }
             if($request_filter['paging_page_id'] == '0'){
