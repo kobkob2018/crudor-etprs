@@ -8,6 +8,8 @@ class Meta_webhooksController extends CrudController{
         foreach($_REQUEST as $key=>$val){
             $request_smg .= "\n$key: $val";
         }
+        $request_body = file_get_contents('php://input');
+        $request_smg .= $request_body;
         Helper::add_log('meta_webhooks.txt',"\n\n\n: ".date("m/d/Y H:i", time()).":$request_smg");
         $exit_str = "";
         if(isset($_REQUEST['hub_challenge'])){
