@@ -638,13 +638,14 @@
         $order_by_name = $this->get_session_param_name("order_by");
         $this->session_filter = array('set'=>false);
         if(isset($_REQUEST['filter'])){
-            session__unset($order_by_name);
+            
             $request_filter = $_REQUEST['filter'];
             $session_filter = false;
             if(session__isset($filter_name)){
                 $session_filter = session__get($filter_name);
             }
             if(!isset($request_filter['paging_page_id'])){
+                session__unset($order_by_name);
                 $request_filter['paging_page_id'] = '0';
             }
             if($request_filter['paging_page_id'] == '0'){
