@@ -1,6 +1,11 @@
 <?php
 class Meta_webhooksController extends CrudController{
 
+    public function clear_log(){
+        Helper::clear_log('meta_webhooks.txt');
+        exit("ok");
+    }
+
     public function msg_recived(){
         $this->set_layout('blank');
         
