@@ -115,7 +115,10 @@
                 session__set('campaign',$campaign);
                 $info['campaign'] = $campaign;
                 $info['campaign_type'] = $info['campaign']['type'];
-                $info['campaign_name'] = $info['campaign']['name'];
+                $info['campaign_name'] = "";
+                if(isset($info['campaign']['name'])){
+                    $info['campaign_name'] = $info['campaign']['name'];
+                }
             }
             return $info;
         }
