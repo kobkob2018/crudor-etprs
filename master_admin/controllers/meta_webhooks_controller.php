@@ -1,19 +1,5 @@
 <?php
 class Meta_webhooksController extends CrudController{
-//this is the controller who recives calls sent directly from link, at real time
-    protected function handle_access($action){
-        return true;
-        if(isset($_REQUEST['token']) && $_REQUEST['token'] == 'kobkob'){
-            Helper::add_log('meta_webhooks_no_token.txt',"\n\n\n: ".date("m/d/Y H:i", time())."-kobkob");
-            exit("fail");
-        }
-        if(isset($_REQUEST['token']) && $_REQUEST['token'] == '1fdb7184e697ab9355a3f1438ddc6ef9'){
-            return true;
-        }
-        Helper::add_log('meta_webhooks_no_token.txt',"\n\n\n: ".date("m/d/Y H:i", time())."-sent by hooks");
-        exit("fail");
-        return false;
-    }
 
     public function msg_recived(){
         
