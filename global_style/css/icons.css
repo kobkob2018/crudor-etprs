@@ -58,6 +58,16 @@
 .fa-arrows-up-to-line::before {
   content: "\e4c2"; }
 
+.fa-sort-down::before {
+    content: "\f0dd"; }
+  
+.fa-sort-desc::before {
+    content: "\f0dd"; 
+    
+  }
+  .fa-sort-desc{
+    transform: rotate(180deg);
+  }
   @font-face { 
     font-family: 'faFont';
     font-display: block;

@@ -17,17 +17,60 @@
 
 <div class="items-table flex-table">
     <div class="table-th row">
-        <div class="col">עדכון דף</div>
+        <div class="col col-tiny">
+            <?php $this->include_view(
+                'crud/list_th_order_by.php',
+                array(
+                    'order_by'=>'id',
+                    'label'=>'#'
+                )
+            );?>
+        </div>
+        <div class="col">
+            <?php $this->include_view(
+                'crud/list_th_order_by.php',
+                array(
+                    'order_by'=>'title',
+                    'label'=>'שם הדף [עדכון]'
+                )
+            );?>
+
+        </div>
         <div class="col">צפייה</div>
         <?php if($view->site_user_is('master_admin')): ?>
-            <div class="col">מספר צפיות</div>
-            <div class="col">המרות</div>
-            <div class="col">ספאם</div>
+            <div class="col">
+                <?php $this->include_view(
+                    'crud/list_th_order_by.php',
+                    array(
+                        'order_by'=>'views',
+                        'label'=>'מספר צפיות'
+                    )
+                );?>
+            </div>
+            <div class="col">
+                <?php $this->include_view(
+                    'crud/list_th_order_by.php',
+                    array(
+                        'order_by'=>'convertions',
+                        'label'=>'המרות'
+                    )
+                );?>
+            </div>
+            <div class="col">
+            <?php $this->include_view(
+                    'crud/list_th_order_by.php',
+                    array(
+                        'order_by'=>'spam_convertions',
+                        'label'=>'ספאם'
+                    )
+                );?>
+            </div>
         <?php endif; ?>
         <div class="col">מחיקה</div>
     </div>
     <?php foreach($info['list'] as $content_page): ?>
         <div class="table-tr row is-visible-0<?= $content_page['visible'] ?>">
+            <div class="col col-tiny"><?= $content_page['id'] ?></div>
             <div class="col">
                 <?php if($content_page['visible'] != '1'): ?>
                     <span class="fa fa-eye-slash" title="דף נסתר"></span>

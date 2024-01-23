@@ -1,6 +1,8 @@
 <?php
   class PagesController extends CrudController{
     public $add_models = array("sites","adminPages");
+
+    protected $session_order_by = "title";
     public function error() {
       SystemMessages::add_err_message("Oops! seems like you are in the wrong place");
       $this->include_view('pages/error.php');
@@ -131,7 +133,7 @@
     }
 
     protected function get_paginated_list($filter_arr, $payload){
-      $payload['order_by'] = "title, id";
+      $payload['order_by'] = $this->session_order_by.", id";
       return AdminPages::get_list($filter_arr, 'id, archived, status, user_id, title, link, visible, views, convertions, spam_convertions',$payload);
     }
 

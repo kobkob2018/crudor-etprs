@@ -30,7 +30,7 @@
         $fields_collection = Site_users::setup_field_collection();
         $site_users_list = Site_users::get_list($filter_arr,"*");      
         $this->data['site_users_list'] = $site_users_list;
-        $this->include_view('site_users/list.php',array('fields_colection'=>$fields_collection));
+        $this->include_view('site_users/list.php',array('fields_collection'=>$fields_collection));
     }
 
     protected function get_base_filter(){

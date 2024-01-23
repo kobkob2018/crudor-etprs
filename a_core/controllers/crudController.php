@@ -3,7 +3,7 @@
 
     protected $assets_map = array('static'=>'');
     protected $session_filter = false;
-    
+    protected $session_order_by = "id";
     protected function init_setup($action){
         $this->set_priority_from_session();
         $this->init_filter_session();
@@ -633,12 +633,12 @@
         return $item_list;
     }
 
-
-
     protected function init_filter_session(){
-        $filter_name = $this->get_session_filter_name();
+        $filter_name = $this->get_session_param_name("filter");
+        $order_by_name = $this->get_session_param_name("order_by");
         $this->session_filter = array('set'=>false);
         if(isset($_REQUEST['filter'])){
+            session__unset($order_by_name);
             $request_filter = $_REQUEST['filter'];
             $session_filter = false;
             if(session__isset($filter_name)){
@@ -665,17 +665,39 @@
             session__set($filter_name, $this->session_filter);
             return $this->redirect_back_to_action();
         }
-        elseif(isset($_REQUEST['reset_session_filter'])){
-            session__unset($filter_name);
+        elseif(isset($_REQUEST['order_by'])){
+            $order_by = $_REQUEST['order_by'];
+            if(session__isset($order_by_name)){
+                $session_order_by = session__get($order_by_name);
+                if($session_order_by == $order_by && isset($_REQUEST['desc'])){
+                    $order_by.=" desc";
+                }
+            }
+            session__set($order_by_name,$order_by);
+            if(session__isset($filter_name)){
+                $session_filter = session__get($filter_name);
+                $session_filter['paging_page_id'] = '1';
+                session__set($filter_name,$session_filter);
+            }
             return $this->redirect_back_to_action();
         }
-        elseif(session__isset($filter_name)){
-            $this->session_filter = session__get($filter_name);
+        elseif(isset($_REQUEST['reset_session_filter'])){
+            session__unset($filter_name);
+            session__unset($order_by_name);
+            return $this->redirect_back_to_action();
+        }
+        else{
+            if(session__isset($filter_name)){
+                $this->session_filter = session__get($filter_name);
+            }
+            if(session__isset($order_by_name)){
+                $this->session_order_by = session__get($order_by_name);
+            }
         }
     }
 
     protected function setup_session_filter_form($fields_collection,$pagination = false){
-        $session_filter = $this->get_session_filter();
+        $session_filter = $this->get_session_param("filter");
         $filter_values = $session_filter['values'];
         if(!$filter_values['set']){
             
@@ -705,25 +727,25 @@
     }
   
     protected function get_paginated_list_info($filter_arr,$pagination = array('page_limit'=>'1000')){
-        $filter_fields_colection = $this->get_filter_fields_collection();
-        foreach($filter_fields_colection as $key=>$field){
+        $filter_fields_collection = $this->get_filter_fields_collection();
+        foreach($filter_fields_collection as $key=>$field){
             if(isset($field['handle_access'])){
                 $method = $field['handle_access']['method'];
                 $value = $field['handle_access']['value'];
                 $main_module = get_config('main_module');
                 if(!$this->call_module($main_module,$method, $value)){
-                    unset($filter_fields_colection[$key]);
+                    unset($filter_fields_collection[$key]);
                 }
             }
         }
-        $filter_fields_colection = array(
+        $filter_fields_collection = array(
         'paging_page_id'=>array(
             'label'=>'עמוד',
             'type'=>'pagination',
             'validation'=>'required, int'
-          )) + $filter_fields_colection;
+          )) + $filter_fields_collection;
 
-        $filter_form = $this->setup_session_filter_form($filter_fields_colection);
+        $filter_form = $this->setup_session_filter_form($filter_fields_collection);
         
 
 
@@ -790,7 +812,7 @@
     }
 
     protected function reset_session_filter(){       
-        $filter_name = $this->get_session_filter_name();
+        $filter_name = $this->get_session_param_name("filter");
         session__unset($filter_name);
         return $this->redirect_back_to_action();
     }
@@ -800,16 +822,16 @@
         return $this->redirect_to(inner_url($controller.'/'.$action.'/'));
     }
     
-    protected function get_session_filter(){
+    protected function get_session_param($param_name="filter"){
         return array(
-            'identifier'=>$this->get_session_filter_name(),
+            'identifier'=>$this->get_session_param_name($param_name),
             'values'=>$this->session_filter
         );
     }
 
-    protected function get_session_filter_name(){
+    protected function get_session_param_name($param_name="filter"){
         global $controller,$action;
-        return $controller."_".$action."_filter";
+        return $controller."_".$action."_".$param_name;
     }
 
     protected function after_add_redirect($new_row_id){

@@ -289,6 +289,22 @@ h4{
 
 .flex-table .row.is-visible-00, .flex-table .row.is-hidden-01{background: #82a4a391; }
 
+.order-by-arraow{
+    display: none;
+}
+
+.orderby-01, .orderbydesc-01{
+    font-size:1.2em;
+}
+
+.orderby-01 .order-by-arraow-up{
+    display: inline;
+}
+
+.orderbydesc-01 .order-by-arraow-down{
+    display: inline;
+}
+
 .delete-item-x{
     text-decoration: none;
     font-family: sans-serif;

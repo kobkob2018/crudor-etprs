@@ -18,18 +18,18 @@
                 <div class="col">
                     <?php if($site_user['user_id'] != $this->user['id']): ?>
                         <a href = "<?= inner_url('site_users/edit/') ?>?row_id=<?= $site_user['id'] ?>" title="ערוך">
-                            <?= $this->get_label_value('user_id', $site_user,$info['fields_colection']) ?>
+                            <?= $this->get_label_value('user_id', $site_user,$info['fields_collection']) ?>
                         </a>
                     <?php else: ?>
-                        <b><?= $this->get_label_value('user_id', $site_user,$info['fields_colection']) ?></b>
+                        <b><?= $this->get_label_value('user_id', $site_user,$info['fields_collection']) ?></b>
                     <?php endif; ?>
                 </div>
 
                 <div class="col">
-                    <?= $this->get_label_value('roll', $site_user,$info['fields_colection']) ?>
+                    <?= $this->get_label_value('roll', $site_user,$info['fields_collection']) ?>
                 </div>       
                 <div class="col">
-                <?= $this->get_label_value('status', $site_user,$info['fields_colection']) ?>
+                <?= $this->get_label_value('status', $site_user,$info['fields_collection']) ?>
                 </div>        
                 <div class="col">
                     <?php if($site_user['user_id'] != $this->user['id']): ?>
