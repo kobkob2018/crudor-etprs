@@ -9,7 +9,11 @@ class Meta_webhooksController extends CrudController{
             $request_smg .= "\n$key: $val";
         }
         Helper::add_log('meta_webhooks.txt',"\n\n\n: ".date("m/d/Y H:i", time()).":$request_smg");
-        exit("1417343539");
+        $exit_str = "";
+        if(isset($_REQUEST['hub_challenge'])){
+            $exit_str = $_REQUEST['hub_challenge'];
+        }
+        exit($exit_str);
     }
 }
 ?>
