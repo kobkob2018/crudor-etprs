@@ -98,7 +98,7 @@
             if(isset($_REQUEST['gclid'])){
                 $campaign['type'] = '2';
             }
-            if(isset($_REQUEST['fblid'])){
+            if(isset($_REQUEST['fblead'])){
                 $campaign['type'] = '1';
             }
             if(isset($_REQUEST['campaign'])){
