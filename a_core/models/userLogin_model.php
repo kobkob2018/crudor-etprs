@@ -229,5 +229,21 @@
 		return $new_user;
     }
 
+	public static function is_user_login_with_sms($log_in_user){
+		$login_with_sms = Global_settings::get()['login_with_sms'];
+		if(!$login_with_sms){
+			return false;
+		}
+		$login_with_sms_all = Global_settings::get()['login_with_sms_all'];
+		if($login_with_sms_all){
+			return true;
+		}
+		
+		if(isset($log_in_user['login_with_sms']) && $log_in_user['login_with_sms'] == '1'){
+			return true;
+		}
+		return false;
+	}
+
   }
 ?>

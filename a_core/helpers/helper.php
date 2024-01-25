@@ -75,6 +75,11 @@
     } 
   
     public static function send_sms($phone,$msg){
+      if(get_config('mode') == 'dev'){
+        Helper::add_log('sms_messages.txt',"\n\n ".$phone.": ".$msg);
+        return;
+      }
+      
       $msg = urlencode($msg);
       $micropay_url = get_config('micropay_url');
       $micropay_url = str_replace("{{phone}}", $phone, $micropay_url);

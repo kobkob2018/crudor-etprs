@@ -20,6 +20,11 @@
       print_r_help($_REQUEST,"here are some params");
     }
 
+    public function hebstring(){
+      
+      print(json_decode($_GET['str']));
+    }
+
     public function send_email_test(){
       
 

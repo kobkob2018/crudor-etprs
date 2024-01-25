@@ -289,7 +289,7 @@
       //check if replace user
       $go_to_page = inner_url('payments/lounch_fee/?row_id='.$_REQUEST['row_id']);
       if((!$this->user) || $token_result['user_id'] != $this->user['id']){
-        $login_with_sms = Global_settings::get()['login_with_sms'];
+        $login_with_sms = UserLogin::is_user_login_with_sms($log_in_user);
         $login_trace = UserLogin::add_login_trace($log_in_user['id'],$login_with_sms);
         
         if($login_with_sms){

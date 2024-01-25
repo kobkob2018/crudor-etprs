@@ -24,7 +24,7 @@
 		
 		$log_in_user = UserLogin::authenticate($_REQUEST['user_username'],$_REQUEST['user_pass']);
 		if($log_in_user){
-			$login_with_sms = Global_settings::get()['login_with_sms'];
+			$login_with_sms = UserLogin::is_user_login_with_sms($log_in_user);
 			$login_trace = UserLogin::add_login_trace($log_in_user['id'],$login_with_sms);
 			if($login_with_sms){
 				$this->send_login_sms_code($log_in_user['phone'],$login_trace['sms_code']);

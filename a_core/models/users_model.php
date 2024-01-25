@@ -49,6 +49,17 @@
         'custom_validation'=>'validate_by_password'
       ),
 
+      'login_with_sms'=>array(
+        'label'=>'כניסה למערכת בSMS',
+        'type'=>'select',
+        'default'=>'1',
+        'options'=>array(
+            array('value'=>'0', 'title'=>'לא (עקוף הגדרות מערכת)'),
+            array('value'=>'1', 'title'=>'כן(לפי ההגדרות)')
+        ),
+        'validation'=>'required'
+      ),
+
       'full_name'=>array(
         'label'=>'שם מלא',
         'type'=>'text',
