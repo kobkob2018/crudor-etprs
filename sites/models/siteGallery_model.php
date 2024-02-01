@@ -25,7 +25,7 @@
 
     public static function get_gallery_images($gallery_id){
         $execute_arr = array('gallery_id'=>$gallery_id);
-        $sql = "SELECT * FROM gallery_images WHERE gallery_id = :gallery_id";  
+        $sql = "SELECT * FROM gallery_images WHERE gallery_id = :gallery_id ORDER BY priority, id";  
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
         $req->execute($execute_arr);
