@@ -536,11 +536,13 @@ a.nice-button{
 .form-group select option.deep-1{
     font-weight: bold;
     font-size: 1.3em;
+    color: yellow;
 }
 
 .form-group select option.deep-2{
     font-weight: bold;
     font-size: 1.1em;
+    color: yellow;
 }
 
 .form-group .submit-button{
