@@ -1,5 +1,5 @@
 <?php
-	class cron_emailsModule extends Module{
+	class Cron_emailsModule extends Module{
         public $add_models = array("user_pending_emails","masterUser_leads");
 
         //each minute cronjob at cron_master_controller.php

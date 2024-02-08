@@ -14,6 +14,7 @@ class Meta_webhooksController extends CrudController{
             $request_smg .= "\n$key: $val";
         }
         $request_body = file_get_contents('php://input');
+        $this->call_module('whatsapp_messages','list_incoming_message',array('message_info'=>$request_body));
         $request_smg .= "\n".$request_body;
         Helper::add_log('meta_webhooks.txt',"\n\n\n: ".date("m/d/Y H:i", time()).":$request_smg");
         $exit_str = "";

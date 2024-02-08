@@ -1,5 +1,5 @@
 <?php
-	class master_adminModule extends Module{
+	class Master_adminModule extends Module{
 
         //good place to colect global data of the workon site, the user, etc...
         public function init_layout(){

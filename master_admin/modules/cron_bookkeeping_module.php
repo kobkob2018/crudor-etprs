@@ -1,5 +1,5 @@
 <?php
-	class cron_bookkeepingModule extends Module{
+	class Cron_bookkeepingModule extends Module{
         public $add_models = array("user_pending_emails","user_bookkeeping","auto_login_token");
 
         //each minute cronjob at cron_master_controller.php
