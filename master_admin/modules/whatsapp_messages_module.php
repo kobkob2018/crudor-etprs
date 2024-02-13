@@ -107,23 +107,30 @@
             (!isset($message_info['entry']['changes']['value']['metadata'])) ||
             (!isset($message_info['entry']['changes']['value']['messages']))
         ){
+            Helper::add_log('meta_webhooks.txt',"\n\n\n BAAYA A");
             return false;
         }
+        Helper::add_log('meta_webhooks.txt',"\n\n\n OK A OK");
         $metadata = $message_info['entry']['changes']['value']['contacts'];
         $contact = $message_info['entry']['changes']['value']['contacts'];
         $message = $message_info['entry']['changes']['value']['messages'];
         $self_phone = $metadata['display_phone_number'];
         $contact_phone = $metadata['display_phone_number'];
         $connection_id = $self_phone."_".$contact_phone;
+        Helper::add_log('meta_webhooks.txt',"\n\n\n OK B OK");
         $filter_arr = array("connection_id"=>$connection_id,"stage"=>"open");
         $conversation_row = Whatsapp_conversations::find($filter_arr,'id');
         $conversation_id = false;
+        Helper::add_log('meta_webhooks.txt',"\n\n\n OK C OK");
         if(!$conversation_row){
+            Helper::add_log('meta_webhooks.txt',"\n\n\n Yes C found");
             $conversation_id = $this->add_conversation($metadata,$contact,$message,$connection_id);
         }
         else{
+            Helper::add_log('meta_webhooks.txt',"\n\n\n NOT C found");
             $conversation_id = $conversation_row['id'];
         }
+        Helper::add_log('meta_webhooks.txt',"\n\n\n STEAL HERE");
         $message_data = array(
             'convertion_id'=>$conversation_id,
             'connection_id'=>$connection_id,
@@ -132,7 +139,9 @@
             'message_text'=>$message['text']['body'],
             'direction'=>'recive',
         );
+        Helper::add_log('meta_webhooks.txt',"\n\n\n YET AGAIN");
         $message_id = Whatsapp_messages::create($message_data);
+        Helper::add_log('meta_webhooks.txt',"\n\n\n MESSAGE CREATED");
         $conversation_update = array(
             'last_message_id'=>$message_id,
         );
