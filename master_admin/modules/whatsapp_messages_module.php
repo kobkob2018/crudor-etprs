@@ -94,8 +94,11 @@
     }
 
     public function handle_message_notification(){
+
         $message_data = $this->action_data;
         $message_info = json_decode($message_data['message_info'],true);
+
+        Helper::add_log('meta_webhooks.txt',"\n\n\n: ".date("m/d/Y H:i", time()).":".$message_data['message_info']);
         if(
             (!isset($message_info['entry'])) ||
             (!isset($message_info['entry']['changes'])) ||
