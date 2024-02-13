@@ -10,7 +10,7 @@
         //if(session__isset())
         $filter_arr = $this->get_base_filter();
         $payload = array(
-            'order_by'=>'last_update'
+            'order_by'=>'last_message_time'
         );
         $whatsapp_conversations = Whatsapp_conversations::get_list($filter_arr,"*");
         $fields_collection = Whatsapp_conversations::setup_field_collection();
@@ -18,8 +18,8 @@
         foreach($fields_collection['active']['options'] as $option){
           $active_strings[$option['value']] = $option['title'];
         }
-        foreach($whatsapp_conversations as $key=>$dir){
-          $whatsapp_conversations[$key]['active_str'] = $active_strings[$dir['active']];
+        foreach($whatsapp_conversations as $key=>$val){
+          $whatsapp_conversations[$key]['last_message'] = Whatsapp_messages::get_by_id($val['last_message_id']);
         }
         $this->data['whatsapp_conversations'] = $whatsapp_conversations;
         $this->include_view('whatsapp_conversations/list.php');
@@ -61,21 +61,21 @@
     }   
 
     protected function update_success_message(){
-        SystemMessages::add_success_message("הבאנר עודכנה בהצלחה");
+        SystemMessages::add_success_message("השיחה עודכנה בהצלחה");
 
     }
 
     protected function create_success_message(){
-        SystemMessages::add_success_message("הבאנר נוצרה בהצלחה");
+        SystemMessages::add_success_message("השיחה נוצרה בהצלחה");
 
     }
 
     protected function delete_success_message(){
-        SystemMessages::add_success_message("הבאנר נמחקה");
+        SystemMessages::add_success_message("השיחה נמחקה");
     }
 
     protected function row_error_message(){
-      SystemMessages::add_err_message("לא נבחרה באנר");
+      SystemMessages::add_err_message("לא נבחרה שיחה");
     }   
 
     protected function delete_item($row_id){
@@ -107,7 +107,6 @@
     }
 
     protected function create_item($fixed_values){
-        $fixed_values['dir_id'] = $this->data['dir_info']['id'];
         return Whatsapp_conversations::create($fixed_values);
     }
   }
