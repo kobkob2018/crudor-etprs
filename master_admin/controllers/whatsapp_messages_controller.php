@@ -35,15 +35,7 @@
     }
 
     public function add(){
-        $filter_arr = $this->get_base_filter();
-        $payload = array(
-            'order_by'=>'id'
-        );
-        $whatsapp_messages = Whatsapp_messages::get_list($filter_arr,"*",$payload);
-        $conversation_id = $_REQUEST['conversation_id'];
-        $this->data['whatsapp_conversation'] = Whatsapp_conversations::get_by_id($conversation_id);
-        $this->data['whatsapp_messages'] = $whatsapp_messages;
-        $this->include_view('whatsapp_messages/add.php');
+
         return parent::add();
     }       
 
