@@ -6,7 +6,14 @@
                 'table'=>'whatsapp_messages',
                 'id_key'=>'connection_id'
             ),
-        );  
+        );
+
+        public static $fields_collection = array(
+            'contact_custom_name'=>array(
+                'label'=>'שם איש הקשר',
+                'type'=>'text',
+            ),
+        );
 
     }
 
