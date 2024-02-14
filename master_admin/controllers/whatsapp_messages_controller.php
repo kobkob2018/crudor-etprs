@@ -56,25 +56,25 @@
     }
 
     public function include_edit_view(){
-        $this->include_view('whatsapp_conversations/edit.php');
+        $this->include_view('whatsapp_messages/edit.php');
     }
 
     public function include_add_view(){
-        $this->include_view('whatsapp_conversations/add.php');
+        $this->include_view('whatsapp_messages/add.php');
     }   
 
     protected function update_success_message(){
-        SystemMessages::add_success_message("השיחה עודכנה בהצלחה");
+        SystemMessages::add_success_message("ההודעה עודכנה בהצלחה");
 
     }
 
     protected function create_success_message(){
-        SystemMessages::add_success_message("השיחה נוצרה בהצלחה");
+        SystemMessages::add_success_message("ההודעה נוצרה בהצלחה");
 
     }
 
     protected function delete_success_message(){
-        SystemMessages::add_success_message("השיחה נמחקה");
+        SystemMessages::add_success_message("ההודעה נמחקה");
     }
 
     protected function row_error_message(){
