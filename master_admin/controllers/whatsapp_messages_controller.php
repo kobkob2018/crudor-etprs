@@ -116,8 +116,7 @@
             'message_type'=>$fixed_values['message_type'],
         );
         $message_send = $this->call_module('whatsapp_messages','send_message',$message_data);
-
-        return Whatsapp_messages::create($fixed_values);
+        return $message_send;
     }
   }
 ?>
