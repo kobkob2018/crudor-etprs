@@ -19,7 +19,7 @@
           $whatsapp_conversations[$key]['last_message'] = Whatsapp_messages::get_by_id($val['last_message_id']);
         }
         $this->data['whatsapp_conversations'] = $whatsapp_conversations;
-        $this->include_view('whatsapp_conversations/list.php');
+        //$this->include_view('whatsapp_conversations/list.php');
 
     }
 
