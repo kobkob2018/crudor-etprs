@@ -68,6 +68,7 @@
             );
         }
         if($message_data['message_type'] == 'text'){
+            exit("ok ok ok ");
             $data['text'] = array(
                 "preview_url"=> false,
                 "body" => $message_data['message_text'],
