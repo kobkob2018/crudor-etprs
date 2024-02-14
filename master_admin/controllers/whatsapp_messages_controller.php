@@ -35,7 +35,15 @@
     }
 
     public function add(){
-
+        $filter_arr = $this->get_base_filter();
+        $payload = array(
+            'order_by'=>'id'
+        );
+        $whatsapp_messages = Whatsapp_messages::get_list($filter_arr,"*",$payload);
+        $conversation_id = $_REQUEST['conversation_id'];
+        $this->data['whatsapp_conversation'] = Whatsapp_conversations::get_by_id($conversation_id);
+        $this->data['whatsapp_messages'] = $whatsapp_messages;
+        
         return parent::add();
     }       
 
@@ -74,11 +82,11 @@
     }   
 
     protected function delete_item($row_id){
-      return Whatsapp_conversations::delete($row_id);
+      return Whatsapp_messages::delete($row_id);
     }
 
     protected function get_item_info($row_id){
-      return Whatsapp_conversations::get_by_id($row_id);
+      return Whatsapp_messages::get_by_id($row_id);
     }
 
     public function eject_url(){
@@ -94,15 +102,15 @@
     }
 
     protected function get_fields_collection(){
-      return Whatsapp_conversations::setup_field_collection();
+      return Whatsapp_messages::setup_field_collection();
     }
 
     protected function update_item($item_id,$update_values){
-      return Whatsapp_conversations::update($item_id,$update_values);
+      return Whatsapp_messages::update($item_id,$update_values);
     }
 
     protected function create_item($fixed_values){
-        return Whatsapp_conversations::create($fixed_values);
+        return Whatsapp_messages::create($fixed_values);
     }
   }
 ?>
