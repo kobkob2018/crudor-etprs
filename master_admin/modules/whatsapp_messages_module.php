@@ -53,8 +53,6 @@
         // Create a new cURL resource
         $ch = curl_init($url);
 
-        print_r_help($message_data);
-        exit();
         $data = array(
             'messaging_product'=> "whatsapp",
             "to"=> $to,
