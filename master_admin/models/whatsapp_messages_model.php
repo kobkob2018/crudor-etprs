@@ -12,10 +12,20 @@
                     array('value'=>'template', 'title'=>'תבנית')
                 )
             ),
+            'template_language'=>array(
+                'label'=>'שפה (לתבנית)',
+                'type'=>'select',
+                'default'=>'he',
+                'options'=>array(
+                    array('value'=>'he', 'title'=>'עברית'),
+                    array('value'=>'en_US', 'title'=>'אנגלית')
+                )
+            ),
             'message_text'=>array(
                 'label'=>'טקסט \ תבנית',
                 'type'=>'text',
             ),
+
         );
     }
 

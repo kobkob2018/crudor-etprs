@@ -69,7 +69,7 @@
             $data['template'] = array(
                 "name"=> $message_data['message_text'],
                 "language"=> array(
-                    "code"=> "he"
+                    "code"=> $message_data['template_language']
                 )
             );
         }
