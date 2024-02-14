@@ -93,27 +93,43 @@
         curl_close($ch);
     }
 
+	protected function create_log($log_arr,$log_str = ""){
+		
+		foreach($log_arr as $key=>$val){
+			
+			$log_str .="\n$key: ";
+			if(!is_array($val)){
+				$log_str .="  $val";
+			}
+			else{
+				$log_str = $this->create_log($val,$log_str);
+			}
+		}
+		return $log_str;
+	}
+
     public function handle_message_notification(){
 
         $message_data = $this->action_data;
         $message_info = json_decode($message_data['message_info'],true);
        // Helper::add_log('meta_webhooks.txt',"stam hereee");
-       // Helper::add_log('meta_webhooks.txt',"\n\n\n: ".date("m/d/Y H:i", time()).":".$message_data['message_info']);
+	   $log = $this->create_log($message_info);
+        //Helper::add_log('meta_webhooks.txt',$log);
         if(
-            (!isset($message_info['entry'])) ||
-            (!isset($message_info['entry']['changes'])) ||
-            (!isset($message_info['entry']['changes']['value'])) ||
-            (!isset($message_info['entry']['changes']['value']['contacts'])) ||
-            (!isset($message_info['entry']['changes']['value']['metadata'])) ||
-            (!isset($message_info['entry']['changes']['value']['messages']))
+            (!isset($message_info['entry'][0])) ||
+            (!isset($message_info['entry'][0]['changes'][0])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value'])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['contacts'][0])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata'])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['messages'][0]))
         ){
-            Helper::add_log('meta_webhooks.txt',"\n\n\n BAAYA A");
+            
             return false;
         }
         Helper::add_log('meta_webhooks.txt',"\n\n\n OK A OK");
-        $metadata = $message_info['entry']['changes']['value']['contacts'];
-        $contact = $message_info['entry']['changes']['value']['contacts'];
-        $message = $message_info['entry']['changes']['value']['messages'];
+        $metadata = $message_info['entry'][0]['changes'][0]['value']['contacts'][0];
+        $contact = $message_info['entry'][0]['changes'][0]['value']['contacts'][0];
+        $message = $message_info['entry'][0]['changes'][0]['value']['messages'][0];
         $self_phone = $metadata['display_phone_number'];
         $contact_phone = $metadata['display_phone_number'];
         $connection_id = $self_phone."_".$contact_phone;
