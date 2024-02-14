@@ -67,9 +67,9 @@
             );
         }
         if($message_data['message_type'] == 'text'){
-            $data['text'] = array(
+            $data['text2'] = array(
                 "preview_url"=> false,
-                "body2" => $message_data['message_text'],
+                "body" => $message_data['message_text'],
             );
         }
 
