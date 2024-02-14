@@ -37,7 +37,7 @@
     public function add(){
         $filter_arr = $this->get_base_filter();
         $payload = array(
-            'order_by'=>'last_message_time'
+            'order_by'=>'id'
         );
         $whatsapp_messages = Whatsapp_messages::get_list($filter_arr,"*",$payload);
         $conversation_id = $_REQUEST['conversation_id'];

@@ -148,7 +148,7 @@
         }
         Helper::add_log('meta_webhooks.txt',"\n\n\n STEAL HERE");
         $message_data = array(
-            'convertion_id'=>$conversation_id,
+            'conversation_id'=>$conversation_id,
             'connection_id'=>$connection_id,
             'message_time'=>date('Y-m-d h:i:s',$message['timestamp']),
             'message_type'=>'text',
