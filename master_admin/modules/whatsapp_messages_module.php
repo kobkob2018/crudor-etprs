@@ -28,7 +28,7 @@
         $this->send_message_with_api($conversation_data,$message_data);
         $connection_id = $conversation_data['connection_id'];
         $message_row_data = array(
-            'conversation_id'=>$connection_id,
+            'conversation_id'=>$conversation_id,
             'connection_id'=>$connection_id,
             'message_time'=>date('Y-m-d h:i:s'),
             'message_text'=>$message_data['message_text'],
