@@ -163,7 +163,7 @@
             $message_time = $message['timestamp'];
         }
         if(isset($message['context'])){
-            $message_type = $message['context']['type'];
+           // $message_type = $message['context']['type'];
             if(isset($message['context']['button'])){
                 $message_text = $message['context']['button']['text'];   
             }
