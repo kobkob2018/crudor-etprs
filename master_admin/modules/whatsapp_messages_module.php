@@ -127,7 +127,7 @@
             return false;
         }
         Helper::add_log('meta_webhooks.txt',"\n\n\n OK A OK");
-        $metadata = $message_info['entry'][0]['changes'][0]['value']['contacts'][0];
+        $metadata = $message_info['entry'][0]['changes'][0]['value']['metadata'];
         $contact = $message_info['entry'][0]['changes'][0]['value']['contacts'][0];
         $message = $message_info['entry'][0]['changes'][0]['value']['messages'][0];
         $self_phone = $metadata['display_phone_number'];
