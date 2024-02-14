@@ -110,7 +110,6 @@
     }
 
     protected function create_item($fixed_values){
-        print_r_help($fixed_values);
         $message_data = array(
             'conversation_id'=>$_REQUEST['conversation_id'],
             'message_text'=>$fixed_values['message_text'],

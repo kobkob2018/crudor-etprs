@@ -12,7 +12,7 @@
                     array('value'=>'template', 'title'=>'תבנית')
                 )
             ),
-            'messages_text'=>array(
+            'message_text'=>array(
                 'label'=>'טקסט \ תבנית',
                 'type'=>'text',
             ),
