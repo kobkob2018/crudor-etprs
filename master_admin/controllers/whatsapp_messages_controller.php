@@ -110,12 +110,14 @@
     }
 
     protected function create_item($fixed_values){
+        print_r_help($fixed_values);
         $message_data = array(
             'conversation_id'=>$_REQUEST['conversation_id'],
             'message_text'=>$fixed_values['message_text'],
             'message_type'=>$fixed_values['message_type'],
         );
         $message_send = $this->call_module('whatsapp_messages','send_message',$message_data);
+
         return Whatsapp_messages::create($fixed_values);
     }
   }
