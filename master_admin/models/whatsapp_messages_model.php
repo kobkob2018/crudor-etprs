@@ -3,7 +3,7 @@
         protected static $main_table = 'whatsapp_messages';  
 
         public static $fields_collection = array(
-            'campaign_type'=>array(
+            'message_type'=>array(
                 'label'=>'סוג המסר',
                 'type'=>'select',
                 'default'=>'text',
