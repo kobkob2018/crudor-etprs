@@ -154,16 +154,17 @@
             $conversation_id = $conversation_row['id'];
         }
         Helper::add_log('meta_webhooks.txt',"\n\n\n STEAL HERE");
-        $message_data = array(
+        $message_row_data = array(
             'conversation_id'=>$conversation_id,
             'connection_id'=>$connection_id,
             'message_time'=>date('Y-m-d h:i:s',$message['timestamp']),
             'message_type'=>'text',
             'message_text'=>$message['text']['body'],
             'direction'=>'recive',
+            'log'=>$message_data['message_info']
         );
         Helper::add_log('meta_webhooks.txt',"\n\n\n YET AGAIN");
-        $message_id = Whatsapp_messages::create($message_data);
+        $message_id = Whatsapp_messages::create($message_row_data);
         Helper::add_log('meta_webhooks.txt',"\n\n\n MESSAGE CREATED");
         $conversation_update = array(
             'last_message_id'=>$message_id,
