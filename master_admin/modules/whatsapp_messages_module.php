@@ -25,7 +25,14 @@
         if(!$conversation_data){
             exit("error finding conversation");
         }
-        $this->send_message_with_api($conversation_data,$message_data);
+        $message_send = $this->send_message_with_api($conversation_data,$message_data);
+        if(isset($message_send['error'])){
+            SystemMessages::add_err_message($message_send['error']['message']);
+            if(isset($message_send['error']['error_data'])){
+                SystemMessages::add_err_message($message_send['error']['error_data']['details']);
+            }
+            return $this->controller->redirect_to(inner_url("whatsapp_messages/add/?conversation_id=".$conversation_id));
+        }
         $connection_id = $conversation_data['connection_id'];
         $message_row_data = array(
             'conversation_id'=>$conversation_id,
@@ -90,7 +97,7 @@
         // Close cURL resource
         curl_close($ch);
         $result_arr = json_decode($result,true);
-        print_r_help($result_arr);
+        return $result_arr;
     }
 
 	protected function create_log($log_arr,$log_str = ""){
