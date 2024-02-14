@@ -48,7 +48,7 @@
             'last_message_time'=>date('Y-m-d h:i:s'),
         );
         Whatsapp_conversations::update($conversation_id,$conversation_update);
-        exit();
+        return;
     }
 
     protected function send_message_with_api($conversation_data,$message_data){
