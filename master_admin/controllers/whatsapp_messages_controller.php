@@ -43,7 +43,7 @@
         $conversation_id = $_REQUEST['conversation_id'];
         $this->data['whatsapp_conversation'] = Whatsapp_conversations::get_by_id($conversation_id);
         $this->data['whatsapp_messages'] = $whatsapp_messages;
-        $this->include_view('whatsapp_messages/list.php');
+        $this->include_view('whatsapp_messages/add.php');
         return parent::add();
     }       
 
