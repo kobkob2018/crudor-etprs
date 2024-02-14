@@ -173,7 +173,8 @@
             'contact_wa_name'=>$contact['profile']['name'],
             'contact_custom_name'=>"",
             'last_message_time'=>date('Y-m-d h:i:s',$message['timestamp']),
-            'last_message_direction'=>'recive'
+            'last_message_direction'=>'recive',
+            'stage'=>'open'
         );
         $row_id = Whatsapp_conversations::create($conversation_data);
         return $row_id;
