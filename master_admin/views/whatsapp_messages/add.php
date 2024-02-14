@@ -11,7 +11,7 @@
         <div class="table-tr row">
             <div class="col"><?= $item['id'] ?></div>
             <div class="col">
-                <div class="<?= $item['direction'] ?>">
+                <div class="<?= $item['direction'] ?> message-direction">
                     <b><?= $item['message_type'] ?></b><br/>
                     <?= $item['message_text'] ?>
                 </div>
@@ -35,3 +35,22 @@
         <?php $this->include_view('form_builder/form.php'); ?>
     </div>
 </div>
+
+
+<style type="text/css">
+
+
+    .message-direction{
+        background: #9191ff;
+        padding: 10px 15px 10px 30px;
+        border-radius: 5px;
+    }
+    .message-direction.send{
+        float: left;
+        margin-right: 20px;
+    }
+    .message-direction.recive{
+        float: right;
+        margin-left: 20px;
+    }
+</style>
