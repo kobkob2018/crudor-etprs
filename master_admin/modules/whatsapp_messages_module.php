@@ -46,7 +46,7 @@
 
     protected function send_message_with_api($conversation_data,$message_data){
         $owner_phone_id = $conversation_data['owner_phone_id'];
-        $to = "972542393395";//$conversation_data['contact_phone_wa_id'];
+        $to = $conversation_data['contact_phone_wa_id'];
         $api_key = "EAANAw9SYST0BO6M4zvTUtNUS1QZAsEVBln994M1V2mV6d72knSzKQSOXTESxEKaZBRErctfip7vfbffZB9tnWrET0VcCx81cZBsMpmJ3WuuELGLp2yOz3EBDbJKvtZCd9qszkWXaLgBGmn6kSSA1jZC4mh50SD8H6XdZAfViyV573aqPggYxPSgYfy3EG6XL0W6nCP4nOFxlNKjbnBKDxBOlx0r8yYmVLJ9";// add api key here...
         $url = "https://graph.facebook.com/v17.0/$owner_phone_id/messages";
 
@@ -69,7 +69,7 @@
         if($message_data['message_type'] == 'text'){
             $data['text'] = array(
                 "preview_url"=> false,
-                "body" => $message_data['message_text'],
+                "body2" => $message_data['message_text'],
             );
         }
 
