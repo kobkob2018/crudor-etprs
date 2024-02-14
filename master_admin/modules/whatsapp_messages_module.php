@@ -138,7 +138,7 @@
         $contact = $message_info['entry'][0]['changes'][0]['value']['contacts'][0];
         $message = $message_info['entry'][0]['changes'][0]['value']['messages'][0];
         $self_phone = $metadata['display_phone_number'];
-        $contact_phone = $metadata['display_phone_number'];
+        $contact_phone = $contact['wa_id'];
         $connection_id = $self_phone."_".$contact_phone;
         Helper::add_log('meta_webhooks.txt',"\n\n\n OK B OK");
         $filter_arr = array("connection_id"=>$connection_id,"stage"=>"open");
