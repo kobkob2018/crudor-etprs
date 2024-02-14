@@ -48,7 +48,7 @@
             'last_message_time'=>date('Y-m-d h:i:s'),
         );
         Whatsapp_conversations::update($conversation_id,$conversation_update);
-        return;
+        return $this->controller->redirect_to(inner_url("whatsapp_messages/add/?conversation_id=".$conversation_id));
     }
 
     protected function send_message_with_api($conversation_data,$message_data){
