@@ -154,12 +154,27 @@
             $conversation_id = $conversation_row['id'];
         }
         Helper::add_log('meta_webhooks.txt',"\n\n\n STEAL HERE");
+
+        $message_type = "text";
+        $message_text = "";
+        $message_time = "";
+        if(isset($message['text'])){
+            $message_text = $message['text']['body'];
+            $message_time = $message['timestamp'];
+        }
+        if(isset($message['context'])){
+            $message_type = $message['context']['type'];
+            if(isset($message['context']['button'])){
+                $message_text = $message['context']['button']['text'];   
+            }
+            $message_time = $message['context']['timestamp'];
+        }
         $message_row_data = array(
             'conversation_id'=>$conversation_id,
             'connection_id'=>$connection_id,
-            'message_time'=>date('Y-m-d h:i:s',$message['timestamp']),
-            'message_type'=>'text',
-            'message_text'=>$message['text']['body'],
+            'message_time'=>date('Y-m-d h:i:s',$message_time),
+            'message_type'=>$message_type,
+            'message_text'=>$message_text,
             'direction'=>'recive',
             'log'=>$message_data['message_info']
         );
