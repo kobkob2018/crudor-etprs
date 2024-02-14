@@ -31,9 +31,8 @@
             'conversation_id'=>$connection_id,
             'connection_id'=>$connection_id,
             'message_time'=>date('Y-m-d h:i:s'),
-            'message_text'=>$message_data['text'],
-            'message_type'=>$message_data['type'],
-            'message_template'=>$message_data['template'],
+            'message_text'=>$message_data['message_text'],
+            'message_type'=>$message_data['message_type'],
             'direction'=>'send',
         );
         $message_id = Whatsapp_messages::create($message_row_data);
@@ -42,7 +41,7 @@
             'last_message_time'=>date('Y-m-d h:i:s'),
         );
         Whatsapp_conversations::update($conversation_id,$conversation_update);
-        
+        exit();
     }
 
     protected function send_message_with_api($conversation_data,$message_data){
@@ -91,6 +90,8 @@
 
         // Close cURL resource
         curl_close($ch);
+        $result_arr = json_decode($result,true);
+        print_r_help($result_arr);
     }
 
 	protected function create_log($log_arr,$log_str = ""){

@@ -94,11 +94,11 @@
     }
 
     public function url_back_to_item($item_info){
-      return inner_url("whatsapp_conversations/edit/?row_id=".$item_info['id']);
+      return inner_url("whatsapp_messages/add/?conversation_id=".$item_info['conversation_id']);
     }
 
     public function delete_url($item_info){
-        return inner_url("whatsapp_conversations/delete/?row_id=".$item_info['id']);
+        return inner_url("whatsapp_messages/delete/?row_id=".$item_info['id']);
     }
 
     protected function get_fields_collection(){
@@ -110,6 +110,12 @@
     }
 
     protected function create_item($fixed_values){
+        $message_data = array(
+            'conversation_id'=>$_REQUEST['conversation_id'],
+            'message_text'=>$fixed_values['message_text'],
+            'message_type'=>$fixed_values['message_type'],
+        );
+        $message_send = $this->call_module('whatsapp_messages','send_message',$message_data);
         return Whatsapp_messages::create($fixed_values);
     }
   }
