@@ -13,6 +13,7 @@
         </div>
         <div class="col">שם ווטסאפ</div>
         <div class="col">שם הפונה</div>
+        <div class="col">הודעה אחרונה</div>
         <div class="col">מחיקה</div>
     </div>
     <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
