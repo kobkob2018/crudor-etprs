@@ -24,7 +24,7 @@
                 <a href = "<?= inner_url('whatsapp_conversations/edit/') ?>?&row_id=<?= $item['id'] ?>" title="ערוך באנר"><?= $item['contact_wa_name'] ?></a>
             </div>
             <div class="col"><?= $item['contact_custom_name'] ?></div>
-            <div class="col"><b><?= $item['direction'] ?></b><br/><?= $item['last_message']['message_type'] ?>: <?= $item['last_message']['message_text'] ?></div>
+            <div class="col"><b><?= $item['last_message']['direction'] ?></b><br/><?= $item['last_message']['message_type'] ?>: <?= $item['last_message']['message_text'] ?></div>
             <div class="col">
                 <a href = "<?= inner_url('whatsapp_conversations/delete/') ?>?row_id=<?= $item['id'] ?>" title="מחק">מחק</a>
             </div>
