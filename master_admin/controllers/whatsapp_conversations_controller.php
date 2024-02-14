@@ -12,12 +12,9 @@
         $payload = array(
             'order_by'=>'last_message_time'
         );
-        $whatsapp_conversations = Whatsapp_conversations::get_list($filter_arr,"*");
-        $fields_collection = Whatsapp_conversations::setup_field_collection();
-        $active_strings = array();
-        foreach($fields_collection['active']['options'] as $option){
-          $active_strings[$option['value']] = $option['title'];
-        }
+        $whatsapp_conversations = Whatsapp_conversations::get_list($filter_arr,"*",$payload);
+
+
         foreach($whatsapp_conversations as $key=>$val){
           $whatsapp_conversations[$key]['last_message'] = Whatsapp_messages::get_by_id($val['last_message_id']);
         }
