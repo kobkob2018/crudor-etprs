@@ -64,7 +64,7 @@
 
     function init_whatsapp_fetch_messages(){
         console.log("init_whatsapp_fetch_messages");
-        setInterval(function(){fetch_whatsapp_messages()},80000);
+        setInterval(function(){fetch_whatsapp_messages()},10000);
     }
 
     function fetch_whatsapp_messages(){
@@ -72,7 +72,7 @@
         const messages_table = document.querySelector(".messages-table");       
         const last_row = messages_table.querySelector(".message_tr");
         const last_message_id = last_row.dataset.message_id;
-        const fetch_url = "<?= inner_url("whatsapp_messages/ajax_list/?last_message_id=") ?>"+last_message_id;
+        const fetch_url = "<?= inner_url("whatsapp_messages/ajax_list/?conversation_id=".$this->data['whatsapp_conversation']['id']."&last_message_id=") ?>"+last_message_id;
         const placeholder = document.querySelector(".new-messages-placeholder");
         const messages_th = messages_table.querySelector(".messages-th");
         console.log(fetch_url);
