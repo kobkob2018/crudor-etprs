@@ -49,7 +49,7 @@
 
 
     function init_whatsapp_fetch_conversations(){
-        setInterval(function(){fetch_whatsapp_conversations()},80000);
+        setInterval(function(){fetch_whatsapp_conversations()},20000);
     }
 
     function fetch_whatsapp_conversations(){
@@ -79,7 +79,9 @@
         }
         const conversation_id = conversation_tr.dataset.conversation_id;
         const old_conversation_tr = conversations_table.querySelector(".conversation-"+conversation_id);
-        old_conversation_tr.remove();
+        if(old_conversation_tr){
+            old_conversation_tr.remove();
+        }
         conversations_th.after(conversation_tr);
         move_rows_from_placeholder_to_table(placeholder,conversations_table,conversations_th);
     }

@@ -4,7 +4,7 @@
         protected static $auto_delete_from_attached_tables = array(
             'whatsapp_messages'=>array(
                 'table'=>'whatsapp_messages',
-                'id_key'=>'connection_id'
+                'id_key'=>'conversation_id'
             ),
         );
 
