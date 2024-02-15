@@ -19,7 +19,7 @@
     <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
         <div class="table-tr row">
             <div class="col"><?= $item['id'] ?></div>
-            <div class="col"><?= hebdt($item['last_message_time'],'H:i<br/>d-m-Y') ?></div>
+            <div class="col"><?= hebdt($item['last_message_time'],'H:i\nd-m-Y') ?></div>
             <div class="col"><?= $item['contact_phone_wa_id'] ?></div>
             <div class="col">
                 <?= $item['contact_wa_name'] ?>
