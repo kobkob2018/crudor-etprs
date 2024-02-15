@@ -6,37 +6,23 @@
         return parent::init_setup($action);
     }
 
-    public function list(){
-        //if(session__isset())
-        $filter_arr = $this->get_base_filter();
-        $payload = array(
-            'order_by'=>'message_time'
-        );
-        $whatsapp_messages = Whatsapp_messages::get_list($filter_arr,"*",$payload);
-        $conversation_id = $_REQUEST['conversation_id'];
-        $this->data['whatsapp_conversation'] = Whatsapp_conversations::get_by_id($conversation_id);
-        $this->data['whatsapp_messages'] = $whatsapp_messages;
-        $this->include_view('whatsapp_messages/list.php');
-
-    }
-
     public function ajax_list(){
-      //if(session__isset())
+      //the original list is in the add function
+
       $filter_arr = $this->get_base_filter();
-      $last_message_time = $_REQUEST['last_message_time'];
-      $filter_arr['custom_time'] = array('custom_where'=>"message_time > '$last_message_time'");
+      $last_message_id = $_REQUEST['last_message_id'];
+      $filter_arr['custom_time'] = array('custom_where'=>"id > $last_message_id");
       $payload = array(
-          'order_by'=>'message_time'
+          'order_by'=>'id desc'
       );
       $whatsapp_messages = Whatsapp_messages::get_list($filter_arr,"*",$payload);
-      $conversation_id = $_REQUEST['conversation_id'];
-      $this->data['whatsapp_conversation'] = Whatsapp_conversations::get_by_id($conversation_id);
       $this->data['whatsapp_messages'] = $whatsapp_messages;
-      $messages_html = $this->include_ob_view('whatsapp_messages/list.php');
+
+      $messages_html = $this->include_ob_view('whatsapp_messages/ajax_list.php');
       $return_array = array('messages_html'=>$messages_html);
       print(json_encode($return_array));
       return;
-  }
+    }
 
     protected function get_base_filter(){
         $conversation_id = $_REQUEST['conversation_id'];
@@ -55,7 +41,7 @@
     public function add(){
         $filter_arr = $this->get_base_filter();
         $payload = array(
-            'order_by'=>'id'
+            'order_by'=>'id desc'
         );
         $whatsapp_messages = Whatsapp_messages::get_list($filter_arr,"*",$payload);
         $conversation_id = $_REQUEST['conversation_id'];
