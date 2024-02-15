@@ -64,6 +64,7 @@
         const last_message_time = last_row.dataset.last_message;
         const fetch_url = "<?= inner_url("whatsapp_conversations/ajax_list/?last_message_time=") ?>"+last_message_time;
         const placeholder = document.querySelector(".new-conversations-placeholder");
+        console.log(fetch_url);
         fetch(fetch_url).then((res) => res.json()).then(info => {
             placeholder.append(info.conversations_html);
         }).catch(function(err) {
