@@ -49,7 +49,7 @@
 
 
     function init_whatsapp_fetch_conversations(){
-        setInterval(function(){fetch_whatsapp_conversations()},20000);
+        setInterval(function(){fetch_whatsapp_conversations()},80000);
     }
 
     function fetch_whatsapp_conversations(){
