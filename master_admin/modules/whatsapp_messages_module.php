@@ -183,6 +183,7 @@
         Helper::add_log('meta_webhooks.txt',"\n\n\n MESSAGE CREATED");
         $conversation_update = array(
             'last_message_id'=>$message_id,
+            'last_message_time'=>date('Y-m-d h:i:s',$message_time),
         );
         Whatsapp_conversations::update($conversation_id,$conversation_update);
     }
