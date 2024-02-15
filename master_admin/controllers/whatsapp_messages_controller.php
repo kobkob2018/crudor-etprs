@@ -10,7 +10,7 @@
         //if(session__isset())
         $filter_arr = $this->get_base_filter();
         $payload = array(
-            'order_by'=>'message_time desc'
+            'order_by'=>'message_time'
         );
         $whatsapp_messages = Whatsapp_messages::get_list($filter_arr,"*",$payload);
         $conversation_id = $_REQUEST['conversation_id'];
@@ -26,7 +26,7 @@
       $last_message_time = $_REQUEST['last_message_time'];
       $filter_arr['custom_time'] = array('custom_where'=>"message_time > '$last_message_time'");
       $payload = array(
-          'order_by'=>'message_time desc'
+          'order_by'=>'message_time'
       );
       $whatsapp_messages = Whatsapp_messages::get_list($filter_arr,"*",$payload);
       $conversation_id = $_REQUEST['conversation_id'];
