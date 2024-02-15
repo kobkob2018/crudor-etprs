@@ -8,9 +8,11 @@
     <div class="table-th row conversations-th">
         <div class="col">#</div>
         <div class="col"></div>
+        <div class="col">מספר השירות</div>
         <div class="col">
-            עדכון שיחה
+            מספר הפונה
         </div>
+        
         <div class="col">שם ווטסאפ</div>
         <div class="col">שם הפונה</div>
         <div class="col">הודעה אחרונה</div>
@@ -20,6 +22,7 @@
         <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>"  data-conversation_id="<?= $item['id'] ?>">
             <div class="col"><?= $item['id'] ?></div>
             <div class="col"><?= hebdt($item['last_message_time'],'d-m-Y') ?><br/><?= hebdt($item['last_message_time'],'H:i') ?></div>
+            <div class="col"><?= $item['owner_phone'] ?></div>
             <div class="col"><?= $item['contact_phone_wa_id'] ?></div>
             <div class="col">
                 <?= $item['contact_wa_name'] ?>
