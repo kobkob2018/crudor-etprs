@@ -138,6 +138,10 @@
             $columns_like_sql = implode(" OR ",$columns_like_sql_arr);
             $fields_sql_arr[] = "($columns_like_sql)";
           }
+          elseif(isset($value['custom_where'])){
+            $custom_where = $value['custom_where'];
+            $fields_sql_arr[] = "($custom_where)";
+          }
           else{
             $in_items_arr = array();
             foreach($value as $in_key=>$in_var){

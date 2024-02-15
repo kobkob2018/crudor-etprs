@@ -23,6 +23,28 @@
 
     }
 
+    public function ajax_list(){
+      //if(session__isset())
+      $this->set_layout("blank");
+      $filter_arr = $this->get_base_filter();
+      $last_message_time = $_REQUEST['last_message_time'];
+      $filter_arr['custom_time'] = array('custom_where'=>"last_message_time > $last_message_time");
+      $payload = array(
+          'order_by'=>'last_message_time'
+      );
+      $whatsapp_conversations = Whatsapp_conversations::get_list($filter_arr,"*",$payload);
+
+
+      foreach($whatsapp_conversations as $key=>$val){
+        $whatsapp_conversations[$key]['last_message'] = Whatsapp_messages::get_by_id($val['last_message_id']);
+      }
+      $this->data['whatsapp_conversations'] = $whatsapp_conversations;
+      $conversations_html = $this->include_ob_view('whatsapp_conversations/ajax_list.php');
+      $return_array = array('conversations_html'=>$conversations_html);
+      print(json_encode($return_array));
+      return;
+    }   
+
     protected function get_base_filter(){
     
         $filter_arr = array( );  
