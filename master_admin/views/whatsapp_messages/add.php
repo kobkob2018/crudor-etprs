@@ -68,6 +68,7 @@
     }
 
     function fetch_whatsapp_messages(){
+        console.log("fetch_whatsapp_messages");
         const messages_table = document.querySelector(".messages-table");       
         const last_row = messages_table.querySelector(".message_tr");
         const last_message_id = last_row.dataset.message_id;
