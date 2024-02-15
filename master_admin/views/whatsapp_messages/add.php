@@ -39,6 +39,11 @@
 
 <style type="text/css">
 
+    .items-table{
+        height: 260px;
+        margin-bottom: 20px;
+        overflow: auto;
+    }
 
     .message-direction{
         background: #9191ff;
