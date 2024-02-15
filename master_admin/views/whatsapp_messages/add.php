@@ -63,6 +63,7 @@
 
 
     function init_whatsapp_fetch_messages(){
+        console.log("init_whatsapp_fetch_messages");
         setInterval(function(){fetch_whatsapp_messages()},80000);
     }
 
