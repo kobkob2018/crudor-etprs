@@ -195,7 +195,9 @@
         $limit_sql = "LIMIT ".$payload['limit'];
       }
       $sql = "SELECT $select_params FROM $table_name WHERE $fields_sql $order_by_sql $limit_sql";
-    
+      if(isset($_REQUEST['test_sqls'])){
+        print_help($sql,$table_name);
+      }
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
       if(!$paging_result){
