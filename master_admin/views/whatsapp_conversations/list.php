@@ -17,7 +17,7 @@
         <div class="col">מחיקה</div>
     </div>
     <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
-        <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>">
+        <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>"  data-conversation_id="<?= $item['id'] ?>">
             <div class="col"><?= $item['id'] ?></div>
             <div class="col"><?= hebdt($item['last_message_time'],'d-m-Y') ?><br/><?= hebdt($item['last_message_time'],'H:i') ?></div>
             <div class="col"><?= $item['contact_phone_wa_id'] ?></div>
@@ -64,14 +64,30 @@
         const last_message_time = last_row.dataset.last_message;
         const fetch_url = "<?= inner_url("whatsapp_conversations/ajax_list/?last_message_time=") ?>"+last_message_time;
         const placeholder = document.querySelector(".new-conversations-placeholder");
+        const conversations_th = conversations_table.querySelector(".conversations-th");
         console.log(fetch_url);
         fetch(fetch_url).then((res) => res.json()).then(info => {
-            placeholder.append(info.conversations_html);
+            placeholder.innerHTML = info.conversations_html;
+
+            move_rows_from_placeholder_to_table(placeholder,conversations_table,conversations_th);
+
+
         }).catch(function(err) {
             console.log(err);
             alert("Something went wrong. please reload the page");
         });
     }
 
+    function move_rows_from_placeholder_to_table(placeholder,conversations_table,conversations_th){
+        const conversation_tr = placeholder.querySelector(".conversation_tr");
+        if(!conversation_tr){
+            return;
+        }
+        const conversation_id = conversation_tr.dataset.conversation_id;
+        const old_conversation_tr = conversations_table.querySelector(".conversation-"+conversation_id);
+        old_conversation_tr.remove();
+        conversations_th.after(conversation_tr);
+        move_rows_from_placeholder_to_table(placeholder,conversations_table,conversations_th);
+    }
 
 </script>

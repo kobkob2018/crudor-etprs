@@ -40,6 +40,7 @@
       }
       $this->data['whatsapp_conversations'] = $whatsapp_conversations;
       $conversations_html = $this->include_ob_view('whatsapp_conversations/ajax_list.php');
+      $conversations_html = '<h1 class="kobkob">Hi this is kobkob</h1>';
       $return_array = array('conversations_html'=>$conversations_html);
       print(json_encode($return_array));
       return;
