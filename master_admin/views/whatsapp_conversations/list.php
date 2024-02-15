@@ -41,21 +41,15 @@
     <?php endforeach; ?>
 </div>
 
-<div class="new-conversations-placeholder hidden" style="display:block; background:blue; padding:10px;">
+<div class="new-conversations-placeholder hidden">
 
 </div>
-
-<a href="javascript://" onclick="fetch_whatsapp_conversations()" >
-        <h2>check it out!!</h2>
-</a>
 
 <script type="text/javascript">
 
 
     function init_whatsapp_fetch_conversations(){
-
-        
-
+        setInterval(function(){fetch_whatsapp_conversations()},20000);
     }
 
     function fetch_whatsapp_conversations(){
@@ -89,5 +83,5 @@
         conversations_th.after(conversation_tr);
         move_rows_from_placeholder_to_table(placeholder,conversations_table,conversations_th);
     }
-
+    init_whatsapp_fetch_conversations();
 </script>
