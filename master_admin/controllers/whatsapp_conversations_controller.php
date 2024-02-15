@@ -28,7 +28,7 @@
       $this->set_layout("blank");
       $filter_arr = $this->get_base_filter();
       $last_message_time = $_REQUEST['last_message_time'];
-      $filter_arr['custom_time'] = array('custom_where'=>"last_message_time > $last_message_time");
+      //$filter_arr['custom_time'] = array('custom_where'=>"last_message_time > $last_message_time");
       $payload = array(
           'order_by'=>'last_message_time'
       );
