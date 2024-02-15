@@ -10,7 +10,7 @@
         //if(session__isset())
         $filter_arr = $this->get_base_filter();
         $payload = array(
-            'order_by'=>'last_message_time'
+            'order_by'=>'last_message_time desc'
         );
         $whatsapp_conversations = Whatsapp_conversations::get_list($filter_arr,"*",$payload);
 
