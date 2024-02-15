@@ -113,6 +113,12 @@
             <li class="bar-item <?= $view->a_class("domain_redirections/list/") ?>">
                 <a href="<?= inner_url('domain_redirections/list/') ?>" title="הפניות כלליות לדומיינים" class="a-link">הפניות כלליות לדומיינים</a>
             </li>
+
+            <h4>ווטסאם</h4>
+            <li class="bar-item <?= $view->a_c_class("whatsapp_conversations","whatsapp_messages") ?>">
+                <a href="<?= inner_url('whatsapp_conversations/list/') ?>" title="שיחות ווטסאפ" class="a-link">שיחות ווטסאפ</a>
+            </li>
+            
         <?php endif; ?>
 
     </ul>
