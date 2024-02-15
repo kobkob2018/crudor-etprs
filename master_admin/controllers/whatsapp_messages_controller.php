@@ -8,7 +8,7 @@
 
     public function ajax_list(){
       //the original list is in the add function
-
+      $this->set_layout("blank");
       $filter_arr = $this->get_base_filter();
       $last_message_id = $_REQUEST['last_message_id'];
       $filter_arr['custom_time'] = array('custom_where'=>"id > $last_message_id");
