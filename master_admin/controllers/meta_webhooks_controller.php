@@ -3,6 +3,7 @@ class Meta_webhooksController extends CrudController{
 
     public function clear_log(){
         Helper::clear_log('meta_webhooks.txt');
+        Helper::clear_log('meta_webhooks_log.txt');
         exit("ok");
     }
 
