@@ -173,7 +173,7 @@
         }
         if(isset($message['button'])){
             Helper::add_log('meta_webhooks.txt',"\nTHIS IS A BUTTON MESSAGE");
-            $message_text = $message['context']['button']['text'];   
+            $message_text = $message['button']['text'];   
         }
         $message_row_data = array(
             'conversation_id'=>$conversation_id,
