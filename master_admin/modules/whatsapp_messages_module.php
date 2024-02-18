@@ -144,16 +144,16 @@
         $filter_arr = array("connection_id"=>$connection_id,"stage"=>"open");
         $conversation_row = Whatsapp_conversations::find($filter_arr,'id');
         $conversation_id = false;
-        Helper::add_log('meta_webhooks.txt',"\n\n\n OK C OK");
+        Helper::add_log('meta_webhooks.txt',"\n OK C OK-".$connection_id);
         if(!$conversation_row){
-            Helper::add_log('meta_webhooks.txt',"\n\n\n Yes C found");
+            Helper::add_log('meta_webhooks.txt',"\n NOT C found");
             $conversation_id = $this->add_conversation($metadata,$contact,$message,$connection_id);
         }
         else{
-            Helper::add_log('meta_webhooks.txt',"\n\n\n NOT C found");
+            Helper::add_log('meta_webhooks.txt',"\nYes C found");
             $conversation_id = $conversation_row['id'];
         }
-        Helper::add_log('meta_webhooks.txt',"\n\n\n STEAL HERE");
+        Helper::add_log('meta_webhooks.txt',"\n STEAL HERE");
 
         $message_type = "text";
         $message_text = "";
@@ -163,8 +163,10 @@
             $message_time = $message['timestamp'];
         }
         if(isset($message['context'])){
+            Helper::add_log('meta_webhooks.txt',"\nTHIS IS A CONTEXT MESSAGE");
            // $message_type = $message['context']['type'];
             if(isset($message['context']['button'])){
+                Helper::add_log('meta_webhooks.txt',"\nTHIS IS A BUTTON MESSAGE");
                 $message_text = $message['context']['button']['text'];   
             }
             $message_time = $message['context']['timestamp'];
