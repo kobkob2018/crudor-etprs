@@ -41,6 +41,7 @@
             'message_text'=>$message_data['message_text'],
             'message_type'=>$message_data['message_type'],
             'direction'=>'send',
+            'log'=>$message_send,
         );
         $message_id = Whatsapp_messages::create($message_row_data);
         $conversation_update = array(
