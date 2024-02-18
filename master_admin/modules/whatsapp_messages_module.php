@@ -119,9 +119,9 @@
 
         $message_data = $this->action_data;
         $message_info = json_decode($message_data['message_info'],true);
-       // Helper::add_log('meta_webhooks.txt',"stam hereee");
+       Helper::add_log('meta_webhooks_log.txt',$message_data['message_info']);
 	   $log = $this->create_log($message_info);
-        //Helper::add_log('meta_webhooks.txt',$log);
+        Helper::add_log('meta_webhooks.txt',$log);
         if(
             (!isset($message_info['entry'][0])) ||
             (!isset($message_info['entry'][0]['changes'][0])) ||
