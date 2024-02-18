@@ -115,6 +115,9 @@
             </li>
 
             <h4>ווטסאפ</h4>
+            <li class="bar-item <?= $view->a_class("whatsapp_settings/edit/") ?>">
+                <a href="<?= inner_url('whatsapp_settings/edit/') ?>" title="הגדרות API ווטסאפ" class="a-link">הגדרות API ווטסאפ</a>
+            </li>
             <li class="bar-item <?= $view->a_c_class("whatsapp_conversations","whatsapp_messages") ?>">
                 <a href="<?= inner_url('whatsapp_conversations/list/') ?>" title="שיחות ווטסאפ" class="a-link">שיחות ווטסאפ</a>
             </li>
