@@ -100,16 +100,19 @@
         return $result_arr;
     }
 
-	protected function create_log($log_arr,$log_str = ""){
-		
+	protected function create_log($log_arr,$log_str = "",$deep=-1){
+		$deep++;
 		foreach($log_arr as $key=>$val){
 			
 			$log_str .="\n$key: ";
 			if(!is_array($val)){
+                for($gap=0;$gap<$deep;$gap++){
+                    $log_str .="- ";    
+                }
 				$log_str .="  $val";
 			}
 			else{
-				$log_str = $this->create_log($val,$log_str);
+				$log_str = $this->create_log($val,$log_str,$deep);
 			}
 		}
 		return $log_str;
