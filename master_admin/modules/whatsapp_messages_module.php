@@ -1,7 +1,7 @@
 <?php
   class Whatsapp_messagesModule extends Module{
 
-    public $add_models = array("Whatsapp_settings", "whatsapp_conversations", "whatsapp_messages");
+    public $add_models = array("whatsapp_settings", "whatsapp_conversations", "whatsapp_messages");
 
 
     public function list_incoming_message(){
