@@ -170,12 +170,10 @@
         }
         if(isset($message['context'])){
             Helper::add_log('meta_webhooks.txt',"\nTHIS IS A CONTEXT MESSAGE");
-           // $message_type = $message['context']['type'];
-            if(isset($message['context']['button'])){
-                Helper::add_log('meta_webhooks.txt',"\nTHIS IS A BUTTON MESSAGE");
-                $message_text = $message['context']['button']['text'];   
-            }
-            $message_time = $message['context']['timestamp'];
+        }
+        if(isset($message['button'])){
+            Helper::add_log('meta_webhooks.txt',"\nTHIS IS A BUTTON MESSAGE");
+            $message_text = $message['context']['button']['text'];   
         }
         $message_row_data = array(
             'conversation_id'=>$conversation_id,
