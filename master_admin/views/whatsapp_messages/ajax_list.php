@@ -6,7 +6,9 @@
                 <b><?= $item['message_type'] ?></b><br/>
                 <?= $item['message_text'] ?>
             </div>
-
+            <?php if(isset($item['context']) && $item['context'] != '0'): ?>
+                <div class="message-context message-context-pending" data-context="<?= $item['context'] ?>">[-- <?= $item['context'] ?> --]</div>
+            <?php endif; ?>
         </div>
         <div class="col">
             <a href = "<?= inner_url('whatsapp_messages/delete/') ?>?conversation_id=<?= $item['conversation_id'] ?>row_id=<?= $item['id'] ?>" title="מחק">מחק</a>
