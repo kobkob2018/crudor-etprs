@@ -98,6 +98,7 @@
         // Close cURL resource
         curl_close($ch);
         $result_arr = json_decode($result,true);
+        $result_arr['log'] = $result;
         return $result_arr;
     }
 
@@ -186,7 +187,7 @@
             'message_type'=>$message_type,
             'message_text'=>$message_text,
             'direction'=>'recive',
-            'log'=>$message_data['message_info']
+            'log'=>$message_data['message_info']['log']
         );
         Helper::add_log('meta_webhooks.txt',"\n\n\n YET AGAIN");
         $message_id = Whatsapp_messages::create($message_row_data);
