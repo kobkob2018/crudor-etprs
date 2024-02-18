@@ -164,9 +164,12 @@
         $message_type = "text";
         $message_text = "";
         $message_time = "";
+        
+        if(isset($message['timestamp'])){
+            $message_time = $message['timestamp'];
+        }
         if(isset($message['text'])){
             $message_text = $message['text']['body'];
-            $message_time = $message['timestamp'];
         }
         if(isset($message['context'])){
             Helper::add_log('meta_webhooks.txt',"\nTHIS IS A CONTEXT MESSAGE");
