@@ -41,7 +41,7 @@
             'message_text'=>$message_data['message_text'],
             'message_type'=>$message_data['message_type'],
             'direction'=>'send',
-            'log'=>$message_send,
+            'log'=>$message_send['log'],
         );
         $message_id = Whatsapp_messages::create($message_row_data);
         $conversation_update = array(
@@ -187,7 +187,7 @@
             'message_type'=>$message_type,
             'message_text'=>$message_text,
             'direction'=>'recive',
-            'log'=>$message_data['message_info']['log']
+            'log'=>$message_data['message_info']
         );
         Helper::add_log('meta_webhooks.txt',"\n\n\n YET AGAIN");
         $message_id = Whatsapp_messages::create($message_row_data);
