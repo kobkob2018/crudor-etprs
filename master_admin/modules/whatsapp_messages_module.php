@@ -42,6 +42,7 @@
             'message_type'=>$message_data['message_type'],
             'direction'=>'send',
             'log'=>$message_send['log'],
+            'wamid'=>$message_send['messages'][0]['id']
         );
         $message_id = Whatsapp_messages::create($message_row_data);
         $conversation_update = array(
@@ -173,7 +174,13 @@
         if(isset($message['text'])){
             $message_text = $message['text']['body'];
         }
+        $wamid_message = false;
         if(isset($message['context'])){
+            $wamid_filter = array('wamid'=>$message['context']['id']);
+            $wamid_message = Whatsapp_messages::find($wamid_filter,'id');
+            if($wamid_message){
+
+            }
             Helper::add_log('meta_webhooks.txt',"\nTHIS IS A CONTEXT MESSAGE");
         }
         if(isset($message['button'])){
@@ -187,8 +194,12 @@
             'message_type'=>$message_type,
             'message_text'=>$message_text,
             'direction'=>'recive',
-            'log'=>$message_data['message_info']
+            'log'=>$message_data['message_info'],
+            'wamid'=>$message['id']
         );
+        if($wamid_message){
+            $message_row_data['context'] = $wamid_message['id'];
+        }
         Helper::add_log('meta_webhooks.txt',"\n\n\n YET AGAIN");
         $message_id = Whatsapp_messages::create($message_row_data);
         Helper::add_log('meta_webhooks.txt',"\n\n\n MESSAGE CREATED");
