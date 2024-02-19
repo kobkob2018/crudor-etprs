@@ -4,6 +4,8 @@
 
     protected $session_filter = false;
 
+    protected $city_names = array();
+
     protected function init_filter_session(){
         $this->session_filter = array();
         if(isset($_REQUEST['filter'])){
@@ -240,6 +242,20 @@
         );
         $this->include_view('biz_requests/spam_list.php',$info);
     }    
+
+
+    public function get_city_name($city_id){
+        if(!isset($this->city_names[$city_id])){
+            $city_name = $city_id;
+            $city = Cities::get_by_id($city_id);
+            if($city){
+                $city_name = $city['label'];
+            }
+            $this->city_names[$city_id] = $city_name;
+        }
+
+        return $this->city_names[$city_id];
+    }
 
     public function edit(){
         return parent::edit();

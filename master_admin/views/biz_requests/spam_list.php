@@ -101,7 +101,7 @@
             <?= $biz_request['ip'] ?>
         </div>
         <div class="col">
-            <?= $biz_request['city_id'] ?>
+            <?= $this->get_city_name($biz_request['city_id']) ?>
         </div>
         <div class="col">
             <?php foreach($biz_request['cat_tree'] as $cat): ?>
