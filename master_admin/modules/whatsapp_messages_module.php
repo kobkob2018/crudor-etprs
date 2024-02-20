@@ -83,9 +83,9 @@
                 "body" => $message_data['message_text'],
             );
         }
-
+        
         $payload = json_encode($data);
-
+        Helper::add_log('meta_webhooks_admin.txt',"\n\n\n$to: $payload");
         // Attach encoded JSON string to the POST fields
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 
@@ -223,6 +223,7 @@
         $message_text .= $message_row_data['message_type'].": \n".$message_row_data['message_text'];
         $message_text .= "\n\nview in admin: ".outer_url('whatsapp_messages/add/?conversation_id='.$conversation_data['id']);
         Helper::add_log('meta_webhooks_admin.txt',"\n\n\n $message_text");
+
         $message_data = array(
             'message_type'=>'text',
             'message_text'=>$message_text,
