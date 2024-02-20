@@ -183,16 +183,20 @@
         $direction = 'recive';
         if(isset($message['context'])){
             
-            
+            Helper::add_log('meta_webhooks_wamin.txt',"wamid:\n".$message['context']['id']);
             $wamid_filter = array('wamid'=>$message['context']['id']);
             $wamid_message = Whatsapp_messages::find($wamid_filter,'id');
             if($wamid_message){
+                Helper::add_log('meta_webhooks_wamin.txt',"YES YES FOUND");
                 $admin_alerts_phone = Whatsapp_settings::get()['admin_alerts_phone'];
                 if($contact_phone == $admin_alerts_phone){
                     $conversation_id = $wamid_message['conversation_id'];
                     $connection_id = $wamid_message['connection_id'];
                     $direction = 'send';
                 }
+            }
+            else{
+                Helper::add_log('meta_webhooks_wamin.txt',"NOT FOUND");
             }
             Helper::add_log('meta_webhooks.txt',"\nTHIS IS A CONTEXT MESSAGE");
         }
