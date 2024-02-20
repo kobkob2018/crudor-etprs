@@ -214,8 +214,9 @@
             'log'=>$message_data['message_info'],
             'wamid'=>$message['id']
         );
+        
         if($direction=='recive'){
-            $this->send_alert_to_admin($conversation_row,$message_row_data);
+            
             if($wamid_message){
                 $message_row_data['context'] = $wamid_message['id'];
             }
@@ -224,6 +225,11 @@
             $this->foreword_message_from_admin($conversation_row,$message_row_data);
         }
         $message_id = Whatsapp_messages::create($message_row_data);
+        $message_row_data['id'] = $message_id;
+        if($direction=='recive'){
+            $this->send_alert_to_admin($conversation_row,$message_row_data);
+
+        }
         Helper::add_log('meta_webhooks.txt',"\n\n\n MESSAGE CREATED");
         $conversation_update = array(
             'last_message_id'=>$message_id,
