@@ -183,20 +183,25 @@
         $direction = 'recive';
         if(isset($message['context'])){
             
-            Helper::add_log('meta_webhooks_wamin.txt',"wamid:\n".$message['context']['id']);
+            
             $wamid_filter = array('admin_wamid'=>$message['context']['id']);
             $wamid_message = Whatsapp_messages::find($wamid_filter,'id');
-            if(false && $wamid_message){
+            if($wamid_message){
                 Helper::add_log('meta_webhooks_wamin.txt',"YES YES FOUND");
                 $admin_alerts_phone = Whatsapp_settings::get()['admin_alerts_phone'];
                 if($contact_phone == $admin_alerts_phone){
+                    Helper::add_log('meta_webhooks_wamin.txt',"\n$contact_phone is $admin_alerts_phone");
                     $conversation_id = $wamid_message['conversation_id'];
                     $connection_id = $wamid_message['connection_id'];
                     $direction = 'send';
                 }
+                else{
+                    Helper::add_log('meta_webhooks_wamin.txt',"\n$contact_phone is not $admin_alerts_phone");
+                }
             }
             else{
-                Helper::add_log('meta_webhooks_wamin.txt',"NOT FOUND");
+                Helper::add_log('meta_webhooks_wamin.txt',"\nis not a message from admin");
+                
             }
             Helper::add_log('meta_webhooks.txt',"\nTHIS IS A CONTEXT MESSAGE");
         }
@@ -224,6 +229,7 @@
         $message_id = Whatsapp_messages::create($message_row_data);
         $message_row_data['id'] = $message_id;
         if($direction=='send'){
+
             $this->foreword_message_from_admin($conversation_row,$message_row_data);
         }
         
