@@ -186,7 +186,7 @@
             Helper::add_log('meta_webhooks_wamin.txt',"wamid:\n".$message['context']['id']);
             $wamid_filter = array('admin_wamid'=>$message['context']['id']);
             $wamid_message = Whatsapp_messages::find($wamid_filter,'id');
-            if($wamid_message){
+            if(false && $wamid_message){
                 Helper::add_log('meta_webhooks_wamin.txt',"YES YES FOUND");
                 $admin_alerts_phone = Whatsapp_settings::get()['admin_alerts_phone'];
                 if($contact_phone == $admin_alerts_phone){
