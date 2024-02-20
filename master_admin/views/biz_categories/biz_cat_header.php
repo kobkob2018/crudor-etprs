@@ -32,7 +32,9 @@
             <br/>
             <a href = "<?= inner_url('cat_phone_display_hours/list/') ?>?cat_id=<?= $this->data['current_item_id'] ?>" class="item-edit-a <?= $view->a_c_class('cat_phone_display_hours') ?>">תצוגת טלפון</a> 
             | 
-            <a href = "<?= inner_url('refund_reasons/list/') ?>?cat_id=<?= $this->data['current_item_id'] ?>" class="item-edit-a <?= $view->a_c_class('refund_reasons') ?>">סיבות זיכוי</a>             
+            <a href = "<?= inner_url('refund_reasons/list/') ?>?cat_id=<?= $this->data['current_item_id'] ?>" class="item-edit-a <?= $view->a_c_class('refund_reasons') ?>">סיבות זיכוי</a>   
+            | 
+            <a href = "<?= inner_url('cat_whatsapp_terms/list/') ?>?cat_id=<?= $this->data['current_item_id'] ?>" class="item-edit-a <?= $view->a_c_class('cat_whatsapp_terms') ?>">ווטסאפ - מושגי התאמה</a>             
         </div>
         <hr/>
 

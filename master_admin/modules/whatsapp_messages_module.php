@@ -53,9 +53,11 @@
         return $this->controller->redirect_to(inner_url("whatsapp_messages/add/?conversation_id=".$conversation_id));
     }
 
-    protected function send_message_with_api($conversation_data,$message_data){
+    protected function send_message_with_api($conversation_data,$message_data, $to = ""){
         $owner_phone_id = $conversation_data['owner_phone_id'];
-        $to = $conversation_data['contact_phone_wa_id'];
+        if($to ==""){
+            $to = $conversation_data['contact_phone_wa_id'];
+        }
         $api_key = Whatsapp_settings::get()['messages_api_key'];
         $url = "https://graph.facebook.com/v17.0/$owner_phone_id/messages";
 
@@ -202,12 +204,29 @@
         }
         Helper::add_log('meta_webhooks.txt',"\n\n\n YET AGAIN");
         $message_id = Whatsapp_messages::create($message_row_data);
+        $this->send_alert_to_admin($conversation_row,$message_row_data);
         Helper::add_log('meta_webhooks.txt',"\n\n\n MESSAGE CREATED");
         $conversation_update = array(
             'last_message_id'=>$message_id,
             'last_message_time'=>date('Y-m-d h:i:s',$message_time),
         );
         Whatsapp_conversations::update($conversation_id,$conversation_update);
+    }
+
+    protected function send_alert_to_admin($conversation_data, $message_row_data){
+
+        $to = Whatsapp_settings::get()['admin_alerts_phone'];
+        
+        $message_text = "message from system: \n\n";
+        $message_text .= "connection_id: ".$message_row_data['connection_id']."\n";
+        $message_text .= "message: \n";
+        $message_text .= $message_row_data['message_type'].": \n".$message_row_data['message_text'];
+        $message_text .= "\n\nview in admin: ".outer_url('whatsapp_messages/add/?conversation_id='.$conversation_data['id']);
+        $message_data = array(
+            'message_type'=>'text',
+            'message_text'=>$message_text,
+        );
+        $message_send = $this->send_message_with_api($conversation_data,$message_data,$to);
     }
 
     protected function add_conversation($metadata,$contact,$message,$connection_id){

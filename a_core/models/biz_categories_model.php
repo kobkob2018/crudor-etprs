@@ -42,6 +42,11 @@
             'table'=>'user_cat_city',
             'id_key'=>'cat_id'
         ),
+        'cat_whatsapp_terms'=>array(
+            'table'=>'cat_whatsapp_terms',
+            'id_key'=>'cat_id'
+        ),
+        
     );    
 
     public static $fields_collection = array(
