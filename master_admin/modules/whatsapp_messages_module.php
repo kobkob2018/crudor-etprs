@@ -211,9 +211,9 @@
             'wamid'=>$message['id']
         );
         if($direction=='recive'){
+            $this->send_alert_to_admin($conversation_row,$message_row_data);
             if($wamid_message){
                 $message_row_data['context'] = $wamid_message['id'];
-                $this->send_alert_to_admin($conversation_row,$message_row_data);
             }
         }
         else{
