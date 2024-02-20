@@ -86,6 +86,8 @@
         
         $payload = json_encode($data);
         Helper::add_log('meta_webhooks_admin.txt',"\n\n\n$to: $payload");
+        Helper::add_log('meta_webhooks_admin.txt',"\n\n\n$api_key");
+        Helper::add_log('meta_webhooks_admin.txt',"\n\n\n$url");
         // Attach encoded JSON string to the POST fields
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 
