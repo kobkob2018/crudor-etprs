@@ -184,7 +184,7 @@
         if(isset($message['context'])){
             
             Helper::add_log('meta_webhooks_wamin.txt',"wamid:\n".$message['context']['id']);
-            $wamid_filter = array('wamid'=>$message['context']['id']);
+            $wamid_filter = array('admin_wamid'=>$message['context']['id']);
             $wamid_message = Whatsapp_messages::find($wamid_filter,'id');
             if($wamid_message){
                 Helper::add_log('meta_webhooks_wamin.txt',"YES YES FOUND");
@@ -252,6 +252,8 @@
             'message_text'=>$message_text,
         );
         $message_send = $this->send_message_with_api($conversation_data,$message_data,$to);
+        $admin_wamid = $message_send['messages'][0]['id'];
+        Whatsapp_messages::update($message_row_data['id'],array('admin_wamid'=>$admin_wamid));
     }
 
     protected function add_conversation($metadata,$contact,$message,$connection_id){
