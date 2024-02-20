@@ -155,12 +155,13 @@
         $connection_id = $self_phone."_".$contact_phone;
         Helper::add_log('meta_webhooks.txt',"\n\n\n OK B OK");
         $filter_arr = array("connection_id"=>$connection_id,"stage"=>"open");
-        $conversation_row = Whatsapp_conversations::find($filter_arr,'id');
+        $conversation_row = Whatsapp_conversations::find($filter_arr);
         $conversation_id = false;
         Helper::add_log('meta_webhooks.txt',"\n OK C OK-".$connection_id);
         if(!$conversation_row){
             Helper::add_log('meta_webhooks.txt',"\n NOT C found");
             $conversation_id = $this->add_conversation($metadata,$contact,$message,$connection_id);
+            $conversation_row = Whatsapp_conversations::get_by_id($conversation_id);
         }
         else{
             Helper::add_log('meta_webhooks.txt',"\nYes C found");
