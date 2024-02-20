@@ -214,7 +214,7 @@
     }
 
     protected function send_alert_to_admin($conversation_data, $message_row_data){
-
+        Helper::add_log('meta_webhooks_admin.txt',"\n\n\n MESSAGE CREATing");
         $to = Whatsapp_settings::get()['admin_alerts_phone'];
         
         $message_text = "message from system: \n\n";
