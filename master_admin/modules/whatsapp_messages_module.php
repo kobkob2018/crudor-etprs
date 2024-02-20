@@ -180,11 +180,19 @@
             $message_text = $message['text']['body'];
         }
         $wamid_message = false;
+        $direction = 'recive';
         if(isset($message['context'])){
+            
+            
             $wamid_filter = array('wamid'=>$message['context']['id']);
             $wamid_message = Whatsapp_messages::find($wamid_filter,'id');
             if($wamid_message){
-
+                $admin_alerts_phone = Whatsapp_settings::get()['admin_alerts_phone'];
+                if($contact_phone == $admin_alerts_phone){
+                    $conversation_id = $wamid_message['conversation_id'];
+                    $connection_id = $wamid_message['connection_id'];
+                    $direction = 'send';
+                }
             }
             Helper::add_log('meta_webhooks.txt',"\nTHIS IS A CONTEXT MESSAGE");
         }
@@ -198,22 +206,30 @@
             'message_time'=>date('Y-m-d h:i:s',$message_time),
             'message_type'=>$message_type,
             'message_text'=>$message_text,
-            'direction'=>'recive',
+            'direction'=>$direction,
             'log'=>$message_data['message_info'],
             'wamid'=>$message['id']
         );
-        if($wamid_message){
-            $message_row_data['context'] = $wamid_message['id'];
+        if($direction=='recive'){
+            if($wamid_message){
+                $message_row_data['context'] = $wamid_message['id'];
+                $this->send_alert_to_admin($conversation_row,$message_row_data);
+            }
         }
-        Helper::add_log('meta_webhooks.txt',"\n\n\n YET AGAIN");
+        else{
+            $this->foreword_message_from_admin($conversation_row,$message_row_data);
+        }
         $message_id = Whatsapp_messages::create($message_row_data);
-        $this->send_alert_to_admin($conversation_row,$message_row_data);
         Helper::add_log('meta_webhooks.txt',"\n\n\n MESSAGE CREATED");
         $conversation_update = array(
             'last_message_id'=>$message_id,
             'last_message_time'=>date('Y-m-d h:i:s',$message_time),
         );
         Whatsapp_conversations::update($conversation_id,$conversation_update);
+    }
+
+    protected function foreword_message_from_admin($conversation_row,$message_row_data){
+        return $this->send_message_with_api($conversation_row,$message_row_data);
     }
 
     protected function send_alert_to_admin($conversation_data, $message_row_data){
