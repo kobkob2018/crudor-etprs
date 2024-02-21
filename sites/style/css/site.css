@@ -949,6 +949,10 @@ a.news-ticker-a-content{
 
 }
 
+.product-price-pre{
+    text-decoration: line-through;
+}
+
 .video-container{
     position: relative;
     padding-bottom: 56.25%;

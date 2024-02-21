@@ -158,7 +158,19 @@
         <div class="product-content">
             <?php if($info['product']['price']): ?>
                 <div class="color-b">
-                    <b><?= __tr("Price") ?>: <?= $info['product']['price'] ?> <?= __tr("NIS") ?> </b>
+                    <b><?= __tr("Price") ?>: 
+                        <?php if($product['price_special'] == ''): ?>
+                            <?= $product['price'] ?> <?= __tr("NIS") ?> 
+                        <?php else: ?>
+                            <span class="product-price-pre">
+                                <?= $product['price'] ?> <?= __tr("NIS") ?>
+                            </span>
+                            &nbsp;
+                            <span class="product-price-special">
+                                <?= $product['price_special'] ?> <?= __tr("NIS") ?>
+                            </span>
+                        <?php endif; ?> 
+                    </b>
                     
                 </div> 
                 <br/>
