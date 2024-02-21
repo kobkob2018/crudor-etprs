@@ -66,15 +66,15 @@
                 <?php endif; ?>
                 <?php if($info['product']['price']): ?>
                     <div class="box-price color-b">
-                        <?php if($product['price_special'] == ''): ?>
-                            <?= $product['price'] ?> <?= __tr("NIS") ?> 
+                        <?php if($info['product']['price_special'] == ''): ?>
+                            <?= $info['product']['price'] ?> <?= __tr("NIS") ?> 
                         <?php else: ?>
                             <span class="product-price-pre">
-                                <?= $product['price'] ?> <?= __tr("NIS") ?>
+                                <?= $info['product']['price'] ?> <?= __tr("NIS") ?>
                             </span>
                             &nbsp;
                             <span class="product-price-special">
-                                <?= $product['price_special'] ?> <?= __tr("NIS") ?>
+                                <?= $info['product']['price_special'] ?> <?= __tr("NIS") ?>
                             </span>
                         <?php endif; ?>
                     </div> 
