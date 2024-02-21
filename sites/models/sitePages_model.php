@@ -28,6 +28,7 @@
     }
 
     public static function set_custom_current_page($page_link){
+        
         $page_find = self::get_by_link($page_link);
         if($page_find){
             self::$current_page = $page_find;
