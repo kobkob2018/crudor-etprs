@@ -26,6 +26,8 @@
             $product = SiteProducts::get_by_id($product_id);
             if($with_portal_view){
                 $this->call_module('portal_user','use',array('user_id'=>$product['user_id']));
+                $portal_page_url = $this->data['portal_user']['link'];
+                SitePages::set_custom_current_page($portal_page_url);
             }
             $product_images = SiteProducts::get_product_images($product_id);  
             if(!$product){

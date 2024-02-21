@@ -27,6 +27,13 @@
         return self::$current_page; 
     }
 
+    public static function set_custom_current_page($page_link){
+        $page_find = self::get_by_link($page_link);
+        if($page_find){
+            self::$current_page = $page_find;
+        }
+    }
+
     protected static function update_page_views($page_id){
         $db = Db::getInstance();
         $sql = "UPDATE content_pages SET views = views + 1 WHERE id = :page_id";	
