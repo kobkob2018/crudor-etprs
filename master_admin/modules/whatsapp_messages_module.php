@@ -3,21 +3,6 @@
 
     public $add_models = array("whatsapp_settings", "whatsapp_conversations", "whatsapp_messages");
 
-
-    public function list_incoming_message(){
-        $message_data = $this->action_data;
-        $message_info = json_decode($message_data['message_info'],true);
-
-        print_r_help($message_info);
-    }
-
-    public function list_outcoming_message(){
-        $message_data = $this->action_data;
-        $message_info = json_decode($message_data['message_info'],true);
-        
-        print_r_help($message_info);
-    }
-
     public function send_message(){
         $message_data = $this->action_data;
         $conversation_id = $message_data['conversation_id'];
@@ -107,34 +92,11 @@
         return $result_arr;
     }
 
-	protected function create_log($log_arr,$log_str = "",$deep=-1){
-		$deep++;
-		foreach($log_arr as $key=>$val){
-			
-			$log_str .="\n$key: ";
-			if(!is_array($val)){
-                for($gap=0;$gap<$deep+1;$gap++){
-                    $log_str .="- ";    
-                }
-				$log_str .="  $val";
-			}
-			else{
-                for($gap=0;$gap<$deep;$gap++){
-                    $log_str .="- ";    
-                }
-				$log_str = $this->create_log($val,$log_str,$deep);
-			}
-		}
-		return $log_str;
-	}
-
     public function handle_message_notification(){
 
         $message_data = $this->action_data;
         $message_info = json_decode($message_data['message_info'],true);
-       Helper::add_log('meta_webhooks_log.txt',$message_data['message_info']);
-	   $log = $this->create_log($message_info);
-        Helper::add_log('meta_webhooks.txt',$log);
+
         if(
             (!isset($message_info['entry'][0])) ||
             (!isset($message_info['entry'][0]['changes'][0])) ||
@@ -146,28 +108,26 @@
             
             return false;
         }
-        Helper::add_log('meta_webhooks.txt',"\n\n\n OK A OK");
+        
         $metadata = $message_info['entry'][0]['changes'][0]['value']['metadata'];
         $contact = $message_info['entry'][0]['changes'][0]['value']['contacts'][0];
         $message = $message_info['entry'][0]['changes'][0]['value']['messages'][0];
         $self_phone = $metadata['display_phone_number'];
         $contact_phone = $contact['wa_id'];
         $connection_id = $self_phone."_".$contact_phone;
-        Helper::add_log('meta_webhooks.txt',"\n\n\n OK B OK");
+        
         $filter_arr = array("connection_id"=>$connection_id,"stage"=>"open");
         $conversation_row = Whatsapp_conversations::find($filter_arr);
         $conversation_id = false;
-        Helper::add_log('meta_webhooks.txt',"\n OK C OK-".$connection_id);
+        
         if(!$conversation_row){
-            Helper::add_log('meta_webhooks.txt',"\n NOT C found");
             $conversation_id = $this->add_conversation($metadata,$contact,$message,$connection_id);
             $conversation_row = Whatsapp_conversations::get_by_id($conversation_id);
         }
         else{
-            Helper::add_log('meta_webhooks.txt',"\nYes C found");
             $conversation_id = $conversation_row['id'];
         }
-        Helper::add_log('meta_webhooks.txt',"\n STEAL HERE");
+        
 
         $message_type = "text";
         $message_text = "";
@@ -187,7 +147,7 @@
             $wamid_filter = array('admin_wamid'=>$message['context']['id']);
             $wamid_message = Whatsapp_messages::find($wamid_filter,'id');
             if($wamid_message){
-                Helper::add_log('meta_webhooks_wamin.txt',"YES YES FOUND");
+                
                 $admin_alerts_phone = Whatsapp_settings::get()['admin_alerts_phone'];
                 if($contact_phone == $admin_alerts_phone){
                     Helper::add_log('meta_webhooks_wamin.txt',"\n$contact_phone is $admin_alerts_phone");
@@ -229,7 +189,7 @@
         $message_id = Whatsapp_messages::create($message_row_data);
         $message_row_data['id'] = $message_id;
         if($direction=='send'){
-
+            $message_row_data['context'] = $wamid_message['id'];
             $this->foreword_message_from_admin($conversation_row,$message_row_data);
         }
         
