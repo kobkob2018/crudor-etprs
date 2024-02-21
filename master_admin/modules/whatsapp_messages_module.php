@@ -153,12 +153,13 @@
                 $wamid_filter = array('admin_wamid'=>$message['context']['id']);
             }
 
-            $wamid_message = Whatsapp_messages::find($wamid_filter,'id');
+            $wamid_message = Whatsapp_messages::find($wamid_filter);
             
             if($wamid_message){
                 if($sender_is_admin){
                     $message_is_reply_from_admin = true;
                     $conversation_id = $wamid_message['conversation_id'];
+                    $conversation_row = Whatsapp_conversations::get_by_id($conversation_id);
                     $connection_id = $wamid_message['connection_id'];
                     $direction = 'send';
                 }    
@@ -181,18 +182,17 @@
             'wamid'=>$message['id']
         );
         
-        if($direction=='recive'){
-            
+        if(!$message_is_reply_from_admin){
             if($wamid_message){
                 $message_row_data['context'] = $wamid_message['id'];
             }
         }
+        
         $message_id = Whatsapp_messages::create($message_row_data);
         $message_row_data['id'] = $message_id;
-        if($direction=='send'){
+        if($message_is_reply_from_admin){
             $this->foreword_message_from_admin($conversation_row,$message_row_data);
         }
-        
         
         if($direction=='recive'){
             $this->send_alert_to_admin($conversation_row,$message_row_data);
