@@ -22,7 +22,17 @@
                     </div>
                     <?php if($product['price']): ?>
                         <div class="box-price color-b">
-                            <?= $product['price'] ?> <?= __tr("NIS") ?> 
+                            <?php if($product['price_special'] == ''): ?>
+                                <?= $product['price'] ?> <?= __tr("NIS") ?> 
+                            <?php else: ?>
+                                <span class="product-price-pre">
+                                    <?= $product['price'] ?> <?= __tr("NIS") ?>
+                                </span>
+                                &nbsp;
+                                <span class="product-price-special">
+                                    <?= $product['price_special'] ?> <?= __tr("NIS") ?>
+                                </span>
+                            <?php endif; ?>
                         </div> 
                     <?php endif; ?>
                     <div class="box-go-to">

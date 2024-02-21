@@ -119,13 +119,18 @@
         $filter_arr = array("connection_id"=>$connection_id,"stage"=>"open");
         $conversation_row = Whatsapp_conversations::find($filter_arr);
         $conversation_id = false;
-        
-        if(!$conversation_row){
-            $conversation_id = $this->add_conversation($metadata,$contact,$message,$connection_id);
+        $lead_info = array(
+            'category'=>'0',
+            'city'=>'0'
+        );
+        if(!$conversation_row){   
+
+            $conversation_id = $this->add_conversation($metadata,$contact,$message,$connection_id,$lead_info);
             $conversation_row = Whatsapp_conversations::get_by_id($conversation_id);
         }
         else{
             $conversation_id = $conversation_row['id'];
+            $lead_info = json_decode($conversation_row['lead_info'],true);
         }
         
 
@@ -198,12 +203,49 @@
             $this->send_alert_to_admin($conversation_row,$message_row_data);
 
         }
-        
+        if($lead_info['city'] == '0'){
+            if($city = $this->track_city_from_message_text($message_text)){
+                $lead_info['city'] = $city;
+            }
+        }
+        if($lead_info['category'] == '0'){
+            if($category = $this->track_category_from_message_text($message_text)){
+                $lead_info['category'] = $category;
+            }
+        }
+
+        $lead_info_json = json_encode($lead_info);        
         $conversation_update = array(
             'last_message_id'=>$message_id,
             'last_message_time'=>date('Y-m-d h:i:s',$message_time),
+            'lead_info'=>$lead_info_json
         );
+
+        if($lead_info['city'] != '0' && $lead_info['category'] != '0'){
+            $conversation_update['stage'] = 'closed';
+        }
         Whatsapp_conversations::update($conversation_id,$conversation_update);
+        if($lead_info['city'] != '0' && $lead_info['category'] != '0'){
+            $this->add_lead($conversation_id);
+        }
+    }
+
+    protected function add_lead($conversation_id){
+        return;
+        $conversation_row = Whatsapp_conversations::get_by_id($connection_id);
+        $phone = $conversation_row['contact_phone_wa_id'];
+        $full_name = $conversation_row['contact_wa_name'];
+        $lead_info = json_decode($conversation_row['lead_info'],true);
+        $cat_id = $lead_info['category'];
+        $city_id = $lead_info['city'];
+    }
+
+    protected function track_city_from_message_text($message_text){
+        return false;
+    }
+
+    protected function track_category_from_message_text($message_text){
+        return false;
     }
 
     protected function foreword_message_from_admin($conversation_row,$message_row_data){
@@ -230,7 +272,7 @@
         Whatsapp_messages::update($message_row_data['id'],array('admin_wamid'=>$admin_wamid));
     }
 
-    protected function add_conversation($metadata,$contact,$message,$connection_id){
+    protected function add_conversation($metadata,$contact,$message,$connection_id,$lead_info){
         $conversation_data = array(
             'connection_id'=>$connection_id,
             'owner_phone'=>$metadata['display_phone_number'],
@@ -240,7 +282,8 @@
             'contact_custom_name'=>"",
             'last_message_time'=>date('Y-m-d h:i:s',$message['timestamp']),
             'last_message_direction'=>'recive',
-            'stage'=>'open'
+            'stage'=>'open',
+            'lead_info'=>json_encode($lead_info)
         );
         $row_id = Whatsapp_conversations::create($conversation_data);
         return $row_id;
