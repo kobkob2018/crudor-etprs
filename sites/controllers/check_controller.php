@@ -15,6 +15,11 @@
             $log.= "$name: $value\n";
         }
 
+
+        $request_body = file_get_contents('php://input');
+
+        $log.=$request_body;
+
        // Helper::add_log("check_log.txt","\nHi now is ".$log);
         echo nl2br($log);
         return;

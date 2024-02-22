@@ -22,7 +22,7 @@ class Whatsapp_settingsController extends CrudController{
         curl_setopt( $ch, CURLOPT_POST, 1 ); 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-       // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json', 'Authorization: Bearer '.$api_key));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json', 'Authorization: Bearer '.$api_key));
         $result = curl_exec($ch);
 
         // Close cURL resource
