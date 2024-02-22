@@ -12,13 +12,13 @@
     <?php endif; ?>
     <?php if(!isset($this->data['is_portal_view'])): ?>
         <?php $this->call_module('site_menus','right_menu'); ?>
-        <?php if(isset($this->data['is_home_page']) && !$this->data['is_home_page']): ?>
-            <?php if($this->data['site_styling']['add_scrolling_requests'] == '1'): ?>
-                <?php $this->call_module('scrolling_last_requests','print'); ?>
-            <?php endif; ?>
-        <?php endif; ?>
     <?php else: ?>
         <?php $this->call_module('site_menus','portal_menu'); ?>
+    <?php endif; ?>
+    <?php if(!isset($this->data['is_portal_view']) && isset($this->data['is_home_page']) && !$this->data['is_home_page']): ?>
+        <?php if($this->data['site_styling']['add_scrolling_requests'] == '1'): ?>
+            <?php $this->call_module('scrolling_last_requests','print'); ?>
+        <?php endif; ?>
     <?php endif; ?>
     <div class="grab-content right-bot-grabber" data-grab="go-right-bot"></div>
 </div>
