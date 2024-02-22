@@ -8,7 +8,7 @@
         if($headers['authorization'] != " Bearer $api_key"){
             exit("permission denied - code 203");
         }
-        exit("CLIENT IP:".$_SERVER['REMOTE_ADDR']);
+        exit("CLIENT IP:".$_SERVER['REMOTE_ADDR']); 
         if($_SERVER['REMOTE_ADDR'] != " Bearer $api_key"){
             exit("permission denied - code 203");
         }       
