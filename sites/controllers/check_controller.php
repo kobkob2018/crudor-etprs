@@ -10,9 +10,13 @@
         foreach($_REQUEST as $k=>$v){
             $log.= "$k: $v \n";
         }
+        $log.= "\n\nHEADERS: \n";
+        foreach (getallheaders() as $name => $value) {
+            $log.= "$name: $value\n";
+        }
 
-        Helper::add_log("check_log.txt","\nHi now is ".$log);
-        echo "Hi how are you";
+       // Helper::add_log("check_log.txt","\nHi now is ".$log);
+        echo nl2br($log);
         return;
     }
 
