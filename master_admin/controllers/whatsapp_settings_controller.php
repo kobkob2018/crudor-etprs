@@ -2,6 +2,37 @@
 class Whatsapp_settingsController extends CrudController{
     public $add_models = array("whatsapp_settings");
 
+    public function check_the_check(){
+        
+        $api_key = Whatsapp_settings::get()['messages_api_key'];
+        $url = "https://il-biz.co.il/check/check/";
+
+
+
+        $data = array(
+            'param_1'=> "1",
+            "param_2"=> "2"
+        );
+        
+
+
+        $payload = json_encode($data);
+
+        $ch = curl_init($url);
+        curl_setopt( $ch, CURLOPT_POST, 1 ); 
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+
+        // Close cURL resource
+        curl_close($ch);
+        $result_arr = json_decode($result,true);
+        $result_arr['log'] = $result;
+        return $result_arr;
+        
+        echo "We have sent the curl request good!";
+    }
+
     public function edit(){
 
         $fields_collection = Whatsapp_settings::setup_kv_field_collection();
