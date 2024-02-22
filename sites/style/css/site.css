@@ -1365,6 +1365,9 @@ a.news-ticker-a-content{
         overflow: auto;
       }
 
+      .product-content .product-price{
+        display: none;
+      }
 }
 
 @media only screen and (min-width: 1300px) {

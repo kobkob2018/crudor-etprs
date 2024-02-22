@@ -157,7 +157,7 @@
         <?php endif; ?>
         <div class="product-content">
             <?php if($info['product']['price']): ?>
-                <div class="color-b">
+                <div class="color-b product-price">
                     <b><?= __tr("Price") ?>: 
                         <?php if($info['product']['price_special'] == ''): ?>
                             <?= $info['product']['price'] ?> <?= __tr("NIS") ?> 
