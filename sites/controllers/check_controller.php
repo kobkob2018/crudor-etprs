@@ -9,10 +9,8 @@
             exit('"'.$headers['authorization'].'"');
             exit("permission denied - code 203");
         }
-        print("CLIENT IP:".$_SERVER['SERVER_ADDR']);
 
-        exit("<br/>CLIENT IP:".$_SERVER['REMOTE_ADDR']); 
-        if($_SERVER['REMOTE_ADDR'] != " Bearer $api_key"){
+        if($_SERVER['REMOTE_ADDR'] != get_config('server_ip')){
             exit("permission denied - code 203");
         }       
 
