@@ -2,6 +2,18 @@
   class CheckController extends CrudController{
     
     protected function check(){
+
+        $api_key = get_config("curl_key");
+        $headers = getallheaders();
+        if($headers['authorization'] != " Bearer $api_key"){
+            exit("permission denied - code 203");
+        }
+        exit("CLIENT IP:".$_SERVER['REMOTE_ADDR']);
+        if($_SERVER['REMOTE_ADDR'] != " Bearer $api_key"){
+            exit("permission denied - code 203");
+        }       
+
+
         $this->set_layout("blank");
         $date = new DateTime();
         $now = $date->format('d-m-Y H:i:s');
