@@ -5,7 +5,7 @@
 
         $api_key = get_config("curl_key");
         $headers = getallheaders();
-        if($headers['authorization'] != " Bearer $api_key"){
+        if($headers['authorization'] != "Bearer $api_key"){
             exit('"'.$headers['authorization'].'"');
             exit("permission denied - code 203");
         }

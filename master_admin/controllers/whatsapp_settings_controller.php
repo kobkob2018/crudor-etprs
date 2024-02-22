@@ -4,7 +4,7 @@ class Whatsapp_settingsController extends CrudController{
 
     public function check_the_check(){
         
-        $api_key = "1234-4321";
+        $api_key = get_config("curl_key");
         $url = "https://il-biz.co.il/check/check/";
 
 
