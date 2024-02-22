@@ -132,9 +132,6 @@
                         AND active = '1' 
                         AND archived = '0' 
                         AND visible = '1'";	
-
-
-
         
         $req = $db->prepare($sql);
         $req->execute($execute_arr);
