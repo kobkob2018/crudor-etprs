@@ -2,6 +2,7 @@
   class CheckController extends CrudController{
     
     protected function check(){
+        $this->set_layout("blank");
         $date = new DateTime();
         $now = $date->format('d-m-Y H:i:s');
         $log = $now."\n";
