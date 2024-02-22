@@ -26,11 +26,8 @@ class Whatsapp_settingsController extends CrudController{
 
         // Close cURL resource
         curl_close($ch);
-        $result_arr = json_decode($result,true);
-        $result_arr['log'] = $result;
-        return $result_arr;
         
-        echo "We have sent the curl request good!";
+        echo $result;
     }
 
     public function edit(){
