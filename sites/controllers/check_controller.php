@@ -21,7 +21,11 @@
           'full_name'=>$request_arr['full_name'],
           'phone'=>$request_arr['phone'],
           'city_id'=>$request_arr['city_id'],
-          'cat_id'=>$request_arr['cat_id']
+          'cat_id'=>$request_arr['cat_id'],
+          'referrer'=>'whatsapp',
+          'email'=>'no-email',
+          'extra_info'=>'',
+          'note'=>'',
         );
         $return_array = $this->call_module("biz_request","enter_lead_by_api",array('return_array'=>$return_array,'lead_info'=>$lead_info));
 
@@ -45,7 +49,10 @@
         'phone'=>$_REQUEST['phone'],
         'city_id'=>$_REQUEST['city_id'],
         'cat_id'=>$_REQUEST['cat_id'],
-        'referrer'=>'whatsapp'
+        'referrer'=>'whatsapp',
+        'email'=>'no-email',
+        'extra_info'=>'',
+        'note'=>'',
       );
       $return_array = $this->call_module("biz_request","enter_lead_by_api",array('return_array'=>$return_array,'lead_info'=>$lead_info));
 

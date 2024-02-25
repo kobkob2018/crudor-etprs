@@ -10,8 +10,11 @@ class Whatsapp_settingsController extends CrudController{
 
 
         $data = array(
-            'param_1'=> "1",
-            "param_2"=> "2"
+            'cat_id'=> "232",
+            "city_id"=> "10",
+            "form_id"=> "393",
+            "full_name"=> "bodek bodek",
+            "phone"=> "111222333221",
         );
         
 
