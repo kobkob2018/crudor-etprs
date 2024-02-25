@@ -221,6 +221,8 @@
             'lead_info'=>$lead_info_json
         );
 
+
+$this->check_the_check();
         if($lead_info['city'] != '0' && $lead_info['category'] != '0'){
             $conversation_update['stage'] = 'closed';
         }
@@ -229,6 +231,38 @@
             $this->add_lead($conversation_id);
         }
     }
+
+    public function check_the_check(){
+        
+        $api_key = get_config("curl_key");
+        $url = "https://il-biz.co.il/check/check/";
+
+
+
+        $data = array(
+            'cat_id'=> "232",
+            "city_id"=> "10",
+            "form_id"=> "393",
+            "full_name"=> "check check",
+            "phone"=> "333666688",
+        );
+        
+
+
+        $payload = json_encode($data);
+
+        $ch = curl_init($url);
+        curl_setopt( $ch, CURLOPT_POST, 1 ); 
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json', 'Authorization: Bearer '.$api_key));
+        $result = curl_exec($ch);
+
+        // Close cURL resource
+        curl_close($ch);
+        return $result;
+    }
+
 
     protected function add_lead($conversation_id){
         return;
