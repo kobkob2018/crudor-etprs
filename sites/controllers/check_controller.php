@@ -34,7 +34,8 @@
 
     protected function test_set(){
       
-      //cat_id=51&city_id=3$form_id=62$full_name=kobkob&phone=123123
+      //cat_id=51&city_id=3&form_id=62&full_name=kobkob&phone=123123
+      //?cat_id=323&city_id=10&form_id=393&full_name=kobkob&phone=123123
       $this->set_layout("blank");
       
       $return_array = $this->init_form_data($_REQUEST);
@@ -43,7 +44,8 @@
         'full_name'=>$_REQUEST['full_name'],
         'phone'=>$_REQUEST['phone'],
         'city_id'=>$_REQUEST['city_id'],
-        'cat_id'=>$_REQUEST['cat_id']
+        'cat_id'=>$_REQUEST['cat_id'],
+        'referrer'=>'whatsapp'
       );
       $return_array = $this->call_module("biz_request","enter_lead_by_api",array('return_array'=>$return_array,'lead_info'=>$lead_info));
 
