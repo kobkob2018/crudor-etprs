@@ -169,6 +169,77 @@
             return $return_array;
         }
 
+
+        public function enter_lead_by_api(){
+
+            $action_data = $this->action_data;
+            $form_info = $this->controller->data['form_info'];
+            $return_array = $action_data['return_array'];
+
+
+            $this->lead_info = $action_data['lead_info'];
+
+            $have_meny_phone_duplications = $this->validate_phone_duplications($return_array);
+            
+            //create duplication mockup for spammers, with a success true result
+            if($have_meny_phone_duplications && !isset($this->lead_info['test_set'])){
+                return $this->add_spam_request($return_array, "multiple phones",$form_info);
+            }
+
+            $this->lead_info['page_id'] = $form_info['page_id'];
+
+            $this->add_cat_info_to_lead_info();
+            $this->add_city_info_to_lead_info();
+
+            $this->lead_info['thanks_pixel'] = $form_info['thanks_pixel'];
+
+            $lead_sends_arr = Leads_complex::find_users_for_lead($this->lead_info);
+
+            $this->lead_info['recivers'] = $lead_sends_arr['send_count'];
+
+            $optional_fields = array(
+                'ip',
+                'cat_id',
+                'c1',
+                'c2',
+                'c3',
+                'c4',
+                'city_id',
+                'site_id',
+                'page_id',
+                'form_id',
+                'is_mobile',
+                'banner_id',
+                'cube_id',
+                'aff_id',
+                'referrer',
+                'site_ref',
+                'recivers',
+                'full_name',
+                'phone',                
+                'note',
+                'extra_info',
+                'campaign_type',
+                'campaign_name',
+            );
+
+            $fixed_db_values = array();
+            foreach ($optional_fields as $field){
+                if(isset($this->lead_info[$field])){
+                    $fixed_db_values[$field] = $this->lead_info[$field];
+                }
+            }
+
+            $request_id = SiteBiz_requests::create($fixed_db_values);
+            Leads_complex::update_page_convertions($form_info['page_id']);
+            $this->lead_info['reuqest_id'] = $request_id;
+
+            $this->send_leads_to_users($request_id,$fixed_db_values,$lead_sends_arr);
+
+            return $return_array;
+        }
+
+
         protected function validate_multiple_requests(){
             $biz_request_count = 0;
             if(session__isset('biz_request_count')){

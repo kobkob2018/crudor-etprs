@@ -123,6 +123,9 @@
 
 
     protected static function get_users_by_rotation($optional_user_ids){
+        if(empty($optional_user_ids)){
+            return array();
+        }
         $user_id_in = implode(",",$optional_user_ids);
         if(isset($_REQUEST['prevent_db_listing'])){
             print_help($user_id_in, "user_id_in (line 140 leads_complex_model");   
