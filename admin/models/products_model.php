@@ -77,7 +77,7 @@
         'price_special'=>array(
             'label'=>'מחיר מיוחד',
             'type'=>'text',
-            'validation'=>'float',
+            'validation'=>'required, float',
             'default'=>'0'
         ),
         

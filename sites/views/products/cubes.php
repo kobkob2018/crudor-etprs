@@ -22,7 +22,7 @@
                     </div>
                     <?php if($product['price']): ?>
                         <div class="box-price color-b">
-                            <?php if($product['price_special'] == ''): ?>
+                            <?php if($product['price_special'] == '' || $product['price_special'] == '0'): ?>
                                 <?= $product['price'] ?> <?= __tr("NIS") ?> 
                             <?php else: ?>
                                 <span class="product-price-pre">

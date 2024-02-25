@@ -66,7 +66,7 @@
                 <?php endif; ?>
                 <?php if($info['product']['price']): ?>
                     <div class="box-price color-b">
-                        <?php if($info['product']['price_special'] == ''): ?>
+                        <?php if($info['product']['price_special'] == '' || $info['product']['price_special'] == '0'): ?>
                             <?= $info['product']['price'] ?> <?= __tr("NIS") ?> 
                         <?php else: ?>
                             <span class="product-price-pre">
@@ -159,7 +159,7 @@
             <?php if($info['product']['price']): ?>
                 <div class="color-b product-price">
                     <b><?= __tr("Price") ?>: 
-                        <?php if($info['product']['price_special'] == ''): ?>
+                        <?php if($info['product']['price_special'] == '' || $info['product']['price_special'] == '0'): ?>
                             <?= $info['product']['price'] ?> <?= __tr("NIS") ?> 
                         <?php else: ?>
                             <span class="product-price-pre">
@@ -209,7 +209,7 @@
                     </div>
                     <?php if($product['price']): ?>
                         <div class="box-price color-b">
-                            <?php if($product['price_special'] == ''): ?>
+                            <?php if($product['price_special'] == '' || $product['price_special'] == '0'): ?>
                                 <?= $product['price'] ?> <?= __tr("NIS") ?> 
                             <?php else: ?>
                                 <span class="product-price-pre">
@@ -257,7 +257,7 @@
                     </div>
                     <?php if($product['price']): ?>
                         <div class="box-price color-b">
-                            <?php if($product['price_special'] == ''): ?>
+                            <?php if($product['price_special'] == '' || $product['price_special'] == '0'): ?>
                                 <?= $product['price'] ?> <?= __tr("NIS") ?> 
                             <?php else: ?>
                                 <span class="product-price-pre">
