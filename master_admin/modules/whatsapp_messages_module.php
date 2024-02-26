@@ -275,31 +275,29 @@
     }
 
     protected function track_city_from_message_text($message_text){
+        Helper::add_log('meta_webhooks_admin.txt',$message_text.": tracking city");
         $city_filter = array('label'=>$message_text);
         $city_find = Cities::simple_find($city_filter,'id');
         if(!$city_find){
+            Helper::add_log('meta_webhooks_admin.txt',": CIty not found");
             return false;
         }
+        Helper::add_log('meta_webhooks_admin.txt',": CIty YES found");
         return $city_find['id'];
     }
 
     protected function track_form_from_message_text($message_text){
-        Helper::add_log('meta_webhooks_admin.txt',$message_text.":\n\n\n tracking..");
         $message_arr = explode('"',$message_text);
         if(!isset($message_arr[1])){
-            Helper::add_log('meta_webhooks_admin.txt',$message_text.":\n\n\n not exploded correctly");
             return false;
         }
         
         $search_term = $message_arr[1];
         $page_filter = array('title'=>$search_term);
-        Helper::add_log('meta_webhooks_admin.txt',"searching for: ".$search_term);
         $page_find = TableModel::simple_find_by_table_name($page_filter,'content_pages','id');
         if(!$page_find){
-            Helper::add_log('meta_webhooks_admin.txt',"\n\n page_not_found");
             return false;
         }
-        Helper::add_log('meta_webhooks_admin.txt',"\n\n YES found");
         $page_id = $page_find['id'];
         $form_filter = array('page_id'=>$page_id);
         $form_find = TableModel::simple_find_by_table_name($form_filter,'biz_forms');
