@@ -123,7 +123,7 @@
             'page_id'=>'0',
             'form_id'=>'0',
             'cat_id'=>'0',
-            'city'=>'0'
+            'city_id'=>'0'
         );
         if(!$conversation_row){   
 
