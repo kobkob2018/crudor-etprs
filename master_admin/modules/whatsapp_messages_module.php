@@ -277,7 +277,7 @@
     protected function track_city_from_message_text($message_text){
         Helper::add_log('meta_webhooks_admin.txt',$message_text.": tracking city");
         $city_filter = array('label'=>$message_text);
-        $city_find = Cities::simple_find($city_filter,'id');
+        $city_find = Cities::find($city_filter,'id');
         if(!$city_find){
             Helper::add_log('meta_webhooks_admin.txt',": CIty not found");
             return false;
