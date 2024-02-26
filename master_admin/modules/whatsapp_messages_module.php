@@ -70,9 +70,7 @@
         }
         
         $payload = json_encode($data);
-        Helper::add_log('meta_webhooks_admin.txt',"\n\n\n$to: $payload");
-        Helper::add_log('meta_webhooks_admin.txt',"\n\n\n$api_key");
-        Helper::add_log('meta_webhooks_admin.txt',"\n\n\n$url");
+
         // Attach encoded JSON string to the POST fields
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 
@@ -120,7 +118,11 @@
         $conversation_row = Whatsapp_conversations::find($filter_arr);
         $conversation_id = false;
         $lead_info = array(
-            'category'=>'0',
+            'full_name'=>$contact['profile']['name'],
+            'phone'=>$contact['wa_id'],
+            'page_id'=>'0',
+            'form_id'=>'0',
+            'cat_id'=>'0',
             'city'=>'0'
         );
         if(!$conversation_row){   
@@ -203,14 +205,17 @@
             $this->send_alert_to_admin($conversation_row,$message_row_data);
 
         }
-        if($lead_info['city'] == '0'){
-            if($city = $this->track_city_from_message_text($message_text)){
-                $lead_info['city'] = $city;
+
+        if($lead_info['cat_id'] == '0'){
+            if($form_info = $this->track_form_from_message_text($message_text)){
+                $lead_info['page_id'] = $form_info['page_id'];
+                $lead_info['form_id'] = $form_info['form_id'];
+                $lead_info['cat_id'] = $form_info['cat_id'];
             }
         }
-        if($lead_info['category'] == '0'){
-            if($category = $this->track_category_from_message_text($message_text)){
-                $lead_info['category'] = $category;
+        elseif($lead_info['city_id'] == '0'){
+            if($city_id = $this->track_city_from_message_text($message_text)){
+                $lead_info['city_id'] = $city_id;
             }
         }
 
@@ -221,18 +226,16 @@
             'lead_info'=>$lead_info_json
         );
 
-
-$this->check_the_check();
-        if($lead_info['city'] != '0' && $lead_info['category'] != '0'){
+        if($lead_info['city_id'] != '0' && $lead_info['cat_id'] != '0'){
             $conversation_update['stage'] = 'closed';
         }
         Whatsapp_conversations::update($conversation_id,$conversation_update);
-        if($lead_info['city'] != '0' && $lead_info['category'] != '0'){
+        if($lead_info['city_id'] != '0' && $lead_info['cat_id'] != '0'){
             $this->add_lead($conversation_id);
         }
     }
 
-    public function check_the_check(){
+    public function send_lead_by_curl($lead_info){
         
         $api_key = get_config("curl_key");
         $url = "https://il-biz.co.il/check/check/";
@@ -240,11 +243,12 @@ $this->check_the_check();
 
 
         $data = array(
-            'cat_id'=> "232",
-            "city_id"=> "10",
-            "form_id"=> "393",
-            "full_name"=> "check check",
-            "phone"=> "333666688",
+            'cat_id'=> $lead_info['cat_id'],
+            "city_id"=> $lead_info['city_id'],
+            "page_id"=> $lead_info['page_id'],
+            "form_id"=> $lead_info['form_id'],
+            "full_name"=> $lead_info['full_name'],
+            "phone"=> $lead_info['phone'],
         );
         
 
@@ -265,21 +269,47 @@ $this->check_the_check();
 
 
     protected function add_lead($conversation_id){
-        return;
-        $conversation_row = Whatsapp_conversations::get_by_id($connection_id);
-        $phone = $conversation_row['contact_phone_wa_id'];
-        $full_name = $conversation_row['contact_wa_name'];
+        $conversation_row = Whatsapp_conversations::get_by_id($conversation_id);
         $lead_info = json_decode($conversation_row['lead_info'],true);
-        $cat_id = $lead_info['category'];
-        $city_id = $lead_info['city'];
+        return $this->send_lead_by_curl($lead_info);
     }
 
     protected function track_city_from_message_text($message_text){
-        return false;
+        $city_filter = array('label'=>$message_text);
+        $city_find = Cities::simple_find($city_filter,'id');
+        if(!$city_find){
+            return false;
+        }
+        return $city_find['id'];
     }
 
-    protected function track_category_from_message_text($message_text){
-        return false;
+    protected function track_form_from_message_text($message_text){
+        $message_arr = explode('"',$message_text);
+        if(!isset($message_arr[1])){
+            Helper::add_log('meta_webhooks_admin.txt',$message_text.":\n\n\n not exploded correctly");
+            return false;
+        }
+        
+        $search_term = $message_arr[1];
+        $page_filter = array('title'=>$search_term);
+        Helper::add_log('meta_webhooks_admin.txt',"searching for: ".$search_term);
+        $page_find = TableModel::simple_find_by_table_name($page_filter,'content_pages','id');
+        if(!$page_find){
+            Helper::add_log('meta_webhooks_admin.txt',"\n\n page_not_found");
+            return false;
+        }
+        Helper::add_log('meta_webhooks_admin.txt',"\n\n YES found");
+        $page_id = $page_find['id'];
+        $form_filter = array('page_id'=>$page_id);
+        $form_find = TableModel::simple_find_by_table_name($form_filter,'biz_forms');
+        if(!$form_find){
+            return false;
+        }
+        return array(
+            'page_id'=>$page_id,
+            'form_id'=>$form_find['id'],
+            'cat_id'=>$form_find['cat_id']
+        );
     }
 
     protected function foreword_message_from_admin($conversation_row,$message_row_data){
@@ -287,7 +317,7 @@ $this->check_the_check();
     }
 
     protected function send_alert_to_admin($conversation_data, $message_row_data){
-        Helper::add_log('meta_webhooks_admin.txt',"\n\n\n MESSAGE CREATing");
+        
         $to = Whatsapp_settings::get()['admin_alerts_phone'];
         
         $message_text = "message from system: \n\n";
@@ -295,7 +325,6 @@ $this->check_the_check();
         $message_text .= "message: \n";
         $message_text .= $message_row_data['message_type'].": \n".$message_row_data['message_text'];
         $message_text .= "\n\nview in admin: ".outer_url('whatsapp_messages/add/?conversation_id='.$conversation_data['id']);
-        Helper::add_log('meta_webhooks_admin.txt',"\n\n\n $message_text");
 
         $message_data = array(
             'message_type'=>'text',
