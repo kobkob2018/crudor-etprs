@@ -217,6 +217,8 @@
             if($city_id = $this->track_city_from_message_text($message_text)){
                 $lead_info['city_id'] = $city_id;
             }
+            Helper::clear_log("meta_webhooks_admin.txt");
+            Helper::add_log('meta_webhooks_admin.txt',"asking for city now");
             $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id']);
         }
 
