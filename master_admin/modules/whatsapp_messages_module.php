@@ -211,15 +211,13 @@
                 $lead_info['page_id'] = $form_info['page_id'];
                 $lead_info['form_id'] = $form_info['form_id'];
                 $lead_info['cat_id'] = $form_info['cat_id'];
+                $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id']);
             }
         }
         elseif($lead_info['city_id'] == '0'){
             if($city_id = $this->track_city_from_message_text($message_text)){
                 $lead_info['city_id'] = $city_id;
             }
-            Helper::clear_log("meta_webhooks_admin.txt");
-            Helper::add_log('meta_webhooks_admin.txt',"asking for city now");
-            $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id']);
         }
 
         $lead_info_json = json_encode($lead_info);        
