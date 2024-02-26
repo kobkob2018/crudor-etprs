@@ -52,7 +52,8 @@
         'referrer'=>'whatsapp',
         'email'=>'no-email',
         'extra_info'=>'',
-        'note'=>'',
+        'note'=>'whatsapp',
+        'ip'=>$_SERVER['REMOTE_ADDR'],
       );
       $return_array = $this->call_module("biz_request","enter_lead_by_api",array('return_array'=>$return_array,'lead_info'=>$lead_info));
 
