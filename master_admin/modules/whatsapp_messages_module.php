@@ -284,6 +284,7 @@
     }
 
     protected function track_form_from_message_text($message_text){
+        Helper::add_log('meta_webhooks_admin.txt',$message_text.":\n\n\n tracking..");
         $message_arr = explode('"',$message_text);
         if(!isset($message_arr[1])){
             Helper::add_log('meta_webhooks_admin.txt',$message_text.":\n\n\n not exploded correctly");
