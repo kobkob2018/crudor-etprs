@@ -239,7 +239,7 @@
     protected function send_city_request_to_contact($conversation_data,$cat_id){
 
         $this->controller->add_model('user_cat_city');
-
+        $this->controller->add_model('cities');
         $allowed_cities = User_cat_city::get_cat_city_assign($cat_id);
         
         if(empty($allowed_cities)){
