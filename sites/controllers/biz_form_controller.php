@@ -127,6 +127,42 @@
         return $this->print_json_page($return_array);
     }
 
+    protected function submit_request_by_curl(){
+        $this->set_layout("blank");
+        $api_key = get_config("curl_key");
+        $headers = getallheaders();
+        if($headers['authorization'] != "Bearer $api_key"){
+            exit("permission denied - code 203");
+        }
+
+        if($_SERVER['REMOTE_ADDR'] != get_config('server_ip')){
+            exit("permission denied - code 203");
+        }       
+
+        $request_body = file_get_contents('php://input');
+        $request_arr = json_decode($request_body,true);
+        
+        $return_array = $this->init_form_data($request_arr);
+        $lead_info = array(
+          'full_name'=>$request_arr['full_name'],
+          'phone'=>$request_arr['phone'],
+          'city_id'=>$request_arr['city_id'],
+          'cat_id'=>$request_arr['cat_id'],
+          'referrer'=>'whatsapp',
+          'email'=>'no-email',
+          'extra_info'=>'',
+          'note'=>'whatsapp',
+          'ip'=>$_SERVER['REMOTE_ADDR'],
+        );
+        $return_array = $this->call_module("biz_request","enter_lead_by_api",array('return_array'=>$return_array,'lead_info'=>$lead_info));
+
+        print_r_help(($return_array));
+       // Helper::add_log("check_log.txt","\nHi now is ".$log);
+        //echo nl2br($log);
+        return;
+    }
+
+
     public function init_post_demo_url($return_array){
         $str = "";
         foreach($_REQUEST as $key=>$val){

@@ -238,7 +238,7 @@
     public function send_lead_by_curl($lead_info){
         
         $api_key = get_config("curl_key");
-        $url = "https://il-biz.co.il/check/check/";
+        $url = "https://il-biz.co.il/biz_form/submit_request_by_curl/";
 
 
 
