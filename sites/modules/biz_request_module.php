@@ -183,6 +183,7 @@
             
             //create duplication mockup for spammers, with a success true result
             if($have_meny_phone_duplications && !isset($this->lead_info['test_set'])){
+                $_REQUEST['biz'] = $this->lead_info;
                 return $this->add_spam_request($return_array, "multiple phones",$form_info);
             }
 
