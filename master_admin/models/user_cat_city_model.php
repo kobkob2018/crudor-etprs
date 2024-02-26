@@ -59,5 +59,34 @@
         'payload'=>array('order_by'=>'label'),
     );
 
+
+    //filter cities by cat_id for the leads coming from whatsapp
+    public static function get_cat_city_assign($cat_id){
+        $db = DB::getInstance();
+        $filter_arr = array('cat_id'=>$cat_id);
+        $city_list = array();
+        $sql = "SELECT * FROM user_city WHERE user_id IN (SELECT user_id FROM user_cat WHERE cat_id = :cat_id)";
+        $req = $db->prepare($sql);
+        $req->execute($filter_arr);
+        $user_city_list = $req->fetchAll();
+        if($user_city_list){
+            foreach($user_city_list as $city){
+                $city_list[] = $city['city_id'];
+            }
+        }
+
+        $sql = "SELECT * FROM user_cat_city WHERE cat_id = :cat_id AND user_id IN (SELECT user_id FROM user_cat WHERE cat_id = :cat_id)";
+        $req = $db->prepare($sql);
+        $req->execute($filter_arr);
+        $user_cat_city_list = $req->fetchAll();
+        if($user_cat_city_list){
+            foreach($user_cat_city_list as $city){
+                $city_list[] = $city['city_id'];
+            }
+        }
+
+        return $city_list;
+    }
+
 }
 ?>

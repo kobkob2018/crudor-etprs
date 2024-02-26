@@ -237,7 +237,24 @@
     }
 
     protected function send_city_request_to_contact($conversation_data,$cat_id){
-        $message_text = "אנא בחר עיר מן הרשימה: \n בלה בלה בלה\n בלה בלו בלי";
+
+        $this->controller->add_model('user_cat_city');
+
+        $allowed_cities = User_cat_city::get_cat_city_assign($cat_id);
+        
+        if(empty($allowed_cities)){
+            $city_list = Cities::get_flat_select_city_options();
+        }
+        else{
+            $city_list = Cities::get_filtered_flat_select_city_options($allowed_cities);
+        }
+
+        $city_list_text = "";
+        foreach($city_list as $city){
+            $city_list_text .= "\n".$city['label'];
+        }
+
+        $message_text = "אנא בחר עיר מן הרשימה: \n".$city_list_text;
         $message_data = array(
             'message_type'=>'text',
             'message_text'=>$message_text,
