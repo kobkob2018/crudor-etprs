@@ -217,6 +217,7 @@
             if($city_id = $this->track_city_from_message_text($message_text)){
                 $lead_info['city_id'] = $city_id;
             }
+            $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id']);
         }
 
         $lead_info_json = json_encode($lead_info);        
@@ -233,6 +234,45 @@
         if($lead_info['city_id'] != '0' && $lead_info['cat_id'] != '0'){
             $this->add_lead($conversation_id);
         }
+    }
+
+    protected function send_city_request_to_contact($conversation_data,$cat_id){
+        $message_text = "אנא בחר עיר מן הרשימה: \n בלה בלה בלה\n בלה בלו בלי";
+        $message_data = array(
+            'message_type'=>'text',
+            'message_text'=>$message_text,
+        );
+        return $this->send_reply_to_contact($conversation_data,$message_data);
+    }
+
+    protected function send_reply_to_contact($conversation_data,$message_data){
+
+        $message_send = $this->send_message_with_api($conversation_data,$message_data);
+        if(isset($message_send['error'])){
+            SystemMessages::add_err_message($message_send['error']['message']);
+            if(isset($message_send['error']['error_data'])){
+                SystemMessages::add_err_message($message_send['error']['error_data']['details']);
+            }
+            return $this->controller->redirect_to(inner_url("whatsapp_messages/add/?conversation_id=".$conversation_id));
+        }
+        $connection_id = $conversation_data['connection_id'];
+        $conversation_id = $conversation_data['id'];
+        $message_row_data = array(
+            'conversation_id'=>$conversation_id,
+            'connection_id'=>$connection_id,
+            'message_time'=>date('Y-m-d h:i:s'),
+            'message_text'=>$message_data['message_text'],
+            'message_type'=>$message_data['message_type'],
+            'direction'=>'send',
+            'log'=>$message_send['log'],
+            'wamid'=>$message_send['messages'][0]['id']
+        );
+        $message_id = Whatsapp_messages::create($message_row_data);
+        $conversation_update = array(
+            'last_message_id'=>$message_id,
+            'last_message_time'=>date('Y-m-d h:i:s'),
+        );
+        Whatsapp_conversations::update($conversation_id,$conversation_update);
     }
 
     public function send_lead_by_curl($lead_info){
