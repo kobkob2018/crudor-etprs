@@ -122,6 +122,7 @@
             'phone'=>$contact['wa_id'],
             'page_id'=>'0',
             'form_id'=>'0',
+            'parent_cat_id'=>'0',
             'cat_id'=>'0',
             'city_id'=>'0'
         );
@@ -210,10 +211,22 @@
             if($form_info = $this->track_form_from_message_text($message_text)){
                 $lead_info['page_id'] = $form_info['page_id'];
                 $lead_info['form_id'] = $form_info['form_id'];
-                $lead_info['cat_id'] = $form_info['cat_id'];
-                $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id']);
+                $cat_id = $form_info['cat_id'];
+                if($cat_children = $this->fetch_cat_children($cat_id)){
+                    $lead_info['parent_cat_id'] = $cat_id;
+                    $this->send_cat_request_to_contact($conversation_row, $cat_id,$cat_children);
+                }
+                else{
+                    $lead_info['cat_id'] = $form_info['cat_id'];
+                    $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id']);
+                }
+            }
+            else{
+                $cat_children = $this->fetch_cat_children($lead_info['parent_cat_id'])
+                $this->send_cat_request_to_contact($conversation_row, $lead_info['parent_cat_id'], $cat_children);
             }
         }
+
         elseif($lead_info['city_id'] == '0'){
             if($city_id = $this->track_city_from_message_text($message_text)){
                 $lead_info['city_id'] = $city_id;
@@ -238,6 +251,35 @@
             $this->add_lead($conversation_id);
             $this->send_lead_confirm_message($conversation_row,$lead_info['cat_id'],$lead_info['city_id']);
         }
+    }
+
+    protected function send_cat_request_to_contact($conversation_data,$cat_id,$cat_children,$cat_message_id = 'cat_select_message'){
+
+        $biz_category = Biz_categories::get_by_id($cat_id,'label');
+
+        $cat_children_text = "";
+        foreach($cat_children as $cat){
+            $cat_children_text .= "\n".$cat['label'];
+        }
+
+        $message_text = Whatsapp_settings::get()[$cat_message_id];
+        $message_text = str_replace("{{cat_name}}",$biz_category['label'],$message_text);
+        $message_text = str_replace("{{cat_list}}",$cat_children_text,$message_text);
+
+        $message_data = array(
+            'message_type'=>'text',
+            'message_text'=>$message_text,
+        );
+        return $this->send_reply_to_contact($conversation_data,$message_data);
+    }
+
+    protected function fetch_cat_children($cat_id){
+        $cat_list_filter = array('parent'=>$cat_id,'active'=>'1','visible'=>'1');
+        $cat_list = Biz_categories::get_list($cat_list_filter,'id, parent, label');
+        if(empty($cat_list)){
+            return false;
+        }
+        return $cat_list;
     }
 
     protected function send_lead_confirm_message($conversation_data,$cat_id,$city_id){
@@ -371,14 +413,14 @@
     protected function track_form_from_message_text($message_text){
         $message_arr = explode('"',$message_text);
         if(!isset($message_arr[1])){
-            return false;
+            return $this->track_cat_from_message_text($message_text);
         }
         
         $search_term = $message_arr[1];
         $page_filter = array('title'=>$search_term);
         $page_find = TableModel::simple_find_by_table_name($page_filter,'content_pages','id');
         if(!$page_find){
-            return false;
+            return $this->track_cat_from_message_text($message_text);
         }
         $page_id = $page_find['id'];
         $form_filter = array('page_id'=>$page_id);
@@ -392,6 +434,30 @@
             'cat_id'=>$form_find['cat_id']
         );
     }
+
+    protected function track_cat_from_message_text($message_text){      
+        $search_term = $message_text;
+        $cat_filter = array('label'=>$search_term);
+        $cat_find = Biz_categories::find($cat_filter,'id');
+        if(!$cat_find){
+            return false;
+        }
+        $cat_id = $cat_find['id'];
+        $form_filter = array('cat_id'=>$cat_id);
+        $form_find = TableModel::simple_find_by_table_name($form_filter,'biz_forms');
+        if(!$form_find){
+            $form_find = array(
+                'id'=>'0',
+                'page_id'=>'0'
+            );
+        }
+        return array(
+            'page_id'=>$form_find['page_id'],
+            'form_id'=>$form_find['id'],
+            'cat_id'=>$cat_id
+        );
+    }
+
 
     protected function foreword_message_from_admin($conversation_row,$message_row_data){
         return $this->send_message_with_api($conversation_row,$message_row_data);
