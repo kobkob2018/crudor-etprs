@@ -218,6 +218,9 @@
             if($city_id = $this->track_city_from_message_text($message_text)){
                 $lead_info['city_id'] = $city_id;
             }
+            else{
+                $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id'],'city_correct_message');
+            }
         }
 
         $lead_info_json = json_encode($lead_info);        
@@ -250,7 +253,7 @@
         return $this->send_reply_to_contact($conversation_data,$message_data);
     }
 
-    protected function send_city_request_to_contact($conversation_data,$cat_id){
+    protected function send_city_request_to_contact($conversation_data,$cat_id,$city_message_id = 'city_select_message'){
 
         $this->controller->add_model('user_cat_city');
         $biz_category = Biz_categories::get_by_id($cat_id,'label');
@@ -268,7 +271,7 @@
             $city_list_text .= "\n".$city['label'];
         }
 
-        $message_text = Whatsapp_settings::get()['city_select_message'];
+        $message_text = Whatsapp_settings::get()[$city_message_id];
         $message_text = str_replace("{{cat_name}}",$biz_category['label'],$message_text);
         $message_text = str_replace("{{city_list}}",$city_list_text,$message_text);
         
