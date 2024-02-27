@@ -1,7 +1,7 @@
 <?php
   class Whatsapp_messagesModule extends Module{
 
-    public $add_models = array("whatsapp_settings", "whatsapp_conversations", "whatsapp_messages");
+    public $add_models = array("whatsapp_settings", "whatsapp_conversations", "whatsapp_messages","biz_categories","cities");
 
     public function send_message(){
         $message_data = $this->action_data;
@@ -233,13 +233,27 @@
         Whatsapp_conversations::update($conversation_id,$conversation_update);
         if($lead_info['city_id'] != '0' && $lead_info['cat_id'] != '0'){
             $this->add_lead($conversation_id);
+            $this->send_lead_confirm_message($conversation_row,$lead_info['cat_id'],$lead_info['city_id']);
         }
+    }
+
+    protected function send_lead_confirm_message($conversation_data,$cat_id,$city_id){
+        $biz_category = Biz_categories::get_by_id($cat_id,'label');
+        $city = Cities::get_by_id($city_id,'label');
+        $message_text = Whatsapp_settings::get()['lead_confirm_message'];
+        $message_text = str_replace("{{cat_name}}",$biz_category['label'],$message_text);
+        $message_text = str_replace("{{city_name}}",$city['label'],$message_text);
+        $message_data = array(
+            'message_type'=>'text',
+            'message_text'=>$message_text,
+        );
+        return $this->send_reply_to_contact($conversation_data,$message_data);
     }
 
     protected function send_city_request_to_contact($conversation_data,$cat_id){
 
         $this->controller->add_model('user_cat_city');
-        $this->controller->add_model('cities');
+        $biz_category = Biz_categories::get_by_id($cat_id,'label');
         $allowed_cities = User_cat_city::get_cat_city_assign($cat_id);
         
         if(empty($allowed_cities)){
@@ -254,6 +268,10 @@
             $city_list_text .= "\n".$city['label'];
         }
 
+        $message_text = Whatsapp_settings::get()['city_select_message'];
+        $message_text = str_replace("{{cat_name}}",$biz_category['label'],$message_text);
+        $message_text = str_replace("{{city_list}}",$city_list_text,$message_text);
+        
         $message_text = "אנא בחר עיר מן הרשימה: \n".$city_list_text;
         $message_data = array(
             'message_type'=>'text',
@@ -332,7 +350,6 @@
     }
 
     protected function track_city_from_message_text($message_text){
-        $this->controller->add_model("cities");
         Helper::add_log('meta_webhooks_admin.txt',$message_text.": tracking city");
         $city_filter = array('label'=>$message_text);//
         $city_filter = array(
