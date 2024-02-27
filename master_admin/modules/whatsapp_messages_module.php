@@ -222,7 +222,7 @@
                 }
             }
             else{
-                $cat_children = $this->fetch_cat_children($lead_info['parent_cat_id'])
+                $cat_children = $this->fetch_cat_children($lead_info['parent_cat_id']);
                 $this->send_cat_request_to_contact($conversation_row, $lead_info['parent_cat_id'], $cat_children);
             }
         }
