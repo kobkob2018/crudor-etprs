@@ -274,8 +274,7 @@
         $message_text = Whatsapp_settings::get()[$city_message_id];
         $message_text = str_replace("{{cat_name}}",$biz_category['label'],$message_text);
         $message_text = str_replace("{{city_list}}",$city_list_text,$message_text);
-        
-        $message_text = "אנא בחר עיר מן הרשימה: \n".$city_list_text;
+
         $message_data = array(
             'message_type'=>'text',
             'message_text'=>$message_text,
