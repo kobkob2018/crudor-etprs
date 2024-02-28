@@ -105,6 +105,7 @@
             (!isset($message_info['entry'][0]['changes'][0]['value']['metadata'])) ||
             (!isset($message_info['entry'][0]['changes'][0]['value']['messages'][0]))
         ){
+            Helper::add_log('meta_webhooks_admin5.txt',"\n\n\n".$message_data['message_info']);
             Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 12");
             return false;
         }
