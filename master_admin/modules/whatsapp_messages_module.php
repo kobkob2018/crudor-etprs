@@ -135,12 +135,12 @@
             $conversation_row = Whatsapp_conversations::get_by_id($conversation_id);
         }
         else{
-            $lead_info = json_decode($conversation_row['lead_info'],true);
+            $last_lead_info = json_decode($conversation_row['lead_info'],true);
             //continue conversation or renew conversation
             $conversation_id = $conversation_row['id'];
             if($conversation_row['stage'] == 'open'){
                 //
-                $last_lead_info = json_decode($conversation_row['lead_info'],true);
+                
                 $conversation_abandoned = false;
                 if($conversation_row['last_message_time'] != ''){
                     $days_pass = time() - strtotime($conversation_row['last_message_time']); // in seconds
