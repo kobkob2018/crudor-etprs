@@ -25,7 +25,7 @@
                 }
             }
             $this->controller->add_model("whatsapp_settings");
-            $button_message = "hi";//Whatsapp_settings::get()['button_message'];
+            $button_message = Global_settings::get()['whatsapp_button_message'];
             $page_title = $this->controller->data['page']['title'];
             $button_message = str_replace("{{page_title}}",$page_title,$button_message);
             $action_data = $this->decode_action_data_arr(";");
