@@ -91,13 +91,11 @@
     }
 
     public function handle_message_notification(){
-        Helper::clear_log('meta_webhooks_admin5.txt');
-        Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check");
+
         $message_data = $this->action_data;
         $message_info = json_decode($message_data['message_info'],true);
-        Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 11");
+
         if(
-            
             (!isset($message_info['entry'][0])) ||
             (!isset($message_info['entry'][0]['changes'][0])) ||
             (!isset($message_info['entry'][0]['changes'][0]['value'])) ||
@@ -105,11 +103,10 @@
             (!isset($message_info['entry'][0]['changes'][0]['value']['metadata'])) ||
             (!isset($message_info['entry'][0]['changes'][0]['value']['messages'][0]))
         ){
-            Helper::add_log('meta_webhooks_admin5.txt',"\n\n\n".$message_data['message_info']);
-            Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 12");
+            
             return false;
         }
-        Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 13");
+        
         $metadata = $message_info['entry'][0]['changes'][0]['value']['metadata'];
         $contact = $message_info['entry'][0]['changes'][0]['value']['contacts'][0];
         $message = $message_info['entry'][0]['changes'][0]['value']['messages'][0];
@@ -129,20 +126,17 @@
             'cat_id'=>'0',
             'city_id'=>'0'
         );
-        Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 2");
-        if(!$conversation_row){  
-            Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 3"); 
+        if(!$conversation_row){   
             //create new conversation
             $conversation_id = $this->add_conversation($metadata,$contact,$message,$connection_id,$lead_info);
             $conversation_row = Whatsapp_conversations::get_by_id($conversation_id);
-            Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 4");
         }
         else{
+            $lead_info = json_decode($conversation_row['lead_info'],true);
             //continue conversation or renew conversation
-            Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 5");
             $conversation_id = $conversation_row['id'];
             if($conversation_row['stage'] == 'open'){
-                Helper::add_log('meta_webhooks_admin5.txt',"log conversation open");
+                //
                 $last_lead_info = json_decode($conversation_row['lead_info'],true);
                 $conversation_abandoned = false;
                 if($conversation_row['last_message_time'] != ''){
@@ -160,14 +154,14 @@
                         }
                         $previous_conversations[] = array(
                             'stage'=>'abandoned',
-                            'lead_info'=>$lead_info
+                            'lead_info'=>json_encode($lead_info)
                         );
                         $previous_conversations_json_update = json_encode($previous_conversations);
 
 
                         $conversation_update = array(
                             'previous_conversations'=>$previous_conversations_json_update,
-                            'lead_info'=>$lead_info
+                            'lead_info'=>json_encode($lead_info)
                         );
                         Whatsapp_conversations::update($conversation_row['id'],$conversation_update);
                         $conversation_abandoned = true;
@@ -179,9 +173,8 @@
                 }
             }
             else{
-                Helper::add_log('meta_webhooks_admin5.txt',"log conversation closed");
                 $conversation_update = array(
-                    'lead_info'=>$lead_info,
+                    'lead_info'=>json_encode($lead_info),
                     'stage'=>'open'
                 );
                 Whatsapp_conversations::update($conversation_id,$conversation_update);
@@ -265,7 +258,6 @@
                 $cat_id = $form_info['cat_id'];
                 if($cat_children = $this->fetch_cat_children($cat_id)){
                     $lead_info['parent_cat_id'] = $cat_id;
-                    Helper::add_log('meta_webhooks_admin5.txt',"\n\nenter where should \n\n\n");
                     $this->send_cat_request_to_contact($conversation_row, $cat_id,$cat_children);
                 }
                 else{
