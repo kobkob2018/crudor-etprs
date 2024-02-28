@@ -22,7 +22,7 @@
         $message_row_data = array(
             'conversation_id'=>$conversation_id,
             'connection_id'=>$connection_id,
-            'message_time'=>date('Y-m-d h:i:s'),
+            'message_time'=>date('Y-m-d H:i:s'),
             'message_text'=>$message_data['message_text'],
             'message_type'=>$message_data['message_type'],
             'direction'=>'send',
@@ -32,7 +32,7 @@
         $message_id = Whatsapp_messages::create($message_row_data);
         $conversation_update = array(
             'last_message_id'=>$message_id,
-            'last_message_time'=>date('Y-m-d h:i:s'),
+            'last_message_time'=>date('Y-m-d H:i:s'),
         );
         Whatsapp_conversations::update($conversation_id,$conversation_update);
         return $this->controller->redirect_to(inner_url("whatsapp_messages/add/?conversation_id=".$conversation_id));
@@ -229,7 +229,7 @@
         $message_row_data = array(
             'conversation_id'=>$conversation_id,
             'connection_id'=>$connection_id,
-            'message_time'=>date('Y-m-d h:i:s',$message_time),
+            'message_time'=>date('Y-m-d H:i:s',$message_time),
             'message_type'=>$message_type,
             'message_text'=>$message_text,
             'direction'=>$direction,
@@ -295,7 +295,7 @@
         );
         if(!$reply_sent){
             $conversation_update['last_message_id'] = $message_id;
-            $conversation_update['last_message_time'] = date('Y-m-d h:i:s',$message_time);
+            $conversation_update['last_message_time'] = date('Y-m-d H:i:s',$message_time);
         }
 
         if($lead_info['city_id'] != '0' && $lead_info['cat_id'] != '0'){
@@ -409,7 +409,7 @@
         $message_row_data = array(
             'conversation_id'=>$conversation_id,
             'connection_id'=>$connection_id,
-            'message_time'=>date('Y-m-d h:i:s'),
+            'message_time'=>date('Y-m-d H:i:s'),
             'message_text'=>$message_data['message_text'],
             'message_type'=>$message_data['message_type'],
             'direction'=>'send',
@@ -419,7 +419,7 @@
         $message_id = Whatsapp_messages::create($message_row_data);
         $conversation_update = array(
             'last_message_id'=>$message_id,
-            'last_message_time'=>date('Y-m-d h:i:s'),
+            'last_message_time'=>date('Y-m-d H:i:s'),
         );
         Whatsapp_conversations::update($conversation_id,$conversation_update);
     }
@@ -574,7 +574,7 @@
             'contact_phone_wa_id'=>$contact['wa_id'],
             'contact_wa_name'=>$contact['profile']['name'],
             'contact_custom_name'=>"",
-            'last_message_time'=>date('Y-m-d h:i:s',$message['timestamp']),
+            'last_message_time'=>date('Y-m-d H:i:s',$message['timestamp']),
             'last_message_direction'=>'recive',
             'stage'=>'open',
             'lead_info'=>json_encode($lead_info)
