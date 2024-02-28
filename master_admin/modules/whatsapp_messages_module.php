@@ -310,13 +310,17 @@
 
         $biz_category = Biz_categories::get_by_id($cat_id,'label');
 
+        $cat_name = "במגוון תחומים";
+        if($biz_category){
+            $cat_name = $biz_category['label'];
+        }
         $cat_children_text = "";
         foreach($cat_children as $cat){
             $cat_children_text .= "\n".$cat['label'];
         }
 
         $message_text = Whatsapp_settings::get()[$cat_message_id];
-        $message_text = str_replace("{{cat_name}}",$biz_category['label'],$message_text);
+        $message_text = str_replace("{{cat_name}}",$cat_name,$message_text);
         $message_text = str_replace("{{cat_list}}",$cat_children_text,$message_text);
 
         $message_data = array(
