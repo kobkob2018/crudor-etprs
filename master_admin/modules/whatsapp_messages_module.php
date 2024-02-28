@@ -435,7 +435,11 @@
         );
     }
 
-    protected function track_cat_from_message_text($message_text){      
+    protected function track_cat_from_message_text($message_text){
+        $cat_vag_terms= Whatsapp_settings::get()['cat_vag_terms'];
+        if (strpos($cat_vag_terms, $message_text) !== false) {
+            return false;
+        }
         $search_term = $message_text;
         $cat_filter = array('label'=>$search_term);
         $cat_find = Biz_categories::find($cat_filter,'id');
