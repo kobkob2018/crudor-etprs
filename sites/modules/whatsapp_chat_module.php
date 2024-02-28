@@ -7,7 +7,7 @@
             if(!isset($this->controller->data['biz_form_on'])){
                 return;
             }
-            if(!isset($this->controller->data['page_info'])){
+            if(!isset($this->controller->data['page'])){
                 return;
             }
             if(isset($this->controller->data['cat_tree'])){
@@ -26,7 +26,7 @@
             }
             $this->controller->add_model("whatsapp_settings");
             $button_message = Whatsapp_settings::get()['button_message'];
-            $page_title = $this->controller->data['page_info']['title'];
+            $page_title = $this->controller->data['page']['title'];
             $button_message = str_replace("{{page_title}}",$page_title,$button_message);
             $action_data = $this->decode_action_data_arr(";");
             $whatsaap_img = styles_url('style/image/whatsapp_chat.png');
