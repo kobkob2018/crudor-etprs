@@ -91,7 +91,7 @@
     }
 
     public function handle_message_notification(){
-
+        Helper::clear_log('meta_webhooks_admin5.txt');
         $message_data = $this->action_data;
         $message_info = json_decode($message_data['message_info'],true);
 
@@ -135,6 +135,7 @@
             //continue conversation or renew conversation
             $conversation_id = $conversation_row['id'];
             if($conversation_row['stage'] == 'open'){
+                Helper::add_log('meta_webhooks_admin5.txt',"log conversation open");
                 $last_lead_info = json_decode($conversation_row['lead_info'],true);
                 $conversation_abandoned = false;
                 if($conversation_row['last_message_time'] != ''){
@@ -171,6 +172,7 @@
                 }
             }
             else{
+                Helper::add_log('meta_webhooks_admin5.txt',"log conversation closed");
                 $conversation_update = array(
                     'lead_info'=>$lead_info,
                     'stage'=>'open'
