@@ -114,7 +114,7 @@
         $contact_phone = $contact['wa_id'];
         $connection_id = $self_phone."_".$contact_phone;
         
-        $filter_arr = array("connection_id"=>$connection_id,"stage"=>"open");
+        $filter_arr = array("connection_id"=>$connection_id);
         $conversation_row = Whatsapp_conversations::find($filter_arr);
         $conversation_id = false;
         $lead_info = array(
@@ -127,13 +127,23 @@
             'city_id'=>'0'
         );
         if(!$conversation_row){   
-
+            //create new conversation
             $conversation_id = $this->add_conversation($metadata,$contact,$message,$connection_id,$lead_info);
             $conversation_row = Whatsapp_conversations::get_by_id($conversation_id);
         }
         else{
+            //continue conversation or renew conversation
             $conversation_id = $conversation_row['id'];
-            $lead_info = json_decode($conversation_row['lead_info'],true);
+            if($conversation_row['stage'] == 'open'){
+                $lead_info = json_decode($conversation_row['lead_info'],true);
+            }
+            else{
+                $conversation_update = array(
+                    'lead_info'=>$lead_info,
+                    'stage'=>'open'
+                );
+                Whatsapp_conversations::update($conversation_id,$conversation_update);
+            }
         }
         
 
@@ -245,6 +255,17 @@
 
         if($lead_info['city_id'] != '0' && $lead_info['cat_id'] != '0'){
             $conversation_update['stage'] = 'closed';
+            $previous_conversations_json = $conversation_row['previous_conversations'];
+            $previous_conversations = array();
+            if($previous_conversations_json != ""){
+                $previous_conversations = json_decode($previous_conversations_json,true);
+            }
+            $previous_conversations[] = array(
+                'stage'=>'closed',
+                'lead_info'=>$lead_info
+            );
+            $previous_conversations_json_update = json_encode($previous_conversations);
+            $conversation_update['previous_conversations'] = $previous_conversations_json_update;
         }
         Whatsapp_conversations::update($conversation_id,$conversation_update);
         if($lead_info['city_id'] != '0' && $lead_info['cat_id'] != '0'){
