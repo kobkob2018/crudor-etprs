@@ -92,6 +92,7 @@
 
     public function handle_message_notification(){
         Helper::clear_log('meta_webhooks_admin5.txt');
+        Helper::add_log('meta_webhooks_admin5.txt',"log conversation check");
         $message_data = $this->action_data;
         $message_info = json_decode($message_data['message_info'],true);
 
