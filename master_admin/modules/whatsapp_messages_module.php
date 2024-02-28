@@ -135,7 +135,40 @@
             //continue conversation or renew conversation
             $conversation_id = $conversation_row['id'];
             if($conversation_row['stage'] == 'open'){
-                $lead_info = json_decode($conversation_row['lead_info'],true);
+                $last_lead_info = json_decode($conversation_row['lead_info'],true);
+                $conversation_abandoned = false;
+                if($conversation_row['last_message_time'] != ''){
+                    $days_pass = time() - strtotime($conversation_row['last_message_time']); // in seconds
+                    if($days_pass!=0){
+                        $days_pass = $days_pass/24/60/60;
+                    }
+                    if($days_pass>2){
+                        
+
+                        $previous_conversations_json = $conversation_row['previous_conversations'];
+                        $previous_conversations = array();
+                        if($previous_conversations_json != ""){
+                            $previous_conversations = json_decode($previous_conversations_json,true);
+                        }
+                        $previous_conversations[] = array(
+                            'stage'=>'abandoned',
+                            'lead_info'=>$lead_info
+                        );
+                        $previous_conversations_json_update = json_encode($previous_conversations);
+
+
+                        $conversation_update = array(
+                            'previous_conversations'=>$previous_conversations_json_update,
+                            'lead_info'=>$lead_info
+                        );
+                        Whatsapp_conversations::update($conversation_row['id'],$conversation_update);
+                        $conversation_abandoned = true;
+                        $conversation_row = Whatsapp_conversations::get_by_id($conversation_row['id']);
+                    }
+                }
+                if(!$conversation_abandoned){
+                    $lead_info = $last_lead_info;
+                }
             }
             else{
                 $conversation_update = array(
@@ -145,7 +178,6 @@
                 Whatsapp_conversations::update($conversation_id,$conversation_update);
             }
         }
-        
 
         $message_type = "text";
         $message_text = "";
