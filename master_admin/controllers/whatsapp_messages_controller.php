@@ -9,10 +9,8 @@
     public function check(){
       $con = Whatsapp_conversations::get_by_id('8');
       print_help($con['last_message_time']);
-      $last_message_time = new DateTime($con['last_message_time']);
-      $now = new DateTime("now");
-      $interval = $last_message_time->diff($now);
-      echo $interval;
+      $delta = time() - strtotime($con['last_message_time']); // in seconds
+      print($delta);
     }
 
     public function ajax_list(){
