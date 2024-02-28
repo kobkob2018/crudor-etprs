@@ -92,7 +92,7 @@
 
     public function handle_message_notification(){
         Helper::clear_log('meta_webhooks_admin5.txt');
-        Helper::add_log('meta_webhooks_admin5.txt',"log conversation check");
+        Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check");
         $message_data = $this->action_data;
         $message_info = json_decode($message_data['message_info'],true);
 
@@ -127,13 +127,17 @@
             'cat_id'=>'0',
             'city_id'=>'0'
         );
-        if(!$conversation_row){   
+        Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 2");
+        if(!$conversation_row){  
+            Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 3"); 
             //create new conversation
             $conversation_id = $this->add_conversation($metadata,$contact,$message,$connection_id,$lead_info);
             $conversation_row = Whatsapp_conversations::get_by_id($conversation_id);
+            Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 4");
         }
         else{
             //continue conversation or renew conversation
+            Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 5");
             $conversation_id = $conversation_row['id'];
             if($conversation_row['stage'] == 'open'){
                 Helper::add_log('meta_webhooks_admin5.txt',"log conversation open");
