@@ -9,7 +9,13 @@
     public function check(){
       $con = Whatsapp_conversations::get_by_id('8');
       print_help($con['last_message_time']);
-      $delta = time() - strtotime($con['last_message_time']); // in seconds
+      $delta = 0;
+      if($con['last_message_time'] != ''){
+        $delta = time() - strtotime($con['last_message_time']); // in seconds
+        if($delta!=0){
+          $delta = $delta/24/60/60;
+        }
+      }
       print($delta);
     }
 
