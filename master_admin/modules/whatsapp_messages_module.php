@@ -251,6 +251,8 @@
 
         }
 
+        $reply_sent = false;
+        
         if($lead_info['cat_id'] == '0'){
             if($form_info = $this->track_form_from_message_text($message_text)){
                 $lead_info['page_id'] = $form_info['page_id'];
@@ -259,15 +261,18 @@
                 if($cat_children = $this->fetch_cat_children($cat_id)){
                     $lead_info['parent_cat_id'] = $cat_id;
                     $this->send_cat_request_to_contact($conversation_row, $cat_id,$cat_children);
+                    $reply_sent = true;
                 }
                 else{
                     $lead_info['cat_id'] = $form_info['cat_id'];
                     $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id']);
+                    $reply_sent = true;
                 }
             }
             else{
                 $cat_children = $this->fetch_cat_children($lead_info['parent_cat_id']);
                 $this->send_cat_request_to_contact($conversation_row, $lead_info['parent_cat_id'], $cat_children);
+                $reply_sent = true;
             }
         }
 
@@ -282,10 +287,12 @@
 
         $lead_info_json = json_encode($lead_info);        
         $conversation_update = array(
-            'last_message_id'=>$message_id,
-            'last_message_time'=>date('Y-m-d h:i:s',$message_time),
             'lead_info'=>$lead_info_json
         );
+        if(!$reply_sent){
+            $conversation_update['last_message_id'] = $message_id;
+            $conversation_update['last_message_time'] = date('Y-m-d h:i:s',$message_time);
+        }
 
         if($lead_info['city_id'] != '0' && $lead_info['cat_id'] != '0'){
             $conversation_update['stage'] = 'closed';
