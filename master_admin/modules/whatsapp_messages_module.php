@@ -95,8 +95,9 @@
         Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check");
         $message_data = $this->action_data;
         $message_info = json_decode($message_data['message_info'],true);
-
+        Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 11");
         if(
+            
             (!isset($message_info['entry'][0])) ||
             (!isset($message_info['entry'][0]['changes'][0])) ||
             (!isset($message_info['entry'][0]['changes'][0]['value'])) ||
@@ -104,10 +105,10 @@
             (!isset($message_info['entry'][0]['changes'][0]['value']['metadata'])) ||
             (!isset($message_info['entry'][0]['changes'][0]['value']['messages'][0]))
         ){
-            
+            Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 12");
             return false;
         }
-        
+        Helper::add_log('meta_webhooks_admin5.txt',"\nlog conversation check 13");
         $metadata = $message_info['entry'][0]['changes'][0]['value']['metadata'];
         $contact = $message_info['entry'][0]['changes'][0]['value']['contacts'][0];
         $message = $message_info['entry'][0]['changes'][0]['value']['messages'][0];
