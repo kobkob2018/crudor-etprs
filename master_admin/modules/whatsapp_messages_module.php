@@ -393,23 +393,6 @@
         return $this->send_lead_by_curl($lead_info);
     }
 
-    protected function track_city_from_message_text($message_text){
-        Helper::add_log('meta_webhooks_admin.txt',$message_text.": tracking city");
-        $city_filter = array('label'=>$message_text);//
-        $city_filter = array(
-            'city_like'=>array(
-                'str_like'=>$message_text, 
-                'columns_like'=>array('label'))
-        );
-        $city_find = Cities::find($city_filter,'id');
-        if(!$city_find){
-            Helper::add_log('meta_webhooks_admin.txt',": CIty not found");
-            return false;
-        }
-        Helper::add_log('meta_webhooks_admin.txt',": CIty YES found");
-        return $city_find['id'];
-    }
-
     protected function track_form_from_message_text($message_text){
         $message_arr = explode('"',$message_text);
         if(!isset($message_arr[1])){
@@ -441,7 +424,13 @@
             return false;
         }
         $search_term = $message_text;
-        $cat_filter = array('label'=>$search_term);
+
+        $cat_filter = array(
+            'cat_like'=>array(
+                'str_like'=>$search_term, 
+                'columns_like'=>array('label'))
+        );
+
         $cat_find = Biz_categories::find($cat_filter,'id');
         if(!$cat_find){
             return false;
@@ -460,6 +449,27 @@
             'form_id'=>$form_find['id'],
             'cat_id'=>$cat_id
         );
+    }
+
+    protected function track_city_from_message_text($message_text){
+        $cat_vag_terms= Whatsapp_settings::get()['city_vag_terms'];
+        if (strpos($cat_vag_terms, $message_text) !== false) {
+            return false;
+        }
+        Helper::add_log('meta_webhooks_admin.txt',$message_text.": tracking city");
+        $city_filter = array('label'=>$message_text);//
+        $city_filter = array(
+            'city_like'=>array(
+                'str_like'=>$message_text, 
+                'columns_like'=>array('label'))
+        );
+        $city_find = Cities::find($city_filter,'id');
+        if(!$city_find){
+            Helper::add_log('meta_webhooks_admin.txt',": CIty not found");
+            return false;
+        }
+        Helper::add_log('meta_webhooks_admin.txt',": CIty YES found");
+        return $city_find['id'];
     }
 
 
