@@ -115,7 +115,10 @@
         $connection_id = $self_phone."_".$contact_phone;
         
         $filter_arr = array("connection_id"=>$connection_id);
-        $conversation_row = Whatsapp_conversations::find($filter_arr);
+        $payload = array(
+            'order_by'=>'id desc'
+        );
+        $conversation_row = Whatsapp_conversations::find($filter_arr,'*',$payload);
         $conversation_id = false;
         $lead_info = array(
             'full_name'=>$contact['profile']['name'],
