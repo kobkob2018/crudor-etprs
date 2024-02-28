@@ -282,6 +282,7 @@
             }
             else{
                 $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id'],'city_correct_message');
+                $reply_sent = true;
             }
         }
 
