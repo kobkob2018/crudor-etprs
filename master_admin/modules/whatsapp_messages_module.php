@@ -144,6 +144,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
             //create new conversation
             $conversation_id = $this->add_conversation($metadata,$contact,$message,$connection_id,$lead_info);
             $conversation_row = Whatsapp_conversations::get_by_id($conversation_id);
+            $bot_state = json_decode($conversation_row['bot_state']);
         }
         else{
             $last_lead_info = json_decode($conversation_row['lead_info'],true);
