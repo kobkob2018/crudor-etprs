@@ -1,4 +1,15 @@
 <?php
+/*
+for token changes: 
+https://graph.facebook.com/v12.0/oauth/access_token?  
+    grant_type=fb_exchange_token&           
+    client_id=[your-app-id]&
+    client_secret=[your-app-secret]&
+    fb_exchange_token=[your-short-term-token]
+
+
+*/
+
   class Whatsapp_messagesModule extends Module{
 
     public $add_models = array("whatsapp_settings", "whatsapp_conversations", "whatsapp_messages","biz_categories","cities");
@@ -136,6 +147,7 @@
         }
         else{
             $last_lead_info = json_decode($conversation_row['lead_info'],true);
+            $bot_state = json_decode($conversation_row['bot_state']);
             //continue conversation or renew conversation
             $conversation_id = $conversation_row['id'];
             if($conversation_row['stage'] == 'open'){
@@ -250,36 +262,43 @@
         }
         
         if($direction=='recive'){
-            $this->send_alert_to_admin($conversation_row,$message_row_data);
-
+            if($bot_state['admin_alerts'] == '1'){
+                $this->send_alert_to_admin($conversation_row,$message_row_data);
+            }
         }
 
         $reply_sent = false;
         
-        if($lead_info['cat_id'] == '0'){
+        if($lead_info['cat_id'] == '0' && $bot_state['info_collect'] == '1'){
             if($form_info = $this->track_form_from_message_text($message_text)){
                 $lead_info['page_id'] = $form_info['page_id'];
                 $lead_info['form_id'] = $form_info['form_id'];
                 $cat_id = $form_info['cat_id'];
                 if($cat_children = $this->fetch_cat_children($cat_id)){
                     $lead_info['parent_cat_id'] = $cat_id;
-                    $this->send_cat_request_to_contact($conversation_row, $cat_id,$cat_children);
-                    $reply_sent = true;
+                    if($bot_state['auto_reply'] == '1'){
+                        $this->send_cat_request_to_contact($conversation_row, $cat_id,$cat_children);
+                        $reply_sent = true;
+                    }
                 }
                 else{
                     $lead_info['cat_id'] = $form_info['cat_id'];
-                    $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id']);
-                    $reply_sent = true;
+                    if($bot_state['auto_reply'] == '1'){   
+                        $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id']);
+                        $reply_sent = true;
+                    }
                 }
             }
             else{
                 $cat_children = $this->fetch_cat_children($lead_info['parent_cat_id']);
-                $this->send_cat_request_to_contact($conversation_row, $lead_info['parent_cat_id'], $cat_children);
-                $reply_sent = true;
+                if($bot_state['auto_reply'] == '1'){       
+                    $this->send_cat_request_to_contact($conversation_row, $lead_info['parent_cat_id'], $cat_children);
+                    $reply_sent = true;
+                }
             }
         }
 
-        elseif($lead_info['city_id'] == '0'){
+        elseif($lead_info['city_id'] == '0' && $bot_state['info_collect'] == '1'){
             if($city_id = $this->track_city_from_message_text($message_text)){
                 $lead_info['city_id'] = $city_id;
             }
@@ -311,7 +330,7 @@
             );
             $previous_conversations_json_update = json_encode($previous_conversations);
             $conversation_update['previous_conversations'] = $previous_conversations_json_update;
-        }
+        } 
         Whatsapp_conversations::update($conversation_id,$conversation_update);
         if($lead_info['city_id'] != '0' && $lead_info['cat_id'] != '0'){
             $this->add_lead($conversation_id);
@@ -567,6 +586,11 @@
     }
 
     protected function add_conversation($metadata,$contact,$message,$connection_id,$lead_info){
+        $bot_state = array(
+            'auto_reply'=>'1',
+            'info_collect'=>'1',
+            'admin_alerts'=>'1'
+        );
         $conversation_data = array(
             'connection_id'=>$connection_id,
             'owner_phone'=>$metadata['display_phone_number'],
@@ -577,7 +601,8 @@
             'last_message_time'=>date('Y-m-d H:i:s',$message['timestamp']),
             'last_message_direction'=>'recive',
             'stage'=>'open',
-            'lead_info'=>json_encode($lead_info)
+            'lead_info'=>json_encode($lead_info),
+            'bot_state'=>json_encode($bot_state)
         );
         $row_id = Whatsapp_conversations::create($conversation_data);
         return $row_id;

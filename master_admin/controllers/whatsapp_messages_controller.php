@@ -46,6 +46,18 @@
         $whatsapp_messages = Whatsapp_messages::get_list($filter_arr,"*",$payload);
         $conversation_id = $_REQUEST['conversation_id'];
         $this->data['whatsapp_conversation'] = Whatsapp_conversations::get_by_id($conversation_id);
+        $bot_state = json_decode($this->data['whatsapp_conversation']['bot_state']);
+        $bot_state_checkboxes = array();
+        foreach($bot_state as $key=>$value){
+          $checked = "";
+          if($value == '1'){
+            $checked = "checked";
+          }
+          $bot_state_checkboxes[$key] = array(
+            'checked'=>$checked
+          );
+        }
+        $this->data['bot_state_checkboxes'] = $bot_state_checkboxes;
         $this->data['whatsapp_messages'] = $whatsapp_messages;
         
         return parent::add();

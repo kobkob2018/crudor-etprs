@@ -39,6 +39,26 @@
 </div>
 
 
+<div class="form-addition">
+    <div class="focus-box sub-focus">
+        <h3>מצב הפרעה לשיחה</h3>
+        <b>שים לב. במידה ואתה שולח הודעה יזומה, כאשר הפונה מהצד השני מגיב, נשלחות הודעות אוטומטיות מהמערכת.</b>
+        <br/>
+        באפשרותך לבחור אם להמשיך את תגובות המערכת האוטומטיות או להמשיכן, ובוסף, אם להמשיך לאסוף מידע.
+        <div  class="form-group">
+            <input type="checkbox" class="input-checkbox" name='auto_reply' value="1" <?= $this->data['bot_state_checkboxes']['auto_reply']['checked'] ?>/>שלח תגובות מערכת בצורה אוטומטית
+        </div>
+        <div  class="form-group">
+            <input type="checkbox" class="input-checkbox" name='info_collect' value="1" <?= $this->data['bot_state_checkboxes']['info_collect']['checked'] ?>/>אסוף מידע לאחר הודעות נכנסות
+        </div>
+        <div  class="form-group">
+            <input type="checkbox" class="input-checkbox" name='admin_alerts' value="1" <?= $this->data['bot_state_checkboxes']['admin_alerts']['checked'] ?>/>שלח התראות למנהל על כל הודעה נכנסת
+        </div>
+        
+
+    </div>
+</div>
+
 <style type="text/css">
 
     .items-table{
@@ -68,7 +88,11 @@
 
 <script type="text/javascript">
 
-
+    function add_bot_options_to_form(){
+        const form_container = document.querySelector(".send-form");
+        const form_addition = document.querySelector(".form-addition");
+        form_container.append(form_addition);
+    }
     function init_whatsapp_fetch_messages(){
         console.log("init_whatsapp_fetch_messages");
         setInterval(function(){fetch_whatsapp_messages()},10000);
@@ -104,5 +128,6 @@
         messages_th.after(message_tr);
         move_rows_from_placeholder_to_table(placeholder,messages_table,messages_th);
     }
+    add_bot_options_to_form();
     init_whatsapp_fetch_messages();
 </script>
