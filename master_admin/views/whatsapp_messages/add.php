@@ -62,9 +62,10 @@
 <style type="text/css">
 
     .form-addition .input-checkbox{
-        display:block;
-        width: 40px;
-        float: right;
+        width: 20px;
+        min-width: 40px;
+        height: 20px;
+        margin-bottom: 9px;
     }
     .items-table{
         height: 260px;
