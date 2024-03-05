@@ -132,6 +132,20 @@
             'message_type'=>$fixed_values['message_type'],
             'template_language'=>$fixed_values['template_language'],
         );
+        $bot_state = array(
+          'auto_reply'=>'0',
+          'info_collect'=>'0',
+          'admin_alerts'=>'0',
+        );
+        foreach($bot_state as $key=>$val){
+          if(isset($_REQUEST[$key]) && $_REQUEST[$key] == '1'){
+            $bot_state[$key] = '1';
+          }
+        }
+        $bot_state_json = json_encode($bot_state);
+        
+        $conversation_id = $_REQUEST['conversation_id'];
+        Whatsapp_conversations::update($conversation_id,array('bot_state'=>$bot_state_json));
         $message_send = $this->call_module('whatsapp_messages','send_message',$message_data);
         return $message_send;
     }

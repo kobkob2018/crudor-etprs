@@ -61,6 +61,11 @@
 
 <style type="text/css">
 
+    .form-addition .input-checkbox{
+        display:block;
+        width: 40px;
+        float: right;
+    }
     .items-table{
         height: 260px;
         margin-bottom: 20px;
@@ -80,6 +85,8 @@
         float: right;
         margin-left: 20px;
     }
+
+
 </style>
 
 <div class="new-messages-placeholder hidden">
