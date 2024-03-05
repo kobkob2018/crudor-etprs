@@ -148,7 +148,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         }
         else{
             $last_lead_info = json_decode($conversation_row['lead_info'],true);
-            $bot_state = json_decode($conversation_row['bot_state']);
+            $bot_state = json_decode($conversation_row['bot_state'],true);
             //continue conversation or renew conversation
             $conversation_id = $conversation_row['id'];
             if($conversation_row['stage'] == 'open'){

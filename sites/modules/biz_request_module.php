@@ -96,8 +96,18 @@
             $this->add_cat_info_to_lead_info();
             $this->add_city_info_to_lead_info();
 
-            $this->lead_info['thanks_pixel'] = $form_info['thanks_pixel'];
+            $thanks_pixel = $form_info['thanks_pixel'];
             
+            if($thanks_pixel != ""){
+                foreach($this->lead_info as $lead_key=>$lead_val){
+
+                    if(!is_array($lead_val)){
+                        $thanks_pixel = str_replace('{{'.$lead_key.'}}',$lead_val,$thanks_pixel);
+                    }
+                }
+            }
+            
+            $this->lead_info['thanks_pixel'] = $thanks_pixel;
 
             if(isset($_REQUEST['extra'])){
                 $this->lead_info['extra'] = $_REQUEST['extra'];
@@ -192,7 +202,20 @@
             $this->add_cat_info_to_lead_info();
             $this->add_city_info_to_lead_info();
 
-            $this->lead_info['thanks_pixel'] = $form_info['thanks_pixel'];
+            $thanks_pixel = $form_info['thanks_pixel'];
+            
+            if($thanks_pixel != ""){
+                foreach($this->lead_info as $lead_key=>$lead_val){
+
+                    if(!is_array($lead_val)){
+                        $thanks_pixel = str_replace("{{$lead_key}}",$lead_val,$thanks_pixel);
+                    }
+                }
+            }
+            $thanks_pixel = str_replace("<","--",$thanks_pixel);
+            $this->lead_info['thanks_pixel'] = $thanks_pixel;
+
+
 
             $lead_sends_arr = Leads_complex::find_users_for_lead($this->lead_info);
 
