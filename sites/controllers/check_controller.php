@@ -4,7 +4,7 @@
     protected function setlog(){
       $this->set_layout("blank");
       $txt = "\n";
-      foreach($_REQUEST as $key=>$val){
+      foreach($_POST as $key=>$val){
         $txt.="$key: $val,";
       }
       Helper::add_log("api_log.txt",$txt);
