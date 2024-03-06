@@ -7,7 +7,7 @@
       foreach($_REQUEST as $key=>$val){
         $txt.="$key: $val,";
       }
-      Helper::add_log(api_log.txt,$txt);
+      Helper::add_log("api_log.txt",$txt);
     }
 
     protected function check(){
