@@ -44,7 +44,7 @@
 
       $missing_dst = array();
       $tracking_phones = array();
-      Helper::add_log("api_log.txt","\n\nstill sleeping....\n\n");
+
       foreach ($new_calls_arr as $call) {
         $user_phone = self::get_user_phone_by_call($call);
         //changes from old db:
@@ -104,7 +104,7 @@
           
           $lead_data['id'] = $lead_id;
 
-          Helper::add_log("api_log.txt","\n\nreaddyy for??\n\n");
+         
           self::handle_phone_api_send($user_phone,$lead_data,$call_data);
           self::handle_return_sms($call,$user_phone);
           self::handle_call_alert_sms($call,$user_phone);
@@ -144,6 +144,7 @@
 	}
 
     protected static function handle_phone_api_send($user_phone,$lead_data,$call_data){
+      Helper::clear_log("api_log.txt");
       Helper::add_log("api_log.txt","\n\ncame here good\n\n");
       $db = Db::getInstance();
       $sql = "SELECT * FROM user_phone_api WHERE phone_id = :phone_id";
@@ -176,6 +177,8 @@
 				  $params.=$url_arr[$i];
 			  }
 
+        Helper::add_log("api_log.txt","url: $url");
+        Helper::add_log("api_log.txt","params: $params");
         $ch = curl_init(); 
         curl_setopt( $ch, CURLOPT_URL,$url ); 
         curl_setopt($ch, CURLOPT_HEADER, 0);
