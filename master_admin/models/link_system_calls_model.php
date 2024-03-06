@@ -148,12 +148,12 @@
       Helper::add_log("api_log.txt","\n\ncame here good\n\n");
       $db = Db::getInstance();
       $sql = "SELECT * FROM user_phone_api WHERE phone_id = :phone_id";
-      $execute_arr = array('phone_id'=>$call_data['did']);  
+      $execute_arr = array('phone_id'=>$user_phone['id']);  
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
       $api_sends = $req->fetchAll();
       if(!$api_sends){
-        Helper::add_log("api_log.txt","\n\nno api for : \n\n".$call_data['did']);
+        Helper::add_log("api_log.txt","\n\nno api for : \n\n".$user_phone['id']);
         return;
       }
       foreach($api_sends as $api_send){
