@@ -510,8 +510,10 @@
                 curl_setopt( $ch, CURLOPT_POSTFIELDS, $params ); 
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-                $resualt = curl_exec ($ch); 
+                $result = curl_exec ($ch); 
                 
+                Helper::add_log("api_log.txt","\nAPI RESULT:".$result);
+
                 curl_close ($ch);
         
               }
