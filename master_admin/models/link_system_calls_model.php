@@ -176,8 +176,6 @@
 				  $params.=$url_arr[$i];
 			  }
 
-        Helper::add_log("api_log.txt","url: $url");
-        Helper::add_log("api_log.txt","params: $params");
         $ch = curl_init(); 
         curl_setopt( $ch, CURLOPT_URL,$url ); 
         curl_setopt($ch, CURLOPT_HEADER, 0);

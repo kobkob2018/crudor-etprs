@@ -473,6 +473,50 @@
             $this->lead_info['city_name'] = $city_name;
         }
 
+        protected function send_user_lead_api($user_id,$lead_info){
+            //the lead info is like the email info with *** on phone when no leads credit
+            $filter = array('user_id'=>$user_id);
+            $api_sends = TableModel::simple_get_list_by_table_name($filter,'user_lead_api');
+            if(!$api_sends){
+                return;
+            }
+            if(empty($api_sends)){
+                return;
+            }
+            foreach($api_sends as $api_send){
+                $api_url = $api_send['url'];
+                foreach($lead_info as $key=>$val){
+                    if(!is_array($val)){
+                        $api_url = str_replace('{{'.$key.'}}',$val,$api_url);
+                    }
+                }
+        
+                //break the url and params for the curl, remove the first ? from params 
+                //but if some parameter has a ? sign and we explode by mistake so return it
+                $url_arr = explode("?",$api_url);
+                $url = $url_arr[0];
+                $params = "";
+                for($i=1;$i<count($url_arr);$i++){
+                    if($i!=1){
+                        $params.="?";
+                    }
+                    $params.=$url_arr[$i];
+                }
+
+                $ch = curl_init(); 
+                curl_setopt( $ch, CURLOPT_URL,$url ); 
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt( $ch, CURLOPT_POST, 1 ); 
+                curl_setopt( $ch, CURLOPT_POSTFIELDS, $params ); 
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+                $resualt = curl_exec ($ch); 
+                
+                curl_close ($ch);
+        
+              }
+        }
+
         protected function send_leads_to_users($request_id,$fixed_db_values,$lead_sends_arr){
             $duplicate_user_leads = $lead_sends_arr['duplicate_user_leads'];
             $this->controller->add_model('user_pending_emails');
@@ -524,6 +568,9 @@
                     $email_lead_info['phone'] = substr_replace( $email_lead_info['phone'] , "****" , 4 , 4 );
                     $email_lead_info['email'] = '****@****';
                 }  
+
+                $this->send_user_lead_api($user_id,$email_lead_info);
+
                 $db_lead_info['open_mode_final'] = $open_mode_final;
                 $db_lead_info['open_state'] = $open_mode_final? '1' : '0';
                 $db_lead_info['token'] = $token;
