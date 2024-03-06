@@ -144,7 +144,7 @@
 	}
 
     protected static function handle_phone_api_send($user_phone,$lead_data,$call_data){
-      Helper::clear_log("api_log.txt");
+      //Helper::clear_log("api_log.txt");
       Helper::add_log("api_log.txt","\n\ncame here good\n\n");
       $db = Db::getInstance();
       $sql = "SELECT * FROM user_phone_api WHERE phone_id = :phone_id";
@@ -153,6 +153,7 @@
       $req->execute($execute_arr);
       $api_sends = $req->fetchAll();
       if(!$api_sends){
+        Helper::add_log("api_log.txt","\n\nno api for : \n\n".$call_data['did']);
         return;
       }
       foreach($api_sends as $api_send){
