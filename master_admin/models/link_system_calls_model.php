@@ -156,16 +156,16 @@
       foreach($api_sends as $api_send){
         $api_url = $api_send['url'];
         foreach($lead_data as $key=>$val){
-          $api_url = str_replace("{$key}",$val,$api_url);
+          $api_url = str_replace('{{'.$key.'}}',$val,$api_url);
         }
         foreach($call_data as $key=>$val){
-          $api_url = str_replace("{$key}",$val,$api_url);
+          $api_url = str_replace('{{'.$key.'}}',$val,$api_url);
         }
 
 
         //break the url and params for the curl, remove the first ? from params 
         //but if some parameter has a ? sign and we explode by mistake so return it
-        $url_arr = explode("?",$api_send_url);
+        $url_arr = explode("?",$api_url);
 			  $url = $url_arr[0];
 			  $params = "";
 			  for($i=1;$i<count($url_arr);$i++){
