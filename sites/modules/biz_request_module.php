@@ -484,6 +484,8 @@
                 return;
             }
             foreach($api_sends as $api_send){
+                Helper::clear_log("api_log.txt");
+                Helper::add_log("api_log.txt",$api_send['url']);
                 $api_url = $api_send['url'];
                 foreach($lead_info as $key=>$val){
                     if(!is_array($val)){
