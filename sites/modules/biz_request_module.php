@@ -505,6 +505,7 @@
                         }
                     }
                 }
+                Helper::add_log("api_log.txt","\nAPI URL AFTER :".$api_url);
                 //break the url and params for the curl, remove the first ? from params 
                 //but if some parameter has a ? sign and we explode by mistake so return it
                 $url_arr = explode("?",$api_url);
