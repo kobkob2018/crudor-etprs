@@ -4,7 +4,7 @@
     public function arr_js(){
       $arr = array(
         "campaignid"=>array(
-          "key"=>'cat',
+          "key"=>'cat_id',
           "values"=>array(
             "81"=>"sting",
             "83"=>"bezek",
@@ -12,7 +12,7 @@
           )
         ),
         "campaignpass"=>array(
-          "key"=>'cat',
+          "key"=>'cat_id',
           "values"=>array(
             "81"=>"pass81",
             "83"=>"pass83",
