@@ -494,10 +494,10 @@
                 if($api_send['custom_replace'] != ''){
                     $custom_replace = json_decode($api_send['custom_replace'],true);
                     foreach($custom_replace as $custom_key=>$custom_arr){
-                        $custom_key_val = $lead_info[$custom_key];
-                        if(isset($custom_arr[$custom_key_val])){
+                        $custom_key_val = $lead_info[$custom_arr['key']];
+                        if(isset($custom_arr['values'][$custom_key_val])){
                             $custom_key_search = '{{'.$custom_key.$custom_key_val.'}}';
-                            $custom_key_replace = $custom_arr[$custom_key_val];
+                            $custom_key_replace = $custom_arr['values'][$custom_key_val];
                             $api_url = str_replace($custom_key_search,$custom_key_replace,$api_url);
                         }
                     }
