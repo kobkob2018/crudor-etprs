@@ -493,6 +493,9 @@
                     }
                 }
 
+
+                Helper::add_log("api_log.txt","\n\n midway:".$api_url."\n\n");
+
                 if($api_send['custom_replace'] != ''){
                     $custom_replace = json_decode($api_send['custom_replace'],true);
                     foreach($custom_replace as $custom_key=>$custom_arr){
@@ -504,7 +507,7 @@
                         }
                     }
                 }
-                Helper::add_log("api_log.txt","\n\n after:".$api_send['url']."\n\n");
+                Helper::add_log("api_log.txt","\n\n after:".$api_url."\n\n");
                 //break the url and params for the curl, remove the first ? from params 
                 //but if some parameter has a ? sign and we explode by mistake so return it
                 $url_arr = explode("?",$api_url);
