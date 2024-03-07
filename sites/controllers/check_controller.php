@@ -25,8 +25,6 @@
     }
 
     protected function setlog(){
-
-      
       $this->set_layout("blank");
       $txt = "\n";
       foreach($_POST as $key=>$val){
