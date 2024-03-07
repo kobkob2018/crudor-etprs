@@ -3,10 +3,22 @@
     
     public function arr_js(){
       $arr = array(
-        "cat"=>array(
-          "81"=>"sting",
-          "83"=>"bezek"
-        )
+        "campaignid"=>array(
+          "key"=>'cat',
+          "values"=>array(
+            "81"=>"sting",
+            "83"=>"bezek",
+            "348"=>"kobicustom",
+          )
+        ),
+        "campaignpass"=>array(
+          "key"=>'cat',
+          "values"=>array(
+            "81"=>"pass81",
+            "83"=>"pass83",
+            "348"=>"pass348",
+          )
+        ),
       );
       print(json_encode($arr));
       exit();
