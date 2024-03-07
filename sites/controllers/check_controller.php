@@ -25,16 +25,14 @@
     }
 
     protected function setlog(){
-      if(!isset($_POST['campaignid'])){
-        return;
-      }
-      Helper::clear_log("api_log.txt");
+
+      Helper::clear_log("api_log2.txt");
       $this->set_layout("blank");
       $txt = "\n";
       foreach($_POST as $key=>$val){
         $txt.="$key: $val\n\n";
       }
-      Helper::add_log("api_log.txt",$txt);
+      Helper::add_log("api_log2.txt",$txt);
     }
 
     protected function check(){
