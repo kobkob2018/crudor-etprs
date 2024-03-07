@@ -67,7 +67,7 @@
         $fixed_values = array(
             'user_id'=>$this->data['user_info']['id'],
             'url'=>$_REQUEST['row']['url'],
-            'custom_replace'=>str_replace('"','\"',$_REQUEST['row']['custom_replace']),
+            'custom_replace'=>$_REQUEST['row']['custom_replace'],
         );
         $row_id = $_REQUEST['api_id'];
         if($row_id == "new"){
