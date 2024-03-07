@@ -163,23 +163,6 @@
           $api_url = str_replace('{{'.$key.'}}',$val,$api_url);
         }
 
-        if($api_send['custom_replace'] != ''){
-          $custom_replace = json_decode($api_send['custom_replace'],true);
-          foreach($custom_replace as $custom_key=>$custom_arr){
-            $custom_key_val = $lead_data[$custom_arr['key']];
-            if(isset($lead_data[$custom_arr['key']])){
-              $custom_key_val = $lead_data[$custom_arr['key']];
-            }
-            elseif(isset($call_data[$custom_arr['key']])){
-              $custom_key_val = $call_data[$custom_arr['key']];
-            }
-            if(isset($custom_arr['values'][$custom_key_val])){
-              $custom_key_search = '{{'.$custom_key.$custom_key_val.'}}';
-              $custom_key_replace = $custom_arr['values'][$custom_key_val];
-              $api_url = str_replace($custom_key_search,$custom_key_replace,$api_url);
-            }
-          }
-        }
 
         //break the url and params for the curl, remove the first ? from params 
         //but if some parameter has a ? sign and we explode by mistake so return it

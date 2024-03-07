@@ -493,7 +493,7 @@
                         $api_url = str_replace('{{'.$key.'}}',$val,$api_url);
                     }
                 }
-
+                Helper::add_log("api_log.txt","\nAPI URL:".$api_url);
                 if($api_send['custom_replace'] != ''){
                     $custom_replace = json_decode($api_send['custom_replace'],true);
                     foreach($custom_replace as $custom_key=>$custom_arr){
