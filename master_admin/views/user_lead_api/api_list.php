@@ -50,7 +50,7 @@
                     </div>
 
                     <div class="col col-first big-text">
-                        <input type="text" class = 'table-input' name = 'row[custom_replace]' value = '<?= $this->get_form_input('custom_replace',$api['form_identifier']) ?>' />
+                        <input type="text" class = 'table-input' name = 'row[custom_replace]' value = "<?= $this->get_form_input('custom_replace',$api['form_identifier']) ?>" />
                     </div>
                    
                     <div class="col"><input type="submit" value="שמור" /></div>
