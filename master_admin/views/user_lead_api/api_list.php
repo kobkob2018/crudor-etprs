@@ -14,8 +14,11 @@
         <form  class="table-tr row" action = "" method = "POST" >
             <input type="hidden" name="sendAction" value="createApiSend" />
             <input type="hidden" name="api_id" value="new" />
-            <div class="col col-first">                   
+            <div class="col col-first big-text">                   
                 <input type="text" class = 'table-input' name = 'row[url]' value = "<?= $this->get_form_input('url') ?>" />
+            </div>
+            <div class="col big-text">                   
+                <input type="text" class = 'table-input' name = 'row[custom_replace]' value = "<?= $this->get_form_input('custom_replace') ?>" />
             </div>
            
             <div class="col"><input type="submit" value="שמור" /></div>
@@ -42,8 +45,12 @@
                 <form  class="table-tr row" action = "" method = "POST" >
                     <input type="hidden" name="sendAction" value="apiListUpdateSend" />
                     <input type="hidden" name="api_id" value="<?= $api['id'] ?>" /> 
-                    <div class="col col-first">
+                    <div class="col col-first big-text">
                         <input type="text" class = 'table-input' name = 'row[url]' value = "<?= $this->get_form_input('url',$api['form_identifier']) ?>" />
+                    </div>
+
+                    <div class="col col-first big-text">
+                        <input type="text" class = 'table-input' name = 'row[custom_replace]' value = "<?= $this->get_form_input('custom_replace',$api['form_identifier']) ?>" />
                     </div>
                    
                     <div class="col"><input type="submit" value="שמור" /></div>
