@@ -9,7 +9,11 @@
             'label'=>'כתובת',
             'type'=>'text',
             'validation'=>'required'
-        )
+        ),
+        'custom_replace'=>array(
+            'label'=>'מערכי ערכים קבועים',
+            'type'=>'text'
+        ),
 
     );
 }

@@ -1,6 +1,17 @@
 <?php
   class CheckController extends CrudController{
     
+    public function arr_js(){
+      $arr = array(
+        "cat"=>array(
+          "81"=>"sting",
+          "83"=>"bezek"
+        )
+      );
+      print(json_encode($arr));
+      exit();
+    }
+
     protected function setlog(){
       $this->set_layout("blank");
       $txt = "\n";
