@@ -413,6 +413,9 @@
 
         protected function validate_phone_duplications($return_array){
             $phone = $this->lead_info['phone'];
+            if($phone == "0542323232"){
+                return false;
+            }
             if($phone == ""){
                 return true;
             }
