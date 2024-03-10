@@ -309,7 +309,7 @@
       $db = Db::getInstance();
       $needle_sql = "";
       $execute_arr = array('phone'=>$lead_data['phone'], 'user_id'=>$lead_data['user_id']);  
-      if($needle_sql_arr = self::add_972_needle_sql_arr($user_phone)){
+      if($needle_sql_arr = self::add_972_needle_sql_arr($lead_data['phone'])){
         $needle_sql = $needle_sql_arr['sql'];
         foreach($needle_sql_arr['execute_arr'] as $needle_key=>$needle_phone){
           $execute_arr[$needle_key] = $needle_phone;
