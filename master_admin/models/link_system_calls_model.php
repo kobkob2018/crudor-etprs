@@ -276,7 +276,7 @@
       }
     }
 
-    protected function remove_country_vs_local_prefix_from_phone($phone,$prefix_arr){
+    protected static function remove_country_vs_local_prefix_from_phone($phone,$prefix_arr){
       $phone_return = $phone;
       foreach($prefix_arr as $prefix){
         $replace = '';
@@ -289,7 +289,7 @@
       return $phone_return;
     }
 
-    protected function replace_prefix_options_sql($phone){
+    protected static function replace_prefix_options_sql($phone){
       $prefix_arr = array('0','972','+972');
       $phone_without_prefix = self::remove_country_vs_local_prefix_from_phone($phone,$prefix_arr);
       $phone_options_arr_sql = array();
