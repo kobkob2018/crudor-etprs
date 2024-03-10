@@ -79,6 +79,7 @@
     }
 
     protected function replace_needle_with_0($phone,$needle){
+      Helper::add_log('needle_phones.txt',"\nthe check file:".$phone,"\n\n");
       $replace = '0';
 
       $pos = strpos($phone, $needle);
