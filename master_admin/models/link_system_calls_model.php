@@ -287,6 +287,7 @@
     }
 
     protected function add_972_needle_sql_arr($phone){
+      Helper::add_log('needle_phones.txt',"\nchecking phone".$phone,"\n\n");
       $needle_phone = self::replace_needle_with_0($phone,'972');
       if($needle_phone == $phone){
         $needle_phone = self::replace_needle_with_0($phone,'+972');
