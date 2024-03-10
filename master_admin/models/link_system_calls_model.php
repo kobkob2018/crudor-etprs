@@ -306,6 +306,7 @@
     }
 
     protected static function handle_lead_billing_and_duplicates($lead_data,$user_phone){
+      Helper::add_log('needle_phones.txt',"\n new duplicate check ".$user_phone,"\n\n");
       $db = Db::getInstance();
       $needle_sql = "";
       $execute_arr = array('phone'=>$lead_data['phone'], 'user_id'=>$lead_data['user_id']);  
