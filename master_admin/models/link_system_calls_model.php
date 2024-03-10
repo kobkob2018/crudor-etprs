@@ -306,10 +306,11 @@
     }
 
     protected static function handle_lead_billing_and_duplicates($lead_data,$user_phone){
-      Helper::add_log('needle_phones.txt',"\n new duplicate check ".$user_phone,"\n\n");
+      Helper::add_log('needle_phones.txt',"\n new duplicate check ".$user_phone['number'],"\n\n");
       $db = Db::getInstance();
       $needle_sql = "";
       $execute_arr = array('phone'=>$lead_data['phone'], 'user_id'=>$lead_data['user_id']);
+      Helper::add_log('needle_phones.txt',"\n sending nowww ".$user_phone['number'].$lead_data['phone'] ."\n\n");
       $needle_sql_arr = self::add_972_needle_sql_arr($lead_data['phone']);  
       if($needle_sql_arr){
         $needle_sql = $needle_sql_arr['sql'];
