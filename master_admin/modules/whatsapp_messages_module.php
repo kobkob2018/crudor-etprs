@@ -271,11 +271,14 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         $reply_sent = false;
         
         if($lead_info['cat_id'] == '0' && $bot_state['info_collect'] == '1'){
+            Helper::add_log("watsap.txt","\n\n INSIDE a \n\n");
             if($form_info = $this->track_form_from_message_text($message_text)){
+                Helper::add_log("watsap.txt","\n\n INSIDE 1 \n\n");
                 $lead_info['page_id'] = $form_info['page_id'];
                 $lead_info['form_id'] = $form_info['form_id'];
                 $cat_id = $form_info['cat_id'];
                 if($cat_children = $this->fetch_cat_children($cat_id)){
+                    Helper::add_log("watsap.txt","\n\n INSIDE 1-1 \n\n");
                     $lead_info['parent_cat_id'] = $cat_id;
                     $lead_info['cat_id'] = '0';
                     if($bot_state['auto_reply'] == '1'){
@@ -284,6 +287,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
                     }
                 }
                 else{
+                    Helper::add_log("watsap.txt","\n\n INSIDE 1-2 \n\n");
                     $lead_info['cat_id'] = $form_info['cat_id'];
                     if($bot_state['auto_reply'] == '1'){   
                         $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id']);
@@ -301,6 +305,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         }
 
         elseif($lead_info['city_id'] == '0' && $bot_state['info_collect'] == '1'){
+            Helper::add_log("watsap.txt","\n\n INSIDE b \n\n");
             if($city_id = $this->track_city_from_message_text($message_text)){
                 $lead_info['city_id'] = $city_id;
             }
@@ -310,6 +315,9 @@ https://graph.facebook.com/v12.0/oauth/access_token?
             }
         }
 
+        else{
+            Helper::add_log("watsap.txt","\n\n INSIDE c \n\n");
+        }
         $lead_info_json = json_encode($lead_info);        
         $conversation_update = array(
             'lead_info'=>$lead_info_json
