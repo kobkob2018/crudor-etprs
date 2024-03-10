@@ -277,6 +277,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
                 $cat_id = $form_info['cat_id'];
                 if($cat_children = $this->fetch_cat_children($cat_id)){
                     $lead_info['parent_cat_id'] = $cat_id;
+                    $lead_info['cat_id'] = '0';
                     if($bot_state['auto_reply'] == '1'){
                         $this->send_cat_request_to_contact($conversation_row, $cat_id,$cat_children);
                         $reply_sent = true;
