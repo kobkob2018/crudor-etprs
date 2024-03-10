@@ -252,6 +252,7 @@
         $user_id_in = implode(",",$optional_user_ids);
         $sql = "SELECT * FROM user_lead_settings WHERE user_id IN($user_id_in)  
         AND active = '1' 
+        AND auto_send = '1' 
         AND (end_date > now() OR end_date = 0000-00-00 OR end_date IS NULL)";
        
         $db = Db::getInstance();		
