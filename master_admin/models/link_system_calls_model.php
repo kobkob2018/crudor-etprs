@@ -350,6 +350,7 @@
     }
 
     protected static function get_user_phone_by_call($call){
+      Helper::add_log('needle_phones.txt',"\n\n new cal to: ". $call['did']." \n\n");
       $db = Db::getInstance();
       $did = isset($call['did'])? $call['did'] : "" ;
       if((!$did) || $did == ''){
