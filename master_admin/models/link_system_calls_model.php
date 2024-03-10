@@ -309,12 +309,16 @@
       Helper::add_log('needle_phones.txt',"\n new duplicate check ".$user_phone,"\n\n");
       $db = Db::getInstance();
       $needle_sql = "";
-      $execute_arr = array('phone'=>$lead_data['phone'], 'user_id'=>$lead_data['user_id']);  
-      if($needle_sql_arr = self::add_972_needle_sql_arr($lead_data['phone'])){
+      $execute_arr = array('phone'=>$lead_data['phone'], 'user_id'=>$lead_data['user_id']);
+      $needle_sql_arr = self::add_972_needle_sql_arr($lead_data['phone']);  
+      if($needle_sql_arr){
         $needle_sql = $needle_sql_arr['sql'];
         foreach($needle_sql_arr['execute_arr'] as $needle_key=>$needle_phone){
           $execute_arr[$needle_key] = $needle_phone;
         }
+      }
+      else{
+        Helper::add_log('needle_phones.txt',"\n not pfund \n\n");
       }
       
       $sql = "SELECT id, duplicate_id FROM user_leads WHERE (phone = :phone $needle_sql)  AND billed = 1 AND user_id = :user_id AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)) LIMIT 1";
