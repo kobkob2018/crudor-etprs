@@ -269,10 +269,10 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         }
 
         $reply_sent = false;
-        
-        if($lead_info['cat_id'] == '0' && $bot_state['info_collect'] == '1'){
-            Helper::add_log("watsap.txt","\n\n INSIDE a \n\n");
+        $info_changed = false;
+        if($bot_state['info_collect'] == '1'){ 
             if($form_info = $this->track_form_from_message_text($message_text)){
+                $info_changed = true;
                 Helper::add_log("watsap.txt","\n\n INSIDE 1 \n\n");
                 $lead_info['page_id'] = $form_info['page_id'];
                 $lead_info['form_id'] = $form_info['form_id'];
@@ -281,43 +281,31 @@ https://graph.facebook.com/v12.0/oauth/access_token?
                     Helper::add_log("watsap.txt","\n\n INSIDE 1-1 \n\n");
                     $lead_info['parent_cat_id'] = $cat_id;
                     $lead_info['cat_id'] = '0';
-                    if($bot_state['auto_reply'] == '1'){
-                        $this->send_cat_request_to_contact($conversation_row, $cat_id,$cat_children);
-                        $reply_sent = true;
-                    }
                 }
                 else{
                     Helper::add_log("watsap.txt","\n\n INSIDE 1-2 \n\n");
-                    $lead_info['cat_id'] = $form_info['cat_id'];
-                    if($bot_state['auto_reply'] == '1'){   
-                        $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id']);
-                        $reply_sent = true;
-                    }
+                    $lead_info['cat_id'] = $cat_id;
                 }
             }
-            else{
-                $cat_children = $this->fetch_cat_children($lead_info['parent_cat_id']);
-                if($bot_state['auto_reply'] == '1'){       
-                    $this->send_cat_request_to_contact($conversation_row, $lead_info['parent_cat_id'], $cat_children);
-                    $reply_sent = true;
-                }
-            }
-        }
-
-        elseif($lead_info['city_id'] == '0' && $bot_state['info_collect'] == '1'){
-            Helper::add_log("watsap.txt","\n\n INSIDE b \n\n");
-            if($city_id = $this->track_city_from_message_text($message_text)){
+            elseif($city_id = $this->track_city_from_message_text($message_text)){
                 $lead_info['city_id'] = $city_id;
             }
-            else{
-                $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id'],'city_correct_message');
-                $reply_sent = true;
+        }
+
+        if($bot_state['auto_reply'] == '1'){
+            if($lead_info['cat_id'] == '0'){
+                $cat_children = $this->fetch_cat_children($lead_info['parent_cat_id']);
+                $this->send_cat_request_to_contact($conversation_row, $lead_info['parent_cat_id'] ,$cat_children);
+            }
+            elseif($lead_info['city_id'] == '0'){
+                $city_request_type = "city_select_message";
+                if($info_changed){
+                    $city_request_type = "city_correct_message";
+                }
+                $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id'], $city_request_type);
             }
         }
 
-        else{
-            Helper::add_log("watsap.txt","\n\n INSIDE c \n\n");
-        }
         $lead_info_json = json_encode($lead_info);        
         $conversation_update = array(
             'lead_info'=>$lead_info_json
