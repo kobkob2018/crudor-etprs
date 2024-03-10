@@ -312,7 +312,6 @@
 
     protected static function handle_lead_billing_and_duplicates($lead_data,$user_phone){
       $db = Db::getInstance();
-      $needle_sql = "";
       $execute_arr = array('user_id'=>$lead_data['user_id']);
       $phone_options_sql_arr = self::replace_prefix_options_sql($lead_data['phone']);  
       
@@ -320,9 +319,10 @@
       foreach($phone_options_sql_arr['execute_arr'] as $execute_key=>$execute_val){
         $execute_arr[$execute_key] = $execute_val;
       }
-      
-      $sql = "SELECT id, duplicate_id FROM user_leads WHERE $phone_options_sql AND billed = 1 AND user_id = :user_id AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)) LIMIT 1";
+      Helper::clear_log("prefix_phones.txt");
 
+      $sql = "SELECT id, duplicate_id FROM user_leads WHERE $phone_options_sql AND billed = 1 AND user_id = :user_id AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)) LIMIT 1";
+Helper::add_log("prefix_phones.txt",$sql);
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
       $duplicated_lead = $req->fetch();
