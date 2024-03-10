@@ -54,7 +54,6 @@
         $did = $call['did'];
 
         if (!$user_phone) {
-          Helper::add_log('needle_phones.txt',"\n\n missing phone: ". $user_phone);
           if(isset($missing_dst[$did])){
             $missing_dst[$did] = $missing_dst[$did]+1;
           }
@@ -277,59 +276,52 @@
       }
     }
 
-    protected static function replace_needle_with_0($phone,$needle){
-      $replace = '0';
+    protected function remove_country_vs_local_prefix_from_phone($phone,$prefix_arr){
+      $phone_return = $phone;
+      foreach($prefix_arr as $prefix){
+        $replace = '';
 
-      $pos = strpos($phone, $needle);
-      if ($pos === 0) {
-          $phone = substr_replace($phone, $replace, $pos, strlen($needle));
-      } 
-      return $phone;       
+        $pos = strpos($phone, $prefix);
+        if ($pos === 0) {
+            $phone_return = substr_replace($phone, $replace, $pos, strlen($prefix));
+        }  
+      }
+      return $phone_return;
     }
 
-    protected static function add_972_needle_sql_arr($phone){
-      Helper::add_log('needle_phones.txt',"\n \n \n MAAA MAAA MAAAA \n \n");
-      $needle_phone = self::replace_needle_with_0($phone,'972');
-      if($needle_phone == $phone){
-        $needle_phone = self::replace_needle_with_0($phone,'+972');
+    protected function replace_prefix_options_sql($phone){
+      $prefix_arr = array('0','972','+972');
+      $phone_without_prefix = self::remove_country_vs_local_prefix_from_phone($phone,$prefix_arr);
+      $phone_options_arr_sql = array();
+      $prefix_execute_arr = array();
+      $prefix_index = 0;
+      foreach($prefix_arr as $prefix){
+        $prefix_index++;
+        $phone_with_prefix = $prefix.$phone_without_prefix;
+        $prefix_execute_key = "prefix_".$prefix_index;
+        $phone_options_arr_sql[] = " phone = :".$prefix_execute_key." ";
+          $prefix_execute_arr[$prefix_execute_key] = $phone_with_prefix;
       }
-      if($needle_phone == $phone){
-        $needle_sql = " OR phone = :needle_phone ";
-        $needle_execute_arr = array('needle_phone'=>$needle_phone);
-        return array(
-          'sql'=>$needle_sql,
-          'execute_arr'=>$needle_execute_arr
-        );
-      }
-      return false;
-
+      $phone_options_sql = implode(" OR ",$phone_options_arr_sql);
+      $phone_options_sql = "($phone_options_sql)";
+      return array(
+        'sql'=>$phone_options_sql,
+        'execute_arr'=>$prefix_execute_arr
+      );
     }
 
     protected static function handle_lead_billing_and_duplicates($lead_data,$user_phone){
-      Helper::add_log('needle_phones.txt',"\n new duplicate check ".$user_phone['number'],"\n\n");
       $db = Db::getInstance();
       $needle_sql = "";
-      $execute_arr = array('phone'=>$lead_data['phone'], 'user_id'=>$lead_data['user_id']);
-      Helper::add_log('needle_phones.txt',"\n sending nowww ".$user_phone['number'].$lead_data['phone'] ."\n\n");
-      $needle_sql_arr = self::add_972_needle_sql_arr($lead_data['phone']);  
-
-      Helper::add_log('needle_phones.txt',"\n HERE SOMETHING DEAD \n\n");
-      if($needle_sql_arr){
-        $needle_sql = $needle_sql_arr['sql'];
-        foreach($needle_sql_arr['execute_arr'] as $needle_key=>$needle_phone){
-          $execute_arr[$needle_key] = $needle_phone;
-        }
-      }
-      else{
-        Helper::add_log('needle_phones.txt',"\n not pfund \n\n");
+      $execute_arr = array('user_id'=>$lead_data['user_id']);
+      $phone_options_sql_arr = self::replace_prefix_options_sql($lead_data['phone']);  
+      
+      $phone_options_sql = $phone_options_sql_arr['sql'];
+      foreach($phone_options_sql_arr['execute_arr'] as $execute_key=>$execute_val){
+        $execute_arr[$execute_key] = $execute_val;
       }
       
-      $sql = "SELECT id, duplicate_id FROM user_leads WHERE (phone = :phone $needle_sql)  AND billed = 1 AND user_id = :user_id AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)) LIMIT 1";
-
-      if($needle_sql != ""){
-        Helper::add_log('needle_phones.txt',"\n".$needle_sql,"\n\n");
-      }
-
+      $sql = "SELECT id, duplicate_id FROM user_leads WHERE $phone_options_sql AND billed = 1 AND user_id = :user_id AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)) LIMIT 1";
 
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
@@ -358,7 +350,6 @@
     }
 
     protected static function get_user_phone_by_call($call){
-      Helper::add_log('needle_phones.txt',"\n\n new cal to: ". $call['did']."from ".$call['src']." \n\n");
       $db = Db::getInstance();
       $did = isset($call['did'])? $call['did'] : "" ;
       if((!$did) || $did == ''){
