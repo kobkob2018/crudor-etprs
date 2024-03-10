@@ -323,6 +323,7 @@
 
       $sql = "SELECT id, duplicate_id FROM user_leads WHERE $phone_options_sql AND billed = 1 AND user_id = :user_id AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)) LIMIT 1";
 Helper::add_log("prefix_phones.txt",$sql);
+print_help($sql);
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
       $duplicated_lead = $req->fetch();
