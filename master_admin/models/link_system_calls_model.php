@@ -54,6 +54,7 @@
         $did = $call['did'];
 
         if (!$user_phone) {
+          Helper::add_log('needle_phones.txt',"\n\n missing phone: ". $user_phone);
           if(isset($missing_dst[$did])){
             $missing_dst[$did] = $missing_dst[$did]+1;
           }
