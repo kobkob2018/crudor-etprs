@@ -276,10 +276,51 @@
       }
     }
 
+    protected function replace_needle_with_0($phone,$needle){
+      $replace = '0';
+
+      $pos = strpos($phone, $needle);
+      if ($pos === 0) {
+          $phone = substr_replace($phone, $replace, $pos, strlen($needle));
+      } 
+      return $phone;       
+    }
+
+    protected function add_972_needle_sql_arr($phone){
+      $needle_phone = self::replace_needle_with_0($phone,'972');
+      if($needle_phone == $phone){
+        $needle_phone = self::replace_needle_with_0($phone,'+972');
+      }
+      if($needle_phone == $phone){
+        $needle_sql = " OR phone = :needle_phone ";
+        $needle_execute_arr = array('needle_phone'=>$needle_phone);
+        return array(
+          'sql'=>$needle_sql,
+          'execute_arr'=>$needle_execute_arr
+        );
+      }
+      return false;
+
+    }
+
     protected static function handle_lead_billing_and_duplicates($lead_data,$user_phone){
       $db = Db::getInstance();
-      $sql = "SELECT id, duplicate_id FROM user_leads WHERE phone = :phone AND billed = 1 AND user_id = :user_id AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)) LIMIT 1";
+      $needle_sql = "";
       $execute_arr = array('phone'=>$lead_data['phone'], 'user_id'=>$lead_data['user_id']);  
+      if($needle_sql_arr = self::add_972_needle_sql_arr($user_phone)){
+        $needle_sql = $needle_sql_arr['sql'];
+        foreach($needle_sql_arr['execute_arr'] as $needle_key=>$needle_phone){
+          $execute_arr[$needle_key] = $needle_phone;
+        }
+      }
+      
+      $sql = "SELECT id, duplicate_id FROM user_leads WHERE (phone = :phone $needle_sql)  AND billed = 1 AND user_id = :user_id AND date_in > (CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)) LIMIT 1";
+
+      if($needle_sql != ""){
+        Helper::add_log('needle_phones.txt',"\n".$needle_sql,"\n\n");
+      }
+
+
       $req = $db->prepare($sql);
       $req->execute($execute_arr);
       $duplicated_lead = $req->fetch();

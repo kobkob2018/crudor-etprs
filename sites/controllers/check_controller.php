@@ -69,32 +69,24 @@
 
 
     protected function test_set(){
-      
-      //cat_id=51&city_id=3&form_id=62&full_name=kobkob&phone=123123
-      //?cat_id=323&city_id=10&form_id=393&full_name=kobkob&phone=123123
-      $this->set_layout("blank");
-      
-      $return_array = $this->init_form_data($_REQUEST);
-      $lead_info = array(
-        'test_set'=>'1',
-        'full_name'=>$_REQUEST['full_name'],
-        'phone'=>$_REQUEST['phone'],
-        'city_id'=>$_REQUEST['city_id'],
-        'cat_id'=>$_REQUEST['cat_id'],
-        'referrer'=>'whatsapp',
-        'email'=>'no-email',
-        'extra_info'=>'',
-        'note'=>'whatsapp',
-        'ip'=>$_SERVER['REMOTE_ADDR'],
-      );
-      $return_array = $this->call_module("biz_request","enter_lead_by_api",array('return_array'=>$return_array,'lead_info'=>$lead_info));
+      $phone = "+972542393397";
+      print_help($phone,'first');
+      $phone = $this->replace_needle_with_0($phone,'972');
+      print_help($phone,'second');
+      $phone = $this->replace_needle_with_0($phone,'+972');
+      print_help($phone,'third');
+      exit();
+    }
 
-      print_r_help(($return_array));
-     // Helper::add_log("check_log.txt","\nHi now is ".$log);
-      //echo nl2br($log);
-      return;
-  }
+    protected function replace_needle_with_0($phone,$needle){
+      $replace = '0';
 
+      $pos = strpos($phone, $needle);
+      if ($pos === 0) {
+          $phone = substr_replace($phone, $replace, $pos, strlen($needle));
+      } 
+      return $phone;       
+    }
 
 
     public function init_form_data($request_arr){
