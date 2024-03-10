@@ -299,7 +299,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
             }
             elseif($lead_info['city_id'] == '0'){
                 $city_request_type = "city_select_message";
-                if($info_changed){
+                if(!$info_changed){
                     $city_request_type = "city_correct_message";
                 }
                 $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id'], $city_request_type);
