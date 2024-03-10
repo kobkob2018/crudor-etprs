@@ -312,6 +312,8 @@
       $execute_arr = array('phone'=>$lead_data['phone'], 'user_id'=>$lead_data['user_id']);
       Helper::add_log('needle_phones.txt',"\n sending nowww ".$user_phone['number'].$lead_data['phone'] ."\n\n");
       $needle_sql_arr = self::add_972_needle_sql_arr($lead_data['phone']);  
+
+      Helper::add_log('needle_phones.txt',"\n HERE SOMETHING DEAD \n\n");
       if($needle_sql_arr){
         $needle_sql = $needle_sql_arr['sql'];
         foreach($needle_sql_arr['execute_arr'] as $needle_key=>$needle_phone){
