@@ -311,6 +311,7 @@
     }
 
     protected static function handle_lead_billing_and_duplicates($lead_data,$user_phone){
+      Helper::add_log("prefix_phones.txt","\n\n HERE WE STILL ARE \n\n");
       $db = Db::getInstance();
       $execute_arr = array('user_id'=>$lead_data['user_id']);
       $phone_options_sql_arr = self::replace_prefix_options_sql($lead_data['phone']);  
