@@ -66,7 +66,7 @@
         }
         $gallery_images = false;
         if($selected_gallery){    
-            $gallery_images = siteGallery::get_gallery_images($selected_gallery);
+            $gallery_images = siteGallery::get_gallery_images($selected_gallery,$site_id);
         }
         $info = array(
             'gallery'=>$gallery_info,

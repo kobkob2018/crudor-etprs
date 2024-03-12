@@ -23,9 +23,14 @@
         return $result;
     }
 
-    public static function get_gallery_images($gallery_id){
+    public static function get_gallery_images($gallery_id,$site_id = false){
         $execute_arr = array('gallery_id'=>$gallery_id);
-        $sql = "SELECT * FROM gallery_images WHERE gallery_id = :gallery_id ORDER BY priority, id";  
+        $site_id_sql = "";
+        if($site_id){
+            $site_id_sql = " AND site_id = :site_id ";
+            $execute_arr['site_id'] = $site_id;
+        }
+        $sql = "SELECT * FROM gallery_images WHERE gallery_id = :gallery_id $site_id_sql ORDER BY priority, id";  
         $db = Db::getInstance();		
         $req = $db->prepare($sql);
         $req->execute($execute_arr);
