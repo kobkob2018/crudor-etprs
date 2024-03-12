@@ -37,6 +37,7 @@
           $filter_arr['user_id'] = $this->user['id'];
         }
         $list_info = $this->get_paginated_list_info($filter_arr);
+        print_r_help($list_info);
         if($user_is_admin){
             $users_by_id = array();
             foreach($list_info['list'] as $key=>$page){
