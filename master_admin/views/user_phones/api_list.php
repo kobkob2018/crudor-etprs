@@ -26,10 +26,6 @@
 
     <hr/>
 
-
-
-
-
     <?php if(!empty($this->data['api_list'])): ?>
         <h4>רשימת API</h4>
         <div class="items-table flex-table">
@@ -42,7 +38,7 @@
                 <form  class="table-tr row" action = "" method = "POST" >
                     <input type="hidden" name="sendAction" value="apiListUpdateSend" />
                     <input type="hidden" name="api_id" value="<?= $api['id'] ?>" /> 
-                    <div class="col col-first big-text">
+                    <div class="col col-first big-text"> 
                         <input type="text" class = 'table-input' name = 'row[url]' value = "<?= $this->get_form_input('url',$api['form_identifier']) ?>" />
                     </div>
                    
