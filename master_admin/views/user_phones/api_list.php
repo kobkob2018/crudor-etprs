@@ -7,14 +7,14 @@
     <h4>הוספת API</h4>
     <div class="items-table flex-table">
         <div class="table-th row">
-            <div class="col  col-first">url</div>
+            <div class="col  col-first big-text">url</div>
             <div class="col"></div>
         </div>
 
         <form  class="table-tr row" action = "" method = "POST" >
             <input type="hidden" name="sendAction" value="createApiSend" />
             <input type="hidden" name="api_id" value="new" />
-            <div class="col col-first">                   
+            <div class="col col-first big-text">                   
                 <input type="text" class = 'table-input' name = 'row[url]' value = "<?= $this->get_form_input('url') ?>" />
             </div>
            
