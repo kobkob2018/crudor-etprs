@@ -34,7 +34,7 @@
         <h4>רשימת API</h4>
         <div class="items-table flex-table">
             <div class="table-th row">
-                <div class="col  col-first">כתובת</div>
+                <div class="col  col-first big-text">כתובת</div>
                 <div class="col"></div>
                 <div class="col"></div>
             </div>
@@ -42,7 +42,7 @@
                 <form  class="table-tr row" action = "" method = "POST" >
                     <input type="hidden" name="sendAction" value="apiListUpdateSend" />
                     <input type="hidden" name="api_id" value="<?= $api['id'] ?>" /> 
-                    <div class="col col-first">
+                    <div class="col col-first big-text">
                         <input type="text" class = 'table-input' name = 'row[url]' value = "<?= $this->get_form_input('url',$api['form_identifier']) ?>" />
                     </div>
                    
