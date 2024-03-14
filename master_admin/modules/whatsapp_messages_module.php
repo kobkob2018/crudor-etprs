@@ -56,7 +56,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         }
         $api_key = Whatsapp_settings::get()['messages_api_key'];
         $url = "https://graph.facebook.com/v17.0/$owner_phone_id/messages";
-
+exit($url);
         // Create a new cURL resource
         $ch = curl_init($url);
 
