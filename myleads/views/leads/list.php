@@ -369,10 +369,10 @@
 											<?php if(is_mobile()): ?>
 												<a class="phone-link"  href="tel:{{lead_data['phone']}}"><img class="phone-link-img" src="style/image/Phone-icon.png" /></a>	
 											<?php endif; ?>
-											&nbsp;&nbsp; 
-											<a class="whatsapp-link" href="whatsapp://send?text=איך אפשר לעזור לך&phone=+972722706395">
-												<img src="style/image/whatsapp_chat.png" alt="צור קשר בווטסאפ">
-											</a>		
+
+											<a href='whatsapp://send?text=text-normal&phone=+972722706395'>
+												chat_whatsapp
+											</a>
 										</div>	
 										<div ng-if="lead_data['open_state'] == '0'" class='span3 lead_form_item form-group'>
 											<label for="data_arr[email]">אימייל</label>
