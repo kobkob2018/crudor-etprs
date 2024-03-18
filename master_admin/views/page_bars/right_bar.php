@@ -121,7 +121,9 @@
             <li class="bar-item <?= $view->a_c_class("whatsapp_conversations","whatsapp_messages") ?>">
                 <a href="<?= inner_url('whatsapp_conversations/list/') ?>" title="שיחות ווטסאפ" class="a-link">שיחות ווטסאפ</a>
             </li>
-            
+            <li class="bar-item <?= $view->a_c_class("whatsapp_notifications","whatsapp_messages") ?>">
+                <a href="<?= inner_url('whatsapp_notifications/list/') ?>" title="בדיקת תקלות ווטסאפ" class="a-link">בדיקת תקלות ווטסאפ</a>
+            </li>           
         <?php endif; ?>
 
     </ul>
