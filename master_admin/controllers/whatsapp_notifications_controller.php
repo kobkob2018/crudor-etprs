@@ -1,5 +1,5 @@
 <?php
-  class Whatsapp_conversationsController extends CrudController{
+  class Whatsapp_notificationsController extends CrudController{
     public $add_models = array("whatsapp_notifications");
 
     protected function init_setup($action){
