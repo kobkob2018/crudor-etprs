@@ -370,7 +370,7 @@
 												<a class="phone-link"  href="tel:{{lead_data['phone']}}"><img class="phone-link-img" src="style/image/Phone-icon.png" /></a>	
 											<?php endif; ?>
 
-											<a href="whatsapp://send?text=text-normal&phone={{lead_data['phone']}}">
+											<a href="whatsapp://send?text=text-normal&phone=+972722706395">
 												chat_whatsapp
 											</a>
 										</div>	
