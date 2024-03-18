@@ -29,7 +29,7 @@
                     <?php foreach($note['values'] as $note_val): ?>
                         <?php $class = str_replace('messages','messages-key',$note_val['class']); ?>
                         <?php $class = str_replace('body','body messages',$class); ?>
-                        <div class="<?= str_replace('messages','messages-key',$class) ?>">
+                        <div class="<?= $class ?>">
                             <b><?= $note_val['key'] ?>:</b> <span class="note-val"><?= $note_val['value'] ?></span>
                         </div>
                     <?php endforeach; ?>
