@@ -22,10 +22,13 @@
         $this->include_view('whatsapp_notifications/list.php',array('list'=>$whatsapp_notifications));
     }
 
-    protected function create_list_item_from_array($key,$item, $item_class="", $item_array = array()){
+    protected function create_list_item_from_array($key,$item, $item_class="", $item_array = array('type'=>'none','values'=>array())){
         $item_class = $item_class." ".$key;
         if(!is_array($item)){
-            $item_array[] = array('class'=>$item_class,'value'=>$item,'key'=>$key);
+            if($key == 'type'){
+                $item_array['type'] = $item;
+            }
+            $item_array['values'][] = array('class'=>$item_class,'value'=>$item,'key'=>$key);
         }
         else{
             foreach($item as $item_key=>$item_val){
