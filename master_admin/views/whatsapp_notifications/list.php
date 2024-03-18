@@ -25,6 +25,13 @@
         <div class="table-tr row">
             <div class="col col-tiny"><?= $key ?></div>
             <div class="col">
+                <div class="notification">
+                    <?php foreach($note as $note_val): ?>
+                        <div class="<?= $note_val['class'] ?>">
+                            <b><?= $note_val['key'] ?>:</b> <span class="note-val"><?= $note_val['value'] ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
                 <?php print_r_help($note); ?>
             </div>
         </div>
