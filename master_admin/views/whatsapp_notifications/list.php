@@ -35,6 +35,9 @@
                     <?php endforeach; ?>
                 </div>
             </div>
+            <div class="col">
+                <a href = "<?= inner_url('whatsapp_notifications/delete/') ?>?row_id=<?= $key ?>" title="מחק">מחק</a>
+            </div>
         </div>
     <?php endforeach; ?>
 </div>
