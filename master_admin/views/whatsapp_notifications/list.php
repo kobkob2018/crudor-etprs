@@ -32,7 +32,6 @@
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <?php print_r_help($note); ?>
             </div>
         </div>
     <?php endforeach; ?>
