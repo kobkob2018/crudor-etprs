@@ -383,7 +383,7 @@
 											<?php endif; ?>
 
 											<a href="javascript://" onclick="goto_whatsapp_chat(this)" data-phone="{{lead_data['phone']}}">
-												chat_whatsapp
+												<img class="phone-link-img" src="style/image/whatsapp_chat.png" />
 											</a>
 										</div>	
 										<div ng-if="lead_data['open_state'] == '0'" class='span3 lead_form_item form-group'>
