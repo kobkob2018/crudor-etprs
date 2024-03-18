@@ -40,9 +40,9 @@
 
 <style type= "text/css">
     .notification_row{font-size: 5px;}
-    .notification_row .type_text .from,
-    .notification_row .type_text .body,
-    .notification_row .type_text .name,
-    .notification_row .type_text .display_phone_number
+    .notification_row.type_text .from,
+    .notification_row.type_text .body,
+    .notification_row.type_text .name,
+    .notification_row.type_text .display_phone_number
     {font-size: 18px;}
 </style>
