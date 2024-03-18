@@ -25,7 +25,7 @@
         <div class="table-tr row">
             <div class="col col-tiny"><?= $key ?></div>
             <div class="col">
-                <div class="notification_val type_<?= $note['type'] ?>">
+                <div class="notification_row type_<?= $note['type'] ?>">
                     <?php foreach($note['values'] as $note_val): ?>
                         <div class="<?= $note_val['class'] ?>">
                             <b><?= $note_val['key'] ?>:</b> <span class="note-val"><?= $note_val['value'] ?></span>
@@ -39,10 +39,10 @@
 
 
 <style type= "text/css">
-    .notification{font-size: 5px;}
-    .notification .type_text .from,
-    .notification .type_text .body,
-    .notification .type_text .name,
-    .notification .type_text .display_phone_number
+    .notification_row{font-size: 5px;}
+    .notification_row .type_text .from,
+    .notification_row .type_text .body,
+    .notification_row .type_text .name,
+    .notification_row .type_text .display_phone_number
     {font-size: 18px;}
 </style>
