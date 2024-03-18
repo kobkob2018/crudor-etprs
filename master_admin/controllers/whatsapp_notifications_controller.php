@@ -19,7 +19,7 @@
             $whatsapp_notifications[$val['id']] = $this->create_list_item_from_array("notification",$val_arr);
         }
         $this->data['whatsapp_notifications'] = $whatsapp_notifications;
-        $this->include_view('whatsapp_notifications/list.php',array('list'=>$whatsapp_notifications));
+        $this->include_view('whatsapp_notifications/list.php',array('list'=>$whatsapp_notifications,'filter_form'=>$list_info['filter_form']));
     }
 
     protected function create_list_item_from_array($key,$item, $item_class="", $item_array = array('type'=>'none','values'=>array())){
