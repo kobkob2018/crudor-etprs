@@ -36,3 +36,13 @@
         </div>
     <?php endforeach; ?>
 </div>
+
+
+<style type= "text/css">
+    .notification{font-size: 5px;}
+    .notification .type_text .from,
+    .notification .type_text .body,
+    .notification .type_text .name,
+    .notification .type_text .display_phone_number
+    {font-size: 18px;}
+</style>
