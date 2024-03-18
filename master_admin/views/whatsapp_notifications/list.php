@@ -22,7 +22,7 @@
         <div class="col">מחיקה</div>
     </div>
     <?php foreach($info['list'] as $note): ?>
-        <div class="table-tr row is-visible-0<?= $content_page['visible'] ?>">
+        <div class="table-tr row is-visible-0<?= $note['id'] ?>">
             <div class="col col-tiny"><?= $content_page['id'] ?></div>
             <div class="col">
                 <?php print_r_help($note); ?>
