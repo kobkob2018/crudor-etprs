@@ -2,6 +2,11 @@
 <?php $filter = $this->data['filter']; ?>
 <?php $leads = $this->data['leads']; ?>
 <?php $pages_data = $this->data['pages']; ?>
+<script type="text/javascript">
+	function goto_whatsapp_chat(a_el){
+		alert(a_el.dataset.phone);
+	}
+</script>
 
 <div ng-app="leadsApp" ng-controller="leadsCtrl">
 
@@ -370,7 +375,7 @@
 												<a class="phone-link"  href="tel:{{lead_data['phone']}}"><img class="phone-link-img" src="style/image/Phone-icon.png" /></a>	
 											<?php endif; ?>
 
-											<a href="whatsapp://send?text=text-normal&phone=+{{lead_data['phone']}}">
+											<a href="javascript://" onclick="goto_whatsapp_chat(this)" data-phone="{{lead_data['phone']}}">
 												chat_whatsapp
 											</a>
 										</div>	
