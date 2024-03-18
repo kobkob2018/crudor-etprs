@@ -21,9 +21,9 @@
        
         <div class="col">מחיקה</div>
     </div>
-    <?php foreach($info['list'] as $note): ?>
-        <div class="table-tr row is-visible-0<?= $note['id'] ?>">
-            <div class="col col-tiny"><?= $content_page['id'] ?></div>
+    <?php foreach($info['list'] as $key=>$note): ?>
+        <div class="table-tr row">
+            <div class="col col-tiny"><?= $key ?></div>
             <div class="col">
                 <?php print_r_help($note); ?>
             </div>
