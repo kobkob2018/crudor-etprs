@@ -10,7 +10,7 @@
 	function goto_whatsapp_chat(a_el){
 		const phone = a_el.dataset.phone;
 		const whatsapp_a = document.querySelector(".whatsapp_button_placeholder");
-		whatsapp_a.href = "whatsapp://send?text=איך אפשר לעזור לך?&phone="+phone;
+		whatsapp_a.href = "whatsapp://send?text=איך אפשר לעזור לך&phone="+phone;
 		whatsapp_a.click();
 	}
 </script>
