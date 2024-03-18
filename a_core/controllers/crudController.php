@@ -666,6 +666,7 @@
             return $this->redirect_back_to_action();
         }
         elseif(isset($_REQUEST['order_by'])){
+            exit("dddd");
             $order_by = $_REQUEST['order_by'];
             if(session__isset($order_by_name)){
                 $session_order_by = session__get($order_by_name);
