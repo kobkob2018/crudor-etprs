@@ -9,16 +9,14 @@
     public function list(){
         //if(session__isset())
         $filter_arr = $this->get_base_filter();
-        $payload = array(
-            'order_by'=>'id desc'
-        );
 
         $list_info = $this->get_paginated_list_info($filter_arr,array('page_limit'=>'300'));
         
         $whatsapp_notifications = array();
 
         foreach($list_info['list'] as $key=>$val){
-            $whatsapp_notifications[$key] = $this->create_list_item_from_array("notification",$val);
+            $val_arr = json_decode($val,true);
+            $whatsapp_notifications[$key] = $this->create_list_item_from_array("notification",$val_arr);
         }
         $this->data['whatsapp_notifications'] = $whatsapp_notifications;
         $this->include_view('whatsapp_notifications/list.php',array('list'=>$whatsapp_notifications));
