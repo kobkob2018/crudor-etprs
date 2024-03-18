@@ -10,7 +10,7 @@
         //if(session__isset())
         $filter_arr = $this->get_base_filter();
 
-        $list_info = $this->get_paginated_list_info($filter_arr,array('page_limit'=>'2'));
+        $list_info = $this->get_paginated_list_info($filter_arr,array('page_limit'=>'300'));
         
         $whatsapp_notifications = array();
 
