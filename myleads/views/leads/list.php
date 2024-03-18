@@ -2,9 +2,16 @@
 <?php $filter = $this->data['filter']; ?>
 <?php $leads = $this->data['leads']; ?>
 <?php $pages_data = $this->data['pages']; ?>
+
+<div class="hidden">
+	<a class="whatsapp_button_placeholder" href = "">whatsapp_chat</a>
+</div>
 <script type="text/javascript">
 	function goto_whatsapp_chat(a_el){
-		alert(a_el.dataset.phone);
+		const phone = a_el.dataset.phone;
+		const whatsapp_a = document.querySelector(".whatsapp_button_placeholder");
+		whatsapp_a.href = "whatsapp://send?text=איך אפשר לעזור לך?&phone="+phone;
+		whatsapp_a.click();
 	}
 </script>
 
