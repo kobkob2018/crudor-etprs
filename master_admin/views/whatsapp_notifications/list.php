@@ -1,6 +1,6 @@
 <h3>נוטיפיקציות ווטסאפ</h3>
 
-<?php if(isset($info['filter_form'])): exit("tesssss"); ?>
+<?php if(isset($info['filter_form'])): ?>
     <?php $this->include_view('form_builder/filter_form.php',$info); ?>
 <?php endif; ?>
 
