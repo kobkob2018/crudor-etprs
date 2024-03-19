@@ -26,7 +26,7 @@ class Meta_webhooksController extends CrudController{
             else{
                 $log_txt.=" array";
             }
-            $log_txt.="\n".$message_info_json."\n";
+            //$log_txt.="\n".$message_info_json."\n";
             $log_txt.="-------------------------------\n";
 
         }
