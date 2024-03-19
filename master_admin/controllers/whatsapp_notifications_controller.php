@@ -51,6 +51,7 @@
 
     public function view_log_file(){
         $contents = file_get_contents('assets_s/logs/webhooks_notes.txt');
+        $contents = nl2br($contents);
         print($contents);
     }
 
