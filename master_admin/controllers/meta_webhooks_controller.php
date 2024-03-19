@@ -26,10 +26,12 @@ class Meta_webhooksController extends CrudController{
             else{
                 $log_txt.=" array";
             }
-            $log_txt.="\n".str_replace('"','--',$message_info_json)."\n";
-            $log_txt.="-------------------------------\n";
+            
+            
 
         }
+        $log_txt.="\n".$message_info_json."\n";
+        $log_txt.="-------------------------------\n";
         Helper::add_log('webhooks_notes.txt',$log_txt);
         $message_arr = array('info'=>$message_info_json);
         TableModel::simple_create_by_table_name($message_arr,'whatsapp_notifications');
