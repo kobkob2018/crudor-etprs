@@ -43,11 +43,11 @@
 </div>
 
 <div class="focus-box">
-    <a href="<?= outer_url('assets_s/logs/webhooks_notes.txt') ?>" target="_BLANK">צפה בקובץ לוג</a>
+    <a href="<?= inner_url('whatsapp_notifications/view_log_file/') ?>" target="_BLANK">צפה בקובץ לוג</a>
     <br/><br/>
     <a href="<?= inner_url("meta_webhooks/clear_notifications_log/") ?>">ניקוי קובץ לוג</a>
     <br/>
-    <a href="<?= inner_url("meta_webhooks/clear_notifications_table/") ?>">ניקוי רשימות לוג</a>
+    <a href="<?= inner_url("whatsapp_notifications/clear_notifications_table/") ?>">ניקוי רשימות לוג</a>
 </div>
 <style type= "text/css">
     .notification_row{font-size: 5px; text-align: left;}

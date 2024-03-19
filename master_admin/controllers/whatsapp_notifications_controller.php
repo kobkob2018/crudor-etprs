@@ -49,6 +49,11 @@
         $this->redirect_to(inner_url("whatsapp_notifications/list/"));
     }
 
+    public function view_log_file(){
+        $contents = file_get_contents('assets_s/logs/webhooks_notes.txt');
+        print($contents);
+    }
+
     protected function get_filter_fields_collection(){
         return array();
     }
