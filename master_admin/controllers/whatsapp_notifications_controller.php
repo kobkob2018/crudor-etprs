@@ -43,6 +43,12 @@
         return Whatsapp_notifications::get_list($filter_arr, '*',$payload);
     }
 
+    public function clear_notifications_table(){
+        Whatsapp_notifications::clear_list();
+        SystemMessages::add_success_message("list is clear");
+        $this->redirect_to(inner_url("whatsapp_notifications/list/"));
+    }
+
     protected function get_filter_fields_collection(){
         return array();
     }
