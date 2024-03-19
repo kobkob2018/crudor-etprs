@@ -44,7 +44,7 @@
 
 
 <style type= "text/css">
-    .notification_row{font-size: 5px;}
+    .notification_row{font-size: 5px; text-align: left;}
     .notification_row.bigger{font-size: 16px;}
     .notification_row.type_text .from,
     .notification_row.type_text .body,
