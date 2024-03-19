@@ -101,15 +101,10 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         return $result_arr;
     }
 
-    protected function register_notification_as_is($message_info_json){
-        $message_arr = array('info'=>$message_info_json);
-        TableModel::simple_create_by_table_name($message_arr,'whatsapp_notifications');
-    }
-
     public function handle_message_notification(){
 
         $message_data = $this->action_data;
-        $this->register_notification_as_is($message_data['message_info']);
+        
         $message_info = json_decode($message_data['message_info'],true);
 
         if(

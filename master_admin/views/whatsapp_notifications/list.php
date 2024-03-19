@@ -42,7 +42,13 @@
     <?php endforeach; ?>
 </div>
 
-
+<div class="focus-box">
+    <a href="<?= outer_url('assets_s/logs/webhooks_notes.txt') ?>" target="_BLANK">צפה בקובץ לוג</a>
+    <br/><br/>
+    <a href="<?= inner_url("meta_webhooks/clear_notifications_log/") ?>">ניקוי קובץ לוג</a>
+    <br/>
+    <a href="<?= inner_url("meta_webhooks/clear_notifications_table/") ?>">ניקוי רשימות לוג</a>
+</div>
 <style type= "text/css">
     .notification_row{font-size: 5px; text-align: left;}
     .notification_row.bigger{font-size: 16px;}
