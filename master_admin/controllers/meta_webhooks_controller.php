@@ -17,7 +17,7 @@ class Meta_webhooksController extends CrudController{
     }
 
     protected function register_notification_as_is($message_info_json){
-        $log_txt = "\n\n-------------------------\n";
+        $log_txt = "\n-------------------------\n";
         foreach($_REQUEST as $key=>$val){
             $log_txt .= $key.":";
             if(!is_array($val)){
@@ -26,7 +26,7 @@ class Meta_webhooksController extends CrudController{
             else{
                 $log_txt.=" array";
             }
-            //$log_txt.="\n".$message_info_json."\n";
+            $log_txt.="\n".str_replace('"','--',$message_info_json)."\n";
             $log_txt.="-------------------------------\n";
 
         }
