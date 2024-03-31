@@ -568,13 +568,13 @@ https://graph.facebook.com/v12.0/oauth/access_token?
     protected function send_alert_to_admin($conversation_data, $message_row_data){
         
         $to = Whatsapp_settings::get()['admin_alerts_phone'];
-        
+        $sms_to = Whatsapp_settings::get()['admin_alerts_sms_phone'];
         $message_text = "message from system: \n\n";
         $message_text .= "connection_id: ".$message_row_data['connection_id']."\n";
         $message_text .= "message: \n";
         $message_text .= $message_row_data['message_type'].": \n".$message_row_data['message_text'];
         $message_text .= "\n\nview in admin: ".outer_url('whatsapp_messages/add/?conversation_id='.$conversation_data['id']);
-
+        Helper::send_sms($sms_to,$message_text);
         $message_data = array(
             'message_type'=>'text',
             'message_text'=>$message_text,
