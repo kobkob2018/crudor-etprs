@@ -6,9 +6,12 @@
 <div class="hidden">
 	<a class="whatsapp_button_placeholder" href = "">whatsapp_chat</a>
 </div>
-<script type="text/javascript">
+<script type="text/javascript"> 
 	function goto_whatsapp_chat(a_el){
-		const phone = a_el.dataset.phone;
+		let phone = a_el.dataset.phone;
+		if(phone.startsWith("0")){
+			phone = phone.replace(/0/, '972');
+		}
 		const whatsapp_a = document.querySelector(".whatsapp_button_placeholder");
 		whatsapp_a.href = "whatsapp://send?text=איך אפשר לעזור לך?&phone=+"+phone;
 		whatsapp_a.click();
