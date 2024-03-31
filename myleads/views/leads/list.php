@@ -12,9 +12,7 @@
 		if(phone.startsWith("0")){
 			phone = phone.replace(/0/, '972');
 		}
-		if(!confirm("chat with: "+ phone+" ?")){
-			return;
-		}
+
 		const whatsapp_a = document.querySelector(".whatsapp_button_placeholder");
 		whatsapp_a.href = "whatsapp://send?text=איך אפשר לעזור לך?&phone=+"+phone;
 		whatsapp_a.click();
