@@ -101,7 +101,7 @@
                             <option value = "" class="select-note"><?= __tr("Select a city") ?></option>
                             <option value = "" class="select-note-2" disabled><?= __tr("You can get sevrice at the folowing cities") ?>:</option>
                             <?php foreach($this->data['city_select']['options'] as $option): ?>
-                                <option value = "<?= $option['id'] ?>" class="city-option deep-<?= $option['deep'] ?> city_<?= $option['id'] ?>" data-parent="<?= $option['parent'] ?>"><?= $option['label'] ?></option>
+                                <option value = "<?= $option['id'] ?>" class="city-option deep-<?= $option['deep'] ?> city_<?= $option['id'] ?>" data-parent="<?= $option['parent'] ?>"><b style="color:blue;"><?= $option['label'] ?></b></option>
                             <?php endforeach; ?>
                             <option value = "" class="select-note red"><?= __tr("If you don't find the city, we don't have a service provider there") ?></option>
                         </select>
