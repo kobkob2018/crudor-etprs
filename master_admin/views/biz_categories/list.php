@@ -27,7 +27,7 @@
             <div class="col">מחיקה</div>
         </div>
         <?php foreach($this->data['cat_list'] as $cat): ?>
-            <div class="table-tr row  pale-0<?= $cat['visible'] ?>  pale-0<?= $cat['googleADSense'] == ''?'0':'1' ?>">
+            <div class="table-tr row  pale-0<?= $cat['visible'] ?>  pale-0<?= $cat['googleADSense'] == ''?'1':'0' ?>">
                 <div class="col col-tiny">
                     <?= $cat['id'] ?>
                 </div>
