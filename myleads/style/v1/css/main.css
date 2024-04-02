@@ -192,12 +192,15 @@ label.error::before{content:"*";}
 
 .table-striped>tbody>tr.view_state_1.tag-color-1>td {
     background: #231613;
+    color: wheat;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-2>td {
     background: #1f2a60;
+    color: wheat;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-3>td {
     background: #0d3e81;
+    color: wheat;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-4>td {
     background: #c98a10;
