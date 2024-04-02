@@ -45,6 +45,7 @@
 					array('id'=>'8','label'=>'צבע8'),
 					array('id'=>'9','label'=>'צבע9'),
 					array('id'=>'10','label'=>'צבע10'),
+					array('id'=>'11','label'=>'צבע11'), 
 				)
 			);
 			$this->include_view('tags/tags_settings.php',$info);
