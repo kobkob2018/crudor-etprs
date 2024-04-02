@@ -1,3 +1,7 @@
+<?php 
+    $direction_labels = array('send'=>'הודעה נכנסת','recive'=>'הודעה יוצאת')
+?>
+
 <h3>שיחות ווטסאפ</h3>
 
 <div class="add-button-wrap">
@@ -32,7 +36,12 @@
                 <br/>
                 <a href = "<?= inner_url('whatsapp_conversations/edit/') ?>?&row_id=<?= $item['id'] ?>" title="ערוך איש קשר">[ערוך]</a>
             </div>
-            <div class="col"><b><?= $item['last_message']['direction'] ?></b><br/><?= $item['last_message']['message_type'] ?>: <?= $item['last_message']['message_text'] ?>
+            <div class="col">
+                <b><?= $direction_labels[$item['last_message']['direction']] ?></b>
+                <br/>
+                <div class="message-direction <?= $item['last_message']['direction'] ?>">
+                    <?= $item['last_message']['message_type'] ?>: <?= $item['last_message']['message_text'] ?>
+                </div>
 
                 <br/><br/>
                 <a href = "<?= inner_url('whatsapp_messages/add/') ?>?conversation_id=<?= $item['id'] ?>" title="לשיחה">לשיחה</a>
