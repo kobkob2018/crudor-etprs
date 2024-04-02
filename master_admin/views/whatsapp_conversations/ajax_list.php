@@ -1,3 +1,7 @@
+<?php 
+    $direction_labels = array('send'=>'הודעה נכנסת','recive'=>'הודעה יוצאת')
+?>
+
 <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
     <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>" data-conversation_id="<?= $item['id'] ?>">
         <div class="col"><?= $item['id'] ?></div>
@@ -11,7 +15,12 @@
             <br/>
             <a href = "<?= inner_url('whatsapp_conversations/edit/') ?>?&row_id=<?= $item['id'] ?>" title="ערוך איש קשר">[ערוך]</a>
         </div>
-        <div class="col"><b><?= $item['last_message']['direction'] ?></b><br/><?= $item['last_message']['message_type'] ?>: <?= $item['last_message']['message_text'] ?>
+        <div class="col">
+            <b><?= $direction_labels[$item['last_message']['direction']] ?></b>
+            <br/>
+            <div class="message-direction <?= $item['last_message']['direction'] ?>">
+                <?= $item['last_message']['message_type'] ?>: <?= $item['last_message']['message_text'] ?>
+            </div>
 
             <br/><br/>
             <a href = "<?= inner_url('whatsapp_messages/add/') ?>?conversation_id=<?= $item['id'] ?>" title="לשיחה">לשיחה</a>
