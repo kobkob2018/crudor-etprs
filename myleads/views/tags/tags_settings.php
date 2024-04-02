@@ -96,33 +96,36 @@
 		visibility: 1;
 	}
 	.tag-color.tag-color-1{
-		background: #bbbbea;
+		background: #231613;
 	}
 	.tag-color.tag-color-2{
-		background: #bbe6ea;
+		background: #1f2a60;
 	}
 	.tag-color.tag-color-3{
-		background: #bbeada;
+		background: #0d3e81;
 	}
 	.tag-color.tag-color-4{
-		background: #cceabb;
+		background: #c98a10;
 	}
 	.tag-color.tag-color-5{
-		background: #e3eabb;
+		background: #d93115;
 	}
 	.tag-color.tag-color-6{
-		background: #ead0bb;
+		background: #f1b81a;
 	}
 	.tag-color.tag-color-7{
-		background: #eabbcf;
+		background: #f1e728;
 	}
 	.tag-color.tag-color-8{
-		background: #eabbe3;
+		background: #75b828;
 	}
 	.tag-color.tag-color-9{
-		background: #d8bbea;
+		background: #2e8338;
 	}
 	.tag-color.tag-color-10{
-		background: #bbbeea;
+		background: #5eaada;
+	}
+	.tag-color.tag-color-11{
+		background: #efb3a1;
 	}
 </style>
