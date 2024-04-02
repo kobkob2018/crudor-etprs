@@ -81,6 +81,7 @@
     .message-direction.send{
         float: left;
         margin-right: 20px;
+        background: yellow;
     }
     .message-direction.recive{
         float: right;
