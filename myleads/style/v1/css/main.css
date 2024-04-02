@@ -192,7 +192,7 @@ label.error::before{content:"*";}
 
 .table-striped>tbody>tr.view_state_1.tag-color-1>td {
     background: #231613;
-    color: wheat;
+    color: white;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-2>td {
     background: #1f2a60;
