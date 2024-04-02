@@ -196,23 +196,25 @@ label.error::before{content:"*";}
 }
 .table-striped>tbody>tr.view_state_1.tag-color-2>td {
     background: #1f2a60;
-    color: wheat;
+    color: white;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-3>td {
     background: #0d3e81;
-    color: wheat;
+    color: white;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-4>td {
     background: #c98a10;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-5>td {
     background: #d93115;
+    color: white;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-6>td {
     background: #f1b81a;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-7>td {
     background: #f1e728;
+    color: white;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-8>td {
     background: #75b828;
