@@ -214,13 +214,13 @@ label.error::before{content:"*";}
 }
 .table-striped>tbody>tr.view_state_1.tag-color-7>td {
     background: #f1e728;
-    color: white;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-8>td {
     background: #75b828;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-9>td {
     background: #2e8338;
+    color: white;
 }
 .table-striped>tbody>tr.view_state_1.tag-color-10>td {
     background: #5eaada;
