@@ -1,5 +1,5 @@
 <?php 
-    $direction_labels = array('send'=>'הודעה נכנסת','recive'=>'הודעה יוצאת')
+    $direction_labels = array('send'=>'הודעה יוצאת','recive'=>'הודעה נכנסת')
 ?>
 
 <h3>שיחות ווטסאפ</h3>
