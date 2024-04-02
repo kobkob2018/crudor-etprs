@@ -57,6 +57,28 @@
 
 </div>
 
+
+<style type="text/css">
+
+
+    .message-direction{
+        background: #9191ff;
+        padding: 10px 15px 10px 30px;
+        border-radius: 5px;
+    }
+    .message-direction.send{
+        float: left;
+        margin-right: 20px;
+        background: yellow;
+    }
+    .message-direction.recive{
+        float: right;
+        margin-left: 20px;
+    }
+
+
+</style>
+
 <script type="text/javascript">
 
 
