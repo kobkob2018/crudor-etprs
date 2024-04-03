@@ -123,7 +123,11 @@
             </li>
             <li class="bar-item <?= $view->a_c_class("whatsapp_notifications","whatsapp_messages") ?>">
                 <a href="<?= inner_url('whatsapp_notifications/list/') ?>" title="בדיקת תקלות ווטסאפ" class="a-link">בדיקת תקלות ווטסאפ</a>
-            </li>           
+            </li> 
+            
+            <li class="bar-item <?= $view->a_c_class("whatsapp_templates") ?>">
+                <a href="<?= inner_url('whatsapp_templates/list/') ?>" title="תבניות ווטסאפ" class="a-link">תבניות ווטסאפ</a>
+            </li> 
         <?php endif; ?>
 
     </ul>
