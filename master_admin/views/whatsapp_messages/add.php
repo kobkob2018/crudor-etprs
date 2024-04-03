@@ -4,13 +4,13 @@
     <div class="table-header">
         <div class="messages-collapce-wrap">
             <a class="messages-colapce" href="javascript://" onclick="toggle_messages(this)">
-                <span class="sign-when-open">סגור</span>
+                <span class="sign-when-open">סגור 🔼</span>
                 <span class="sign-when-closed">הצג הודעות</span>
             </a>
         </div>
+        <h2>הודעות</h2>
         <div class="clear"></div>
     </div>
-    <h2>הודעות</h2>
     <div class="items-table flex-table messages-table">
         <div class="table-th row messages-th">
             <div class="col">#</div>
@@ -180,7 +180,7 @@
 
     function toggle_messages(a_el){
         const a_con = a_el.closest(".toggled-container");
-        if(a_con.dataset.state == 'open'){
+        if(a_con.dataset.viewstate == 'open'){
             a_con.classList.remove('open');
             a_con.classList.add('closed');
             a_con.dataset.state = "closed";
