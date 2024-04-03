@@ -4,7 +4,7 @@
     <div class="table-header">
         <div class="messages-collapce-wrap">
             <a class="messages-colapce" href="javascript://" onclick="toggle_messages(this)">
-                <span class="sign-when-open">סגור 🔼</span>
+                <span class="sign-when-open">🔼 סגור</span>
                 <span class="sign-when-closed">הצג הודעות</span>
             </a>
         </div>
