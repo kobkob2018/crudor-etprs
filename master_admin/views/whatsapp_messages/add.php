@@ -71,8 +71,17 @@
         height: 260px;
         margin-bottom: 20px;
         overflow: auto;
-    }
 
+    }
+    .messages-table{
+        width: 50%;
+        float: left;
+        background: #ddf0e1;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 5px 5px 5px gray;
+        margin-top: 38px;
+    }
     .message-direction{
         background: #9191ff;
         padding: 10px 15px 10px 30px;
