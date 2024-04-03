@@ -166,7 +166,6 @@
 
     function toggle_messages(a_el){
         const a_con = a_el.closest(".toggled-container");
-        if(!)
         if(a_con.dataset.state == 'open'){
             a_con.classlist.remove('open');
             a_con.classlist.add('closed');
