@@ -1,8 +1,8 @@
 
 <h3>שיחת ווטסאפ עם <?= $this->data['whatsapp_conversation']['contact_wa_name'] ?> (<?= $this->data['whatsapp_conversation']['contact_custom_name'] ?>)</h3>
 <div class="messages-table-wrap">
+    <h2>הודעות</h2>
     <div class="items-table flex-table messages-table">
-        <h2>הודעות</h2>
         <div class="table-th row messages-th">
             <div class="col">#</div>
             <div class="col">הודעה</div>
