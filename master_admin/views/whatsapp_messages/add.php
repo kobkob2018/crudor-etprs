@@ -101,10 +101,7 @@
         float: left;
     }
     a.messages-colapce{
-        text-decoration: none;
-        font-size: 79px;
-        display: block;
-        line-height: 10px;
+        font-size: 18px;
     }
     .open .messages-colapce .sign-when-closed,
     .closed .messages-colapce .sign-when-open{
