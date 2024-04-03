@@ -143,7 +143,17 @@
                 array('value'=>'1', 'title'=>'כן')
             ),
             'validation'=>'required'
-        )
+        ),
+        'add_city_to_whatsap'=>array(
+            'label'=>'בקש עיר בשיחת ווטסאפ',
+            'type'=>'select',
+            'default'=>'1',
+            'options'=>array(
+                array('value'=>'0', 'title'=>'לא'),
+                array('value'=>'1', 'title'=>'כן')
+            ),
+            'validation'=>'required'
+        ),
     );
 }
 ?>
