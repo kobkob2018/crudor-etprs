@@ -165,16 +165,17 @@
     }
 
     function toggle_messages(a_el){
-        const container = a_el.closest(".toggled-container");
-        if(container.dataset.state == 'open'){
-            container.classlist.remove('open');
-            container.classlist.add('closed');
-            container.dataset.state = "closed";
+        const a_con = a_el.closest(".toggled-container");
+        if(!)
+        if(a_con.dataset.state == 'open'){
+            a_con.classlist.remove('open');
+            a_con.classlist.add('closed');
+            a_con.dataset.state = "closed";
         }
         else{
-            container.classlist.add("open");
-            container.classlist.remove("closed");
-            container.dataset.state = "open";
+            a_con.classlist.add("open");
+            a_con.classlist.remove("closed");
+            a_con.dataset.state = "open";
         }
     }
 
