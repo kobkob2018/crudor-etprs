@@ -1,11 +1,14 @@
 
 <h3>שיחת ווטסאפ עם <?= $this->data['whatsapp_conversation']['contact_wa_name'] ?> (<?= $this->data['whatsapp_conversation']['contact_custom_name'] ?>)</h3>
 <div class="messages-table-wrap open toggled-container" data-viewstate="open">
-    <div class="messages-collapce-wrap">
-        <a class="messages-colapce" href="javascript://" onclick="toggle_messages(this)">
-            <span class="sign-when-open">-^</span>
-            <span class="sign-when-closed">+</span>
-        </a>
+    <div class="table-header">
+        <div class="messages-collapce-wrap">
+            <a class="messages-colapce" href="javascript://" onclick="toggle_messages(this)">
+                <span class="sign-when-open">סגור</span>
+                <span class="sign-when-closed">הצג הודעות</span>
+            </a>
+        </div>
+        <div class="clear"></div>
     </div>
     <h2>הודעות</h2>
     <div class="items-table flex-table messages-table">
