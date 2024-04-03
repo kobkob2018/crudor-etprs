@@ -3,8 +3,8 @@
 <div class="messages-table-wrap open toggled-container" data-viewstate="open">
     <div class="messages-collapce-wrap">
         <a class="messages-colapce" href="javascript://" onclick="toggle_messages(this)">
-            <span class="sign-when-open">^^^^</span>
-            <span class="sign-when-closed">++++</span>
+            <span class="sign-when-open">-^</span>
+            <span class="sign-when-closed">+</span>
         </a>
     </div>
     <h2>הודעות</h2>
@@ -96,6 +96,12 @@
     }
     .messages-collapce-wrap{
         float: left;
+    }
+    a.messages-colapce{
+        text-decoration: none;
+        font-size: 79px;
+        display: block;
+        line-height: 10px;
     }
     .open .messages-colapce .sign-when-closed,
     .closed .messages-colapce .sign-when-open{
