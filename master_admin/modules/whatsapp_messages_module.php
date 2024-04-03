@@ -286,6 +286,10 @@ https://graph.facebook.com/v12.0/oauth/access_token?
                 else{
                     Helper::add_log("watsap.txt","\n\n INSIDE 1-2 \n\n");
                     $lead_info['cat_id'] = $cat_id;
+                    $biz_category = Biz_categories::get_by_id($lead_info['cat_id'],'id, add_city_to_whatsap');
+                    if($biz_category && $biz_category['add_city_to_whatsap'] == '0'){
+                        $lead_info['city_id'] = '1';
+                    }
                 }
             }
             elseif($city_id = $this->track_city_from_message_text($message_text)){
