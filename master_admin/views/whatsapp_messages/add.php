@@ -1,32 +1,32 @@
 
 <h3>שיחת ווטסאפ עם <?= $this->data['whatsapp_conversation']['contact_wa_name'] ?> (<?= $this->data['whatsapp_conversation']['contact_custom_name'] ?>)</h3>
-
-<div class="items-table flex-table messages-table">
-    <h2>הודעות</h2>
-    <div class="table-th row messages-th">
-        <div class="col">#</div>
-        <div class="col">הודעה</div>
-        <div class="col">מחיקה</div>
-    </div>
-    <?php foreach($this->data['whatsapp_messages'] as $item): ?>
-        <div class="table-tr row message_tr" data-message_time = "<?= $item['message_time'] ?>" data-message_id="<?= $item['id'] ?>">
-            <div class="col"><?= $item['id'] ?></div>
-            <div class="col">
-                <div class="<?= $item['direction'] ?> message-direction">
-                    <b><?= $item['message_type'] ?></b><br/>
-                    <?= $item['message_text'] ?>
-                </div>
-                <?php if(isset($item['context']) && $item['context'] != '0'): ?>
-                    <div class="message-context message-context-pending" data-context="<?= $item['context'] ?>">[-- <?= $item['context'] ?> --]</div>
-                <?php endif; ?>
-            </div>
-            <div class="col">
-                <a href = "<?= inner_url('whatsapp_messages/delete/') ?>?conversation_id=<?= $item['conversation_id'] ?>row_id=<?= $item['id'] ?>" title="מחק">מחק</a>
-            </div>
+<div class="messages-table-wrap">
+    <div class="items-table flex-table messages-table">
+        <h2>הודעות</h2>
+        <div class="table-th row messages-th">
+            <div class="col">#</div>
+            <div class="col">הודעה</div>
+            <div class="col">מחיקה</div>
         </div>
-    <?php endforeach; ?>
+        <?php foreach($this->data['whatsapp_messages'] as $item): ?>
+            <div class="table-tr row message_tr" data-message_time = "<?= $item['message_time'] ?>" data-message_id="<?= $item['id'] ?>">
+                <div class="col"><?= $item['id'] ?></div>
+                <div class="col">
+                    <div class="<?= $item['direction'] ?> message-direction">
+                        <b><?= $item['message_type'] ?></b><br/>
+                        <?= $item['message_text'] ?>
+                    </div>
+                    <?php if(isset($item['context']) && $item['context'] != '0'): ?>
+                        <div class="message-context message-context-pending" data-context="<?= $item['context'] ?>">[-- <?= $item['context'] ?> --]</div>
+                    <?php endif; ?>
+                </div>
+                <div class="col">
+                    <a href = "<?= inner_url('whatsapp_messages/delete/') ?>?conversation_id=<?= $item['conversation_id'] ?>row_id=<?= $item['id'] ?>" title="מחק">מחק</a>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 </div>
-
 
 <div class="focus-box">
     <div class="eject-box">
@@ -74,15 +74,17 @@
         overflow: auto;
 
     }
-    .messages-table{
-        width: 50%;
-        float: left;
-        background: #ddf0e1;
-        border-radius: 5px;
-        padding: 5px;
-        box-shadow: 5px 5px 5px gray;
-        margin-top: 38px;
-        border: 4px outset #54e674;
+    @media only screen and (min-width: 1000px) {
+        .messages-table-wrap{
+            width: 50%;
+            float: left;
+            background: #ddf0e1;
+            border-radius: 5px;
+            padding: 5px;
+            box-shadow: 5px 5px 5px gray;
+            margin-top: 38px;
+            border: 4px outset #54e674;
+        }
     }
     .message-direction{
         background: #9191ff;
