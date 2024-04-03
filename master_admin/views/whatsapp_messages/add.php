@@ -183,12 +183,12 @@
         if(a_con.dataset.viewstate == 'open'){
             a_con.classList.remove('open');
             a_con.classList.add('closed');
-            a_con.dataset.state = "closed";
+            a_con.dataset.viewstate = "closed";
         }
         else{
             a_con.classList.add("open");
             a_con.classList.remove("closed");
-            a_con.dataset.state = "open";
+            a_con.dataset.viewstate = "open";
         }
     }
 
