@@ -86,13 +86,21 @@
     }
 
     .messages-table-wrap{
-            background: #ddf0e1;
-            border-radius: 5px;
-            padding: 5px;
-            box-shadow: 5px 5px 5px gray;
-            margin-top: 38px;
-            border: 4px outset #54e674;
-        }
+        background: #ddf0e1;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 5px 5px 5px gray;
+        margin-top: 38px;
+        border: 4px outset #54e674;
+        overflow: hidden;
+    }
+    .messages-collapce-wrap{
+        float: left;
+    }
+    .open .messages-colapce .sign-when-closed,
+    .closed .messages-colapce .sign-when-open{
+        display: none;
+    }
     @media only screen and (min-width: 1000px) {
         .messages-table-wrap{
             width: 50%;
