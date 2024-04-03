@@ -165,7 +165,8 @@
     }
 
     function toggle_messages(a_el){
-        const a_con = a_el.closest(".toggled-container");
+        //const a_con = a_el.closest(".toggled-container");
+        const a_con = document.querySelector(".messages-table-wrap");
         console.log(a_con);
         console.log(a_con.classlist);
         if(a_con.dataset.state == 'open'){
