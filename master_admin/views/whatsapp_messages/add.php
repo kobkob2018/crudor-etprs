@@ -1,6 +1,12 @@
 
 <h3>שיחת ווטסאפ עם <?= $this->data['whatsapp_conversation']['contact_wa_name'] ?> (<?= $this->data['whatsapp_conversation']['contact_custom_name'] ?>)</h3>
-<div class="messages-table-wrap">
+<div class="messages-table-wrap open toggled-container" data-viewstate="open">
+    <div class="messages-collapce-wrap">
+        <a class="messages-colapce" href="javascript://" onclick="toggle_messages(this)">
+            <span class="sign-when-open">^^^^</span>
+            <span class="sign-when-closed">++++</span>
+        </a>
+    </div>
     <h2>הודעות</h2>
     <div class="items-table flex-table messages-table">
         <div class="table-th row messages-th">
@@ -74,16 +80,23 @@
         overflow: auto;
 
     }
-    @media only screen and (min-width: 1000px) {
-        .messages-table-wrap{
-            width: 50%;
-            float: left;
+
+    .toggled-container.closed{
+        height: 50px;
+    }
+
+    .messages-table-wrap{
             background: #ddf0e1;
             border-radius: 5px;
             padding: 5px;
             box-shadow: 5px 5px 5px gray;
             margin-top: 38px;
             border: 4px outset #54e674;
+        }
+    @media only screen and (min-width: 1000px) {
+        .messages-table-wrap{
+            width: 50%;
+            float: left;
         }
     }
     .message-direction{
@@ -150,6 +163,21 @@
         messages_th.after(message_tr);
         move_rows_from_placeholder_to_table(placeholder,messages_table,messages_th);
     }
+
+    function toggle_messages(a_el){
+        const container = a_el.closest(".toggled-container");
+        if(container.dataset.state == 'open'){
+            container.classlist.remove('open');
+            container.classlist.add('closed');
+            container.dataset.state = "closed";
+        }
+        else{
+            container.classlist.add("open");
+            container.classlist.remove("closed");
+            container.dataset.state = "open";
+        }
+    }
+
     add_bot_options_to_form();
     init_whatsapp_fetch_messages();
 </script>
