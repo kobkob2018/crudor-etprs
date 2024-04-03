@@ -165,18 +165,15 @@
     }
 
     function toggle_messages(a_el){
-        //const a_con = a_el.closest(".toggled-container");
-        const a_con = document.querySelector(".messages-table-wrap");
-        console.log(a_con);
-        console.log(a_con.classlist);
+        const a_con = a_el.closest(".toggled-container");
         if(a_con.dataset.state == 'open'){
-            a_con.classlist.remove('open');
-            a_con.classlist.add('closed');
+            a_con.classList.remove('open');
+            a_con.classList.add('closed');
             a_con.dataset.state = "closed";
         }
         else{
-            a_con.classlist.add("open");
-            a_con.classlist.remove("closed");
+            a_con.classList.add("open");
+            a_con.classList.remove("closed");
             a_con.dataset.state = "open";
         }
     }
