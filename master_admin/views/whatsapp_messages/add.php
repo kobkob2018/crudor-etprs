@@ -2,6 +2,7 @@
 <h3>שיחת ווטסאפ עם <?= $this->data['whatsapp_conversation']['contact_wa_name'] ?> (<?= $this->data['whatsapp_conversation']['contact_custom_name'] ?>)</h3>
 
 <div class="items-table flex-table messages-table">
+    <h2>הודעות</h2>
     <div class="table-th row messages-th">
         <div class="col">#</div>
         <div class="col">הודעה</div>
@@ -81,6 +82,7 @@
         padding: 5px;
         box-shadow: 5px 5px 5px gray;
         margin-top: 38px;
+        border: 4px outset #54e674;
     }
     .message-direction{
         background: #9191ff;
