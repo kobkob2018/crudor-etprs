@@ -23,7 +23,7 @@
             </div>
 
             <div class="col">
-                <?= nl2br($template['content']) ?>
+                <?= nl2br($template['text']) ?>
             </div>
 
             <div class="col">
