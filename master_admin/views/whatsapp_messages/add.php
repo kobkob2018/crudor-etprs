@@ -194,7 +194,7 @@
 
     function init_image_pholder(){
         const image_form_group = document.querySelector(".image-form-group");
-        const image_pholder = document.createElement('div').classList.add('image-pholder');
+        const image_pholder = document.createElement('div');
         image_pholder.innerHTML = "kobkob kaka";
         image_form_group.appendChild(image_pholder);
     }
