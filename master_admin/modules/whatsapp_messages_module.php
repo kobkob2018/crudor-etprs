@@ -122,31 +122,33 @@ https://graph.facebook.com/v12.0/oauth/access_token?
     }
 
     public function check_for_error_notifications($message_info){
-        print_r_help($message_info);
+        
         if(
             (!isset($message_info['entry'][0])) ||
             (!isset($message_info['entry'][0]['changes'][0])) ||
-            (!isset($message_info['entry'][0]['changes'][0]['value'])) ||
-            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata'])) ||
-            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses']))
+            (!isset($message_info['entry'][0]['changes'][0]['value']))
+            (!isset($message_info['entry'][0]['changes'][0]['value']['statuses'])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['statuses'][0])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['statuses'][0]['id'])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['statuses'][0]['errors'])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['statuses'][0]['errors'][0]))
         ){
-            exit("out heeeree");
             return false;
         } 
 
-        exit("yesss in heeeree");
-        $wamid = $message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['id'];
+        $wamid = $message_info['entry'][0]['changes'][0]['value']['statuses'][0]['id'];
         $message_row = Whatsapp_messages::find(array('wamid'=>$wamid));
         if(!$message_row){
             return;
         }
         $update_arr = array('send_state'=>'error');
-        $error = $message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['errors'][0];
+        $error = $message_info['entry'][0]['changes'][0]['value']['statuses'][0]['errors'][0];
         if(isset($error['error_data'])){
             if(isset($error['error_data']['details'])){
                 $update_arr['error_msg'] = $error['error_data']['details'];
             }
         }
+        exit("updating");
         Whatsapp_messages::update($message_row['id'],$update_arr);
     }
 
