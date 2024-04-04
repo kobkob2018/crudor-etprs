@@ -164,13 +164,14 @@
     .message_image img{max-width: 100px;}
     .template-button{
         padding: 10px;
-        background: blue;
+        background: #bfbfe1;
         border: 2px solid gray;
         border-radius: 4px;
         margin-bottom: 3px;
     }
     .template-button.selected{
-        background: orange;
+        background: #36368b;
+        color:white;
     }
     .templates-list-wrap{
 
@@ -185,13 +186,18 @@
     .template-list-buttons{
         display: flex;
         justify-content: space-between;
+        padding: 5px;
     }
     .template-list-buttons a{
         display: block;
         padding: 10px;
-        background: gray;
+        background: #8a8ac5;
         color: black;
         border-radius: 5px;
+        border: 2px solid gray;
+    }
+    .template-list-buttons a.cancel-button{
+        background: #ea9999;
     }
 </style>
 
