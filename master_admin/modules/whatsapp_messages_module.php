@@ -122,6 +122,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
     }
 
     public function check_for_error_notifications($message_info){
+        exit("in heeeree");
         if(
             (!isset($message_info['entry'][0])) ||
             (!isset($message_info['entry'][0]['changes'][0])) ||

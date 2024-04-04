@@ -16,6 +16,12 @@ class Meta_webhooksController extends CrudController{
         $this->call_module('whatsapp_messages','handle_message_notification',array('message_info'=>$request_body));
     }
 
+    public function check_long_json(){
+        $long_json = '{"object":"whatsapp_business_account","entry":[{"id":"288442484341750","changes":[{"value":{"messaging_product":"whatsapp","metadata":{"display_phone_number":"972722706389","phone_number_id":"246712598531783"},"statuses":[{"id":"wamid.HBgMOTcyNTQyMzkzMzk3FQIAERgSRkI2NkVCODgyQkE4NzcwOUU5AA==","status":"failed","timestamp":"1712221472","recipient_id":"972542393397","errors":[{"code":131053,"title":"Media upload error","message":"Media upload error","error_data":{"details":"Unsupported Image mime type image\/webp. Please use one of image\/png, image\/jpeg."}}]}]},"field":"messages"}]}]}';
+        $this->call_module('whatsapp_messages','handle_message_notification',array('message_info'=>$long_json));
+
+    }
+
     protected function register_notification_as_is($message_info_json){
         $log_txt = "\n-------------------------\n";
         foreach($_REQUEST as $key=>$val){
