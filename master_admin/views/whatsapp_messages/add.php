@@ -187,12 +187,25 @@
     function move_rows_from_placeholder_to_table(placeholder,messages_table,messages_th){
         const message_tr = placeholder.querySelector(".message_tr");
         if(!message_tr){
-            update_info_from_placeholder(placeholder,messages_table);
-            return;
+            return update_err_messages(placeholder,messages_table);
+            
         }
         const message_id = message_tr.dataset.message_id;
         messages_th.after(message_tr);
         move_rows_from_placeholder_to_table(placeholder,messages_table,messages_th);
+    }
+
+    function update_err_messages(placeholder,messages_table){
+        const error_el = placeholder.querySelector(".ajax_err_msg");
+        if(!error_el){
+            return update_err_messages(placeholder,messages_table);
+            
+        }
+        const error_msg = error_el.innerHTML;
+        alert(error_msg);
+        error_el.remove();
+        
+        update_err_messages(placeholder,messages_table);
     }
 
     function update_info_from_placeholder(placeholder,messages_table){
