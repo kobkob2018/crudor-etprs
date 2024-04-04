@@ -1,6 +1,6 @@
 <?php
   class Whatsapp_messagesController extends CrudController{
-    public $add_models = array("whatsapp_conversations","whatsapp_messages");
+    public $add_models = array("whatsapp_conversations","whatsapp_messages","whatsapp_messages_errors");
 
     protected function init_setup($action){
         return parent::init_setup($action);
@@ -59,6 +59,8 @@
         }
         $this->data['bot_state_checkboxes'] = $bot_state_checkboxes;
         $this->data['whatsapp_messages'] = $whatsapp_messages;
+        $this->data['last_err'] = Whatsapp_messages_errors::get_last_error_id($conversation_id);
+        print_help($this->data['last_err']);
         
         return parent::add();
     }       
