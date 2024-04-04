@@ -351,19 +351,15 @@
             return;
         }
         var video = document.createElement('video');
-        video.onload = function() {
-            if (this.width > 0) {
-            //console.log("image exists");
-                video_pholder.append(video);
-            }
-        }
+        video_pholder.append(video);
+        video.src = url;
+        video.autoplay = true;
         video.onerror = function() {
             video.remove();
             alert("no good video");
             // console.log("image doesn't exist");
         }
-        video.src = url;
-        video.autoplay = true;
+
     }
 
     function close_template_list(){
