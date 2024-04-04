@@ -358,7 +358,7 @@
             const video_input = document.querySelector(".video-form-group .form-input");
             const text_input = document.querySelector(".text-form-group .form-input");
             const placeholder = document.querySelector(".teplate-load-placeholder");
-            placeholder.innerHTML = info;
+            placeholder.innerHTML = info.text();
 
             const img_info_holder = placeholder.querySelector('.image-info-holder');
             if(img_info_holder){
