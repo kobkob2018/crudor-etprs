@@ -6,6 +6,6 @@
         <div class="video-info-holder" data-image_url="$info['template']['header_vidoe']" ></div>
     <?php endif; ?>
     <div class="text-info-holder">
-        <?= $info['templae']['text'] ?>
+        <?= $info['template']['text'] ?>
     </div>
 </div>
