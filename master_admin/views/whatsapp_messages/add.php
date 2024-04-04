@@ -366,7 +366,10 @@
             if(img_info_holder){
                 const img_url = img_info_holder.dataset.image_url;
                 image_input.value = img_url;
+                
             }
+            const event = new Event('change');
+            image_input.dispatchEvent(event);
             const video_info_holder = placeholder.querySelector('.video-info-holder');
             if(video_info_holder){
                 const video_url = video_info_holder.dataset.video_url;
