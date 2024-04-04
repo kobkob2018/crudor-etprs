@@ -13,7 +13,7 @@
             ),
             'message_text'=>array(
                 'label'=>'תוכן ההודעה',
-                'type'=>'text',
+                'type'=>'textbox',
             ),
 
         );
