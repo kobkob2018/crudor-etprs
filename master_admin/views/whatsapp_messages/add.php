@@ -172,7 +172,16 @@
     .template-button.selected{
         background: orange;
     }
-    
+    .messages-table-wrap{
+
+        position: absolute;
+        background: #ddcbcb;
+        padding: 11px 13px;
+        border-radius: 5px;
+        border: 3px solid gray;
+        box-shadow: 5px 5px 5px gray;
+        top: 10px;
+    }
 </style>
 
 <div class="new-messages-placeholder hidden">
