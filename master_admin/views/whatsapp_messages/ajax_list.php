@@ -6,9 +6,9 @@
                 <b><?= $item['message_type'] ?></b><br/>
                 <?= $item['message_text'] ?>
             </div>
-            <?php if($item['err_msg'] != ''): ?>
+            <?php if($item['error_msg'] != ''): ?>
                 <div class = "red err-msg">
-                    <b>שגיאה בשליחת המסר: </b><?= $item['err_msg'] ?>
+                    <b>שגיאה בשליחת המסר: </b><?= $item['error_msg'] ?>
                 </div>
             <?php endif; ?>
             <?php if(isset($item['context']) && $item['context'] != '0'): ?>
