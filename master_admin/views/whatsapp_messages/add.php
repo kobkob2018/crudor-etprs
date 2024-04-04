@@ -379,7 +379,7 @@
             }
             const text = text_info_holder.innerHTML;
             text_input.innerHTML = text;
-            move_rows_from_placeholder_to_table(placeholder,messages_table,messages_th);
+            placeholder.innerHTML = "";
         }).catch(function(err) {
             console.log(err);
             alert("Something went wrong. please reload the page");
