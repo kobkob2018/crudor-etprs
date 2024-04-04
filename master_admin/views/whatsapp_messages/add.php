@@ -198,7 +198,7 @@
     function update_err_messages(placeholder,messages_table){
         const error_el = placeholder.querySelector(".ajax_err_msg");
         if(!error_el){
-            return update_err_messages(placeholder,messages_table);
+            return update_info_from_placeholder(placeholder,messages_table);
             
         }
         const error_msg = error_el.innerHTML;
