@@ -148,6 +148,8 @@ https://graph.facebook.com/v12.0/oauth/access_token?
                 $update_arr['error_msg'] = $error['error_data']['details'];
             }
         }
+        print_help($message_row['id'],'msg_id');
+        print_r_help($update_arr);
         Whatsapp_messages::update($message_row['id'],$update_arr);
     }
 
