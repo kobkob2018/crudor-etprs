@@ -189,7 +189,7 @@
         padding: 5px;
     }
     .template-list-buttons a, a.upload-template-a{
-        display: block;
+        display: inline-block;
         padding: 10px;
         background: #8a8ac5;
         color: black;
