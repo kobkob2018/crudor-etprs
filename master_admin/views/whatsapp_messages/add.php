@@ -350,6 +350,35 @@
         }
         const template_id = selected_template_button.dataset.template_id;
         alert("loading template "+ template_id);
+        const url = "<?= inner_url("whatsapp_templates/ajax_fetch/?template_id=") ?>"+template_id;
+        fetch(fetch_url).then(info => {
+            const image_input = document.querySelector(".image-form-group .form-input");
+            const video_input = document.querySelector(".video-form-group .form-input");
+            const text_input = document.querySelector(".text-form-group .form-input");
+            const placeholder = document.createElement("div");
+            placeholder.innerHTML = info.messages_html;
+            const img_info_holder = placeholder.querySelector('.image-info-holder');
+            if(img_info_holder){
+                const img_url = img_info_holder.dataset.image_url;
+                image_input.value = img_url;
+            }
+            const video_info_holder = placeholder.querySelector('.video-info-holder');
+            if(video_info_holder){
+                const video_url = video_info_holder.dataset.video_url;
+                video_input.value = video_url;
+            }
+            const text_info_holder = placeholder.querySelector('.text-info-holder');
+            if(!text_info_holder){
+                alert("error accured try again later");
+                return;
+            }
+            const text = text_info_holder.innerHTML;
+            text_input.innerHTML = text;
+            move_rows_from_placeholder_to_table(placeholder,messages_table,messages_th);
+        }).catch(function(err) {
+            console.log(err);
+            alert("Something went wrong. please reload the page");
+        });
         close_template_list();
         return;
     }

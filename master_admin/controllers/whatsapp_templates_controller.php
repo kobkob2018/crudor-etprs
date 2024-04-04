@@ -18,6 +18,15 @@
         $this->include_view('whatsapp_templates/list.php');
     }
 
+    public function ajax_fetch(){
+        $template_id = $_REQUEST['templae_id'];
+        $template = Whatsapp_templates::get_by_id($template_id);
+
+        $info = array('template'=>$template);
+        $this->set_layout("blank");
+        return $this->include_view("whatsapp_templates/ajax_fetch.php",$info);
+    }
+
     protected function get_base_filter(){
         $filter_arr = array();  
         return $filter_arr;      
