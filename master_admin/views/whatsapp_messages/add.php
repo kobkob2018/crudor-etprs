@@ -192,6 +192,13 @@
         }
     }
 
+    function init_image_pholder(){
+        const image_form_group = document.querySelector(".image-form-group");
+        const image_pholder = document.createElement('div').classList.add('image-pholder');
+        image_pholder.innerHTML = "kobkob kaka";
+        image_form_group.appendChild(image_pholder);
+    }
+
     add_bot_options_to_form();
     init_whatsapp_fetch_messages();
 </script>
