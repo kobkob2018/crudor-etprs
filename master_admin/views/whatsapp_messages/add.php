@@ -434,4 +434,5 @@
     add_bot_options_to_form();
     init_whatsapp_fetch_messages();
     init_image_pholder();
+    init_video_pholder();
 </script>
