@@ -122,7 +122,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
     }
 
     public function check_for_error_notifications($message_info){
-        exit("in heeeree");
+        
         if(
             (!isset($message_info['entry'][0])) ||
             (!isset($message_info['entry'][0]['changes'][0])) ||
@@ -134,8 +134,11 @@ https://graph.facebook.com/v12.0/oauth/access_token?
             (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['errors'])) ||
             (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['errors'][0]))
         ){
+            exit("out heeeree");
             return false;
         } 
+
+        exit("yesss in heeeree");
         $wamid = $message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['id'];
         $message_row = Whatsapp_messages::find(array('wamid'=>$wamid));
         if(!$message_row){
