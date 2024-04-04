@@ -194,11 +194,27 @@
 
     function init_image_pholder(){
 
-        const ooo = document.createElement('div');
-        const image_form_group2 = document.querySelector(".image-form-group");
-        image_form_group2.appendChild(ooo)
-        ooo.innerHTML = "kobi kaka";
+        const image_pholder = document.createElement('div');
+        const image_form_group = document.querySelector(".image-form-group");
+        image_form_group.appendChild(image_pholder)
+        image_pholder.innerHTML = "kobi kaka";
+        image_pholder.classList.add('image-place-holder');
     }
+
+    function checkImage(url) {
+        var image = new Image();
+        image.onload = function() {
+            if (this.width > 0) {
+            console.log("image exists");
+            }
+        }
+        image.onerror = function() {
+            console.log("image doesn't exist");
+        }
+        image.src = url;
+    }
+
+    
 
     add_bot_options_to_form();
     init_whatsapp_fetch_messages();
