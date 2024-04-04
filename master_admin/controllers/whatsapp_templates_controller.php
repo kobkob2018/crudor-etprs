@@ -19,7 +19,7 @@
     }
 
     public function ajax_fetch(){
-        $template_id = $_REQUEST['templae_id'];
+        $template_id = $_REQUEST['template_id'];
         $template = Whatsapp_templates::get_by_id($template_id);
 
         $info = array('template'=>$template);
