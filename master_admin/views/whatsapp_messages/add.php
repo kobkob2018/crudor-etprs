@@ -182,6 +182,17 @@
         box-shadow: 5px 5px 5px gray;
         top: 10px;
     }
+    .template-list-buttons{
+        display: flex;
+        justify-content: space-between;
+    }
+    .template-list-buttons a{
+        display: block;
+        padding: 10px;
+        background: gray;
+        color: black;
+        border-radius: 5px;
+    }
 </style>
 
 <div class="new-messages-placeholder hidden">
