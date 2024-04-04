@@ -24,7 +24,10 @@
 
         $info = array('template'=>$template);
         $this->set_layout("blank");
-        return $this->include_view("whatsapp_templates/ajax_fetch.php",$info);
+        $text_return =  $this->include_ob_view("whatsapp_templates/ajax_fetch.php",$info);
+        $return_array = array('html'=>$text_return);
+        print(json_encode($return_array));
+        exit();
     }
 
     protected function get_base_filter(){

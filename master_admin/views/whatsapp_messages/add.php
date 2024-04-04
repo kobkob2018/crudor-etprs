@@ -353,12 +353,14 @@
         const template_id = selected_template_button.dataset.template_id;
         alert("loading template "+ template_id);
         const fetch_url = "<?= inner_url("whatsapp_templates/ajax_fetch/?template_id=") ?>"+template_id;
-        fetch(fetch_url).then(info => {
+        fetch(fetch_url).then((res) => res.json()).then(info => {
+
+            
             const image_input = document.querySelector(".image-form-group .form-input");
             const video_input = document.querySelector(".video-form-group .form-input");
             const text_input = document.querySelector(".text-form-group .form-input");
             const placeholder = document.querySelector(".teplate-load-placeholder");
-            placeholder.innerHTML = info.text();
+            placeholder.innerHTML = info.html;
 
             const img_info_holder = placeholder.querySelector('.image-info-holder');
             if(img_info_holder){
