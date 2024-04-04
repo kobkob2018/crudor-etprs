@@ -24,7 +24,7 @@
                     <div class="<?= $item['direction'] ?> message-direction">
                         <?php if($item['image_link'] != ''): ?>
                             <div class="message_image">
-                                <img src="<? $item['image_link'] ?>" alt="the image link"/>
+                                <img src="<?= $item['image_link'] ?>" alt="the image link"/>
                             </div>
                         <?php endif; ?>
                         <?= $item['message_text'] ?>
