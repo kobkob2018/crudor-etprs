@@ -56,8 +56,8 @@
     </div>
     <hr/>
     <div class="template-list-buttons">
-        <a class="load-button" href="javascript://" onclick="close_template_list()">ביטול</a>
-        <a class="cancel-button" href="javascript://" onclick="load_selected_template()">טען תבנית</a>
+        <a class="cancel-button" href="javascript://" onclick="close_template_list()">ביטול</a>
+        <a class="load-button" href="javascript://" onclick="load_selected_template()">טען תבנית</a>
     </div>
 </div>
 
