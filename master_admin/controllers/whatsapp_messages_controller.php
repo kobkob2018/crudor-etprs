@@ -15,9 +15,14 @@
       $payload = array(
           'order_by'=>'id desc'
       );
+      $conversation_id = $filter_arr['conversation_id'];
+      $last_err_viewed = $_REQUEST['last_err'];
+      $messages_errors = Whatsapp_messages_errors::get_conversation_new_errors($conversation_id, $last_err_viewed);
+      $this->data['messages_errors'] = $messages_errors;
       $whatsapp_messages = Whatsapp_messages::get_list($filter_arr,"*",$payload);
       $this->data['whatsapp_messages'] = $whatsapp_messages;
-
+      
+      $this->data['last_err'] = Whatsapp_messages_errors::get_last_error_id($conversation_id);
       $messages_html = $this->include_ob_view('whatsapp_messages/ajax_list.php');
       $return_array = array('messages_html'=>$messages_html);
       print(json_encode($return_array));
@@ -60,8 +65,7 @@
         $this->data['bot_state_checkboxes'] = $bot_state_checkboxes;
         $this->data['whatsapp_messages'] = $whatsapp_messages;
         $this->data['last_err'] = Whatsapp_messages_errors::get_last_error_id($conversation_id);
-        print_help($this->data['last_err']);
-        
+
         return parent::add();
     }       
 

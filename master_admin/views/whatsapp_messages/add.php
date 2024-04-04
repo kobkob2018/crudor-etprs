@@ -187,11 +187,21 @@
     function move_rows_from_placeholder_to_table(placeholder,messages_table,messages_th){
         const message_tr = placeholder.querySelector(".message_tr");
         if(!message_tr){
+            update_info_from_placeholder(placeholder,messages_table);
             return;
         }
         const message_id = message_tr.dataset.message_id;
         messages_th.after(message_tr);
         move_rows_from_placeholder_to_table(placeholder,messages_table,messages_th);
+    }
+
+    function update_info_from_placeholder(placeholder,messages_table){
+        const info_holder = placeholder.querySelector("info-holder");
+        if(!info_holder){
+            return;
+        }
+        const last_err = info_holder.dataset.last_err;
+        messages_table.dataset.last_err = last_err;
     }
 
     function toggle_messages(a_el){

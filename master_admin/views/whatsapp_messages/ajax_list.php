@@ -20,3 +20,11 @@
         </div>
     </div>
 <?php endforeach; ?>
+
+<?php foreach($this->data['messages_errors'] as $err): ?>
+    <div class="ajax_err_msg" data-msg_id="<?= $err['message_id'] ?>" data-err_msg = "<?= $err['error_msg'] ?>">
+        התקבלה הודעת שגיאה: 
+        <?= $err['error_msg'] ?>
+    </div>
+<?php endforeach; ?>
+<div class="info-holder hidden" data-last_err = "<?= $this->data['last_err'] ?>"></div>
