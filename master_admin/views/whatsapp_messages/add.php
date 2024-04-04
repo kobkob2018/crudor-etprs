@@ -188,7 +188,7 @@
         justify-content: space-between;
         padding: 5px;
     }
-    .template-list-buttons a{
+    .template-list-buttons a, a.upload-template-a{
         display: block;
         padding: 10px;
         background: #8a8ac5;
