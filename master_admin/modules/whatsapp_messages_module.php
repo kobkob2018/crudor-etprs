@@ -86,7 +86,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
 
         if($message_data['message_type'] == 'video'){
             $data['video'] = array(
-                "link"=> $message_data['image_link'],
+                "link"=> $message_data['video_link'],
             );
             if($message_data['message_text'] != ''){
                 $data['video']['caption'] = $message_data['message_text'];
