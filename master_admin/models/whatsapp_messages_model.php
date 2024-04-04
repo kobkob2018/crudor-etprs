@@ -16,6 +16,7 @@
             'message_text'=>array(
                 'label'=>'תוכן ההודעה',
                 'type'=>'textbox',
+                'css_class'=>'text-form-group'
             ),
 
         );
