@@ -126,7 +126,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         if(
             (!isset($message_info['entry'][0])) ||
             (!isset($message_info['entry'][0]['changes'][0])) ||
-            (!isset($message_info['entry'][0]['changes'][0]['value']))
+            (!isset($message_info['entry'][0]['changes'][0]['value'])) || 
             (!isset($message_info['entry'][0]['changes'][0]['value']['statuses'])) ||
             (!isset($message_info['entry'][0]['changes'][0]['value']['statuses'][0])) ||
             (!isset($message_info['entry'][0]['changes'][0]['value']['statuses'][0]['id'])) ||
