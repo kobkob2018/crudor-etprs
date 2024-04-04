@@ -350,7 +350,7 @@
             "billsec_sum"=>0,
             "leads_count"=>0,
             "refunded_leads_count"=>0,
-			"refunded_leads_precent"=>0,
+			      "refunded_leads_precent"=>0,
           ); 
           
           $user = $user_list[$user_id];
@@ -760,6 +760,11 @@
             <td style="color:green"><?php echo $all_months_income[$user_id]['leads_count']; ?></td>
             <td><?php echo $all_months_income[$user_id]['refunded_leads_count']; ?></td>
             <td><?php echo number_format ($all_months_income[$user_id]['refunded_leads_precent'],2); ?>%</td>
+            <?php 
+              if(!isset($user_list[$user_id]['user_lead_settings'])){
+                $user_list[$user_id]['user_lead_settings'] = $this->get_missing_user_leads_settings($user_id);
+              }
+            ?>
             <td><?php echo $user_list[$user_id]['user_lead_settings']['lead_credit']; ?></td>
             <td><?php echo number_format ($user_list[$user_id]['lead_price'],2); ?></td>
             <td style="color:green"><?php echo number_format ($all_months_income[$user_id]['leads'],2); ?></td>
@@ -895,6 +900,17 @@
       
       <?php
     }
+
+    protected function get_missing_user_leads_settings($user_id){
+      $db = Db::getInstance();
+      $sql = "SELECT * FROM  user_lead_settings WHERE user_id = :user_id";	
+      $req = $db->prepare($sql);
+      $req->execute(array('user_id'=>$user_id));
+      $settings_res = $req->fetch();
+      return $settings_res;
+    }
   }
+
+
 
 ?>

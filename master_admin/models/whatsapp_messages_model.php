@@ -3,26 +3,16 @@
         protected static $main_table = 'whatsapp_messages';  
 
         public static $fields_collection = array(
-            'message_type'=>array(
-                'label'=>'סוג המסר',
-                'type'=>'select',
-                'default'=>'text',
-                'options'=>array(
-                    array('value'=>'text', 'title'=>'טקסט רגיל'),
-                    array('value'=>'template', 'title'=>'תבנית')
-                )
+            'image_link'=>array(
+                'label'=>'הוספת תמונה',
+                'type'=>'text',
             ),
-            'template_language'=>array(
-                'label'=>'שפה (לתבנית)',
-                'type'=>'select',
-                'default'=>'he',
-                'options'=>array(
-                    array('value'=>'he', 'title'=>'עברית'),
-                    array('value'=>'en_US', 'title'=>'אנגלית')
-                )
+            'video_link'=>array(
+                'label'=>'הוספת וידאו',
+                'type'=>'text',
             ),
             'message_text'=>array(
-                'label'=>'טקסט \ תבנית',
+                'label'=>'תוכן ההודעה',
                 'type'=>'text',
             ),
 

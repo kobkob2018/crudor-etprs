@@ -129,9 +129,17 @@
         $message_data = array(
             'conversation_id'=>$_REQUEST['conversation_id'],
             'message_text'=>$fixed_values['message_text'],
-            'message_type'=>$fixed_values['message_type'],
-            'template_language'=>$fixed_values['template_language'],
+            'image_link'=>$fixed_values['image_link'],
+            'video_link'=>$fixed_values['video_link'],
+            'message_type'=>'text',
+            'template_language'=>'none', //deprecated, we dont use the whatsapp teplates, we use our own..
         );
+        if($fixed_values['image_link'] != ''){
+          $message_data['message_type'] = 'image';
+        }
+        if($fixed_values['video_link'] != ''){
+          $message_data['message_type'] = 'video';
+        }
         $bot_state = array(
           'auto_reply'=>'0',
           'info_collect'=>'0',

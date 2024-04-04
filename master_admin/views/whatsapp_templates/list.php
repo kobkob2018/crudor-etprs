@@ -10,7 +10,7 @@
         <div class="col">שם התבנית</div>
         <div class="col">תוכן</div>
         <div class="col">תמונה</div>
-        <div class="col">וידאן</div>
+        <div class="col">וידאו</div>
         <div class="col"></div>
     </div>
     <?php foreach($this->data['whatsapp_templates_list'] as $template): ?>

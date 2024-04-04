@@ -34,6 +34,8 @@ https://graph.facebook.com/v12.0/oauth/access_token?
             'conversation_id'=>$conversation_id,
             'connection_id'=>$connection_id,
             'message_time'=>date('Y-m-d H:i:s'),
+            'image_link'=>$message_data['image_link'],
+            'video_link'=>$message_data['video_link'],
             'message_text'=>$message_data['message_text'],
             'message_type'=>$message_data['message_type'],
             'direction'=>'send',
@@ -73,6 +75,24 @@ https://graph.facebook.com/v12.0/oauth/access_token?
                 )
             );
         }
+        if($message_data['message_type'] == 'image'){
+            $data['image'] = array(
+                "link"=> $message_data['image_link'],
+            );
+            if($message_data['message_text'] != ''){
+                $data['image']['caption'] = $message_data['message_text'];
+            }
+        }
+
+        if($message_data['message_type'] == 'video'){
+            $data['video'] = array(
+                "link"=> $message_data['image_link'],
+            );
+            if($message_data['message_text'] != ''){
+                $data['video']['caption'] = $message_data['message_text'];
+            }
+        }
+
         if($message_data['message_type'] == 'text'){
             $data['text'] = array(
                 "preview_url"=> false,
