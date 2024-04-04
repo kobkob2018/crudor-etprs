@@ -172,7 +172,7 @@
     .template-button.selected{
         background: orange;
     }
-    .messages-table-wrap{
+    .templates-list-wrap{
 
         position: absolute;
         background: #ddcbcb;
