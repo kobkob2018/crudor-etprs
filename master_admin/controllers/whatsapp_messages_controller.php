@@ -44,6 +44,7 @@
     }
 
     public function add(){
+      $this->add_model("whatsapp_templates");
         $filter_arr = $this->get_base_filter();
         $payload = array(
             'order_by'=>'id desc'
@@ -65,7 +66,7 @@
         $this->data['bot_state_checkboxes'] = $bot_state_checkboxes;
         $this->data['whatsapp_messages'] = $whatsapp_messages;
         $this->data['last_err'] = Whatsapp_messages_errors::get_last_error_id($conversation_id);
-
+        $this->data['templates'] = Whatsapp_templates::get_list();
         return parent::add();
     }       
 

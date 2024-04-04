@@ -45,6 +45,21 @@
         <?php endforeach; ?>
     </div>
 </div>
+<div class="hidden templates-list-wrap">
+    <h3>תבניות ווטסאפ לשליחה מהירה</h3>
+    <div class="templates-list">
+        <?php foreach($this->data['templates'] as $template): ?>
+            <div class="template-button" onclick="select_template(this)" data-template_id="<?= $template['id'] ?>">
+                <?= $template['label'] ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <hr/>
+    <div class="template-list-buttons">
+        <a href="javascript://" onclick="close_template_list()">ביטול</a>
+        <a href="javascript://" onclick="load_selected_template()">טען תבנית</a>
+    </div>
+</div>
 
 <div class="focus-box">
     <div class="eject-box">
@@ -52,6 +67,9 @@
     </div>
     <h3>שלח הודעה</h3>
     <hr/>
+    <a class="upload-template-a" href="javascript://" onclick="open_templates_list()">
+        לחץ כאן לשליחת תבנית מוכנה
+    </a>
     <div id="block_form_wrap" class="form-gen page-form">
         <?php $this->include_view('form_builder/form.php'); ?>
     </div>
@@ -144,6 +162,17 @@
         max-width:200px;
     }
     .message_image img{max-width: 100px;}
+    .template-button{
+        padding: 10px;
+        background: blue;
+        border: 2px solid gray;
+        border-radius: 4px;
+        margin-bottom: 3px;
+    }
+    .template-button.selected{
+        background: orange;
+    }
+    
 </style>
 
 <div class="new-messages-placeholder hidden">
@@ -270,7 +299,32 @@
         image.src = url;
     }
 
-
+    function close_template_list(){
+        document.querySelectorAll(".template-button").forEach(button=>{
+            button.classList.remove("selected");
+        });
+        document.querySelector(".templates-list-wrap").classList.add("hidden");
+    }
+    function open_templates_list(){
+        document.querySelector(".templates-list-wrap").classList.remove("hidden");
+    }
+    function select_template(selected_button){
+        document.querySelectorAll(".template-button").forEach(button=>{
+            button.classList.remove("selected");
+        });
+        selected_button.classList.add("selected");
+    }
+    function load_selected_template(){
+        const selected_template_button = document.querySelector('.template-button.selected');
+        if(!selected_template_button){
+            alert("יש לבחור תבנית");
+            return;
+        }
+        const template_id = selected_template_button.dataset.template_id;
+        alert("loading template "+ template_id);
+        close_template_list();
+        return;
+    }
 
     add_bot_options_to_form();
     init_whatsapp_fetch_messages();
