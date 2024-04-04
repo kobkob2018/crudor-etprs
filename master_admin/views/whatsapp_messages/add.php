@@ -199,9 +199,10 @@
         image_form_group.appendChild(image_pholder)
         image_pholder.classList.add('image-place-holder');
         const image_url_holder = image_form_group.querySelector(".form-input");
-        image_url_holder.addEventListener('change',function(){
-            alert("changed");
+        image_url_holder.addEventListener('change',evt=>{
+            placeImageByNewUrl(evt.target.value,image_pholder);
         });
+
     }
 
     function placeImageByNewUrl(url,image_pholder) {
