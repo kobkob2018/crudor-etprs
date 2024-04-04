@@ -209,7 +209,7 @@
     }
 
     function update_info_from_placeholder(placeholder,messages_table){
-        const info_holder = placeholder.querySelector("info-holder");
+        const info_holder = placeholder.querySelector(".info-holder");
         if(!info_holder){
             return;
         }
