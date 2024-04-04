@@ -151,6 +151,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
 
         Whatsapp_messages::update($message_row['id'],$update_arr);
         $err_message_row = array(
+            'conversation_id'=>$message_row['conversation_id'],
             'message_id'=>$message_row['id'],
             'message_wamid'=>$wamid,
             'error_msg'=>$error['error_data']['details']
