@@ -22,7 +22,11 @@
                 <div class="col"><?= $item['id'] ?></div>
                 <div class="col">
                     <div class="<?= $item['direction'] ?> message-direction">
-                        <b><?= $item['message_type'] ?></b><br/>
+                        <?php if($item['image_link'] != ''): ?>
+                            <div class="message_image">
+                                <img src="<? $item['image_link'] ?>" alt="the image link"/>
+                            </div>
+                        <?php endif; ?>
                         <?= $item['message_text'] ?>
                     </div>
                     <?php if($item['error_msg'] != ''): ?>
@@ -112,6 +116,9 @@
     .closed .messages-colapce .sign-when-open{
         display: none;
     }
+    .message_tr.error{
+        background: #feacac;
+    }
     @media only screen and (min-width: 1000px) {
         .messages-table-wrap{
             width: 50%;
@@ -136,7 +143,7 @@
     .image-place-holder img{
         max-width:200px;
     }
-
+    .message_image img{max-width: 100px;}
 </style>
 
 <div class="new-messages-placeholder hidden">
