@@ -121,6 +121,35 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         return $result_arr;
     }
 
+    public function check_for_error_notifications($message_info){
+        if(
+            (!isset($message_info['entry'][0])) ||
+            (!isset($message_info['entry'][0]['changes'][0])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value'])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata'])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['id'])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['errors'])) ||
+            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['errors'][0]))
+        ){
+            return false;
+        } 
+        $wamid = $message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['id'];
+        $message_row = Whatsapp_messages::find(array('wamid'=>$wamid));
+        if(!$message_row){
+            return;
+        }
+        $update_arr = array('send_state'=>'error');
+        $error = $message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['errors'][0];
+        if(isset($error['error_data'])){
+            if(isset($error['error_data']['details'])){
+                $update_arr['error_msg'] = $error['error_data']['details'];
+            }
+        }
+        Whatsapp_messages::update($message_row['id'],$update_arr);
+    }
+
     public function handle_message_notification(){
 
         $message_data = $this->action_data;
@@ -135,7 +164,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
             (!isset($message_info['entry'][0]['changes'][0]['value']['metadata'])) ||
             (!isset($message_info['entry'][0]['changes'][0]['value']['messages'][0]))
         ){
-            
+            $this->check_for_error_notifications($message_info);
             return false;
         }
         

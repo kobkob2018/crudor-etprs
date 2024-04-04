@@ -127,7 +127,10 @@
         float: right;
         margin-left: 20px;
     }
-
+    
+    .image-place-holder img{
+        max-width:200px;
+    }
 
 </style>
 
