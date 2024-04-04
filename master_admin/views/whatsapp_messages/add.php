@@ -329,6 +329,43 @@
         image.src = url;
     }
 
+    function init_video_pholder(){
+
+        const video_pholder = document.createElement('div');
+        const video_form_group = document.querySelector(".video-form-group");
+        const video_form_group_wrap = video_form_group.querySelector(".form-group-en");
+        video_form_group_wrap.appendChild(video_pholder);
+        video_pholder.classList.add('video-place-holder');
+        const video_url_holder = video_form_group.querySelector(".form-input");
+        video_url_holder.addEventListener('change',evt=>{
+            placeVideoByNewUrl(evt.target.value,video_pholder);
+        });
+
+    }
+
+    function placeVideoByNewUrl(url,video_pholder) {
+
+        video_pholder.querySelectorAll(".video").forEach(video=>{video.remove()});
+
+        if(url == ''){
+            return;
+        }
+        var video = document.createElement('video');
+        video.onload = function() {
+            if (this.width > 0) {
+            //console.log("image exists");
+                video_pholder.append(video);
+            }
+        }
+        video.onerror = function() {
+            video.remove();
+            alert("no good video");
+            // console.log("image doesn't exist");
+        }
+        video.src = url;
+        video.autoplay = true;
+    }
+
     function close_template_list(){
         document.querySelectorAll(".template-button").forEach(button=>{
             button.classList.remove("selected");
@@ -375,6 +412,8 @@
                 const video_url = video_info_holder.dataset.video_url;
                 video_input.value = video_url;
             }
+            const video_event = new Event('change');
+            video_input.dispatchEvent(video_event);
             const text_info_holder = placeholder.querySelector('.text-info-holder');
             if(!text_info_holder){
                 alert("error accured try again later");
