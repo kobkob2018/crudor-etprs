@@ -18,7 +18,7 @@
             <div class="col">מחיקה</div>
         </div>
         <?php foreach($this->data['whatsapp_messages'] as $item): ?>
-            <div class="table-tr row message_tr <?= $item['send_state'] ?>" data-message_time = "<?= $item['message_time'] ?>" data-message_id="<?= $item['id'] ?>">
+            <div class="table-tr row message_tr <?= $item['send_state'] ?> message_<?= $item['id'] ?>" data-message_time = "<?= $item['message_time'] ?>" data-message_id="<?= $item['id'] ?>">
                 <div class="col"><?= $item['id'] ?></div>
                 <div class="col">
                     <div class="<?= $item['direction'] ?> message-direction">
@@ -203,7 +203,12 @@
         }
         const error_msg = error_el.innerHTML;
         alert(error_msg);
-        error_el.remove();
+        const msg_id = error_el.dataset.msg_id;
+        const message_el = messages_table.querySelector(".message_"+msg_id);
+        message_el.classList.remove(".sent");
+        message_el.classList.add(".error");
+        message_el.append(error_el);
+        
         
         update_err_messages(placeholder,messages_table);
     }
