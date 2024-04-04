@@ -206,7 +206,9 @@
 <div class="new-messages-placeholder hidden">
     
 </div>
-
+<div class="teplate-load-placeholder hidden">
+    
+</div>
 <script type="text/javascript">
 
     function add_bot_options_to_form(){
@@ -355,8 +357,8 @@
             const image_input = document.querySelector(".image-form-group .form-input");
             const video_input = document.querySelector(".video-form-group .form-input");
             const text_input = document.querySelector(".text-form-group .form-input");
-            const placeholder = document.createElement("div");
-            placeholder.innerHTML = info.messages_html;
+            const placeholder = document.querySelector(".teplate-load-placeholder");
+
             const img_info_holder = placeholder.querySelector('.image-info-holder');
             if(img_info_holder){
                 const img_url = img_info_holder.dataset.image_url;
