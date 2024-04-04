@@ -196,7 +196,8 @@
 
         const image_pholder = document.createElement('div');
         const image_form_group = document.querySelector(".image-form-group");
-        image_form_group.appendChild(image_pholder)
+        const image_form_group_wrap = image_form_group.querySelector(".form-group-en");
+        image_form_group_wrap.appendChild(image_pholder);
         image_pholder.classList.add('image-place-holder');
         const image_url_holder = image_form_group.querySelector(".form-input");
         image_url_holder.addEventListener('change',evt=>{
@@ -207,6 +208,9 @@
 
     function placeImageByNewUrl(url,image_pholder) {
         image_pholder.querySelectorAll("img").forEach(img=>{img.remove()});
+        if(url == ''){
+            return;
+        }
         var image = new Image();
         image.onload = function() {
             if (this.width > 0) {
