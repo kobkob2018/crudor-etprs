@@ -193,10 +193,11 @@
     }
 
     function init_image_pholder(){
-        const image_form_group = document.querySelector(".image-form-group");
-        const image_pholder = document.createElement('div');
-        image_pholder.innerHTML = "kobkob kaka";
-        image_form_group.appendChild(image_pholder);
+
+        const ooo = document.createElement('div');
+        const image_form_group2 = document.querySelector(".image-form-group");
+        image_form_group2.appendChild(ooo)
+        ooo.innerHTML = "kobi kaka";
     }
 
     add_bot_options_to_form();
