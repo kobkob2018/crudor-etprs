@@ -129,10 +129,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
             (!isset($message_info['entry'][0]['changes'][0]['value'])) ||
             (!isset($message_info['entry'][0]['changes'][0]['value']['metadata'])) ||
             (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'])) ||
-            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0])) ||
-            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['id'])) ||
-            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['errors'])) ||
-            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]['errors'][0]))
+            (!isset($message_info['entry'][0]['changes'][0]['value']['metadata']['statuses'][0]))
         ){
             exit("out heeeree");
             return false;
