@@ -353,6 +353,7 @@
         var video = document.createElement('video');
         video_pholder.append(video);
         video.src = url;
+        video.width = "150";
         video.autoplay = true;
         video.onerror = function() {
             video.remove();
