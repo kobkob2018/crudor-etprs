@@ -1,7 +1,7 @@
 <?php foreach($this->data['whatsapp_messages'] as $item): ?>
     <div class="table-tr row message_tr <?= $item['send_state'] ?> message_<?= $item['id'] ?>" data-message_time = "<?= $item['message_time'] ?>" data-message_id="<?= $item['id'] ?>">
         <div class="col"><?= $item['id'] ?></div>
-        <div class="col">
+        <div class="col message-info">
             <div class="<?= $item['direction'] ?> message-direction ">
                 <b><?= $item['message_type'] ?></b><br/>
                 <?= $item['message_text'] ?>

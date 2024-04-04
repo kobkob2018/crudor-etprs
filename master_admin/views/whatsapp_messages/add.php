@@ -20,7 +20,7 @@
         <?php foreach($this->data['whatsapp_messages'] as $item): ?>
             <div class="table-tr row message_tr <?= $item['send_state'] ?> message_<?= $item['id'] ?>" data-message_time = "<?= $item['message_time'] ?>" data-message_id="<?= $item['id'] ?>">
                 <div class="col"><?= $item['id'] ?></div>
-                <div class="col">
+                <div class="col message-info">
                     <div class="<?= $item['direction'] ?> message-direction">
                         <?php if($item['image_link'] != ''): ?>
                             <div class="message_image">
@@ -205,9 +205,10 @@
         alert(error_msg);
         const msg_id = error_el.dataset.msg_id;
         const message_el = messages_table.querySelector(".message_"+msg_id);
-        message_el.classList.remove(".sent");
-        message_el.classList.add(".error");
-        message_el.append(error_el);
+        const message_info = message_el.querySelector(".message-info");
+        message_el.classList.remove("send");
+        message_el.classList.add("error");
+        message_info.append(error_el);
         
         
         update_err_messages(placeholder,messages_table);
