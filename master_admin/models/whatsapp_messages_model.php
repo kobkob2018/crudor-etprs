@@ -6,10 +6,12 @@
             'image_link'=>array(
                 'label'=>'הוספת תמונה',
                 'type'=>'text',
+                'css_class'=>'image-pholder'
             ),
             'video_link'=>array(
                 'label'=>'הוספת וידאו',
                 'type'=>'text',
+                'css_class'=>'video-pholder'
             ),
             'message_text'=>array(
                 'label'=>'תוכן ההודעה',
