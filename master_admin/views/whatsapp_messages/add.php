@@ -56,8 +56,8 @@
     </div>
     <hr/>
     <div class="template-list-buttons">
-        <a href="javascript://" onclick="close_template_list()">ביטול</a>
-        <a href="javascript://" onclick="load_selected_template()">טען תבנית</a>
+        <a class="load-button" href="javascript://" onclick="close_template_list()">ביטול</a>
+        <a class="cancel-button" href="javascript://" onclick="load_selected_template()">טען תבנית</a>
     </div>
 </div>
 
@@ -195,6 +195,8 @@
         color: black;
         border-radius: 5px;
         border: 2px solid gray;
+        font-family: Arial, Helvetica;
+        font-weight: bold;
     }
     .template-list-buttons a.cancel-button{
         background: #ea9999;
