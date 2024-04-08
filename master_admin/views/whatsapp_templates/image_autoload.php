@@ -74,4 +74,4 @@
     }
     init_image_pholder();
     init_video_pholder();
-</sript>
+</script>
