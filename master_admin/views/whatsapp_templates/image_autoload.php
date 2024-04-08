@@ -34,6 +34,7 @@
         }
         image.onerror = function() {
             image.remove();
+            alert("כתובת התמונה לא תקינה");
             // console.log("image doesn't exist");
         }
         image.src = url;
@@ -67,7 +68,8 @@
         video.autoplay = true;
         video.onerror = function() {
             video.remove();
-            alert("no good video");
+            video_pholder.html = "";
+            alert("כתובת הוידאו לא תקינה");
             // console.log("image doesn't exist");
         }
 
