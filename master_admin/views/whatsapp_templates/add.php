@@ -9,3 +9,4 @@
         <?php $this->include_view('form_builder/form.php'); ?>
     </div>
 </div>
+<?php $this->include_view("whatsapp_templates/image_autoload.php"); ?>

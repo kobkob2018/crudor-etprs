@@ -33,7 +33,7 @@
             </div>
             <div class="col">
                 <?php if($template['header_video'] != ""): ?>
-                    <img src = "<?= $template['header_video'] ?>" alt="תמונת ראש" style="max-width:200px; "/>
+                    <?= $template['header_video'] ?>
                 <?php endif; ?>
             </div>
             <div class="col">

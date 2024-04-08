@@ -11,23 +11,22 @@
             'type'=>'text',
             'validation'=>'required'
         ),      
-
-        'text'=>array(
-            'label'=>'טסקט',
-            'type'=>'textbox',
-            'css_class'=>'small-text'
-        ),
-
         'header_image'=>array(
             'label'=>'כתובת תמונה',
             'type'=>'text',
-            'css_class'=>'big-text'
+            'css_class'=>'big-text image-form-group'
         ),
         'header_video'=>array(
             'label'=>'כתובת וידאו',
             'type'=>'text',
-            'css_class'=>'big-text'
+            'css_class'=>'big-text video-form-group'
         ),
+        'text'=>array(
+            'label'=>'טסקט',
+            'type'=>'textbox',
+            'css_class'=>'small-text text-form-group'
+        ),
+
     );
 }
 ?>
