@@ -345,7 +345,7 @@
 
     function placeVideoByNewUrl(url,video_pholder) {
 
-        video_pholder.querySelectorAll(".video").forEach(video=>{video.remove()});
+        video_pholder.querySelectorAll("video").forEach(video=>{video.remove()});
 
         if(url == ''){
             return;
