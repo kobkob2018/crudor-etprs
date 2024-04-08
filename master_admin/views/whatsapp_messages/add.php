@@ -357,7 +357,7 @@
         video.autoplay = true;
         video.onerror = function() {
             video.remove();
-            alert("no good video");
+            alert("כתובת הוידאו לא תקינה");
             // console.log("image doesn't exist");
         }
 
@@ -385,7 +385,6 @@
             return;
         }
         const template_id = selected_template_button.dataset.template_id;
-        alert("loading template "+ template_id);
         const fetch_url = "<?= inner_url("whatsapp_templates/ajax_fetch/?template_id=") ?>"+template_id;
         fetch(fetch_url).then((res) => res.json()).then(info => {
 
