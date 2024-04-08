@@ -499,7 +499,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         $message_id = Whatsapp_messages::create($message_row_data);
         $conversation_update = array(
             'last_message_id'=>$message_id,
-            'last_message_time'=>date('Y-m-d H:i:s'),
+           // 'last_message_time'=>date('Y-m-d H:i:s'),
         );
         Whatsapp_conversations::update($conversation_id,$conversation_update);
     }
