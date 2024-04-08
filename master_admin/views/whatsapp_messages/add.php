@@ -392,6 +392,8 @@
             
             const image_input = document.querySelector(".image-form-group .form-input");
             const video_input = document.querySelector(".video-form-group .form-input");
+            image_input.value = "";
+            video_input.value = "";
             const text_input = document.querySelector(".text-form-group .form-input");
             const placeholder = document.querySelector(".teplate-load-placeholder");
             placeholder.innerHTML = info.html;
@@ -420,7 +422,7 @@
             text_input.innerHTML = text;
             placeholder.innerHTML = "";
             
-            
+
 
         }).catch(function(err) {
             console.log(err);
