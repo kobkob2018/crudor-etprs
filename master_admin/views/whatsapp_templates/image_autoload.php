@@ -67,10 +67,9 @@
         video.width = "150";
         video.autoplay = true;
         video.onerror = function(evt) {
-            console.log(evt);
-            console.log(evt.target);
-            video.remove();
-            video_pholder.html = "";
+            
+            const vid_remove = evt.target;
+            vid_remove.remove();
             alert("כתובת הוידאו לא תקינה");
             // console.log("image doesn't exist");
         }
