@@ -56,7 +56,7 @@
 
     function placeVideoByNewUrl(url,video_pholder) {
 
-        video_pholder.querySelectorAll(".video").forEach(video=>{video.remove()});
+        video_pholder.querySelectorAll("video").forEach(video=>{video.remove()});
 
         if(url == ''){
             return;
@@ -70,6 +70,7 @@
             
             const vid_remove = evt.target;
             vid_remove.remove();
+            console.log();
             alert("כתובת הוידאו לא תקינה");
             // console.log("image doesn't exist");
         }
