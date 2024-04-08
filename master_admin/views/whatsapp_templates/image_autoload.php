@@ -66,7 +66,9 @@
         video.src = url;
         video.width = "150";
         video.autoplay = true;
-        video.onerror = function() {
+        video.onerror = function(evt) {
+            console.log(evt);
+            console.log(evt.target);
             video.remove();
             video_pholder.html = "";
             alert("כתובת הוידאו לא תקינה");
