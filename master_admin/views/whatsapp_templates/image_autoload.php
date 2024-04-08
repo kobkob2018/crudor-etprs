@@ -17,7 +17,9 @@
         image_url_holder.addEventListener('change',evt=>{
             placeImageByNewUrl(evt.target.value,image_pholder);
         });
-
+        if(image_url_holder.value != ""){
+            placeImageByNewUrl(image_url_holder.value,image_pholder);
+        }
     }
 
     function placeImageByNewUrl(url,image_pholder) {
@@ -51,7 +53,9 @@
         video_url_holder.addEventListener('change',evt=>{
             placeVideoByNewUrl(evt.target.value,video_pholder);
         });
-
+        if(video_url_holder.value != ""){
+            placeVideoByNewUrl(video_url_holder.value,video_pholder);
+        }
     }
 
     function placeVideoByNewUrl(url,video_pholder) {
