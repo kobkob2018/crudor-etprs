@@ -359,6 +359,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
             if($lead_info['cat_id'] == '0'){
                 $cat_children = $this->fetch_cat_children($lead_info['parent_cat_id']);
                 $this->send_cat_request_to_contact($conversation_row, $lead_info['parent_cat_id'] ,$cat_children);
+                $reply_sent = true;
             }
             elseif($lead_info['city_id'] == '0'){
                 $city_request_type = "city_select_message";
@@ -366,6 +367,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
                     $city_request_type = "city_correct_message";
                 }
                 $this->send_city_request_to_contact($conversation_row, $lead_info['cat_id'], $city_request_type);
+                $reply_sent = true;
             }
         }
 
@@ -499,7 +501,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         $message_id = Whatsapp_messages::create($message_row_data);
         $conversation_update = array(
             'last_message_id'=>$message_id,
-           // 'last_message_time'=>date('Y-m-d H:i:s'),
+            'last_message_time'=>date('Y-m-d H:i:s'),
         );
         Whatsapp_conversations::update($conversation_id,$conversation_update);
     }
