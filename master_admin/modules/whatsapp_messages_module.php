@@ -338,7 +338,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
                 $cat_id = $form_info['cat_id'];
                 if(isset($form_info['cat_options'])){
                     $lead_info['cat_id_options'] = $form_info['cat_id_options'];
-                    
+                    $lead_info['cat_options'] = $form_info['cat_options'];
                     if(count($lead_info['cat_id_options']) == '1'){
                         $cat_id = $lead_info['cat_id_options'][0]['id'];
                     }
@@ -445,7 +445,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
     }
 
     protected function send_cat_options_by_search_to_contact($conversation_data ,$cat_options){
-   
+        print_r_help($cat_options);
         $cat_options_text = "";
         foreach($cat_options as $cat){
             $cat_options_text .= "\n".$cat['label'];
