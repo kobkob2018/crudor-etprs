@@ -454,7 +454,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
             $cat_options_text .= "\n".$cat['label'];
         }
 
-        $message_text = "אנא בחר אחת מן האפשרויות"; //Whatsapp_settings::get()[$cat_message_id];
+        $message_text = "אנא בחר אחת מן האפשרויות: {{cat_list}}"; //Whatsapp_settings::get()[$cat_message_id];
         
         $message_text = str_replace("{{cat_list}}",$cat_options_text,$message_text);
 
