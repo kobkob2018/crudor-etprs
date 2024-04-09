@@ -158,15 +158,27 @@
 
     public static function find_matches_with($message_text){
         $message_text = "עורך דין";
+        $matching_cats = array();
         $db = Db::getInstance();		
-        $sql = "SELECT * FROM biz_categories WHERE MATCH(label, search_terms) AGAINST(:message_text)";
-        print_help($sql);
+        $execute_arr = array('message_text'=>$message_text);
+        $sql = "SELECT * FROM biz_categories WHERE MATCH(label) AGAINST(:message_text)";
         $req = $db->prepare($sql);
-        $req->execute(array('message_text'=>$message_text));
-        $matching_cats = $req->fetchAll();
-        print_r_help($matching_cats);
-        if(!$matching_cats){
-            return array();
+        $req->execute($execute_arr);     
+        $matching_cats_by_label = $req->fetchAll();
+        if($matching_cats_by_label){
+            foreach($matching_cats_by_label as $cat){
+                $matching_cats[$cat['id']] = $cat;
+            }
+        }
+
+        $sql = "SELECT * FROM biz_categories WHERE MATCH(search_terms) AGAINST(:message_text)";
+        $req = $db->prepare($sql);
+        $req->execute($execute_arr);     
+        $matching_cats_by_search = $req->fetchAll();
+        if($matching_cats_by_search){
+            foreach($matching_cats_by_search as $cat){
+                $matching_cats[$cat['id']] = $cat;
+            }
         }
         return $matching_cats;
     }
