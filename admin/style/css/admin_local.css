@@ -1,12 +1,12 @@
 .header{background: #e1e1a8;}
-ul.item-group.portal-menu{
+#right_bar ul.item-group.portal-menu{
     background: #6c6e7a;
     padding: 10px;
     margin: 10px 8px 10px 0px;
     border: 2px solid gray;
     border-radius: 5px;
 }
-ul.item-group.portal-menu li.bar-item a {
+#right_bar ul.item-group.portal-menu li.bar-item a {
     background: #ddf3f4;
 }
 a.set-status-11, a.set-status-99, a.set-status-55{
