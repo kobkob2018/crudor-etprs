@@ -17,7 +17,11 @@ class Meta_webhooksController extends CrudController{
     }
 
     public function check_long_json(){
-        $long_json = '{"object":"whatsapp_business_account","entry":[{"id":"288442484341750","changes":[{"value":{"messaging_product":"whatsapp","metadata":{"display_phone_number":"972722706389","phone_number_id":"246712598531783"},"contacts":[{"profile":{"name":"yacov avr"},"wa_id":"972542393397"}],"messages":[{"from":"972542393397","id":"wamid.HBgMOTcyNTQyMzkzMzk3FQIAEhggQTZBOTRCQjIzMkYxOTlFNjJCOTY3NDNBOUVDQTI5MzAA","timestamp":"1712655931","text":{"body":"\u05d5\u05d6\u05d4 \u05d5\u05d6\u05d4 \u05df\u05d6\u05d4"},"type":"text"}]},"field":"messages"}]}]}';
+        $search_term = "\u05d5\u05d6\u05d4 \u05d5\u05d6\u05d4 \u05df\u05d6\u05d4";
+        if(isset($_REQUEST['search'])){
+            $search_term = $_REQUEST['search'];
+        }
+        $long_json = '{"object":"whatsapp_business_account","entry":[{"id":"288442484341750","changes":[{"value":{"messaging_product":"whatsapp","metadata":{"display_phone_number":"972722706389","phone_number_id":"246712598531783"},"contacts":[{"profile":{"name":"yacov avr"},"wa_id":"972542393397"}],"messages":[{"from":"972542393397","id":"wamid.HBgMOTcyNTQyMzkzMzk3FQIAEhggQTZBOTRCQjIzMkYxOTlFNjJCOTY3NDNBOUVDQTI5MzAA","timestamp":"1712655931","text":{"body":"'.$search_term.'"},"type":"text"}]},"field":"messages"}]}]}';
         $this->call_module('whatsapp_messages','handle_message_notification',array('message_info'=>$long_json));
 
     }

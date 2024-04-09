@@ -572,9 +572,9 @@ https://graph.facebook.com/v12.0/oauth/access_token?
 
 
     protected function track_cat_matches_with_message_text($message_text){
-        return false;
+        
         $maching_cats = Biz_categories::find_matches_with($message_text);
-
+        return false;
     }
 
 
