@@ -157,7 +157,6 @@
     );
 
     public static function find_matches_with($message_text){
-        $message_text = "עורך דין";
         $matching_cats = array();
         $db = Db::getInstance();		
         $execute_arr = array('message_text'=>$message_text);
