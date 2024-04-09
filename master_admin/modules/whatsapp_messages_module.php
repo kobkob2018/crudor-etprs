@@ -329,14 +329,28 @@ https://graph.facebook.com/v12.0/oauth/access_token?
 
         $reply_sent = false;
         $info_changed = false;
+        $new_search_options_found = false;
         if($bot_state['info_collect'] == '1'){ 
             if($form_info = $this->track_form_from_message_text($message_text)){
                 $info_changed = true;
-                Helper::add_log("watsap.txt","\n\n INSIDE 1 \n\n");
                 $lead_info['page_id'] = $form_info['page_id'];
                 $lead_info['form_id'] = $form_info['form_id'];
                 $cat_id = $form_info['cat_id'];
-                if($cat_children = $this->fetch_cat_children($cat_id)){
+                if(isset($form_info['cat_options'])){
+                    $lead_info['cat_id_options'] = $form_info['cat_id_options'];
+                    
+                    if(count($lead_info['cat_id_options']) == '1'){
+                        $cat_id = $lead_info['cat_id_options'][0]['id'];
+                    }
+                    else{
+                        $new_search_options_found = true;
+                        $cat_id = '0';
+                    }
+                }
+                if($new_search_options_found){
+
+                }
+                elseif($cat_children = $this->fetch_cat_children($cat_id)){
                     Helper::add_log("watsap.txt","\n\n INSIDE 1-1 \n\n");
                     $lead_info['parent_cat_id'] = $cat_id;
                     $lead_info['cat_id'] = '0';
@@ -356,7 +370,12 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         }
 
         if($bot_state['auto_reply'] == '1'){
-            if($lead_info['cat_id'] == '0'){
+            if($new_search_options_found){
+                $cat_options = $lead_info['cat_options'];
+                $this->send_cat_options_by_search_to_contact($conversation_row ,$cat_options);
+                $reply_sent = true;
+            }
+            elseif($lead_info['cat_id'] == '0'){
                 $cat_children = $this->fetch_cat_children($lead_info['parent_cat_id']);
                 $this->send_cat_request_to_contact($conversation_row, $lead_info['parent_cat_id'] ,$cat_children);
                 $reply_sent = true;
@@ -417,6 +436,24 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         $message_text = Whatsapp_settings::get()[$cat_message_id];
         $message_text = str_replace("{{cat_name}}",$cat_name,$message_text);
         $message_text = str_replace("{{cat_list}}",$cat_children_text,$message_text);
+
+        $message_data = array(
+            'message_type'=>'text',
+            'message_text'=>$message_text,
+        );
+        return $this->send_reply_to_contact($conversation_data,$message_data);
+    }
+
+    protected function send_cat_options_by_search_to_contact($conversation_data ,$cat_options){
+   
+        $cat_options_text = "";
+        foreach($cat_options as $cat){
+            $cat_options_text .= "\n".$cat['label'];
+        }
+
+        $message_text = "אנא בחר אחת מן האפשרויות"; //Whatsapp_settings::get()[$cat_message_id];
+        
+        $message_text = str_replace("{{cat_list}}",$cat_options_text,$message_text);
 
         $message_data = array(
             'message_type'=>'text',
@@ -574,7 +611,20 @@ https://graph.facebook.com/v12.0/oauth/access_token?
     protected function track_cat_matches_with_message_text($message_text){
         
         $maching_cats = Biz_categories::find_matches_with($message_text);
-        return false;
+        if(empty($maching_cats)){
+            return false;
+        }
+        $cat_id_options = array();
+        foreach($maching_cats as $cat){
+            $cat_id_options[] = $cat['id'];
+        }
+        return array(
+            'cat_id'=>'0',
+            'page_id'=>'0',
+            'form_id'=>'0',
+            'cat_options'=>$maching_cats,
+            'cat_id_options'=>$cat_id_options,
+        );
     }
 
 

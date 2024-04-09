@@ -161,7 +161,7 @@
         $matching_cats = array();
         $db = Db::getInstance();		
         $execute_arr = array('message_text'=>$message_text);
-        $sql = "SELECT * FROM biz_categories WHERE MATCH(label) AGAINST(:message_text)";
+        $sql = "SELECT * FROM biz_categories WHERE MATCH(label) AGAINST(:message_text) LIMIT 11";
         $req = $db->prepare($sql);
         $req->execute($execute_arr);     
         $matching_cats_by_label = $req->fetchAll();
@@ -171,7 +171,7 @@
             }
         }
 
-        $sql = "SELECT * FROM biz_categories WHERE MATCH(search_terms) AGAINST(:message_text)";
+        $sql = "SELECT * FROM biz_categories WHERE MATCH(search_terms) AGAINST(:message_text) LIMIT 11";
         $req = $db->prepare($sql);
         $req->execute($execute_arr);     
         $matching_cats_by_search = $req->fetchAll();
@@ -180,7 +180,9 @@
                 $matching_cats[$cat['id']] = $cat;
             }
         }
-        print_r_help($matching_cats);
+        if(count($matching_cats) > 10){
+            return array();
+        }
         return $matching_cats;
     }
 }
