@@ -570,6 +570,15 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         );
     }
 
+
+    protected function track_cat_matches_with_message_text($message_text){
+        return false;
+        $maching_cats = Biz_categories::find_matches_with($message_text);
+
+    }
+
+
+
     protected function track_cat_from_message_text($message_text){
         $cat_vag_terms= Whatsapp_settings::get()['cat_vag_terms'];
         if (strpos($cat_vag_terms, $message_text) !== false) {
@@ -585,6 +594,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
 
         $cat_find = Biz_categories::find($cat_filter,'id');
         if(!$cat_find){
+            return $this->track_cat_matches_with_message_text($message_text);
             return false;
         }
         $cat_id = $cat_find['id'];

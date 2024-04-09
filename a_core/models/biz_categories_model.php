@@ -155,5 +155,17 @@
             'validation'=>'required'
         ),
     );
+
+    public static function find_matches_with($message_text){
+        $db = Db::getInstance();		
+        $sql = "SELECT * FROM biz_categories WHERE MATCH(label, search_terms) AGAINST(:message_text)";
+        $req = $db->prepare($sql);
+        $req->execute(array('message_text'=>$message_text));
+        $matching_cats = $req->fetchAll();
+        if(!$matching_cats){
+            return array();
+        }
+        return $matching_cats;
+    }
 }
 ?>
