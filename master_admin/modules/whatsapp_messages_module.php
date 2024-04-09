@@ -617,7 +617,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         }
         $cat_id_options = array();
         foreach($maching_cats as $cat){
-            print_help("no here");
+            
             $cat_id_options[] = $cat['id'];
         }
         print_r_help($maching_cats);
