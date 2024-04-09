@@ -131,7 +131,7 @@ h4{
 }
 
 #right_bar ul li.bar-item{
-    
+
 }
 
 #right_bar ul li.bar-item a{
@@ -364,12 +364,12 @@ h4{
     background: #fefdf0;
     max-width:300px;
     margin:10px;
-    transition: transform 0.5s;    
+    transition: transform 0.5s;
 }
 
 .button-focus:hover{
     background: #fffafa;
-    transform: scale(1.1);    
+    transform: scale(1.1);   
 }
 
 .go-button, .button-focus{
@@ -415,7 +415,7 @@ h4{
 }
 
 .content-block{    
-    margin-bottom: 0px;
+    margin-bottom: 25px;
 
 }
 
@@ -502,7 +502,7 @@ h4{
     background: #ffffe3;
 }
 
-.time-selector{
+.time-selector{   
     direction: ltr;
 }
 
@@ -624,6 +624,32 @@ a.filter-a-clicker.selected{
     vertical-align: bottom;
 }
 
+.red{
+    color:red;
+}
+
+.green{
+    color:green;
+}
+
+.filter-form{
+    zoom: 0.6;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    background: #e9e9d394;
+    padding: 18px;
+    box-shadow: 5px 5px 5px gray;
+    transition: all 0.7s;
+    border-radius: 5px;
+
+}
+
+.filter-form:hover{
+    zoom:1;
+    background: #e9e9d3;
+}
+
 .content-helper{
     position: absolute;
     top: 20px;
@@ -667,38 +693,6 @@ a.filter-a-clicker.selected{
 
 .thumb-wrap img{
     max-width: 150px;
-}
-
-.red{
-    color: red;
-}
-
-.green{
-    color: green;
-}
-
-.filter-form{
-    zoom: 0.6;
-    position: absolute;
-    left: 3px;
-    top: 3px;
-    background: #e9e9d394;
-    padding: 18px;
-    box-shadow: 5px 5px 5px gray;
-    transition: all 0.7s;
-    border-radius: 5px;
-
-}
-a.set-status-11, a.set-status-99, a.set-status-55{
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: text;
-    pointer-events:none;
-}
-.filter-form:hover{
-    zoom:1;
-    background: #e9e9d3;
 }
 
 @media only screen and (max-width: 900px) {

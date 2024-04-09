@@ -1,0 +1,15 @@
+.portal-menu{
+    background: #6c6e7a;
+    padding: 10px;
+    margin: 10px 8px 10px 0px;
+    border: 2px solid gray;
+    border-radius: 5px;
+}
+
+a.set-status-11, a.set-status-99, a.set-status-55{
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: text;
+    pointer-events:none;
+}
