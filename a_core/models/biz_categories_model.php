@@ -160,6 +160,7 @@
         $message_text = "עורך דין";
         $db = Db::getInstance();		
         $sql = "SELECT * FROM biz_categories WHERE MATCH(label, search_terms) AGAINST(:message_text)";
+        print_help($sql);
         $req = $db->prepare($sql);
         $req->execute(array('message_text'=>$message_text));
         $matching_cats = $req->fetchAll();
