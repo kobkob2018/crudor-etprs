@@ -337,8 +337,10 @@ https://graph.facebook.com/v12.0/oauth/access_token?
                 $lead_info['form_id'] = $form_info['form_id'];
                 $cat_id = $form_info['cat_id'];
                 if(isset($form_info['cat_options'])){
+                    
                     $lead_info['cat_id_options'] = $form_info['cat_id_options'];
                     $lead_info['cat_options'] = $form_info['cat_options'];
+                    print_r_help($lead_info['cat_id_options']);
                     if(count($lead_info['cat_id_options']) == '1'){
                         $cat_id = $lead_info['cat_id_options'][0]['id'];
                     }
@@ -612,7 +614,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
         
         $maching_cats = Biz_categories::find_matches_with($message_text);
         if(empty($maching_cats)){
-            print_help("no here");
+            
             return false;
         }
         $cat_id_options = array();
@@ -620,7 +622,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
             
             $cat_id_options[] = $cat['id'];
         }
-        print_r_help($maching_cats);
+        
         return array(
             'cat_id'=>'0',
             'page_id'=>'0',
