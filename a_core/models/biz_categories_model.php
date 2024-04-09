@@ -157,11 +157,13 @@
     );
 
     public static function find_matches_with($message_text){
+        $message_text = "עורך דין";
         $db = Db::getInstance();		
         $sql = "SELECT * FROM biz_categories WHERE MATCH(label, search_terms) AGAINST(:message_text)";
         $req = $db->prepare($sql);
         $req->execute(array('message_text'=>$message_text));
         $matching_cats = $req->fetchAll();
+        print_r_help($matching_cats);
         if(!$matching_cats){
             return array();
         }
