@@ -180,6 +180,7 @@
                 $matching_cats[$cat['id']] = $cat;
             }
         }
+        print_r_help($matching_cats);
         return $matching_cats;
     }
 }
