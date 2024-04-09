@@ -340,9 +340,9 @@ https://graph.facebook.com/v12.0/oauth/access_token?
                     
                     $lead_info['cat_id_options'] = $form_info['cat_id_options'];
                     $lead_info['cat_options'] = $form_info['cat_options'];
-                    print_r_help($lead_info['cat_id_options']);
-                    if(count($lead_info['cat_id_options']) == '1'){
-                        $cat_id = $lead_info['cat_id_options'][0]['id'];
+                    
+                    if(count($lead_info['cat_options']) == '1'){
+                        $cat_id = $lead_info['cat_options'][0]['id'];
                     }
                     else{
                         $new_search_options_found = true;
