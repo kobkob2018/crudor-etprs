@@ -9,6 +9,9 @@
 #right_bar ul.item-group.portal-menu li.bar-item a {
     background: #ddf3f4;
 }
+#right_bar ul.item-group.portal-menu li.bar-item a:hover{
+    background: #81afb1;
+}
 a.set-status-11, a.set-status-99, a.set-status-55{
     color: black;
     text-decoration: none;
