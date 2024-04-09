@@ -157,6 +157,7 @@
     );
 
     public static function find_matches_with($message_text){
+        print_r_help($message_text);
         $matching_cats = array();
         $db = Db::getInstance();		
         $execute_arr = array('message_text'=>$message_text);
