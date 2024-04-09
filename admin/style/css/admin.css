@@ -700,6 +700,7 @@ a.set-status-11, a.set-status-99, a.set-status-55{
     zoom:1;
     background: #e9e9d3;
 }
+
 @media only screen and (max-width: 900px) {
   
     #right_bar_wrap{

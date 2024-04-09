@@ -141,7 +141,7 @@
 
         </ul>
     <?php endif; ?>
-    <ul class="item-group">
+    <ul class="item-group portal-menu">
         <?php if($view->site_user_is('author')): //can switch to site_user_is.. ?>
             <li class="bar-item <?= $view->a_class("quotes/my_list/") ?> <?= $view->a_class("quotes/my_list/") ?>">
                <h3>תוכן אישי באתר</h3>
