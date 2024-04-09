@@ -343,6 +343,7 @@ https://graph.facebook.com/v12.0/oauth/access_token?
                     
                     if(count($lead_info['cat_id_options']) == '1'){
                         $cat_id = $lead_info['cat_id_options'][0];
+                        $lead_info['cat_id'] = $cat_id;
                     }
                     else{
                         $new_search_options_found = true;
