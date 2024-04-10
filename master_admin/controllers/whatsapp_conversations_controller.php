@@ -128,5 +128,9 @@
     protected function create_item($fixed_values){
         return Whatsapp_conversations::create($fixed_values);
     }
+
+    public function mass_delete(){
+      print_r_help($_REQUEST);
+    }
   }
 ?>
