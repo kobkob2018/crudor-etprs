@@ -23,10 +23,11 @@
         <div class="col">מחיקה</div>
     </div>
     <form action="<?= inner_url("whatsapp_conversations/mass_delete") ?>" method="POST">
+        <input type="hidden" name="delete_selected" value="1" />
     <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
         <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>"  data-conversation_id="<?= $item['id'] ?>">
             <div class="col">
-                <input type="checkbox" value="delete[<?= $item['id'] ?>]" />    
+                <input type="checkbox" name="delete[<?= $item['id'] ?>]" value='1' />    
                 <?= $item['id'] ?>
             </div>
             <div class="col"><?= hebdt($item['last_message_time'],'d-m-Y') ?><br/><?= hebdt($item['last_message_time'],'H:i') ?></div>
