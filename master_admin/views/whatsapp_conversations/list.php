@@ -22,9 +22,13 @@
         <div class="col">הודעה אחרונה</div>
         <div class="col">מחיקה</div>
     </div>
+    <form action="<?= inner_url("whatsapp_conversations/mass_delete") ?> method="POST">
     <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
         <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>"  data-conversation_id="<?= $item['id'] ?>">
-            <div class="col"><?= $item['id'] ?></div>
+            <div class="col">
+                <input type="checkbox" value="delete[<?= $item['id'] ?>]" />    
+                <?= $item['id'] ?>
+            </div>
             <div class="col"><?= hebdt($item['last_message_time'],'d-m-Y') ?><br/><?= hebdt($item['last_message_time'],'H:i') ?></div>
             <div class="col"><?= $item['owner_phone'] ?></div>
             <div class="col"><?= $item['contact_phone_wa_id'] ?></div>
@@ -51,6 +55,10 @@
             </div>
         </div>
     <?php endforeach; ?>
+    <div class="focus-box">
+        <button type="submit" class="button-focus" value="delete_submit" onclick="return confirm('האם למחוק את כל השיחות הנבחרות?')">מחיקת כל הנבחרים</button>
+    </div>
+    </form>
 </div>
 
 <div class="new-conversations-placeholder hidden">
