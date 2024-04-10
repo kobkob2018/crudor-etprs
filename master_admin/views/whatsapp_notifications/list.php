@@ -4,6 +4,10 @@
     <?php $this->include_view('form_builder/filter_form.php',$info); ?>
 <?php endif; ?>
 
+<div class="focus-box">
+    <a class="button-focus" href="<?= inner_url("whatsapp_notifocations/clear_old/") ?>">לחץ כאן לניקוי נוטיפיקציות</a>
+</div>
+
 <div class="items-table flex-table">
     <div class="table-th row">
         <div class="col col-tiny">
