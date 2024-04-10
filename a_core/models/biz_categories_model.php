@@ -154,6 +154,10 @@
             ),
             'validation'=>'required'
         ),
+        'search_terms'=>array(
+            'label'=>'ביטויי חיפוש לבוט של ווטסאם',
+            'type'=>'textbox',
+        ),
     );
 
     public static function find_matches_with($message_text){
