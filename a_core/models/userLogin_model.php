@@ -115,7 +115,7 @@
 			$system_name = $_REQUEST['system'];
 			
 			$email_content = "system login in: ".$system_name."[to ".$system_prefix."] by user: ".$user['full_name'];
-			$email_to = "yacov.avr@gmail.com";  //get_config('alerts_admin_email');
+			$email_to = get_config('alerts_admin_email');
 			Helper::send_email($email_to,"login to il-biz system",$email_content);
 		}
 
