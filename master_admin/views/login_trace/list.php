@@ -3,7 +3,13 @@
 <?php if(isset($info['filter_form'])): ?>
     <?php $this->include_view('form_builder/filter_form.php',$info); ?>
 <?php endif; ?>
-
+<div class="focus-box">
+    <b>מומלץ לנקות מהמערכת כניסות ישנות שכבר אינן בתוקף</b>
+    <br/>
+    <a class="button-focus" href="<?= inner_url("login_trace/clear_old_logins/") ?>">לחץ כאן לניקוי כניסות ישנות</a>
+    <br/>
+    הפעולה תנקה את כל הכניסות שמעל 7 ימים
+</div>
 <div class="items-table flex-table">
     <div class="table-th row">
         <div class="col col-tiny">
@@ -24,7 +30,6 @@
         <div class="col">
             ip
         </div>
-        <div class="col">מחיקה</div>
     </div>
     <?php foreach($info['list'] as $key=>$item): ?>
         <div class="table-tr row">

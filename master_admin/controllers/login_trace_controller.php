@@ -24,6 +24,11 @@
         return MasterLogin_trace::get_list($filter_arr, '*',$payload);
     }
 
+    public function clear_old_logins(){
+        MasterLogin_trace::clear_old_logins();
+        return $this->redirect_to(inner_url("login_trace/list/"));
+    }
+
     protected function get_filter_fields_collection(){
         return array();
     }

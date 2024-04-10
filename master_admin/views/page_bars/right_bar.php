@@ -44,6 +44,10 @@
                 <a href="<?= inner_url('users/list/') ?>" title="ניהול משתמשים" class="a-link">ניהול משתמשים</a>
             </li> 
 
+            <li class="bar-item <?= $view->a_class("login_trace/list/") ?>">
+                <a href="<?= inner_url('login_trace/list/') ?>" title="רשימת כניסות" class="a-link">רשימת כניסות למערכת</a>
+            </li> 
+
             <li class="bar-item <?= $view->a_c_class("net_directories, net_banners") ?>">
                 <a href="<?= inner_url('net_directories/list/') ?>" title="ניהול באנרים" class="a-link">ניהול באנרים</a>
             </li> 
