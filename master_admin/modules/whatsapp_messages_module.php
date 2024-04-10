@@ -448,7 +448,6 @@ https://graph.facebook.com/v12.0/oauth/access_token?
     }
 
     protected function send_cat_options_by_search_to_contact($conversation_data ,$cat_options){
-        print_r_help($cat_options);
         $cat_options_text = "";
         foreach($cat_options as $cat){
             $cat_options_text .= "\n".$cat['label'];
