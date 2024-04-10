@@ -17,6 +17,7 @@
         foreach($list_info['list'] as $key=>$val){
             $val_arr = json_decode($val['info'],true);
             $whatsapp_notifications[$val['id']] = $this->create_list_item_from_array("notification",$val_arr);
+            $whatsapp_notifications[$val['id']]['notification_time'] = $val['notification_time'];
         }
         $this->data['whatsapp_notifications'] = $whatsapp_notifications;
         $this->include_view('whatsapp_notifications/list.php',array('list'=>$whatsapp_notifications,'filter_form'=>$list_info['filter_form']));
