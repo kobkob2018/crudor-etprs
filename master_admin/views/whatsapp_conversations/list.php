@@ -7,27 +7,30 @@
 <div class="add-button-wrap">
     לא ניתן ליזום שיחה. שיחות מאותחלות על ידי הפונים
 </div>
-
-<div class="items-table flex-table conversations-table">
-    <div class="table-th row conversations-th">
-        <div class="col">
-            <input class="nice-input-checkbox select-all-to-delete" onchange="toggle_all_to_delete()" type="checkbox" name="select_all_helper" value='1' />     
-        </div>
-        <div class="col">#</div>
-        <div class="col"></div>
-        <div class="col">מספר השירות</div>
-        <div class="col">
-            מספר הפונה
-        </div>
-        
-        <div class="col">שם ווטסאפ</div>
-        <div class="col">שם הפונה</div>
-        <div class="col">הודעה אחרונה</div>
-        <div class="col">מחיקה</div>
+<form action="" method="POST">
+    <input type="hidden" name="sendAction" value="delete_selected_rows" />
+    <div class="focus-box">
+        <input type="submit" class="button-focus" onclick="return confirm('האם למחוק את כל השיחות הנבחרות?')" value='מחיקת כל הנבחרים' />
     </div>
+    <div class="items-table flex-table conversations-table">
+        <div class="table-th row conversations-th">
+            <div class="col">
+                <input class="nice-input-checkbox select-all-to-delete" onchange="toggle_all_to_delete()" type="checkbox" name="select_all_helper" value='1' />     
+            </div>
+            <div class="col">#</div>
+            <div class="col">זמן</div>
+            <div class="col">מספר השירות</div>
+            <div class="col">
+                מספר הפונה
+            </div>
+            
+            <div class="col">שם ווטסאפ</div>
+            <div class="col">שם הפונה</div>
+            <div class="col">הודעה אחרונה</div>
+            <div class="col">מחיקה</div>
+        </div>
     
-    <form action="" method="POST">
-        <input type="hidden" name="sendAction" value="delete_selected_rows" />
+    
         
         <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
             <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>"  data-conversation_id="<?= $item['id'] ?>">
@@ -63,11 +66,9 @@
                 </div>
             </div>
         <?php endforeach; ?>
-        <div class="focus-box">
-            <input type="submit" class="button-focus" value="delete_submit" onclick="return confirm('האם למחוק את כל השיחות הנבחרות?')" value='מחיקת כל הנבחרים' />
-        </div>
-    </form>
-</div>
+    </div>
+
+</form>
 
 <div class="new-conversations-placeholder hidden">
 
