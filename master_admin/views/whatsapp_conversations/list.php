@@ -2,8 +2,8 @@
     $direction_labels = array('send'=>'הודעה יוצאת','recive'=>'הודעה נכנסת')
 ?>
 
-<form name="send_form" class="send-form form-validate" id="send_form" method="post" action="<?= inner_url("whatsapp_conversations/mass_delete") ?>" <?= $this->data['form_builder']['enctype_str'] ?>>
-        <input type="hidden" name="sendAction" value="<?= $this->data['form_builder']['sendAction'] ?>" />
+<form name="send_form" class="send-form form-validate" id="send_form" method="post" action="<?= inner_url("whatsapp_conversations/mass_delete") ?>">
+        <input type="hidden" name="sendAction" value="mikmik" />
     
 
         <input onclick="this.disabled=true; this.value='שולח...'; this.form.submit(); return false;" type="submit"  class="submit-btn"  value="שליחה" />
