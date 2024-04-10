@@ -3,7 +3,7 @@
 
     protected $assets_map = array('static'=>'');
     protected $session_filter = false;
-    protected $session_order_by = "id";
+    protected $session_order_by = "id desc";
     protected function init_setup($action){
         $this->set_priority_from_session();
         $this->init_filter_session();
