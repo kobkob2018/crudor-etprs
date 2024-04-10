@@ -1,10 +1,15 @@
 <?php 
     $direction_labels = array('send'=>'הודעה יוצאת','recive'=>'הודעה נכנסת')
 ?>
-    <form action="<?= inner_url("whatsapp_conversations/mass_delete") ?>" method="POST">
-        <input type="hidden" name="delete_selected" value="1" />
-        <input type="submit" class="button-focus" value="delete_submit" onclick="return confirm('האם למחוק את כל השיחות הנבחרות?')" value='מחיקת כל הנבחרים' />
-    </form>
+
+<form name="send_form" class="send-form form-validate" id="send_form" method="post" action="<?= inner_url("whatsapp_conversations/mass_delete") ?>" <?= $this->data['form_builder']['enctype_str'] ?>>
+        <input type="hidden" name="sendAction" value="<?= $this->data['form_builder']['sendAction'] ?>" />
+    
+
+        <input onclick="this.disabled=true; this.value='שולח...'; this.form.submit(); return false;" type="submit"  class="submit-btn"  value="שליחה" />
+
+</form>
+    
 <h3>שיחות ווטסאפ</h3>
 
 <div class="add-button-wrap">
