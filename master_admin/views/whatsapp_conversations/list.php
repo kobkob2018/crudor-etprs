@@ -1,7 +1,10 @@
 <?php 
     $direction_labels = array('send'=>'הודעה יוצאת','recive'=>'הודעה נכנסת')
 ?>
-
+    <form action="<?= inner_url("whatsapp_conversations/mass_delete") ?>" method="POST">
+        <input type="hidden" name="delete_selected" value="1" />
+        <input type="submit" class="button-focus" value="delete_submit" onclick="return confirm('האם למחוק את כל השיחות הנבחרות?')" value='מחיקת כל הנבחרים' />
+    </form>
 <h3>שיחות ווטסאפ</h3>
 
 <div class="add-button-wrap">
@@ -22,8 +25,6 @@
         <div class="col">הודעה אחרונה</div>
         <div class="col">מחיקה</div>
     </div>
-    <form action="<?= inner_url("whatsapp_conversations/mass_delete") ?>" method="POST">
-        <input type="hidden" name="delete_selected" value="1" />
         
     <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
         <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>"  data-conversation_id="<?= $item['id'] ?>">
@@ -58,9 +59,11 @@
         </div>
     <?php endforeach; ?>
     <div class="focus-box">
-        <input type="submit" class="button-focus" value="delete_submit" onclick="return confirm('האם למחוק את כל השיחות הנבחרות?')" value='מחיקת כל הנבחרים' />
+        
     </div>
-    </form>
+
+
+
 </div>
 
 <div class="new-conversations-placeholder hidden">
