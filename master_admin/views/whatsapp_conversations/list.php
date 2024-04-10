@@ -22,6 +22,7 @@
         <div class="col">הודעה אחרונה</div>
         <div class="col">מחיקה</div>
     </div>
+    <?php print_r_help($_REQUEST); ?>
     <form action="" method="POST">
         <input type="hidden" name="sendAction" value="delete_selected_rows" />
         
