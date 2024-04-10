@@ -112,10 +112,10 @@
 		}
 		$user = Users::get_by_id($user_id,'id, full_name');
 		if($user){
-			print_r_help($_REQUEST);
-			exit();
-			$email_content = "system login by user: ".$user['full_name'];
-			$email_to = get_config('alerts_admin_email');
+			$system_name = $_REQUEST['system'];
+			
+			$email_content = "system login in: ".$system_name."[to ".$system_prefix."] by user: ".$user['full_name'];
+			$email_to = "yacov.avr@gmail.com";  //get_config('alerts_admin_email');
 			Helper::send_email($email_to,"login to il-biz system",$email_content);
 		}
 
