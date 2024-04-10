@@ -10,6 +10,9 @@
 
 <div class="items-table flex-table conversations-table">
     <div class="table-th row conversations-th">
+        <div class="col">
+            <input class="nice-input-checkbox select-all-to-delete" onchange="toggle_all_to_delete()" type="checkbox" name="select_all_helper" value='1' />     
+        </div>
         <div class="col">#</div>
         <div class="col"></div>
         <div class="col">מספר השירות</div>
@@ -29,7 +32,9 @@
         <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
             <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>"  data-conversation_id="<?= $item['id'] ?>">
                 <div class="col">
-                    <input class="nice-input-checkbox" type="checkbox" name="delete[<?= $item['id'] ?>]" value='1' />    
+                    <input class="nice-input-checkbox" type="checkbox" name="delete[<?= $item['id'] ?>]" value='1' />
+                </div>
+                <div class="col">    
                     <?= $item['id'] ?>
                 </div>
                 <div class="col"><?= hebdt($item['last_message_time'],'d-m-Y') ?><br/><?= hebdt($item['last_message_time'],'H:i') ?></div>
@@ -129,6 +134,15 @@
         }
         conversations_th.after(conversation_tr);
         move_rows_from_placeholder_to_table(placeholder,conversations_table,conversations_th);
+    }
+    function toggle_all_to_delete(){
+        const select_all = document.querySelector(".select-all-to-delete");
+        if(select_all.checked){
+            document.querySelectorAll(".nice-input-checkbox").forEach(check=>{check.checked = true});
+        }
+        else{
+            document.querySelectorAll(".nice-input-checkbox").forEach(check=>{check.checked = false});
+        }
     }
     init_whatsapp_fetch_conversations();
 </script>
