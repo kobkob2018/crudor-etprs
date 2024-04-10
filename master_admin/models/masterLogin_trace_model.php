@@ -7,7 +7,6 @@
 
     public static function add_users_details($trace_list){
         foreach($trace_list as $item_key=>$item){
-            
             $user_id = $item['user_id'];
             if(!isset(self::$users_details[$user_id])){
                 $user_filter = array('id'=>$user_id);
