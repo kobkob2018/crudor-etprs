@@ -36,7 +36,8 @@
             <div class="col col-tiny"><?= $item['id'] ?></div>
             <div class="col">
                 <?php if($item['user']): ?>
-                    <?= $item['user']['full_name'] ?><?= $item['user_id'] ?>
+                    [<?= $item['user_id'] ?>] 
+                    <?= $item['user']['full_name'] ?>
                 <?php else: ?>
                     <b class="red">המשתמש מחוק</b>
                 <?php endif; ?>
