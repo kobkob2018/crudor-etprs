@@ -10,7 +10,9 @@
 <form action="" method="POST">
     <input type="hidden" name="sendAction" value="delete_selected_rows" />
     <div class="focus-box">
+        <h3>למחיקה מרובה סמן את השיחות למחיקה ולחץ על הכפתור:</h3>
         <input type="submit" class="button-focus" onclick="return confirm('האם למחוק את כל השיחות הנבחרות?')" value='מחיקת כל הנבחרים' />
+        <b>לבחירה אוטומטית של כל השיחות אפשר ללחוץ על כפתור הבחירה בראש הטבלה.</b>
     </div>
     <div class="items-table flex-table conversations-table">
         <div class="table-th row conversations-th">
