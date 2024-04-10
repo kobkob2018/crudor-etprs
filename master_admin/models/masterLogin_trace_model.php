@@ -17,7 +17,7 @@
         return $trace_list;
     }
 
-    public function clear_old_logins(){
+    public static function clear_old_logins(){
         $db = DB::getInstance();
         $sql = "DELETE FROM login_trace WHERE login_time < NOW() - interval 11 day";
         $req = $db->prepare($sql);
