@@ -12,7 +12,7 @@
 
         $list_info = $this->get_paginated_list_info($filter_arr,array('page_limit'=>'300'));
         
-        $login_trace = MasterLogin_trace::add_users_details($list_info);
+        $login_trace = MasterLogin_trace::add_users_details($list_info['list']);
 
         $this->data['login_trace'] = $login_trace;
         $this->include_view('login_trace/list.php',array('list'=>$login_trace,'filter_form'=>$list_info['filter_form']));
