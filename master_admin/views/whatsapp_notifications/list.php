@@ -20,6 +20,9 @@
             );?>
         </div>
         <div class="col">
+            זמן
+        </div>
+        <div class="col">
             פרטים
         </div>
        
@@ -28,6 +31,7 @@
     <?php foreach($info['list'] as $key=>$note): ?>
         <div class="table-tr row">
             <div class="col col-tiny"><?= $key ?></div>
+            <div class="col"><?= $note['notification_time'] ?></div>
             <div class="col">
                 <div class="notification_row type_<?= $note['type'] ?>" onclick="toggle_notification(this)">
                     <?php foreach($note['values'] as $note_val): ?>
