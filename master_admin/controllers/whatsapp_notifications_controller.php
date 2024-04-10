@@ -50,7 +50,7 @@
         $this->redirect_to(inner_url("whatsapp_notifications/list/"));
     }
 
-    public function clear_old(){
+    public function clear_old(){ 
         Whatsapp_notifications::clear_old();
         SystemMessages::add_success_message("list is clear from old notifications");
         $this->redirect_to(inner_url("whatsapp_notifications/list/"));

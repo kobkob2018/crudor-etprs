@@ -5,7 +5,7 @@
 <?php endif; ?>
 
 <div class="focus-box">
-    <a class="button-focus" href="<?= inner_url("whatsapp_notifocations/clear_old/") ?>">לחץ כאן לניקוי נוטיפיקציות</a>
+    <a class="button-focus" href="<?= inner_url("whatsapp_notifications/clear_old/") ?>">לחץ כאן לניקוי נוטיפיקציות</a>
 </div>
 
 <div class="items-table flex-table">
