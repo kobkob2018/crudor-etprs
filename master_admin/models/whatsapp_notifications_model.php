@@ -13,7 +13,7 @@
 
         public static function clear_old(){
             $db = DB::getInstance();
-            $sql = "DELETE FROM login_trace WHERE login_time < NOW() - interval 1 day";
+            $sql = "DELETE FROM whatsapp_notifications WHERE notification_time < NOW() - interval 1 day";
             $req = $db->prepare($sql);
             $req->execute();
         }
