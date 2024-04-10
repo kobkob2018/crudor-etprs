@@ -29,7 +29,7 @@
         <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
             <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>"  data-conversation_id="<?= $item['id'] ?>">
                 <div class="col">
-                    <input type="checkbox" name="delete[<?= $item['id'] ?>]" value='1' />    
+                    <input class="nice-input-checkbox" type="checkbox" name="delete[<?= $item['id'] ?>]" value='1' />    
                     <?= $item['id'] ?>
                 </div>
                 <div class="col"><?= hebdt($item['last_message_time'],'d-m-Y') ?><br/><?= hebdt($item['last_message_time'],'H:i') ?></div>

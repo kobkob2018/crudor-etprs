@@ -206,6 +206,11 @@ h4{
     width: auto;
 }
 
+.nice-input-checkbox{
+    width: 20px;
+    height: 20px;
+}
+
 .thumbs-list img{
     max-width: 160px;
 }

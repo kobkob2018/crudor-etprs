@@ -24,8 +24,12 @@
     }
 
     public function delete_selected_rows(){
-      print_r_help($_REQUEST);
-      exit('ok');
+      $this->set_layout('blank');
+      foreach($_REQUEST['delete'] as $conversation_id=>$delete){
+        Whatsapp_conversations::delete($conversation_id);
+      }
+      SystemMessages::add_success_message("השיחות הנבחרות נמחקו");
+      return $this->redirect_to(inner_url("whatsapp_conversations/list"));
     }
 
     public function ajax_list(){
