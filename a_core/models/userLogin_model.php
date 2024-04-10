@@ -110,6 +110,14 @@
 		else{
 			session__set('login_user',$user_session, $system_prefix);
 		}
+		$user = Users::get_by_id($user_id,'id, full_name');
+		if($user){
+			$email_content = "system login by user: ".$user['full_name'];
+			$email_to = get_config('alerts_admin_email');
+			exit($email_to);
+			Helper::send_email($email_to,"login to il-biz system",$email_content);
+		}
+
 		return $trace_array;
     }
 
