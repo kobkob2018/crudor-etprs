@@ -1,16 +1,7 @@
 <?php 
-print_r_help($_REQUEST);
     $direction_labels = array('send'=>'הודעה יוצאת','recive'=>'הודעה נכנסת')
 ?>
 
-<form name="send_form" class="send-form form-validate" id="send_form" method="post" action="">
-        <input type="hidden" name="sendAction" value="mikmik" />
-    
-
-        <input onclick="this.disabled=true; this.value='שולח...'; this.form.submit(); return false;" type="submit"  class="submit-btn"  value="שליחה" />
-
-</form>
-    
 <h3>שיחות ווטסאפ</h3>
 
 <div class="add-button-wrap">
@@ -31,45 +22,45 @@ print_r_help($_REQUEST);
         <div class="col">הודעה אחרונה</div>
         <div class="col">מחיקה</div>
     </div>
+    <form action="" method="POST">
+        <input type="hidden" name="sendAction" value="delete_selected_rows" />
         
-    <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
-        <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>"  data-conversation_id="<?= $item['id'] ?>">
-            <div class="col">
-                <input type="checkbox" name="delete[<?= $item['id'] ?>]" value='1' />    
-                <?= $item['id'] ?>
-            </div>
-            <div class="col"><?= hebdt($item['last_message_time'],'d-m-Y') ?><br/><?= hebdt($item['last_message_time'],'H:i') ?></div>
-            <div class="col"><?= $item['owner_phone'] ?></div>
-            <div class="col"><?= $item['contact_phone_wa_id'] ?></div>
-            <div class="col">
-                <?= $item['contact_wa_name'] ?>
-            </div>
-            <div class="col">
-                <?= $item['contact_custom_name'] ?>
-                <br/>
-                <a href = "<?= inner_url('whatsapp_conversations/edit/') ?>?&row_id=<?= $item['id'] ?>" title="ערוך איש קשר">[ערוך]</a>
-            </div>
-            <div class="col">
-                <b><?= $direction_labels[$item['last_message']['direction']] ?></b>
-                <br/>
-                <div class="message-direction <?= $item['last_message']['direction'] ?>">
-                    <?= $item['last_message']['message_type'] ?>: <?= $item['last_message']['message_text'] ?>
+        <?php foreach($this->data['whatsapp_conversations'] as $item): ?>
+            <div class="table-tr row conversation_tr conversation-<?= $item['id'] ?>" data-last_message="<?= $item['last_message_time'] ?>"  data-conversation_id="<?= $item['id'] ?>">
+                <div class="col">
+                    <input type="checkbox" name="delete[<?= $item['id'] ?>]" value='1' />    
+                    <?= $item['id'] ?>
                 </div>
+                <div class="col"><?= hebdt($item['last_message_time'],'d-m-Y') ?><br/><?= hebdt($item['last_message_time'],'H:i') ?></div>
+                <div class="col"><?= $item['owner_phone'] ?></div>
+                <div class="col"><?= $item['contact_phone_wa_id'] ?></div>
+                <div class="col">
+                    <?= $item['contact_wa_name'] ?>
+                </div>
+                <div class="col">
+                    <?= $item['contact_custom_name'] ?>
+                    <br/>
+                    <a href = "<?= inner_url('whatsapp_conversations/edit/') ?>?&row_id=<?= $item['id'] ?>" title="ערוך איש קשר">[ערוך]</a>
+                </div>
+                <div class="col">
+                    <b><?= $direction_labels[$item['last_message']['direction']] ?></b>
+                    <br/>
+                    <div class="message-direction <?= $item['last_message']['direction'] ?>">
+                        <?= $item['last_message']['message_type'] ?>: <?= $item['last_message']['message_text'] ?>
+                    </div>
 
-                <br/><br/>
-                <a href = "<?= inner_url('whatsapp_messages/add/') ?>?conversation_id=<?= $item['id'] ?>" title="לשיחה">לשיחה</a>
+                    <br/><br/>
+                    <a href = "<?= inner_url('whatsapp_messages/add/') ?>?conversation_id=<?= $item['id'] ?>" title="לשיחה">לשיחה</a>
+                </div>
+                <div class="col">
+                    <a href = "<?= inner_url('whatsapp_conversations/delete/') ?>?row_id=<?= $item['id'] ?>" title="מחק">מחק</a>
+                </div>
             </div>
-            <div class="col">
-                <a href = "<?= inner_url('whatsapp_conversations/delete/') ?>?row_id=<?= $item['id'] ?>" title="מחק">מחק</a>
-            </div>
+        <?php endforeach; ?>
+        <div class="focus-box">
+            <input type="submit" class="button-focus" value="delete_submit" onclick="return confirm('האם למחוק את כל השיחות הנבחרות?')" value='מחיקת כל הנבחרים' />
         </div>
-    <?php endforeach; ?>
-    <div class="focus-box">
-        
-    </div>
-
-
-
+    </form>
 </div>
 
 <div class="new-conversations-placeholder hidden">
