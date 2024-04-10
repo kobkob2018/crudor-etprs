@@ -1,8 +1,9 @@
 <?php 
+print_r_help($_REQUEST);
     $direction_labels = array('send'=>'הודעה יוצאת','recive'=>'הודעה נכנסת')
 ?>
 
-<form name="send_form" class="send-form form-validate" id="send_form" method="post" action="<?= inner_url("whatsapp_conversations/mass_delete") ?>">
+<form name="send_form" class="send-form form-validate" id="send_form" method="post" action="">
         <input type="hidden" name="sendAction" value="mikmik" />
     
 
