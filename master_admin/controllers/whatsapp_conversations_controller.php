@@ -23,6 +23,11 @@
 
     }
 
+    public function delete_selected_rows(){
+      print_r_help($_REQUEST);
+      exit('ok');
+    }
+
     public function ajax_list(){
       //if(session__isset())
       $this->set_layout("blank");
