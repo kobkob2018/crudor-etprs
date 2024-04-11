@@ -64,7 +64,6 @@
           $value = $set[$val_type];
         }
         $field['default'] = $value;
-        $field['css_class'] = "global-".$set['param_name'];
         $fields_collection[$set['param_name']] = $field;
       }
       return self::setup_field_collection($fields_collection);
