@@ -113,8 +113,13 @@
 		$user = Users::get_by_id($user_id,'id, full_name');
 		if($user){
 			$system_name = $_REQUEST['system'];
+			$email_content = "";
+			if($system_prefix != "current"){
+				$email_content.="<br/><b style='color:red;>LOGIN MADE MADE NOT BY USER HIMSELF!!!</b>";
+			}
+			$email_content .= "system login in: ".$system_name."[to ".$system_prefix."] by user: ".$user['full_name'];
 			
-			$email_content = "system login in: ".$system_name."[to ".$system_prefix."] by user: ".$user['full_name'];
+
 			$email_to = get_config('alerts_admin_email');
 			Helper::send_email($email_to,"login to il-biz system",$email_content);
 		}
