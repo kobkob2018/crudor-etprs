@@ -54,3 +54,14 @@
         </form>
     </div>
 </div>
+
+
+<div class="not-hidden comment-holder">
+    <div class="form-builder-comment" data-for="global-whatsapp_button_phone">
+        <b>יש לשים מספר טלפון כולל קידומת +972</b>
+        <br/>
+        <b>API של ווטסאפ: </b>+972722706389
+        <br/>
+        <b>טלפון רגיל: </b>+97236449369
+    </div>
+</div>
