@@ -506,6 +506,12 @@ h4{
 .form-group.yellowish textarea, .form-group.yellowish input{
     background: #ffffe3;
 }
+.form-builder-comment{
+    background: #ddcbcb;
+    padding: 16px;
+    border-radius: 5px;
+    border: 2px solid gray;
+}
 
 .time-selector{
     direction: ltr;
