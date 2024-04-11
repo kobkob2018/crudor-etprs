@@ -26,13 +26,16 @@
             }
             
             $button_message = Global_settings::get()['whatsapp_button_message'];
+            $button_phone = Global_settings::get()['whatsapp_button_phone'];
             $page_title = $this->controller->data['page']['title'];
             $button_message = str_replace("{{page_title}}",$page_title,$button_message);
             $action_data = $this->decode_action_data_arr(";");
             $whatsaap_img = styles_url('style/image/whatsapp_chat.png');
             $phone = $action_data['phone'];
+            $phone = str_replace("{{whatsapp_button_phone}}",$button_phone,$phone);
             $message = $action_data['message'];
             $message = str_replace("{{whatsapp_page_message}}",$button_message,$message);
+            
             $info = array('image'=>$whatsaap_img,'message'=>$message, 'phone'=>$phone);
             $this->include_view('modules/whatsapp_chat.php',$info);
         }
