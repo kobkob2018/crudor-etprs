@@ -115,7 +115,7 @@
 			$system_name = $_REQUEST['system'];
 			$email_content = "";
 			if($system_prefix != "current"){
-				$email_content.="<br/><b style='color:red;>LOGIN MADE MADE NOT BY USER HIMSELF!!!</b>";
+				$email_content.="<b style='color:red;>LOGIN MADE MADE NOT BY USER HIMSELF!!!</b><br/>";
 			}
 			$email_content .= "system login in: ".$system_name."[to ".$system_prefix."] by user: ".$user['full_name'];
 			
