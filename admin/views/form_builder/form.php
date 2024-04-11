@@ -12,7 +12,7 @@
             <?php if($build_field['type'] == 'hidden'): ?>
                 <input type='hidden' name='row[<?= $field_key ?>]" id="row_<?= $field_key ?>' class='' value="<?= $this->get_form_input($field_key); ?>"  />
             <?php else: ?>
-                <div class='form-group <?= isset($build_field['css_class'])? $build_field['css_class']: "" ?>'>
+                <div class='form-group <?= $field_key ?>-filed <?= isset($build_field['css_class'])? $build_field['css_class']: "" ?>'>
                         
                     <div class='form-group-st'>                
                         <label for='row[<?= $field_key ?>]'><?= $build_field['label'] ?></label>
@@ -118,7 +118,7 @@
                 <?php if($build_field['type'] == 'password'): ?>
 
                     
-                    <div class='form-group <?= isset($build_field['css_class'])? $build_field['css_class']: "" ?>'>
+                    <div class='form-group <?= $field_key ?>-confirm-filed <?= isset($build_field['css_class'])? $build_field['css_class']: "" ?>'>
                         <div class="form-group-st">
                             <label for='row[<?= $field_key ?>_confirm]'>אימות <?= $build_field['label'] ?></label>
                         </div>
