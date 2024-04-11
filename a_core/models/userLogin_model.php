@@ -114,14 +114,16 @@
 		if($user){
 			$system_name = $_REQUEST['system'];
 			$email_content = "";
+			$email_title = "login to il-biz system";
 			if($system_prefix != "current"){
-				$email_content.="<b style='color:red;>LOGIN MADE MADE NOT BY USER HIMSELF!!!</b><br/>";
+				$email_content.="LOGIN MADE MADE NOT BY USER HIMSELF!!!\n\n";
+				$email_title = "Master login as another user";
 			}
 			$email_content .= "system login in: ".$system_name."[to ".$system_prefix."] by user: ".$user['full_name'];
 			
 
 			$email_to = 'yacov.avr@gmail.com';// get_config('alerts_admin_email');
-			Helper::send_email($email_to,"login to il-biz system",$email_content);
+			Helper::send_email($email_to,$email_title,$email_content);
 		}
 
 		return $trace_array;
