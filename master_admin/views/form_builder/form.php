@@ -151,3 +151,6 @@
     </form>
 
 </div>
+
+
+<?php $this->register_script('js','time_groups',global_url("global_style/js/form_builder.js")); ?>
